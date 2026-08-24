@@ -1,0 +1,26 @@
+.site-title {
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.side-bar {
+  background-color: #0c100f;
+}
+
+.main-header {
+  background-color: #101513;
+}
+
+.nav-list .nav-list-item .nav-list-link.active {
+  color: #58c99c;
+}
+
+a:not([class]) {
+  text-decoration-color: #58c99c;
+  text-underline-offset: 0.18em;
+}
+
+code {
+  color: #8bd7b8;
+}

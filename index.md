@@ -1,35 +1,37 @@
 ---
 title: Home
 layout: home
+nav_order: 1
 ---
 
-This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
+# TheFatCat
 
-If [Jekyll] is installed on your computer, you can also build and preview the created site *locally*. This lets you test changes before committing them, and avoids waiting for GitHub Pages.[^1] And you will be able to deploy your local build to a different platform than GitHub Pages.
+Trading fees pool in a treasury. Feeders choose which asset the treasury buys
+for their positions, and time in the pool determines each position's share of
+the next purchase.
 
-More specifically, the created site:
+{: .warning }
+The protocol is not live. Contract addresses, transaction links and launch
+dates are intentionally absent until deployment and verification are complete.
 
-- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem
-- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages
+## Start here
 
-Other than that, you're free to customize sites that you create with this template, however you like. You can easily change the versions of `just-the-docs` and Jekyll it uses, as well as adding further plugins.
+- [Protocol overview]({% link protocol.md %}) explains the product in one pass.
+- [Fees and the Belly]({% link protocol/belly.md %}) documents how trading fees
+  are pooled and released.
+- [Meals and seniority]({% link protocol/meals-and-seniority.md %}) explains
+  eligibility, timing and exits.
+- [Custody and invariants]({% link safety/custody.md %}) states the properties
+  the contracts must preserve.
+- [Risks and launch status]({% link safety/risks-and-status.md %}) records what
+  is unfinished and what the mechanism does not promise.
 
-[Browse our documentation][Just the Docs] to learn more about how to use this theme.
+## The short version
 
-To get started with creating a site, simply:
+TheFatCat treats fees as a reservoir rather than a pass-through. A meal releases
+a fraction of the Belly instead of distributing only the fees collected during
+that period. Each position has one diet, its own seniority and its own claimable
+reward history.
 
-1. click "[use this template]" to create a GitHub repository
-2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
-
-If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md#hosting-your-docs-from-an-existing-project-repo) in the template README.
-
-----
-
-[^1]: [It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-your-site).
-
-[Just the Docs]: https://just-the-docs.github.io/just-the-docs/
-[GitHub Pages]: https://docs.github.com/en/pages
-[README]: https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md
-[Jekyll]: https://jekyllrb.com
-[GitHub Pages / Actions workflow]: https://github.blog/changelog/2022-07-27-github-pages-custom-github-actions-workflows-beta/
-[use this template]: https://github.com/just-the-docs/just-the-docs-template/generate
+There is no published APY or APR. Rewards depend on trading activity, the Belly
+balance, eligible weight and the assets Feeders choose.
