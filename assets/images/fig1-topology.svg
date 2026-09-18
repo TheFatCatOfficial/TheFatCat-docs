@@ -184,7 +184,7 @@
     <text x="20" y="48" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="11">minStake: 100,000 FATCAT</text>
     
     <line x1="20" y1="60" x2="240" y2="60" stroke="#1e293b" stroke-width="1" />
-    <text x="20" y="78" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">SeniorityCertificate (Burn 100k FATCAT)</text>
+    <text x="20" y="78" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">SeniorityCertificate (Burn FATCAT)</text>
     <text x="20" y="94" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="10">redeem() Always Bypasses Pause</text>
     <text x="20" y="110" fill="#10b981" font-family="-apple-system, sans-serif" font-size="10">setDiet() Free, Next-Interval Active</text>
   </g>

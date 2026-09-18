@@ -39,7 +39,7 @@ The official technical specification is available in multiple formats for instit
    
    $$\text{Share}_{i, a} = Q_{\text{total}} \cdot \frac{w_i}{W_{\text{total}}}$$
 
-4. **Seniority Certificates (ERC-721)**: Stakers exiting an active position may burn 100,000 FATCAT to `0x...dEaD` via `redeemAndIssue` to mint an on-chain SVG credential, permanently imprinting their notch (1–22). Subsequent stakes can inherit this starting notch, subject to an immutable anti-chaining rule.
+4. **Seniority Certificates (ERC-721 Roadmap)**: In a subsequent protocol phase, exiting stakers may burn FATCAT to mint an on-chain SVG credential, permanently imprinting their achieved seniority notch (1–22).
 5. **Tested Solvency Invariants**: Conservative integer floor division guarantees super-solvency:
    
    $$\sum_{i=1}^N r_i \le R, \quad \Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$$

@@ -32,10 +32,7 @@ You may call `redeem()` at any block to withdraw 100% of your principal. There i
 ## Seniority Certificates (NFTs)
 
 ### What is a Seniority Certificate, and when will it launch?
-A [Seniority Certificate]({% link guides/seniority-certificates.md %}) is an upcoming on-chain ERC-721 credential planned for activation in a subsequent protocol release following initial launch stabilization. When activated, exiting stakers will have the option to burn 100,000 FATCAT to mint a permanent certificate capturing their achieved seniority notch (1–22) to boost future positions.
-
-### Can Seniority Certificates be chained or multiplied?
-**No.** When activated, the protocol's strict **Anti-Chaining Invariant** ensures that a position opened using a certificate cannot mint another certificate upon exit, preventing infinite credential cascading.
+A [Seniority Certificate]({% link guides/seniority-certificates.md %}) is an upcoming on-chain ERC-721 credential planned for activation in a subsequent protocol release following launch stabilization. In upcoming updates, exiting stakers will have the option to burn FATCAT to mint a permanent on-chain SVG certificate capturing their achieved seniority notch (1–22). Further mechanics and parameters will be announced prior to rollout.
 
 ---
 
