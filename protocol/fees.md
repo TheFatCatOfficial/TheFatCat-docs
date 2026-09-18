@@ -44,10 +44,10 @@ During early protocol hours, The Belly may display zero new inflows until the fi
 ## 3. Venue Trading Fees (Isolated from Token Tax)
 
 In addition to the 4% token tax, automated market maker venues charge standard swap fees:
-- **Flap Bonding Curve**: 1.0% venue fee.
-- **PancakeSwap V2 Pool**: 0.25% LP swap fee.
+- **Flap Bonding Curve (Pre-Graduation Only)**: 1.0% venue fee charged by the platform while trading on the bonding curve. Once FATCAT graduates to PancakeSwap V2, the bonding curve permanently closes and this 1.0% venue fee ceases to exist.
+- **PancakeSwap V2 Pool (Post-Graduation)**: 0.25% LP swap fee captured directly by decentralized liquidity providers.
 
-These fees are captured directly by AMM liquidity providers and curve reserves, and are strictly isolated from TheFatCat's internal tax routing.
+These fees are captured directly by AMM liquidity providers and curve platforms, and are strictly isolated from TheFatCat's internal tax routing.
 
 ---
 
