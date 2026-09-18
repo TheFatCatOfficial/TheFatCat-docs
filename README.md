@@ -19,7 +19,7 @@ TheFatCat restructures traditional meme token tax reflections into an unprivileg
 - **$O(1)$ Seniority Ledger**: Evaluates seniority weights across cohorts in constant gas using a 22-slot circular graduation ring buffer.
 - **Sovereign Multi-Asset Diets**: Stakers independently select their reward asset (WBNB, tokenized equities/bStocks, or post-graduation FATCAT) with decoupled accounting and execution.
 - **Seniority Certificates (ERC-721)**: Full position redemptions can permanently imprint achieved seniority notches (1–22) into on-chain SVG certificates by burning 100,000 FATCAT to `0x...dEaD`.
-- **Dual Safe Architecture**: Strict separation of powers between the 2-of-3 Governor Safe (protocol management) and 2-of-3 Ops Safe (revenue receipt with zero protocol privileges).
+- **Strict Non-Custodial Architecture**: Zero administrative withdrawal or balance sweep functions, timelocked router activation, and unconditionally unpausable staker principal redemptions.
 
 ---
 
@@ -30,7 +30,7 @@ The documentation is organized into five primary sections:
 1. **Overview & Philosophy**: Architectural background, the triple dilemma of pass-through reflections, and protocol topology.
 2. **User Guides**: Step-by-step guides for staking, position management, diet selection, seniority certificate minting, and emergency exits via BscScan.
 3. **Core Mechanics**: Deep dives into the Belly's hydrodynamic release formulas, the 22-slot graduation ring, batch procurement, and the 4% tax distribution model.
-4. **Security & Governance**: Dual multi-sig architecture, non-custodial custody invariants, integer floor solvency proofs ($\sum r_i \le R$), and on-chain monitoring.
+4. **Security & Governance**: Non-custodial custody invariants, emergency pause scope, integer floor solvency proofs ($\sum r_i \le R$), and on-chain monitoring.
 5. **Reference & FAQ**: Verified smart contracts schedule, frequently asked questions, whitepaper downloads, and legal disclaimers.
 
 ---

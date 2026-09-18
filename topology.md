@@ -22,7 +22,7 @@ The diagram below details the end-to-end lifecycle of trading taxes, from second
 1. **Secondary DEX Swaps**: Every eligible trade on the bonding curve or PancakeSwap V2 pool carries a **4% dynamic FATCAT trading tax**.
 2. **Flap Tax Processor**: The Flap factory system withholds a **10% platform fee** (~0.4% of swap value). The remaining 90% (~3.6% of swap value) is pushed to the custom forwarding vault upon eligible sells once the liquidation threshold is crossed.
 3. **Atomic Forwarding Vault**: The vault atomically splits the incoming funds:
-   - **5/36 (~0.5% of trade value)** $\rightarrow$ **Operations Safe**: A dedicated 2-of-3 Gnosis Safe for community art, hosting, keepers, security reviews, and gas. This safe has zero administrative privileges over user funds or contracts.
+   - **5/36 (~0.5% of trade value)** $\rightarrow$ **Protocol Operations**: Dedicated operational reserve for community art, hosting, keeper incentives, continuous security reviews, and infrastructure gas. This account possesses zero administrative privileges over user staking vaults or contracts.
    - **31/36 + integer floor remainder (~3.1% of trade value)** $\rightarrow$ **The Belly**: Deposited directly into the unprivileged reward reservoir.
 
 ---

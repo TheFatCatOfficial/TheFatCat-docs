@@ -53,6 +53,5 @@ Your principal does not depend on our website. Staking contracts are fully permi
 ### Can an administrator freeze my principal?
 **No.** In [`StakingVault.sol`]({% link contracts.md %}), the `redeem()` function intentionally ignores the contract's `paused` variable. Even during emergency governance pauses, the path that returns your principal can never be obstructed.
 
-### What is the difference between Governor Safe and Ops Safe?
-- **Governor Safe (2-of-3)**: Holds protocol governance powers (emergency pause/unpause and timelocked spender activation). It cannot withdraw funds.
-- **Ops Safe (2-of-3)**: Purely receives the 5/36 operational revenue stream for hosting and audits. It possesses zero administrative authority over user funds or smart contracts.
+### Can an administrator or developer rug pull or drain user funds?
+**No.** StakingVault and The Belly have zero sweep, withdrawal, or migration functions. Once deployed, no account—administrative or otherwise—has code paths to withdraw stakers' principal or unallocated reward capital. Outflows are strictly bound by the interval clock and mathematical release formulas.

@@ -79,4 +79,4 @@ Even if the authorized `ExecutionRouter` were compromised by an unexpected vulne
 - **Seven Discrete Windows**:
   - After 6 maximum draws: $(1 - 16/168)^6 \approx 54.8537\%$ remains.
   - After 7 maximum draws: $(1 - 16/168)^7 \approx 49.6295\%$ remains.
-- **Critical Reaction Time**: Drawing down 50% of the reservoir requires at least **7 full window intervals**, guaranteeing a minimum security reaction window of **48 to 56 hours** for the independent 2-of-3 Governor Safe or Guardian to trigger an emergency pause.
+- **Critical Reaction Time**: Drawing down 50% of the reservoir requires at least **7 full window intervals**, guaranteeing a minimum security reaction window of **48 to 56 hours** for protocol governance or the designated Guardian to trigger an emergency pause if anomalous conditions arise.

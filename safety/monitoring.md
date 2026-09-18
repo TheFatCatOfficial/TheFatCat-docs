@@ -31,9 +31,9 @@ If any deviation or unauthorized route mutation is detected, automated alerts no
 
 The protocol incorporates robust incident response mechanisms:
 
-- **Dual Emergency Pause**: Both the `Governor Safe` and the dedicated `Guardian` address hold the power to immediately pause The Belly's outflow.
+- **Emergency Pause Controls**: Both protocol governance and the dedicated `Guardian` address hold the power to immediately pause The Belly's outflow.
 - **Scope of Pause**: Pausing halts releases and market swaps, preventing fund drainage. It **deliberately does not** pause principal redemption in `StakingVault.sol`.
-- **Rehearsed Unpause Drills**: Unpausing requires a 2-of-3 threshold signature from the `Governor Safe`. The repository maintains complete offline pause/unpause drill scripts (`run-pause-drill.zsh`) and web verification interfaces to ensure rapid recovery during live incidents.
+- **Rehearsed Unpause Drills**: Unpausing requires multi-signature governance authorization. The repository maintains complete offline pause/unpause drill scripts (`run-pause-drill.zsh`) and verification interfaces to ensure rapid recovery during live incidents.
 
 ---
 

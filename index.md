@@ -45,13 +45,12 @@ Deep technical dives into the protocol's mathematical engines:
 - [The Belly Hydrodynamics]({% link protocol/belly.md %}): Discrete release formulas, half-life decay, and 7-window rate limits.
 - [Meals & Seniority Ladder]({% link protocol/meals-and-seniority.md %}): 22-slot circular graduation ring, $O(1)$ closed-form weight aggregation, and settled premium curves.
 - [Batch Procurement & Execution]({% link protocol/execution.md %}): Decoupled accounting, TWAP slippage guards, and permissionless quote fallback.
-- [Tax Routing & Model]({% link protocol/fees.md %}): The 4% dynamic trading tax, Flap platform fee, 5/36 Ops Safe split, and 100-year tax span.
+- [Tax Routing & Model]({% link protocol/fees.md %}): The 4% dynamic trading tax, Flap platform fee, operations split, and 100-year tax span.
 
 ### [4. Security & Governance]({% link safety.md %})
 Trust assumptions, role separation, and invariant verifications:
-- [Dual Safe Architecture]({% link safety/dual-safe.md %}): Independent 2-of-3 Governor Safe vs. 2-of-3 Ops Safe separation.
 - [Custody & Solvency Proofs]({% link safety/custody.md %}): Integer floor truncation bounds, non-negative dust theorem ($\sum r_i \le R$), and zero admin sweeps.
-- [Operational Monitoring]({% link safety/monitoring.md %}): Upstream processor polling via `watch-processor.sh` and pause drills.
+- [Operational Monitoring]({% link safety/monitoring.md %}): Upstream processor polling via `watch-processor.sh` and emergency response.
 - [Risks & Launch Status]({% link safety/risks-and-status.md %}): Unfinished scopes, dependencies, and material disclosures.
 
 ### [5. Reference & FAQ]({% link contracts.md %})

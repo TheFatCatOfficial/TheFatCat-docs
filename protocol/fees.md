@@ -19,7 +19,7 @@ The table below outlines the exact mathematical allocation of each nominal trade
 | Fee Component | Nominal Rate | Exact Mathematical Split | Recipient | Architectural Purpose |
 |:---|:---|:---|:---|:---|
 | **The Belly Allocation** | **~3.1%** | $31/36$ of Vault Receipt | `Belly.sol` | Staker reward capital, subject to exponential damping release |
-| **Operations Share** | **~0.5%** | $5/36$ of Vault Receipt | `Ops Safe` (2-of-3) | Hosting, art, keeper bounties, security audits, and infrastructure |
+| **Operations Share** | **~0.5%** | $5/36$ of Vault Receipt | Operations Treasury | Hosting, art, keeper bounties, security audits, and infrastructure |
 | **Flap Platform Fee** | **~0.4%** | $10\%$ of 4% Tax | Flap Factory | Launchpad platform fee (withheld at source) |
 | **Total Token Tax** | **4.0%** | **100% of Tax** | — | **Total tax deducted during trade** |
 
@@ -33,7 +33,7 @@ The table below outlines the exact mathematical allocation of each nominal trade
 On BNB Chain, the Flap tax processor operates asynchronously:
 1. **Tax Withholding**: During swaps, the processor withholds the 4% tax in raw FATCAT tokens.
 2. **Batch Liquidation**: When accrued tokens cross the liquidation threshold (currently ~400,000 FATCAT) and an eligible sell swap occurs, the processor liquidates the tokens into canonical WBNB.
-3. **Atomic Forwarding**: The resulting WBNB is pushed to TheFatCat's custom Forwarding Vault, which atomically dispatches $5/36$ to the Ops Safe and $31/36$ to The Belly.
+3. **Atomic Forwarding**: The resulting WBNB is pushed to TheFatCat's custom Forwarding Vault, which atomically dispatches $5/36$ to protocol operations and $31/36$ to The Belly.
 
 {: .tip }
 During early protocol hours, The Belly may display zero new inflows until the first liquidation threshold is reached upstream. This is expected behavior and not a contract fault.
