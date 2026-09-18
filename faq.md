@@ -24,6 +24,9 @@ You may call `redeem()` at any block to withdraw 100% of your principal. There i
 ### If I change my Diet, does my seniority notch reset?
 **No.** Your seniority notch is tied to your position's tenure in the pool, not your choice of asset. Changing your diet takes effect at the next meal boundary and preserves 100% of your accumulated seniority notch.
 
+### Can I add principal to an existing position or merge positions?
+**No.** Every stake creates an isolated position with its own independent seniority clock. Allowing capital to be appended to an existing mature position would enable **Seniority Laundering**—a whale could open a tiny position, wait 7 days to reach Notch 22, and then dump massive capital into it to instantly receive $22\times$ privilege without waiting through the ramp period. To stake additional tokens, simply open a new position.
+
 ---
 
 ## Seniority Certificates (NFTs)

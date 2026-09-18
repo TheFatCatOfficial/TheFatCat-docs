@@ -35,7 +35,7 @@ Understand the structural flaws of traditional reflection tokens and why TheFatC
 
 ### [2. User Guides]({% link guides.md %})
 Step-by-step operational guides for stakers and participants:
-- [Staking & Positions]({% link guides/staking.md %}): Opening positions, principal thresholds, and adding funds.
+- [Staking & Positions]({% link guides/staking.md %}): Opening positions, principal thresholds, and isolated position rules.
 - [Diets & Claiming Rewards]({% link guides/diets-and-claiming.md %}): Selecting reward assets, multi-batch claiming, and native BNB auto-unwrapping.
 - [Seniority Certificates]({% link guides/seniority-certificates.md %}): Exit burning, on-chain SVG traits, and notch inheritance.
 - [Emergency Exit (Without Front-End)]({% link guides/emergency-exit.md %}): How to safely redeem principal directly on BscScan if the front-end is down.
