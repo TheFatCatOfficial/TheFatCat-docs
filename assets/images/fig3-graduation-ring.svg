@@ -31,20 +31,20 @@
     <circle cx="0" cy="0" r="165" fill="none" stroke="url(#ringGrad)" stroke-width="3.5" stroke-dasharray="8 6" opacity="0.75" />
 
     <!-- Center Hub: Settled Cohort Pool (Level 22) -->
-    <circle cx="0" cy="0" r="76" fill="#0f172a" stroke="#f59e0b" stroke-width="2.5" />
-    <text x="0" y="-22" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="11.5" font-weight="800" text-anchor="middle">SETTLED COHORTS</text>
-    <text x="0" y="-5" fill="#f8fafc" font-family="ui-monospace, monospace" font-size="14" font-weight="700" text-anchor="middle">c_i = 22</text>
-    <text x="0" y="14" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="10.5" text-anchor="middle">P_{settled} Scalar</text>
-    <text x="0" y="29" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="9.5" text-anchor="middle">Permanent Maturity</text>
-    <text x="0" y="43" fill="#10b981" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">Weight: 22 × P_{settled}</text>
+    <circle cx="0" cy="0" r="82" fill="#0f172a" stroke="#f59e0b" stroke-width="2.5" />
+    <text x="0" y="-32" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="11.5" font-weight="800" text-anchor="middle">SETTLED COHORTS</text>
+    <text x="0" y="-14" fill="#f8fafc" font-family="ui-monospace, monospace" font-size="14" font-weight="700" text-anchor="middle">c_i = 22</text>
+    <text x="0" y="5" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="10.5" text-anchor="middle">P_{settled} Scalar</text>
+    <text x="0" y="21" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="9.5" text-anchor="middle">Permanent Maturity</text>
+    <text x="0" y="37" fill="#10b981" font-family="ui-monospace, monospace" font-size="9.5" font-weight="600" text-anchor="middle">Weight: 22 × P_{settled}</text>
 
     <!-- Slot 0: Active Graduation Target -->
     <g transform="translate(0, -165)">
       <circle cx="0" cy="0" r="20" fill="#f59e0b" stroke="#fff" stroke-width="2" />
       <text x="0" y="4" fill="#0f172a" font-family="ui-monospace, monospace" font-size="11" font-weight="800" text-anchor="middle">0</text>
-      <text x="0" y="-26" fill="#f59e0b" font-family="-apple-system, sans-serif" font-size="9.5" font-weight="700" text-anchor="middle">CURRENT SLOT</text>
+      <text x="0" y="-25" fill="#f59e0b" font-family="-apple-system, sans-serif" font-size="9" font-weight="700" text-anchor="middle">CURRENT SLOT</text>
       <!-- Graduation Migration Arrow to Center -->
-      <path d="M 0 22 L 0 78" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4" marker-end="url(#ring-arrow)" />
+      <path d="M 0 24 L 0 74" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4" marker-end="url(#ring-arrow)" />
     </g>
 
     <!-- 21 slots around ring (R=165) -->
