@@ -1,5 +1,7 @@
 # TheFatCat Protocol Documentation
 
+[English](README.md) | [简体中文](README.zh.md)
+
 Official developer and protocol documentation repository for [TheFatCat](https://thefatcat.fun) — a decentralized trading-tax routing protocol engineered with autonomous hydrodynamic damping and $O(1)$ closed-form seniority weighting on BNB Chain.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
