@@ -25,7 +25,7 @@
   <text x="50" y="66" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="12">O(1) Constant Gas Cohort Aggregation, Ring Buffer Rotation, and Graduation Migration</text>
 
   <!-- Left Side: Circular Ring Graphic -->
-  <g transform="translate(285, 275)">
+  <g transform="translate(310, 285)">
     <!-- Outer Ring Base -->
     <circle cx="0" cy="0" r="165" fill="none" stroke="#1e293b" stroke-width="7" />
     <circle cx="0" cy="0" r="165" fill="none" stroke="url(#ringGrad)" stroke-width="3.5" stroke-dasharray="8 6" opacity="0.75" />
@@ -132,33 +132,33 @@
     <circle cx="-46.5" cy="-158.3" r="13" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" />
     <text x="-46.5" y="-154.3" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="8.5" text-anchor="middle">21</text>
 
-    <!-- Rotation Indicator -->
-    <path d="M 110 -175 A 210 210 0 0 1 180 -100" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4" marker-end="url(#ring-arrow)" />
-    <text x="165" y="-165" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="9.5">Roll: slot = m % 22</text>
+    <!-- Rotation Indicator (Clockwise progression into Current Slot) -->
+    <path d="M -160 -95 A 190 190 0 0 1 -95 -160" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4" marker-end="url(#ring-arrow)" />
+    <text x="-135" y="-172" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="9.5" text-anchor="middle">Roll: slot = m % 22</text>
   </g>
 
   <!-- Right Side: Mathematical Closed-Form & Operational Analysis -->
-  <g transform="translate(540, 85)">
+  <g transform="translate(570, 85)">
     <!-- Card 1: Closed Form Equation -->
-    <rect width="410" height="165" rx="8" fill="url(#cardGrad3)" stroke="#f59e0b" stroke-width="1.5" />
-    <text x="20" y="28" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="13.5" font-weight="700">O(1) CLOSED-FORM DECOMPOSITION</text>
+    <rect width="380" height="165" rx="8" fill="url(#cardGrad3)" stroke="#f59e0b" stroke-width="1.5" />
+    <text x="20" y="28" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="13" font-weight="700">O(1) CLOSED-FORM DECOMPOSITION</text>
     <text x="20" y="46" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="11">SeniorityLedger.sol Scalar Aggregation Equation</text>
 
-    <rect x="18" y="58" width="374" height="48" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
-    <text x="205" y="79" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">W(m) = (1 + m)·P_{climb} - J_{climb}</text>
-    <text x="205" y="95" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">+ 22·P_{settled} + W_{exiting}</text>
+    <rect x="18" y="58" width="344" height="48" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <text x="172" y="79" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">W(m) = (1 + m)·P_{climb} - J_{climb}</text>
+    <text x="172" y="95" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">+ 22·P_{settled} + W_{exiting}</text>
 
     <text x="20" y="126" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="10">P_{climb} = Σ p_i (Climbing principal sum, c_i &lt; 22)</text>
     <text x="20" y="142" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="10">J_{climb} = Σ (p_i · j_i) (Weighted activation index scalar)</text>
   </g>
 
-  <g transform="translate(540, 265)">
+  <g transform="translate(570, 265)">
     <!-- Card 2: Constant-Time Transition Proof -->
-    <rect width="410" height="210" rx="8" fill="url(#cardGrad3)" stroke="#38bdf8" stroke-width="1.5" />
-    <text x="20" y="26" fill="#38bdf8" font-family="-apple-system, sans-serif" font-size="13.5" font-weight="700">CONSTANT-TIME TRANSITION PROOF</text>
+    <rect width="380" height="210" rx="8" fill="url(#cardGrad3)" stroke="#38bdf8" stroke-width="1.5" />
+    <text x="20" y="26" fill="#38bdf8" font-family="-apple-system, sans-serif" font-size="13" font-weight="700">CONSTANT-TIME TRANSITION PROOF</text>
     <text x="20" y="42" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="11">Why EVM Gas is Strictly Decoupled from Staker Count N</text>
 
-    <g transform="translate(20, 52)">
+    <g transform="translate(18, 52)">
       <text x="0" y="14" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="11" font-weight="700">1. Modular Bucket Assignment:</text>
       <text x="15" y="30" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="10">Each position stakes into slot = activeFrom mod 22.</text>
 
