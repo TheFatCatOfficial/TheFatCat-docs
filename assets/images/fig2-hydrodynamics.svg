@@ -23,7 +23,7 @@
 
   <!-- Title -->
   <text x="50" y="48" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="20" font-weight="700" letter-spacing="0.5">FIGURE 2: THE BELLY HYDRODYNAMICS &amp; RATE-LIMITING</text>
-  <text x="50" y="70" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="12">一阶指数阻尼衰减轨迹、稳态平衡水位与 7 窗口离散限速防御模型</text>
+  <text x="50" y="70" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="12">First-Order Exponential Damping Trajectory, Steady-State Watermark, and 7-Window Throttling</text>
 
   <!-- Left: Decay Plot Area -->
   <g transform="translate(60, 100)">
@@ -146,7 +146,7 @@
   <g transform="translate(60, 460)">
     <rect width="890" height="150" rx="8" fill="url(#cardGrad2)" stroke="#1e293b" stroke-width="1.5" />
     
-    <text x="30" y="32" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="14" font-weight="700">STEADY-STATE WATERMARK THEOREM (稳态平衡水位定理)</text>
+    <text x="30" y="32" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="14" font-weight="700">STEADY-STATE EQUILIBRIUM WATERMARK THEOREM</text>
     <text x="30" y="52" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="12">Under constant fee inflow I per 8-hour interval, The Belly achieves dynamic hydrodynamic equilibrium:</text>
 
     <!-- Math Display Box -->

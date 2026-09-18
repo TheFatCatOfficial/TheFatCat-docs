@@ -37,7 +37,7 @@ The documentation is organized into five primary sections:
 
 ## Local Development
 
-The documentation is built with [Jekyll](https://jekyllrb.com/) and styled using the [Just the Docs](https://just-the-docs.github.io/just-the-docs/) theme.
+Follow these instructions to run and preview the documentation site locally:
 
 ### Prerequisites
 - Ruby 3.1+

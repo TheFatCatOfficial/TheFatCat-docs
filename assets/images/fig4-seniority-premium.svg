@@ -19,7 +19,7 @@
 
   <!-- Title -->
   <text x="50" y="48" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="20" font-weight="700" letter-spacing="0.5">FIGURE 4: SENIORITY MULTIPLIER &amp; RELATIVE ADVANTAGE</text>
-  <text x="50" y="70" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="12">分段线性资历爬坡阶梯、全池稳态溢价关系与本金线性约束</text>
+  <text x="50" y="70" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="12">Piecewise Linear Seniority Ramp, Equilibrium Advantage Multiplier, and Capital Bounds</text>
 
   <!-- Left Side: Seniority Step Ladder Plot -->
   <g transform="translate(60, 100)">

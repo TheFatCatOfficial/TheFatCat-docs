@@ -37,7 +37,7 @@ TheFatCat 将传统的 Meme 币交易税直通管道重构为无特权的物理�
 
 ## 本地开发与预览 (Local Development)
 
-文档基于 [Jekyll](https://jekyllrb.com/) 构建，采用 [Just the Docs](https://just-the-docs.github.io/just-the-docs/) 现代文档主题。
+按照以下步骤在本地运行与预览官方文档站：
 
 ### 环境依赖
 - Ruby 3.1+
