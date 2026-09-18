@@ -26,28 +26,14 @@ The 100,000 FATCAT entry threshold is an immutable parameter passed to the contr
 
 ## 2. How to Open a Position
 
-### Method A: Via the Web Application
-1. Connect your Web3 wallet (MetaMask, Binance Web3 Wallet, OKX Wallet, Bitget Wallet, Trust Wallet, or WalletConnect) at [thefatcat.fun](https://thefatcat.fun).
-2. Enter the amount of FATCAT you wish to stake ($\ge 100,000$).
+1. Connect your Web3 wallet (MetaMask, Binance Web3 Wallet, OKX Wallet, Trust Wallet, or WalletConnect) at [thefatcat.fun](https://thefatcat.fun).
+2. Enter the amount of FATCAT you wish to stake ($\ge 100{,}000$).
 3. Select your desired initial **Diet** (Default is BNB).
 4. *(Optional)* If you hold an unencumbered [Seniority Certificate]({% link guides/seniority-certificates.md %}), you may link it to start with an elevated notch.
-5. Click **Approve** and confirm the token allowance.
+5. Click **Approve** and confirm the token allowance in your wallet.
 6. Click **Stake** and confirm the transaction.
 
-### Method B: Directly on the Blockchain
-You can call [`StakingVault.sol`]({% link contracts.md %}) directly:
-
-```solidity
-function stake(
-    uint256 amount,
-    address dietAsset,
-    uint256 certificateTokenId
-) external returns (uint256 positionId);
-```
-
-- `amount`: Token amount in wei (must be $\ge 100{,}000 \times 10^{18}$).
-- `dietAsset`: Target reward asset address (canonical WBNB contract address for BNB rewards).
-- `certificateTokenId`: `0` for standard entry (starting at Notch 1), or your Seniority Certificate token ID.
+*(Note: Advanced users wishing to call the contract directly on BscScan without using the front-end can follow the direct interface in the [Emergency Exit Guide]({% link guides/emergency-exit.md %})).*
 
 ---
 

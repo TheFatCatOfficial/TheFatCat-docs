@@ -40,7 +40,7 @@ If the official front-end is down, you can execute your redemption directly on *
 ### Step 2: Open the Staking Vault Contract
 1. Navigate to the verified [`StakingVault` contract page on BscScan]({% link contracts.md %}).
 2. Click on the **Contract** tab, then select **Write Contract**.
-3. Click **Connect to Web3** and connect the wallet holding your position (e.g. MetaMask, Binance Web3 Wallet, OKX Wallet, Bitget Wallet, or WalletConnect).
+3. Click **Connect to Web3** and connect the wallet holding your position (e.g. MetaMask, Binance Web3 Wallet, OKX Wallet, Trust Wallet, or WalletConnect).
 
 ### Step 3: Execute `redeem`
 1. Locate function `redeem`:
@@ -73,3 +73,24 @@ To claim your accrued reward tokens without the website:
    - Enter your `positionId`.
    - Set `maxBatches` to `0` (or `20` if claiming in chunks).
 4. Click **Write** and confirm.
+
+---
+
+## 5. Direct On-Chain Staking (Advanced)
+
+If the web application is offline or if you are automating deposits programmatically, positions can also be opened directly via the verified [`StakingVault`]({% link contracts.md %}) contract on BscScan:
+
+1. Under the FATCAT token contract on BscScan, call `approve(stakingVaultAddress, amount)`.
+2. Navigate to `StakingVault` -> **Write Contract** -> locate `stake`:
+
+```solidity
+function stake(
+    uint256 amount,
+    address dietAsset,
+    uint256 certificateTokenId
+) external returns (uint256 positionId);
+```
+
+- `amount`: Token amount in wei (must be $\ge 100{,}000 \times 10^{18}$ FATCAT).
+- `dietAsset`: Target reward asset address (canonical WBNB contract address for default BNB rewards).
+- `certificateTokenId`: `0` for standard entry (starting at Notch 1), or your Seniority Certificate token ID if linking an existing credential.
