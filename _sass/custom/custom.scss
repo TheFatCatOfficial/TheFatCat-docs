@@ -1,15 +1,24 @@
 // TheFatCat Documentation Modern Institutional Layout & Styling
 
-// 1. Sidebar: Permanently pinned on left, constant readable width, sticky scrollable
-@media (min-width: 50rem) {
+// 1. Sidebar: Fixed pinned left navigation across desktop & tablet, smooth scaling
+.side-bar {
+  background-color: #070a09 !important;
+}
+
+.site-nav, .site-header {
+  background-color: #070a09 !important;
+  width: 100% !important;
+}
+
+@media (min-width: 48rem) {
   .side-bar {
     position: fixed !important;
     top: 0 !important;
     bottom: 0 !important;
     left: 0 !important;
-    width: 280px !important;
-    min-width: 280px !important;
-    max-width: 280px !important;
+    width: 270px !important;
+    min-width: 270px !important;
+    max-width: 270px !important;
     height: 100vh !important;
     overflow-y: auto !important;
     align-items: stretch !important;
@@ -19,17 +28,25 @@
   }
 
   .side-bar + .main, .main {
-    margin-left: 280px !important;
-    width: calc(100% - 280px) !important;
+    margin-left: 270px !important;
+    width: calc(100% - 270px) !important;
     min-width: 0 !important;
     background-color: #0a0e0d !important;
     min-height: 100vh !important;
   }
 }
 
-// Ensure the sidebar navigation contents fill the sidebar cleanly
-.site-nav, .site-header {
-  width: 100% !important;
+@media (min-width: 64rem) {
+  .side-bar {
+    width: 290px !important;
+    min-width: 290px !important;
+    max-width: 290px !important;
+  }
+
+  .side-bar + .main, .main {
+    margin-left: 290px !important;
+    width: calc(100% - 290px) !important;
+  }
 }
 
 // 2. Header: Clean top bar matching dark aesthetic
@@ -129,8 +146,8 @@ a {
   }
 }
 
-// 6. Inline and Block Code
-code {
+// 6. Inline and Block Code (Unified Container Architecture - Zero Clipping)
+:not(pre) > code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
   color: #34d399 !important;
   background-color: #141c19 !important;
@@ -140,16 +157,83 @@ code {
   border: 1px solid #1e2a25 !important;
 }
 
-pre {
-  background-color: #0e1412 !important;
-  border: 1px solid #1c2722 !important;
+div.highlighter-rouge {
+  margin: 1.5rem 0 !important;
+  background-color: #0c1210 !important;
+  border: 1px solid #1e2a25 !important;
   border-radius: 8px !important;
-  padding: 1rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+
+  div.highlight {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 1rem 1.25rem !important;
+    margin: 0 !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  pre, pre.highlight {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    display: inline-block !important;
+    min-width: 100% !important;
+
+    code {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+      font-size: 0.85rem !important;
+      line-height: 1.6 !important;
+      color: #e2e8f0 !important;
+    }
+  }
+
+  > button {
+    background-color: #141c19 !important;
+    border: 1px solid #24332d !important;
+    color: #94a3b8 !important;
+    border-radius: 6px !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.75rem !important;
+    cursor: pointer !important;
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    z-index: 5 !important;
+    transition: all 0.15s ease !important;
+
+    &:hover {
+      background-color: #1c2824 !important;
+      color: #38bdf8 !important;
+      border-color: #38bdf8 !important;
+    }
+  }
+}
+
+pre:not(.highlight) {
+  background-color: #0c1210 !important;
+  border: 1px solid #1e2a25 !important;
+  border-radius: 8px !important;
+  padding: 1rem 1.25rem !important;
+  margin: 1.5rem 0 !important;
+  overflow-x: auto !important;
 
   code {
-    background-color: transparent !important;
+    background: transparent !important;
     border: none !important;
     padding: 0 !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    font-size: 0.85rem !important;
+    line-height: 1.6 !important;
+    color: #e2e8f0 !important;
   }
 }
 

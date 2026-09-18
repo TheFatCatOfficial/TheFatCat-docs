@@ -33,11 +33,11 @@ The diagram below details the end-to-end lifecycle of trading taxes, from second
 The protocol advances through deterministic discrete intervals called **Meals** via the [`IntervalController`]({% link contracts.md %}):
 
 ```
-Interval m-1                         Interval m                         Interval m+1
-[==== Active Meal ====] ───────► [==== Active Meal ====] ───────► [==== Active Meal ====]
-                        ▲                                ▲
-                  advanceInterval()                advanceInterval()
-                  (Cadence: ≥ 8h)                  (Cadence: ≥ 8h)
+Interval m-1              Interval m              Interval m+1
+[  Active Meal  ] ───► [  Active Meal  ] ───► [  Active Meal  ]
+                      ▲                      ▲
+                advanceInterval()      advanceInterval()
+                (Cadence: ≥ 8h)        (Cadence: ≥ 8h)
 ```
 
 - **Cadence**: An interval may be closed once at least **8 hours** have elapsed. Anyone (keepers or stakers) may invoke `advanceInterval()`.

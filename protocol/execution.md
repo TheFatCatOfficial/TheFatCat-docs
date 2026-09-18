@@ -18,10 +18,12 @@ In traditional DEX dividend protocols, buying reward tokens occurs synchronously
 TheFatCat solves this via a **two-phase decoupled architecture**:
 
 ```
-Phase 1: Interval Roll (Accounting)               Phase 2: Batch Execution (Market Swaps)
-[ Meal Closes: W_open & Entitlement Locked ] ───► [ Router Swaps Quote for Target Asset ]
-                                                  [ Twap & protocolMinOut Verified ]
-                                                  [ Distributor Updates liability[asset] ]
+Phase 1: Interval Roll (Accounting)     Phase 2: Batch Execution (Swaps)
+┌─────────────────────────────────┐     ┌─────────────────────────────────┐
+│ Meal Closes: W_open Locked      │ ──► │ Router Swaps Quote for Target   │
+│ Entitlements Permanently Sealed │     │ TWAP & protocolMinOut Guarded   │
+└─────────────────────────────────┘     │ Distributor Updates liability   │
+                                        └─────────────────────────────────┘
 ```
 
 1. **Phase 1: Deterministic Entitlement Locking**: When a meal closes, quote budgets are allocated to each diet asset pot. Staker entitlement shares are mathematically locked. Market conditions cannot rewrite who was eligible.

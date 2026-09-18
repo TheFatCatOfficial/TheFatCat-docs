@@ -56,9 +56,9 @@ function stake(
 Staking does not grant retroactive rewards for the meal currently in progress:
 
 ```
-Block Timestamp: T_now ────────► Meal Closes (advanceInterval) ────────► Next Meal Closes
-[ User Calls stake() ]           [ Position Becomes Active (j_i) ]       [ First Rewards Earned ]
-(During Interval m)              (Notch = 1, Weight = p_i × 1)           (Notch climbs to 2)
+T_now ─────────────────────► Meal Closes (advanceInterval) ──► Next Meal Closes
+[ User Calls stake() ]       [ Position Active (j_i = m+1) ]    [ First Rewards Earned ]
+(Interval m: Weight = 0)     (Notch = 1, Weight = p_i × 1)      (Notch climbs to 2)
 ```
 
 1. **Pending Interval ($m$)**: When you stake during interval $m$, your deposit is recorded in the vault immediately, but your effective weight in the currently active meal is 0.
