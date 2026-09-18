@@ -1,4 +1,5 @@
 ---
+layout: default
 title: System Topology
 nav_order: 3
 ---

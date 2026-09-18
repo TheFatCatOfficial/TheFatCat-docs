@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Emergency Exit (Without Front-End)
 parent: User Guides
 nav_order: 4

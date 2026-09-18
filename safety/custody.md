@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Custody & Solvency Proofs
 parent: Security & Governance
 nav_order: 2

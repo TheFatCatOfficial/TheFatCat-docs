@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Meals & Seniority Ladder
 parent: Core Mechanics
 nav_order: 2

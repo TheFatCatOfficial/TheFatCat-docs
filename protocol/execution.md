@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Batch Procurement & Execution
 parent: Core Mechanics
 nav_order: 3

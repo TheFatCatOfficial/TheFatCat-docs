@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Background & Philosophy
 nav_order: 2
 ---

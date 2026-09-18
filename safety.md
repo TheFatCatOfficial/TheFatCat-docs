@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Security & Governance
 nav_order: 6
 has_children: true

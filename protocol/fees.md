@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Tax Routing & Model
 parent: Core Mechanics
 nav_order: 4

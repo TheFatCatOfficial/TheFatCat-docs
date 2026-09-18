@@ -42,3 +42,9 @@ gh_edit_source: /
 footer_content: >-
   TheFatCat is a memecoin protocol. Nothing in these documents is financial
   advice or a promise of profit.
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

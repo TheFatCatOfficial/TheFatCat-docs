@@ -1,4 +1,5 @@
 ---
+layout: default
 title: The Belly Hydrodynamics
 parent: Core Mechanics
 nav_order: 1

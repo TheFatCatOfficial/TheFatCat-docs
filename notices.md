@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Notices & Disclaimers
 nav_order: 10
 ---

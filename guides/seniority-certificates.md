@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Seniority Certificates
 parent: User Guides
 nav_order: 3

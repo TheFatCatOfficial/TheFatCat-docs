@@ -1,4 +1,5 @@
 ---
+layout: default
 title: FAQ & Limitations
 nav_order: 8
 ---

@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Diets & Claiming Rewards
 parent: User Guides
 nav_order: 2

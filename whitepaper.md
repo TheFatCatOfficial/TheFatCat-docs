@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Whitepaper & Specs
 nav_order: 9
 ---

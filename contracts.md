@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Verified Contracts
 nav_order: 7
 ---

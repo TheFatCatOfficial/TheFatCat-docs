@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Operational Monitoring
 parent: Security & Governance
 nav_order: 3

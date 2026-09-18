@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Staking & Positions
 parent: User Guides
 nav_order: 1
