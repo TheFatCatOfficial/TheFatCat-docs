@@ -56,13 +56,11 @@ T_now ─────────────────────► Meal Cl
 
 ---
 
-## 4. Multi-Position Independence (No Merging / No Incremental Deposits)
+## 4. Managing Multiple Positions
 
-In TheFatCat, **each stake is an isolated, independent position ID with its own lifecycle, seniority clock, and diet**:
+In TheFatCat, each stake creates an isolated position with its own lifecycle, seniority clock, and diet:
 
-{: .note }
-**Why Positions Cannot Be Merged or Added To**: The protocol deliberately omits an `addPrincipal` or position-merging function. Allowing an existing mature position (e.g., at Notch 22) to absorb fresh capital would create a fatal **Seniority Laundering** exploit—a whale could open a minimal 100,000 FATCAT position, wait 7 days to reach maximum seniority, and then dump 100,000,000 fresh tokens into that position to instantly receive $22\times$ weighting without enduring the ramp period.
-
-- **Staking More Tokens**: If you wish to deposit additional FATCAT, simply open a **new position**. A single wallet can hold and manage multiple independent positions concurrently.
-- **Independent Asset Diets**: Different positions under the same wallet can select different Diets (e.g., Position #1 earning BNB, Position #2 earning tokenized equities).
-- **Efficient Claims**: Although positions age independently, you can claim earned rewards across all your positions in a single transaction via `claimMany()`, avoiding redundant gas fees.
+- **Adding More Principal**: To stake additional FATCAT, simply open a new position from the staking interface. A single wallet can create and manage multiple independent positions simultaneously.
+- **Independent Asset Diets**: Different positions under the same wallet can select different reward assets (e.g., Position #1 earning BNB, Position #2 earning tokenized equities).
+- **One-Click Batch Claiming**: While each position matures on its own timeline, the dashboard allows you to claim rewards across all your active positions in a single transaction to minimize gas fees.
+- **Carrying Seniority with Certificates**: When you exit a mature position, you can mint a [Seniority Certificate]({% link guides/seniority-certificates.md %}) to transfer your achieved seniority level directly to a future stake.

@@ -22,40 +22,38 @@ When a staker leaves the pool, traditional protocols wipe their historical commi
 
 ---
 
-## 2. How to Mint Upon Exit (`redeemAndIssue`)
+## 2. How to Mint Upon Exit
 
-To mint a Seniority Certificate, you must exit your position via the specialized redemption method:
+When you are ready to unstake and close an active position, you have the option to capture your achieved seniority notch into a permanent on-chain NFT certificate:
 
-```solidity
-function redeemAndIssue(uint256 positionId) external returns (uint256 certificateTokenId);
-```
+1. Connect your wallet and navigate to the **Positions** dashboard on [thefatcat.fun](https://thefatcat.fun).
+2. Locate the active position you want to exit and click **Unstake / Redeem**.
+3. In the exit modal, toggle the **"Mint Seniority Certificate"** option.
+4. Confirm the transaction in your wallet.
 
-### Minting Prerequisites & Mechanics:
-1. **Full Principal Return**: 100% of your staked FATCAT principal is returned to your wallet.
-2. **Deflationary Burn of 100,000 FATCAT**: The contract burns **100,000 FATCAT** from the caller's wallet directly to the blackhole address:
-   
-   $$\text{Burn Destination} = \text{0x000000000000000000000000000000000000dEaD}$$
-   
-   *(Ensure you have approved the vault to spend this burn fee before calling).*
-3. **Notch Imprinting**: The minted certificate permanently records the exact notch ($c_i \in [1, 22]$) your position achieved at the time of redemption.
+### Minting Mechanics:
+- **Full Principal Return**: 100% of your staked FATCAT principal is returned directly to your wallet.
+- **Deflationary Burn of 100,000 FATCAT**: Exactly 100,000 FATCAT is permanently burned from your wallet directly to the blackhole dead address (`0x000000000000000000000000000000000000dEaD`).
+- **Notch Imprinted on ERC-721**: The newly minted certificate permanently embeds the exact seniority notch ($c_i \in [1, 22]$) your position achieved, along with dynamic on-chain SVG artwork.
 
 {: .note }
-Ordinary exits calling standard `redeem(positionId)` do not incur any burn fee, return 100% of principal, and do not mint a certificate.
+**Standard Unstaking**: If you perform a standard exit without choosing to mint a certificate, 100% of your principal is returned with zero burn fee, and no certificate is created.
 
 ---
 
 ## 3. Using a Certificate for Future Staking
 
-When opening a new position, you can supply your certificate's token ID:
+Holding a Seniority Certificate allows you or any recipient to skip the initial ramp period on a future stake:
 
-```solidity
-StakingVault.stake(amount, dietAsset, certificateTokenId);
-```
+1. Go to the **Stake** page on [thefatcat.fun](https://thefatcat.fun).
+2. Enter the amount of FATCAT you wish to stake ($\ge 100{,}000$).
+3. In the **Seniority Certificate** selector, choose the certificate held in your wallet.
+4. Approve token spending and click **Stake with Certificate**.
 
 ### What Happens:
-- **Vault Custody**: The certificate is transferred to the `StakingVault` for safekeeping while your position remains active.
-- **Immediate Notch Boost**: Instead of starting at Notch 1 ($1\times$), your new position activates directly at the certificate's imprinted notch (e.g. Notch 22 for a mature certificate, granting an instant $22\times$ weight multiplier).
-- **Return on Exit**: When you eventually redeem your position, the certificate is safely returned to your wallet.
+- **Immediate Notch Boost**: Instead of starting at Notch 1 ($1\times$), your new position activates immediately at the certificate's imprinted notch (e.g. starting at Notch 22 provides an instant $22\times$ weight multiplier from the very next meal).
+- **Vault Custody**: The certificate is safely held by the staking vault while your position remains active.
+- **Returned on Exit**: When you eventually redeem this position, the certificate is returned directly to your wallet.
 
 ---
 
@@ -64,8 +62,8 @@ StakingVault.stake(amount, dietAsset, certificateTokenId);
 To protect the economic integrity of the protocol and prevent infinite certificate reproduction:
 
 {: .warning }
-**The Anti-Chaining Invariant**: A position that was initiated using a Seniority Certificate **cannot** invoke `redeemAndIssue()` to mint another certificate upon exit. It must exit via standard `redeem()`.
+**The Anti-Chaining Invariant**: A position that was initiated using a Seniority Certificate **cannot** mint another certificate upon exit; it exits via standard redemption.
 
 This strict architectural constraint ensures:
-- Certificates cannot be endlessly recycled or chained to inflate supply.
+- Certificates cannot be endlessly recycled or chained to artificially inflate NFT supply.
 - Every single Seniority Certificate in existence represents an authentic, uninterrupted organic climb from Notch 1, backed by a permanent 100,000 FATCAT token burn.
