@@ -27,7 +27,7 @@ The 100,000 FATCAT entry threshold is an immutable parameter passed to the contr
 ## 2. How to Open a Position
 
 ### Method A: Via the Web Application
-1. Connect your Web3 wallet (MetaMask, Rabby, WalletConnect) at [thefatcat.fun](https://thefatcat.fun).
+1. Connect your Web3 wallet (MetaMask, Binance Web3 Wallet, OKX Wallet, Bitget Wallet, Trust Wallet, or WalletConnect) at [thefatcat.fun](https://thefatcat.fun).
 2. Enter the amount of FATCAT you wish to stake ($\ge 100,000$).
 3. Select your desired initial **Diet** (Default is WBNB).
 4. *(Optional)* If you hold an unencumbered [Seniority Certificate]({% link guides/seniority-certificates.md %}), you may link it to start with an elevated notch.

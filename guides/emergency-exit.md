@@ -40,7 +40,7 @@ If the official front-end is down, you can execute your redemption directly on *
 ### Step 2: Open the Staking Vault Contract
 1. Navigate to the verified [`StakingVault` contract page on BscScan]({% link contracts.md %}).
 2. Click on the **Contract** tab, then select **Write Contract**.
-3. Click **Connect to Web3** and connect the wallet holding your position.
+3. Click **Connect to Web3** and connect the wallet holding your position (e.g. MetaMask, Binance Web3 Wallet, OKX Wallet, Bitget Wallet, or WalletConnect).
 
 ### Step 3: Execute `redeem`
 1. Locate function `redeem`:
