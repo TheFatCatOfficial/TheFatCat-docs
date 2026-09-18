@@ -29,7 +29,7 @@ The 100,000 FATCAT entry threshold is an immutable parameter passed to the contr
 1. Connect your Web3 wallet (MetaMask, Binance Web3 Wallet, OKX Wallet, Trust Wallet, or WalletConnect) at [thefatcat.fun](https://thefatcat.fun).
 2. Enter the amount of FATCAT you wish to stake ($\ge 100{,}000$).
 3. Select your desired initial **Diet** (Default is BNB).
-4. *(Optional)* If you hold an unencumbered [Seniority Certificate]({% link guides/seniority-certificates.md %}), you may link it to start with an elevated notch.
+4. *(Future Roadmap)* In upcoming updates, linking a [Seniority Certificate]({% link guides/seniority-certificates.md %}) will allow starting with an elevated notch.
 5. Click **Approve** and confirm the token allowance in your wallet.
 6. Click **Stake** and confirm the transaction.
 
@@ -63,4 +63,4 @@ In TheFatCat, each stake creates an isolated position with its own lifecycle, se
 - **Adding More Principal**: To stake additional FATCAT, simply open a new position from the staking interface. A single wallet can create and manage multiple independent positions simultaneously.
 - **Independent Asset Diets**: Different positions under the same wallet can select different reward assets (e.g., Position #1 earning BNB, Position #2 earning tokenized equities).
 - **One-Click Batch Claiming**: While each position matures on its own timeline, the dashboard allows you to claim rewards across all your active positions in a single transaction to minimize gas fees.
-- **Carrying Seniority with Certificates**: When you exit a mature position, you can mint a [Seniority Certificate]({% link guides/seniority-certificates.md %}) to transfer your achieved seniority level directly to a future stake.
+- **Seniority Certificates (Roadmap)**: In a subsequent protocol phase, stakers will have the option to mint an on-chain [Seniority Certificate]({% link guides/seniority-certificates.md %}) upon exit to carry their achieved seniority to future positions.

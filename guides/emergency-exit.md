@@ -93,4 +93,4 @@ function stake(
 
 - `amount`: Token amount in wei (must be $\ge 100{,}000 \times 10^{18}$ FATCAT).
 - `dietAsset`: Target reward asset address (canonical WBNB contract address for default BNB rewards).
-- `certificateTokenId`: `0` for standard entry (starting at Notch 1), or your Seniority Certificate token ID if linking an existing credential.
+- `certificateTokenId`: Set to `0` for standard entry at Notch 1 (certificate linking is reserved for future protocol phases).

@@ -27,8 +27,8 @@ Official smart contract registry for TheFatCat protocol on BNB Chain. Addresses 
 | **RewardAssetRegistry** | `RewardAssetRegistry.sol` | Authoritative MENU whitelist and 5% probation allocation controller | Deterministic CREATE2 | Scheduled Genesis |
 | **ExecutionRouter** | `ExecutionRouter.sol` | Timelocked single-activation router, TWAP-guarded batch market swaps | Deterministic CREATE2 | Scheduled Genesis |
 | **RewardDistributor** | `RewardDistributor.sol` | Dual-liability accounting, non-negative dust solvency custody | Deterministic CREATE2 | Scheduled Genesis |
-| **SeniorityCertificate** | `SeniorityCertificate.sol` | Exit credential; burn 100k FATCAT to mint, 100% on-chain SVG ERC-721 | Deterministic CREATE2 | Scheduled Genesis |
-| **CertificateRenderer** | `SeniorityCertificateRenderer.sol` | Pure on-chain SVG generator rendering dynamic visual attributes | Deterministic CREATE2 | Scheduled Genesis |
+| **SeniorityCertificate** | `SeniorityCertificate.sol` | Exit credential; burn 100k FATCAT to mint, 100% on-chain SVG ERC-721 | Deterministic CREATE2 | Post-Launch Phase |
+| **CertificateRenderer** | `SeniorityCertificateRenderer.sol` | Pure on-chain SVG generator rendering dynamic visual attributes | Deterministic CREATE2 | Post-Launch Phase |
 | **PancakeV2TwapOracle** | `PancakeV2TwapOracle.sol` | Endogenous TWAP reader evaluating time-weighted average prices | Deterministic CREATE2 | Scheduled Genesis |
 
 ---

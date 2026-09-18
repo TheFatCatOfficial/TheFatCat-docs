@@ -18,7 +18,7 @@ TheFatCat restructures traditional meme token tax reflections into an unprivileg
 - **The Belly**: First-order exponential damping reservoir with window-capped outflows and zero administrative withdrawal or sweep paths.
 - **$O(1)$ Seniority Ledger**: Evaluates seniority weights across cohorts in constant gas using a 22-slot circular graduation ring buffer.
 - **Sovereign Multi-Asset Diets**: Stakers independently select their reward asset (BNB, tokenized equities/bStocks, post-graduation FATCAT, or future governance-approved tokens) with decoupled accounting and execution.
-- **Seniority Certificates (ERC-721)**: Full position redemptions can permanently imprint achieved seniority notches (1–22) into on-chain SVG certificates by burning 100,000 FATCAT to `0x...dEaD`.
+- **Seniority Certificates (ERC-721 Roadmap)**: Upcoming credential feature allowing exiting stakers to permanently imprint achieved seniority notches (1–22) into on-chain SVG certificates by burning 100,000 FATCAT to `0x...dEaD`.
 - **Strict Non-Custodial Architecture**: Zero administrative withdrawal or balance sweep functions, timelocked router activation, and unconditionally unpausable staker principal redemptions.
 
 ---
@@ -28,7 +28,7 @@ TheFatCat restructures traditional meme token tax reflections into an unprivileg
 The documentation is organized into five primary sections:
 
 1. **Overview & Philosophy**: Architectural background, the triple dilemma of pass-through reflections, and protocol topology.
-2. **User Guides**: Step-by-step guides for staking, position management, diet selection, seniority certificate minting, and emergency exits via BscScan.
+2. **User Guides**: Step-by-step guides for staking, position management, diet selection, seniority certificate roadmap overview, and emergency exits via BscScan.
 3. **Core Mechanics**: Deep dives into the Belly's hydrodynamic release formulas, the 22-slot graduation ring, batch procurement, and the 4% tax distribution model.
 4. **Security & Governance**: Non-custodial custody invariants, emergency pause scope, integer floor solvency proofs ($\sum r_i \le R$), and on-chain monitoring.
 5. **Reference & FAQ**: Verified smart contracts schedule, frequently asked questions, whitepaper downloads, and legal disclaimers.
