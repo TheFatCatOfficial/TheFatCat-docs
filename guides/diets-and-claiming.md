@@ -15,12 +15,12 @@ How to choose your preferred reward assets (Diets), manage allocations across ma
 
 In TheFatCat, you are not forced into a single, uniform reward token. Instead, each position independently designates a **Diet Asset** from the protocol's approved [MENU]({% link protocol/execution.md %}):
 
-- **WBNB (Canonical Network Asset)**: The default and quote fallback asset. It carries zero counterparty or issuer risk.
+- **BNB (Canonical Network Asset)**: The default diet and protocol fallback asset (internally accounted via canonical WBNB). It requires zero market execution and carries zero counterparty or issuer risk. Stakers can receive native BNB directly with no manual unwrapping.
 - **bStocks (Tokenized Equities)**: Real-world asset backed tokens (e.g. tokenized Tesla, Apple, or S&P 500 ETFs) under a 5% observation cap.
 - **FATCAT (Protocol Native)**: Eligible for addition after AMM graduation, liquidity stabilization, and TWAP oracle warmup.
 
 {: .tip }
-Because each stake is an independent position ID, a single wallet can manage multiple positions with completely different diets (e.g. Position #1 earning WBNB, Position #2 earning tokenized equities).
+Because each stake is an independent position ID, a single wallet can manage multiple positions with completely different diets (e.g. Position #1 earning BNB, Position #2 earning tokenized equities).
 
 ---
 
@@ -58,7 +58,7 @@ function claim(
 - `maxBatches`: The maximum number of finalized batches to settle in this transaction. Passing `0` processes all available batches up to the protocol block limit.
 
 ### Claiming Native BNB (`claimNative`)
-When your diet is WBNB, you do not need to perform a separate manual unwrapping transaction. The protocol provides a built-in convenience function:
+When your diet is BNB (held as canonical WBNB in the vault), you do not need to perform a separate manual unwrapping transaction. The protocol provides a built-in convenience function:
 
 ```solidity
 function claimNative(

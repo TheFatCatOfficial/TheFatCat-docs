@@ -18,7 +18,7 @@ TheFatCat is currently in pre-launch status. Contract addresses, deployment hash
 TheFatCat restructures traditional pass-through meme token tax plumbing into an unprivileged, physics-inspired reservoir:
 
 1. **The Belly (Hydrodynamic Damping)**: Trading taxes accumulate in an unprivileged vault that acts as a first-order exponential damping reservoir. Instead of dumping fees instantly on stakers, funds are released smoothly at $\alpha = 8/168 \approx 4.7619\%$ per 8-hour meal cadence, converting transient market volatility into persistent inventory.
-2. **Sovereign Multi-Asset Diets**: Each staker chooses their preferred payout asset (WBNB, tokenized equities/bStocks, or post-graduation FATCAT). Allocation is decoupled from execution: rewards are algebraically locked at interval boundaries, eliminating sandwich attacks and front-running.
+2. **Sovereign Multi-Asset Diets**: Each staker chooses their preferred payout asset (BNB, tokenized equities/bStocks, or post-graduation FATCAT). Allocation is decoupled from execution: rewards are algebraically locked at interval boundaries, eliminating sandwich attacks and front-running.
 3. **Linear Capital with Seniority Weighting**: Staking weight scales strictly linearly with capital above the 100,000 FATCAT threshold ($p_i \times c_i$). Seniority notches climb additively ($+1$ per active 8-hour meal) up to a hard cap of 22 ($22\times$ weight), mathematically favoring time commitment over flash-capital predatory farming.
 4. **Seniority Certificates (ERC-721)**: Upon ordinary full redemption, stakers may burn 100,000 FATCAT to imprint their hard-earned seniority notch (1–22) into a 100% on-chain SVG credential, granting future positions an inherited starting notch (with an anti-chaining rule).
 
@@ -36,7 +36,7 @@ Understand the structural flaws of traditional reflection tokens and why TheFatC
 ### [2. User Guides]({% link guides.md %})
 Step-by-step operational guides for stakers and participants:
 - [Staking & Positions]({% link guides/staking.md %}): Opening positions, principal thresholds, and adding funds.
-- [Diets & Claiming Rewards]({% link guides/diets-and-claiming.md %}): Selecting reward assets, multi-batch claiming, and WBNB auto-unwrapping.
+- [Diets & Claiming Rewards]({% link guides/diets-and-claiming.md %}): Selecting reward assets, multi-batch claiming, and native BNB auto-unwrapping.
 - [Seniority Certificates]({% link guides/seniority-certificates.md %}): Exit burning, on-chain SVG traits, and notch inheritance.
 - [Emergency Exit (Without Front-End)]({% link guides/emergency-exit.md %}): How to safely redeem principal directly on BscScan if the front-end is down.
 
