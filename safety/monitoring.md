@@ -41,7 +41,7 @@ The protocol incorporates robust incident response mechanisms:
 
 TheFatCat welcomes independent security researchers and white-hat hackers:
 
-- **Security Contact**: `security@thefatcat.fun`
+- **Security Reporting**: Vulnerabilities should be submitted privately via [GitHub Security Advisories](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new).
 - **SLA Commitments**:
   - **24-Hour Acknowledgment**: Initial receipt confirmation within 24 hours.
   - **48-Hour Triage**: Preliminary vulnerability severity classification within 48 hours.

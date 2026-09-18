@@ -60,10 +60,9 @@ The documentation will be available locally at `http://localhost:4000/TheFatCat-
 
 ## Security & Responsible Disclosure
 
-We prioritize smart contract security and protocol integrity. If you discover a vulnerability or security issue, please contact our security team directly:
+We prioritize smart contract security and protocol integrity. If you discover a vulnerability or security issue, please submit it privately through our GitHub Security Advisories channel:
 
-- **Security Email**: `security@thefatcat.fun`
-- **PGP Encryption**: Vulnerability reports should be encrypted with the official protocol PGP key (published on the website security section).
+- **Security Reporting**: [Report a Vulnerability](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new)
 
 ---
 
