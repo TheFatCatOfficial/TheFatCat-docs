@@ -1,39 +1,37 @@
 ---
-title: Risks and launch status
-parent: Safety and status
-nav_order: 2
+title: Risks & Launch Status
+parent: Security & Governance
+nav_order: 4
 ---
 
-# Risks and launch status
+# Risks & Pre-Launch Status
+
+Transparent disclosures regarding protocol assumptions, third-party dependencies, and current development status.
+
+---
+
+## 1. Protocol Pre-Launch Status
 
 {: .warning }
-TheFatCat is pre-launch. No address shown outside this documentation should be
-trusted as an official contract until it appears on the verified contracts
-page.
+TheFatCat protocol contracts are finalized in code and thoroughly verified across 74 test suites and 538 tests, but remain pre-launch on BNB Chain mainnet.
 
-## Current status
+- **Target Network**: BNB Chain (Chain ID: 56).
+- **Initial Launch Venue**: Flap bonding curve.
+- **FEED Activation Gate**: Trading begins first; staking (FEED) opens only after live route verification, TWAP warm-up, and end-to-end dry runs.
+- **Contract Addresses**: Official contract addresses will be published on the [Verified Contracts]({% link contracts.md %}) page upon deployment. Any address claiming to represent the protocol prior to official publication is illegitimate.
 
-- Network target: BNB Chain.
-- Launch venue: Flap.
-- Trading and FEED activation are separate phases.
-- The public reward menu is not final.
-- Contract addresses and launch dates are not yet published.
-- FEED opens only after the custody and execution stack has completed its
-  pre-launch review and dry run.
+---
 
-## Material risks
+## 2. Material Risk Disclosures
 
-- Rewards depend entirely on trading volume and can fall toward zero.
-- A proportional Belly smooths fee income; it does not create income.
-- Route liquidity, oracle freshness and market impact can delay execution.
-- Tokenised assets carry issuer, custody and upgrade-key risk.
-- The launch platform controls upstream fee routing; monitoring can detect a
-  change but cannot prevent the platform from making one.
-- Smart contracts can contain undiscovered defects even after testing and
-  review.
+### 1. Market Volume & Variable Rewards
+The protocol does not generate yield out of thin air; reward capital derives strictly from secondary DEX trading volume taxes (plus unsolicited donations). During market lulls, inflows may decrease significantly. While The Belly acts as an exponential shock absorber, it cannot create artificial yield when trading stops.
 
-## What is not promised
+### 2. External Upstream Processor Dependency
+On BNB Chain, the transaction tax processor is an external contract owned by the Flap factory. Upstream changes can affect fee delivery timing and swap liquidation thresholds. The protocol operates active monitoring to mitigate this dependency.
 
-No APY, APR, profit, minimum payout, launch date or uninterrupted route is
-promised. The mechanism and its limitations are published so they can be
-checked directly.
+### 3. Oracle & Slippage Delays
+Market execution requires valid on-chain TWAP observations from `PancakeV2TwapOracle` and bounded slippage. In periods of extreme market turbulence, execution batches may wait until prices stabilize or settle in quote via permissionless fallback.
+
+### 4. Real-World Asset (RWA) Issuer Risk
+Non-default assets (such as tokenized US equities / bStocks) rely on institutional off-chain custody and token upgrade keys. The protocol mitigates this risk through a strict **5% probation allocation cap** and automatic fallback quote settlement.

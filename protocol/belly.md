@@ -1,42 +1,82 @@
 ---
-title: Fees and the Belly
-parent: Protocol
+title: The Belly Hydrodynamics
+parent: Core Mechanics
 nav_order: 1
 ---
 
-# Fees and the Belly
+# The Belly Hydrodynamics & Damping System
 
-## Fee split
+A detailed examination of The Belly's first-order exponential damping system, discrete interval release physics, and multi-window outflow security throttles.
 
-Every buy and sell carries a total 5% trading fee.
+---
 
-| Share | Destination | Purpose |
-|:--|:--|:--|
-| 4.0% | The Belly | Reward capital |
-| 0.7% | Operations | Art, hosting, keepers, review and gas |
-| 0.3% | Launch platform | Platform fee |
+## 1. The Damping Trajectory
 
-Wallet-to-wallet transfers are not trades and are not part of this fee path.
+Unlike pass-through fee contracts, The Belly is modeled after a physical reservoir with viscous damping. The diagram below illustrates the exponential decay curve under zero inflow alongside the 7-window discrete outflow defense:
 
-## Release rule
+![The Belly Hydrodynamics & Trajectory Defense]({{ '/assets/images/fig2-hydrodynamics.svg' | relative_url }})
 
-A valid meal releases:
+---
 
-```
-Belly balance × elapsed hours ÷ 168 hours
-```
+## 2. Mathematical Release Formula
 
-Meals have an eight-hour minimum. An eight-hour meal therefore releases 8/168,
-or about 4.762%, of the eligible balance. A late roll can release more elapsed
-time, subject to the protocol's safety cap.
+Upon each valid meal closing, the `IntervalController` queries The Belly and triggers a release calculated as:
 
-Because each release is proportional, a volume spike raises the Belly and is
-spread across later meals. When volume stops, the Belly decays instead of
-emptying in one payment. It is a shock absorber, not a guaranteed income stream.
+$$\text{Release}_k = (\text{accounted} - \text{outstandingClaims}) \times \frac{\min(\Delta t, 16\text{h})}{T_{\text{week}}}$$
 
-## What the Belly is not
+Where:
+- $\text{accounted}$: Total quote asset recognized by The Belly.
+- $\text{outstandingClaims}$: Cumulative quote pot reserved for pending and unfinalized batches.
+- $\Delta t$: Elapsed time since the last meal advance ($\Delta t \ge 8\text{ hours}$).
+- $\min(\Delta t, 16\text{h})$: Credited duration, strictly capped at **16 hours** to prevent long-dormancy fee surges.
+- $T_{\text{week}} = 168\text{ hours}$ (the normalization denominator).
 
-- It is not an operations wallet.
-- It is not a pool an administrator may sweep.
-- Its balance is not immediately owed to current positions.
-- It does not create a fixed or annualised rate.
+### Standard 8-Hour Emission
+For an ordinary on-time meal ($\Delta t = 8\text{h}$):
+
+$$\alpha = \frac{8}{168} = \frac{1}{21} \approx 4.7619\%$$
+
+The Belly emits exactly $1/21$ of its net unreserved quote balance per 8-hour meal.
+
+---
+
+## 3. Ideal Half-Life Derivation
+
+Assuming continuous time with zero new fee inflow, the reservoir balance $B(t)$ follows the differential equation:
+
+$$\frac{dB(t)}{dt} = -\lambda B(t), \quad \lambda = \frac{1}{168\text{ hours}}$$
+
+Integrating over time $t$:
+
+$$B(t) = B(0) \cdot e^{-\lambda t}$$
+
+The continuous half-life $t_{1/2}$ is:
+
+$$t_{1/2} = \frac{\ln(2)}{\lambda} = 168 \cdot \ln(2) \approx 116.44\text{ hours} \approx 4.85\text{ days}$$
+
+Under discrete 8-hour steps ($B_{k+1} = B_k \cdot (1 - 1/21) = B_k \cdot \frac{20}{21}$):
+
+$$\left(\frac{20}{21}\right)^k = 0.5 \implies k = \frac{\ln(0.5)}{\ln(20/21)} \approx 14.206\text{ intervals}$$
+
+Converting intervals back to days:
+
+$$\text{Discrete Half-Life} = 14.206 \times 8\text{ hours} \approx 113.65\text{ hours} \approx 4.735\text{ days}$$
+
+After 30 days of zero trading volume, remaining balance is:
+
+$$B(30\text{d}) \approx B(0) \cdot \left(\frac{20}{21}\right)^{90} \approx 1.24\%$$
+
+---
+
+## 4. The 7-Window Outflow Defense (Anti-Drain Throttle)
+
+Even if the authorized `ExecutionRouter` were compromised by an unexpected vulnerability, The Belly's hardcoded outflow allowance throttles any potential draining:
+
+- **Window Cap**: In any single 8-hour window, cumulative outflows cannot exceed:
+  
+  $$\text{Window Allowance} = \text{Balance} \times \frac{16}{168} \approx 9.5238\%$$
+
+- **Seven Discrete Windows**:
+  - After 6 maximum draws: $(1 - 16/168)^6 \approx 54.8537\%$ remains.
+  - After 7 maximum draws: $(1 - 16/168)^7 \approx 49.6295\%$ remains.
+- **Critical Reaction Time**: Drawing down 50% of the reservoir requires at least **7 full window intervals**, guaranteeing a minimum security reaction window of **48 to 56 hours** for the independent 2-of-3 Governor Safe or Guardian to trigger an emergency pause.

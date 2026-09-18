@@ -1,22 +1,18 @@
 ---
-title: Protocol
-nav_order: 2
+title: Core Mechanics
+nav_order: 5
 has_children: true
 ---
 
-# Protocol
+# Core Mechanics & Mathematical Specifications
 
-The meme is the interface; the fee-routing system is the product.
+A deep dive into the engineering principles, algebraic formulas, and state machines powering TheFatCat protocol.
 
-Every trade contributes to one shared treasury called **the Belly**. Feeders
-open positions with FATCAT, select one reward asset for each position, and earn
-a share of purchases made for that asset. Accounting happens in **meals**;
-market execution happens later when a route is ready.
+---
 
-The mechanism is built around three rules:
+## Mechanics Index
 
-1. The Belly releases a fraction of itself, never a fixed payout.
-2. Reward choice belongs to each position, not to the wallet as a whole.
-3. Seniority is earned with time and resets when a position exits.
-
-Read the child pages in order for the complete public mechanism.
+- **[The Belly Hydrodynamics]({% link protocol/belly.md %})**: First-order exponential damping, discrete interval emission ratios, half-life decay trajectories, and 7-window outflow throttling.
+- **[Meals & Seniority Ladder]({% link protocol/meals-and-seniority.md %})**: The discrete 8-hour meal clock, 22-slot circular graduation ring, $O(1)$ scalar weight aggregation, and settled premium curves.
+- **[Batch Procurement & Execution]({% link protocol/execution.md %})**: Decoupled accounting vs. market swaps, on-chain TWAP slippage protection, and permissionless fallback realization.
+- **[Tax Routing & Model]({% link protocol/fees.md %})**: The 4% dynamic trading tax, Flap platform fee, Forwarding Vault split (5/36 Ops Safe vs. 31/36 Belly), and 100-year tax span.

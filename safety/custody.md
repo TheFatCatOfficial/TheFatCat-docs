@@ -1,33 +1,67 @@
 ---
-title: Custody and invariants
-parent: Safety and status
-nav_order: 1
+title: Custody & Solvency Proofs
+parent: Security & Governance
+nav_order: 2
 ---
 
-# Custody and invariants
+# Custody & Solvency Proofs
 
-## Principal
+A formal exposition of TheFatCat's non-custodial capital boundaries, zero-sweep invariant, and the mathematical proof of super-solvency via integer floor truncation.
 
-Staked FATCAT is principal, never reward inventory. The withdrawal path is
-designed to remain open even if new stakes or reward settlement are paused.
-No administrator should be able to move a position's principal.
+---
 
-## Reward capital
+## 1. Physical Isolation of Principal
 
-The Belly is designed without an administrative withdrawal, sweep or rescue
-path. Its authorised outflow is restricted to protocol execution and capped per
-window. The distributor that holds purchased rewards follows the same no-sweep
-principle.
+In TheFatCat, staked FATCAT tokens are principal, never reward inventory:
 
-## Core invariants
+- **Isolated Storage**: Staked tokens are locked strictly inside [`StakingVault.sol`]({% link contracts.md %}).
+- **No Bridging to Belly**: Principal never touches `Belly.sol`, the router, or distributor contracts.
+- **Unconditional Redemption**: `redeem()` ignores contract pauses and requires zero external keeper approvals.
 
-1. Principal is never part of reward inventory.
-2. Entitlement never changes retroactively.
-3. Settlement never skips history.
-4. An allocation belongs only to the weights active when it was computed.
-5. Seniority rises monotonically during a position's life and resets on exit.
-6. Accounting must conserve every unit across the Belly, pending execution,
-   reserves, outstanding rewards and claims.
+---
 
-These properties are intended to be checked with unit tests, fuzzing,
-differential accounting tests and live-network fork rehearsals.
+## 2. The Zero-Sweep Principle
+
+A "sweep", "rescue", or "skimming" function in a smart contract is simply an administrative backdoor with friendlier marketing.
+
+{: .important }
+**The Zero-Sweep Invariant**: None of the core protocol contracts (`StakingVault`, `Belly`, `RewardDistributor`, `SeniorityLedger`) contain any `sweepToken()`, `rescueFunds()`, or `emergencyWithdraw()` functions.
+
+If a contract holds user funds, nobody — not the developer, not the multi-sig, not the community — can withdraw or transfer those assets except through the deterministic state-transition rules defined at deployment.
+
+---
+
+## 3. Mathematical Proof of Solvency (Non-Negative Dust Theorem)
+
+A critical failure mode in DeFi dividend distributors is rounding overflow, where integer division rounding errors accumulate until the vault owes more tokens than it physically holds, causing transaction reverts for the final claimers.
+
+TheFatCat mathematically eliminates insolvency through dual-scaled integer floor division:
+
+### Theorem: Non-Negative Dust Vesting
+Let $R$ (in D18{tok}) be the total reward tokens acquired in an execution batch, and let $S$ (in D18{quote}) be the allocated quote pot. For any $N$ stakers with quote entitlements $x_i$ satisfying $\sum_{i=1}^N x_i \le S$, the aggregate claimed tokens $\sum_{i=1}^N r_i$ is strictly less than or equal to $R$:
+
+$$\sum_{i=1}^N r_i \le R$$
+
+### Step-by-Step Proof:
+1. **Batch Conversion Rate**:
+   
+   $$\text{Rate} = \left\lfloor \frac{R \cdot \text{RAY}}{S} \right\rfloor \le \frac{R \cdot \text{RAY}}{S}$$
+
+2. **Per-User Claimed Tokens**:
+   
+   $$r_i = \left\lfloor \frac{x_i \cdot \text{Rate}}{\text{RAY}} \right\rfloor \le \frac{x_i \cdot \text{Rate}}{\text{RAY}}$$
+
+3. **Summing Across All $N$ Claimers**:
+   
+   $$\sum_{i=1}^N r_i \le \sum_{i=1}^N \frac{x_i \cdot \text{Rate}}{\text{RAY}} = \frac{\text{Rate}}{\text{RAY}} \cdot \sum_{i=1}^N x_i$$
+
+4. **Substituting Constraints**: Since $\sum_{i=1}^N x_i \le S$ and $\text{Rate} \le \frac{R \cdot \text{RAY}}{S}$:
+   
+   $$\sum_{i=1}^N r_i \le \frac{\text{Rate} \cdot S}{\text{RAY}} \le \frac{\left( \frac{R \cdot \text{RAY}}{S} \right) \cdot S}{\text{RAY}} = R \quad \blacksquare$$
+
+### Corollary: Physical Dust Vesting (Security Invariant D1)
+The residual rounding dust $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ permanently vests inside the distributor. Physical reserves strictly dominate recorded accounting liabilities:
+
+$$\text{balanceOf}(\text{Distributor}, a) \ge \text{liability}[a]$$
+
+$$\text{balanceOf}(\text{Distributor}, \text{quote}) \ge \sum_a \text{quoteLiability}[a]$$

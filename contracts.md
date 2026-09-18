@@ -1,21 +1,37 @@
 ---
-title: Verified contracts
-nav_order: 4
+title: Verified Contracts
+nav_order: 7
 ---
 
-# Verified contracts
+# Verified Contracts Schedule
 
-Contract addresses will be added only after deployment and source-code
-verification.
+Official smart contract registry for TheFatCat protocol on BNB Chain. Addresses and BscScan links will be populated upon mainnet deployment.
 
-| Component | Network | Address | Status |
-|:--|:--|:--|:--|
-| FATCAT token | BNB Chain | Not published | Pre-launch |
-| Trading pair | BNB Chain | Not published | Pre-launch |
-| The Belly | BNB Chain | Not published | Pre-launch |
-| Staking and seniority | BNB Chain | Not published | Pre-launch |
-| Reward distributor | BNB Chain | Not published | Pre-launch |
+---
 
-When published, every row will link to the block explorer and identify the
-deployed implementation or immutable contract that users are expected to
-interact with.
+## Core Protocol Contracts Matrix
+
+| Component | Network | Role & Architectural Description | Deployment Address | Status |
+|:---|:---|:---|:---|:---|
+| **FATCAT Token** | BNB Chain | 1,000,000,000 fixed supply, zero presale, immutable implementation | `0x...` | Pre-Launch |
+| **PancakeSwap V2 Pair** | BNB Chain | Liquidity pool pair, cumulative price feed source | `0x...` | Pending Graduation |
+| **Forwarding Vault** | BNB Chain | Receives liquidated WBNB; splits 5/36 to Ops Safe & 31/36 to Belly | `0x...` | Pre-Launch |
+| **The Belly** | BNB Chain | Exponential damping reservoir; window-capped outflow, zero sweep | `0x...` | Pre-Launch |
+| **StakingVault** | BNB Chain | Custodies staked principal; unpausable `redeem()`, 100k FATCAT floor | `0x...` | Pre-Launch |
+| **SeniorityLedger** | BNB Chain | $O(1)$ scalar weight accounting, 22-slot graduation ring, RAY prefix accumulators | `0x...` | Pre-Launch |
+| **IntervalController** | BNB Chain | Permissionless clock engine ($\ge 8\text{h}$ cadence), locks open meal weights | `0x...` | Pre-Launch |
+| **RewardAssetRegistry** | BNB Chain | Authoritative MENU whitelist and 5% probation cap controller | `0x...` | Pre-Launch |
+| **ExecutionRouter** | BNB Chain | Timelocked single-activation router, TWAP-guarded batch market swaps | `0x...` | Pre-Launch |
+| **RewardDistributor** | BNB Chain | Dual-liability accounting, non-negative dust solvency custody | `0x...` | Pre-Launch |
+| **SeniorityCertificate (ERC-721)** | BNB Chain | Exit credential; burn 100k FATCAT to mint, 100% on-chain SVG | `0x...` | Pre-Launch |
+| **CertificateRenderer** | BNB Chain | Pure on-chain SVG generator for Seniority Certificates | `0x...` | Pre-Launch |
+| **PancakeV2TwapOracle** | BNB Chain | Endogenous TWAP reader evaluating time-weighted average prices | `0x...` | Pre-Launch |
+| **Governor Safe** | BNB Chain | 2-of-3 Gnosis Safe: emergency pause/unpause, one-time spender timelock | `0x...` | Pre-Launch |
+| **Ops Safe** | BNB Chain | 2-of-3 Gnosis Safe: receives 5/36 operational revenue, zero admin rights | `0x...` | Pre-Launch |
+
+---
+
+## Bytecode & Verification Guidelines
+
+{: .note }
+All deployed contracts are compiled via standard Foundry toolchains with strict deterministic compilation parameters. Source code will be fully verified on [BscScan](https://bscscan.com) upon contract deployment.
