@@ -64,17 +64,9 @@
     <!-- Day 7 (k=21): 270, 193.8 (35.89%) -->
     <!-- Day 14 (k=42): 370, 249.1 (12.88%) -->
     <!-- Day 30 (k=90): 470, 277.0 (1.23%) -->
-    <path d="M 50 40 
-             Q 120 85, 210 160 
-             T 270 193.8 
-             T 370 249.1 
-             T 470 277 L 470 280 L 50 280 Z" fill="url(#areaGrad)" />
+    <path d="M 50 40 C 66.67 50.9, 83.33 60.27, 100 72.7 C 120.0 87.62, 140.0 109.86, 160 125.3 C 176.67 138.17, 193.33 149.59, 210 160.0 C 230.0 172.5, 250.0 182.72, 270 193.9 C 303.33 212.53, 336.67 236.74, 370 249.1 C 403.33 261.46, 436.67 267.7, 470 277.0 L 470 280 L 50 280 Z" fill="url(#areaGrad)" />
 
-    <path d="M 50 40 
-             Q 120 85, 210 160 
-             T 270 193.8 
-             T 370 249.1 
-             T 470 277" fill="none" stroke="url(#curveGrad)" stroke-width="2.5" />
+    <path d="M 50 40 C 66.67 50.9, 83.33 60.27, 100 72.7 C 120.0 87.62, 140.0 109.86, 160 125.3 C 176.67 138.17, 193.33 149.59, 210 160.0 C 230.0 172.5, 250.0 182.72, 270 193.9 C 303.33 212.53, 336.67 236.74, 370 249.1 C 403.33 261.46, 436.67 267.7, 470 277.0" fill="none" stroke="url(#curveGrad)" stroke-width="2.5" />
 
     <!-- Half-life indicator dot -->
     <circle cx="210" cy="160" r="5" fill="#f59e0b" stroke="#fff" stroke-width="1.5" />
@@ -85,16 +77,16 @@
     <text x="210" y="143" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">14.21 Intervals</text>
 
     <!-- Point Day 7 -->
-    <circle cx="270" cy="193.8" r="3.5" fill="#38bdf8" />
-    <text x="270" y="185" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">35.89%</text>
+    <circle cx="270" cy="193.9" r="3.5" fill="#38bdf8" />
+    <text x="270" y="181" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">35.89%</text>
 
     <!-- Point Day 14 -->
     <circle cx="370" cy="249.1" r="3.5" fill="#818cf8" />
-    <text x="370" y="240" fill="#818cf8" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">12.88%</text>
+    <text x="370" y="236" fill="#818cf8" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">12.88%</text>
 
     <!-- Point Day 30 -->
     <circle cx="470" cy="277" r="3.5" fill="#64748b" />
-    <text x="460" y="268" fill="#64748b" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">1.23%</text>
+    <text x="470" y="265" fill="#64748b" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">1.23%</text>
 
     <text x="50" y="20" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="12" font-weight="600">Exponential Damping Curve: B(k) = B_0 × (20/21)^k (Zero External Inflow)</text>
   </g>
