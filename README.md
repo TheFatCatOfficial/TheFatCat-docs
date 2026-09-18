@@ -17,7 +17,7 @@ TheFatCat restructures traditional meme token tax reflections into an unprivileg
 ### Key Architectural Features:
 - **The Belly**: First-order exponential damping reservoir with window-capped outflows and zero administrative withdrawal or sweep paths.
 - **$O(1)$ Seniority Ledger**: Evaluates seniority weights across cohorts in constant gas using a 22-slot circular graduation ring buffer.
-- **Sovereign Multi-Asset Diets**: Stakers independently select their reward asset (BNB, tokenized equities/bStocks, or post-graduation FATCAT) with decoupled accounting and execution.
+- **Sovereign Multi-Asset Diets**: Stakers independently select their reward asset (BNB, tokenized equities/bStocks, post-graduation FATCAT, or future governance-approved tokens) with decoupled accounting and execution.
 - **Seniority Certificates (ERC-721)**: Full position redemptions can permanently imprint achieved seniority notches (1–22) into on-chain SVG certificates by burning 100,000 FATCAT to `0x...dEaD`.
 - **Strict Non-Custodial Architecture**: Zero administrative withdrawal or balance sweep functions, timelocked router activation, and unconditionally unpausable staker principal redemptions.
 

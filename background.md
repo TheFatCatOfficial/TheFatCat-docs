@@ -54,7 +54,7 @@ For an on-time 8-hour meal, this is exactly $\frac{8}{168} = \frac{1}{21} \appro
 Under ideal zero-inflow assumptions, the half-life is approximately **4.735 days**. It acts as a physical shock absorber: a quiet week is absorbed without starvation, while stakers are never lured with unsustainable promises.
 
 ### Principle 2: Sovereign Multi-Asset Diets
-Each staker chooses their preferred menu asset (WBNB, tokenized equities/bStocks, or post-graduation FATCAT). The protocol locks quote budgets at meal boundaries and executes batch swaps separately via an execution router. Front-running, MEV sandwiching, and execution delays are mathematically decoupled from entitlement accounting.
+Each staker chooses their preferred menu asset (BNB, tokenized equities/bStocks, post-graduation FATCAT, or future governance-approved tokens). The protocol locks quote budgets at meal boundaries and executes batch swaps separately via an execution router. Front-running, MEV sandwiching, and execution delays are mathematically decoupled from entitlement accounting.
 
 ### Principle 3: Time-Weighted Seniority
 Staking weight is the product of capital and a discrete seniority notch:

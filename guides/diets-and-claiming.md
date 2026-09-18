@@ -18,6 +18,7 @@ In TheFatCat, you are not forced into a single, uniform reward token. Instead, e
 - **BNB (Canonical Network Asset)**: The default diet and protocol fallback asset (internally accounted via canonical WBNB). It requires zero market execution and carries zero counterparty or issuer risk. Stakers can receive native BNB directly with no manual unwrapping.
 - **bStocks (Tokenized Equities)**: Real-world asset backed tokens (e.g. tokenized Tesla, Apple, or S&P 500 ETFs) under a 5% observation cap.
 - **FATCAT (Protocol Native)**: Eligible for addition after AMM graduation, liquidity stabilization, and TWAP oracle warmup.
+- **Future Candidate Tokens (Ecosystem Expansion)**: Potential high-liquidity crypto assets, blue-chip ecosystem tokens, or stablecoins that may be approved and listed on the MENU via timelocked governance queues and on-chain TWAP verification.
 
 {: .tip }
 Because each stake is an independent position ID, a single wallet can manage multiple positions with completely different diets (e.g. Position #1 earning BNB, Position #2 earning tokenized equities).
