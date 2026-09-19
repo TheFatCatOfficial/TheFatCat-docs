@@ -1,0 +1,58 @@
+<div class="lang-switcher" id="tfc-lang-switcher" aria-label="Language Selector">
+  <span class="lang-icon" aria-hidden="true">🌐</span>
+  <a href="#" id="lang-btn-en" class="lang-btn" title="English Documentation">EN</a>
+  <span class="lang-divider">/</span>
+  <a href="#" id="lang-btn-zh" class="lang-btn" title="中文文档">中文</a>
+</div>
+
+<script>
+  (function() {
+    function initLangSwitcher() {
+      var currentPath = window.location.pathname;
+      var base = "{{ site.baseurl }}";
+      if (!base || base === "/") base = "";
+
+      var relPath = currentPath;
+      if (base && relPath.indexOf(base) === 0) {
+        relPath = relPath.substring(base.length);
+      }
+      if (!relPath.startsWith("/")) relPath = "/" + relPath;
+
+      var isZh = relPath.indexOf("/zh/") === 0 || relPath === "/zh" || relPath === "/zh.html";
+      
+      var btnEn = document.getElementById("lang-btn-en");
+      var btnZh = document.getElementById("lang-btn-zh");
+      if (!btnEn || !btnZh) return;
+
+      if (isZh) {
+        btnZh.classList.add("active");
+        btnEn.classList.remove("active");
+
+        var targetEn = relPath.replace(/^\/zh\/?/, "/");
+        if (!targetEn.startsWith("/")) targetEn = "/" + targetEn;
+        btnEn.href = base + targetEn;
+        btnZh.href = currentPath;
+      } else {
+        btnEn.classList.add("active");
+        btnZh.classList.remove("active");
+
+        var targetZh = "/zh" + (relPath === "/" ? "/" : relPath);
+        btnZh.href = base + targetZh;
+        btnEn.href = currentPath;
+      }
+
+      btnEn.addEventListener("click", function() {
+        localStorage.setItem("tfc_docs_pref_lang", "en");
+      });
+      btnZh.addEventListener("click", function() {
+        localStorage.setItem("tfc_docs_pref_lang", "zh");
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initLangSwitcher);
+    } else {
+      initLangSwitcher();
+    }
+  })();
+</script>

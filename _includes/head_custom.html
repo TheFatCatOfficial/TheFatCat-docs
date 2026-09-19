@@ -10,3 +10,31 @@
     ],
     throwOnError: false
   });"></script>
+<script>
+  (function() {
+    var path = window.location.pathname;
+    var isZh = path.indexOf("/zh/") !== -1 || path.endsWith("/zh") || path.endsWith("/zh.html");
+    document.documentElement.lang = isZh ? "zh-CN" : "en";
+
+    function filterSidebar() {
+      if (document.body) {
+        document.body.setAttribute("data-lang", isZh ? "zh" : "en");
+      }
+      var navItems = document.querySelectorAll(".site-nav > .nav-list > .nav-list-item");
+      navItems.forEach(function(item) {
+        var hasZh = item.querySelector('a[href*="/zh/"], a[href$="/zh"], a[href$="/zh/"]');
+        if (isZh) {
+          if (!hasZh) item.style.setProperty("display", "none", "important");
+        } else {
+          if (hasZh) item.style.setProperty("display", "none", "important");
+        }
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", filterSidebar);
+    } else {
+      filterSidebar();
+    }
+  })();
+</script>

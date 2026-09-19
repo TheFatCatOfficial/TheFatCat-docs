@@ -285,3 +285,61 @@ img, svg {
   max-width: 100% !important;
   height: auto !important;
 }
+
+// 10. Language Switcher Widget
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  background-color: #111816;
+  border: 1px solid #1f2a25;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  margin-left: 0.75rem;
+  font-size: 0.8rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  gap: 0.4rem;
+  user-select: none;
+  vertical-align: middle;
+
+  .lang-icon {
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+
+  .lang-divider {
+    color: #475569;
+    font-size: 0.75rem;
+  }
+
+  .lang-btn {
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    &.active {
+      color: #10b981;
+      font-weight: 700;
+      background-color: rgba(16, 185, 129, 0.18);
+    }
+  }
+}
+
+// 11. Strict Sidebar Language Isolation
+body[data-lang="en"] .site-nav .nav-list-item:has(> a[href*="/zh/"]),
+body[data-lang="en"] .site-nav .nav-list-item:has(> a[href$="/zh"]),
+body[data-lang="en"] .site-nav .nav-list-item:has(> a[href$="/zh/"]) {
+  display: none !important;
+}
+
+body[data-lang="zh"] .site-nav .nav-list-item:not(:has(a[href*="/zh/"])):not(:has(a[href$="/zh"])):not(:has(a[href$="/zh/"])) {
+  display: none !important;
+}
+

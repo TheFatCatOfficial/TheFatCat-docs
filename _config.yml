@@ -48,3 +48,9 @@ defaults:
       path: ""
     values:
       layout: default
+      lang: en
+  - scope:
+      path: "zh"
+    values:
+      layout: default
+      lang: zh
