@@ -39,7 +39,7 @@ Explore detailed specifications for each contract subsystem:
 | **InitialRewardAssetRegistry** | `InitialRewardAssetRegistry.sol` | Production MENU whitelist with signed constructor menu exempt from probation | Deterministic Deployment | Scheduled Genesis |
 | **ExecutionRouter** | `ExecutionRouter.sol` | Permanent write-once router, TWAP-guarded batch market swaps & fallback | Deterministic Deployment | Scheduled Genesis |
 | **RewardDistributor** | `RewardDistributor.sol` | Dual-liability accounting, non-negative dust solvency custody | Deterministic Deployment | Scheduled Genesis |
-| **SeniorityCertificate** | `SeniorityCertificate.sol` | Exit credential; burn 100k FATCAT to mint, 10k cap, 21d delay, 100% on-chain SVG | Deterministic Deployment | Scheduled Genesis |
+| **SeniorityCertificate** | `SeniorityCertificate.sol` | On-chain seniority credential; deployed at genesis, scheduled for release after protocol maturation, exact mechanics subject to future announcement | Deterministic Deployment | Scheduled Genesis |
 | **CertificateRenderer** | `SeniorityCertificateRenderer.sol` | Pure on-chain SVG generator rendering dynamic visual attributes | Deterministic Deployment | Scheduled Genesis |
 | **CertificateData** | `CertificateData.sol` | Bytecode container storing compressed fonts and vector artwork data | Deterministic Deployment | Scheduled Genesis |
 | **PancakeV2TwapOracle** | `PancakeV2TwapOracle.sol` | Endogenous TWAP reader evaluating time-weighted average prices for V2 pairs | Deterministic Deployment | Scheduled Genesis |

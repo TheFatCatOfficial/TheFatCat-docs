@@ -32,14 +32,14 @@ TheFatCat 协议在 BNB Chain 上的官方智能合约注册表。具体合约�
 | **PancakeSwap V2 交易对** | `PancakePair` | 主流动性交易对池（`FATCAT/WBNB`），累积 TWAP 价格数据源 | PancakeFactory | 达成毕业指标后 |
 | **FatCatStakingVault** | `FatCatStakingVault.sol` | Flap V3 税道金库；增量识别、包装 WBNB、分账 5/36 至运营、31/36 至大肚皮 | Flap BeaconProxy | 创世批次 |
 | **FatCatStakingVaultFactory** | `FatCatStakingVaultFactory.sol` | 用于 Flap VaultPortal 接入部署 BeaconProxy 实例的专属工厂 | Flap FactoryBaseV2 | 创世批次 |
-| **大肚皮蓄水池** | `Belly.sol` | 一阶指数阻尼物理水库；单窗口流出限额 $\le 16/168$，单次永久写死 Spender | 确定性部署 | 创世批次 |
+| **大肚皮蓄水池** | `Belly.sol` | 一阶指数阻尼蓄水池；单窗口流出限额 $\le 16/168$，单次永久写死 Spender | 确定性部署 | 创世批次 |
 | **质押金库** | `StakingVault.sol` | 隔离托管质押本金；不可暂停的 `redeem()`、10 万 FATCAT 门槛与凭据联动 | 确定性部署 | 创世批次 |
 | **资历账本** | `SeniorityLedger.sol` | $O(1)$ 标量权重核算、22-槽位环形缓冲区、RAY 精度前缀引擎 | 确定性部署 | 创世批次 |
-| **创世时钟控制器** | `LaunchIntervalController.sol` | 生产时钟引擎（$\ge 8\text{h}$ 节奏），内嵌 7 天物理墙钟初始零排放爬坡锁 | 确定性部署 | 创世批次 |
+| **创世时钟控制器** | `LaunchIntervalController.sol` | 生产时钟引擎（$\ge 8\text{h}$ 节奏），内嵌 7 天初始零分红爬坡期 | 确定性部署 | 创世批次 |
 | **创世食谱注册表** | `InitialRewardAssetRegistry.sol` | 生产菜单白名单管理，带签名的首发菜单标的豁免 5% 试用期分配上限 | 确定性部署 | 创世批次 |
 | **执行路由** | `ExecutionRouter.sol` | 永久绑定唯一提款 Spender，受 TWAP 严密保护的批量市场兑换与兜底结算 | 确定性部署 | 创世批次 |
 | **收益分发器** | `RewardDistributor.sol` | 双重负债结算会计系统，非负粉尘超额偿付能力托管金库 | 确定性部署 | 创世批次 |
-| **资历凭据** | `SeniorityCertificate.sol` | 退仓荣誉勋章；销毁 10 万 FATCAT 铸造，上限 1 万枚，21 天锁定期，纯链上 SVG | 确定性部署 | 创世批次 |
+| **资历凭据** | `SeniorityCertificate.sol` | 链上资历凭据合约；已随创世部署，功能待协议成熟后正式发布，具体规则以官方后续公告为准 | 确定性部署 | 创世批次 |
 | **凭据渲染器** | `SeniorityCertificateRenderer.sol` | 纯链上原生矢量 SVG 生成器，动态计算并实时渲染视觉元数据 | 确定性部署 | 创世批次 |
 | **凭据数据容器** | `CertificateData.sol` | 存储压缩字体与矢量插画字节码的链上数据存储合约 | 确定性部署 | 创世批次 |
 | **V2 TWAP 预言机** | `PancakeV2TwapOracle.sol` | 内生 TWAP 观察器，评估 V2 交易对时间加权均价 | 确定性部署 | 创世批次 |

@@ -36,30 +36,33 @@ The 100,000 FATCAT entry threshold is an immutable parameter passed to the contr
 
 ---
 
-## 3. Position Activation Lifecycle
+## 3. Position Activation & The 7-Day Warmup Window
 
-Staking does not grant retroactive rewards for the meal currently in progress:
+Staking does not grant retroactive rewards for meals already opened or in progress:
 
 ```
-T_now ─────────────────────► Meal Closes (advance) ──────────► Next Meal Closes
-[ User Calls stake() ]       [ Position Active (j_i = m+1) ]    [ First Rewards Earned ]
-(Interval m: Weight = 0)     (Notch = 1, Weight = p_i × 1)      (Notch climbs to 2)
+Deposit (T_now) ─────────────► Next Meal Roll (8h Boundary) ─────► Normal Operation
+[ Deposit Tokens ]            [ Position Activates ]              [ Notch Climbs Each Meal ]
+(Weight in meal m is 0)       (Starts at Notch 1, Weight = p × 1) (Advances to Notch 2 next meal)
 ```
 
-1. **Pending Interval ($m$)**: When you stake during interval $m$, your deposit is recorded in the vault immediately, but your effective weight in the currently active meal is 0.
-2. **Active From ($j_i = m + 1$)**: When the keeper or any caller triggers `advance()`, your position activates at **Notch 1**.
-3. **Climbing the Ladder**: For every subsequent 8-hour meal completed, your seniority notch automatically increases by $+1$ until reaching the maximum of 22 (after 21 completed active meals).
+1. **Deposit & Activation**: When you deposit tokens, your capital is held in custody immediately. In the meal currently underway, your position's calculation weight is 0. Once the next 8-hour boundary advances (`advance`), your position activates at **Notch 1 (1x weight)**.
+2. **Climbing the Ladder**: After activating, your seniority notch increases by $+1$ for every completed 8-hour meal, up to the maximum cap of Notch 22 (requiring 21 completed active meals, or approximately 7 days on the standard cadence).
 
 {: .important }
-**The 7-Day Genesis Accumulation Ramp**: When the protocol is first launched, reward emissions are locked behind an immutable 7-day wall-clock delay. Intervals advance and seniority notches climb normally during this phase, allowing early stakers to climb toward Notch 22 on a level playing field, while DEX trading taxes accumulate safely inside The Belly with zero early outflows.
+**The 7-Day Warmup Window (Zero Early Dilution)**:
+- **When can you stake**: As soon as staking opens (governance may open staking prior to graduation; otherwise it opens automatically upon graduation).
+- **How seniority accrues**: Positions deposited during this period begin climbing the seniority ladder immediately, advancing notch by notch every 8 hours.
+- **When do rewards start**: During the first 7 days, trading taxes accumulate inside the treasury with zero reward distributions. This ensures early stakers establish their seniority on a fair, equal footing without first-mover dilution. Once the 7-day warmup concludes, 8-hour reward distributions begin.  
+*(Underlying mechanism: Opening staking via `openStaking()` starts the 7-day reward countdown clock `startRewardClock()`.)*
 
 ---
 
-## 4. Managing Multiple Positions
+## 4. Multi-Position Management & Claiming
 
-In TheFatCat, each stake creates an isolated position with its own lifecycle, seniority clock, and diet:
+Each stake creates an independently numbered position with its own tenure and diet selection:
 
-- **Adding More Principal**: To stake additional FATCAT, simply open a new position from the staking interface. A single wallet can create and manage multiple independent positions simultaneously.
-- **Independent Asset Diets**: Different positions under the same wallet can select different reward assets (e.g., Position #1 earning BNB, Position #2 earning tokenized equities).
-- **One-Click Batch Claiming**: While each position matures on its own timeline, the dashboard allows you to claim rewards across all your active positions in a single transaction to minimize gas fees.
-- **Seniority Certificates (ERC-721)**: Stakers exiting mature positions may burn 100,000 FATCAT to mint an immutable on-chain [Seniority Certificate]({% link guides/seniority-certificates.md %}) preserving their achieved seniority notch for future position multiplier inheritance.
+- **Adding More Principal**: To stake additional FATCAT, simply open a new position from the interface. A single wallet can manage multiple independent positions simultaneously.
+- **Independent Asset Diets**: Different positions can target different reward assets (e.g., Position #1 earning BNB, Position #2 earning tokenized bStocks).
+- **Per-Position Claiming**: Rewards are settled and withdrawn per position. To prevent transaction failure from gas exhaustion over long backlogs, users settle rewards per position in bounded batch ranges (via `claimThrough` / `claimNativeThrough`).
+- **Exiting & Seniority Certificate Hooks**: When exiting a regular position, 100% of staked principal is returned to your wallet. The contracts include hooks for on-chain [Seniority Certificates]({% link guides/seniority-certificates.md %}), which are planned for official release once the protocol matures; exact rules and parameters will be announced at that time.

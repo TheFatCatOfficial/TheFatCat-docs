@@ -37,7 +37,7 @@ TheFatCat 彻底重构了传统分红代币（Reflection Token）简单的“即
 面向质押者与生态参与者的逐步操作指南：
 - [质押与仓位管理]({% link zh/guides/staking.md %})：开仓规则、本金门槛以及独立仓位隔离原则。
 - [食谱自选与收益提取]({% link zh/guides/diets-and-claiming.md %})：选择分红代币、多批次领取、以及原生 BNB 自动解包功能。
-- [资历凭据（ERC-721）]({% link zh/guides/seniority-certificates.md %})：链上资质勋章、确定性通缩销毁与倍数继承机制。
+- [资历凭据（后续发布）]({% link zh/guides/seniority-certificates.md %})：链上资历凭证体系（已随创世部署，后续阶段正式发布）。
 - [紧急退出通道]({% link zh/guides/emergency-exit.md %})：在前端不可用时的安全紧急退回指引。
 
 ### [3. 核心机制深度解析]({% link zh/protocol.md %})

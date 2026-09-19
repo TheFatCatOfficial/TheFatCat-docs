@@ -2,8 +2,8 @@
 
 ### 具备自适应阻尼与资历权重的去中心化交易税路由协议
 
-**版本：1.0 正式发布版 (Official Release) | 日期：2026-09-15**
-*基于项目计划 v0.5，并对照当前合约源码与发布配置核验。凡属分析模型的公式均明确列出成立条件。普通生产路径不含资历预置；当前工作树中明确标记为不可部署的 `stakeWithHead` 实验不属于本规格，发布构建不得携带该入口。本文档不包含任何预期投资回报率或收益率承诺。*
+**版本：1.0 正式发布版 (Official Release) | 日期：2026-09-20**
+*基于项目计划 v0.5，并对照当前合约源码与发布配置核验。凡属分析模型的公式均明确列出成立条件。普通生产路径默认从资历阶梯第 1 级起步爬坡；持有经链上验证的资历凭据（Seniority Certificate）开仓时，可通过专属入口 `stakeWithCertificate` 继承凭据所载的起始倍数（对应底层 `openWithHead`，提前量 $\text{head} = \text{multiplier} - 1 \in [0, 21]$）。本文档不包含任何预期投资回报率或收益率承诺。*
 
 ---
 
@@ -12,7 +12,7 @@
 常见去中心化交易税（Trading-tax / Dividend）方案采用全体共享的奖励配置、缺少时间缓冲的手续费直通路径，并按资本分配而不引入资历。这些是本文所比较上游模板的特征，不是对所有税币实现的普遍断言。
 
 TheFatCat 将以下机制组合为一套协议架构：
-1. **The Belly 动力学金库**：任何人均可在至少 8 小时后推进时钟。按名义节奏运行时，每期分配未预留 quote 余额的 $\frac{1}{21} \approx 4.7619\%$，其零流入理想模型的半衰期为 4.735 天；
+1. **The Belly 动力学金库**：任何人均可在至少 8 小时后推进时钟。按名义节奏运行时，每期分配未预留 quote 余额的 $\frac{1}{21} \approx 4.7619\%$，其零流入理想模型的半衰期为 4.736 天；
 2. **$O(1)$ 闭式资历账本（Seniority Ledger）**：利用线性代数分解，在不遍历仓位的情况下聚合 1 至 22 级资历权重。完整领取仍需按所跨执行批次线性遍历，可用 `claimThrough` 分段限制单次成本；
 3. **主权点餐架构（Diet Architecture）**：每个仓位自主选择采购资产。忽略观察期限额与整数尘埃时，仓位的名义 quote 预算由其全池权重占比决定；资产选择仍会影响执行、市场价值、发行方风险和外部激励；
 4. **双重负债与保守舍入**：以 WBNB 作为默认及回退 quote 资产，通过批次会计、精确到账检查和向下取整，在受支持的代币模型内维持经过测试的偿付性不变量。
@@ -69,7 +69,7 @@ $$\left(\frac{20}{21}\right)^{k_{1/2}} = \frac{1}{2} \implies k_{1/2} = \frac{\l
 
 换算为绝对物理时间 $t_{1/2}$：
 
-$$t_{1/2} = k_{1/2} \times 8 \text{ 小时} \approx 113.65 \text{ 小时} \approx 4.735 \text{ 天}$$
+$$t_{1/2} = k_{1/2} \times 8 \text{ 小时} \approx 113.654 \text{ 小时} \approx 4.736 \text{ 天}$$
 
 #### 交易归零衰减轨迹表
 
@@ -107,43 +107,51 @@ $$t_{1/2} = k_{1/2} \times 8 \text{ 小时} \approx 113.65 \text{ 小时} \appro
 
 每一笔 FATCAT 质押都会形成一个彼此隔离的逻辑仓位。仓位状态并非存放在单一 Solidity struct 中，而是分布于两份合约：
 
-$$\text{Position}_i = \{ \text{owner}, \text{principal}, \text{diet}, \text{activeFrom}, \text{endInterval} \}$$
+$$\text{Position}_i = \{ \text{owner}, \text{principal}, \text{diet}, \text{activeFrom}, \text{effectiveFrom}, \text{endInterval} \}$$
 
-`StakingVault` 保存 owner、principal、diet 与可选资历证书关联（`certificatePlusOne`）；`SeniorityLedger` 保存用于权重计算的 principal、`activeFrom` 与 `endInterval`。
+`StakingVault` 保存 owner、principal、diet 与可选资历证书关联（`certificatePlusOne`）；`SeniorityLedger` 保存用于权重计算的 principal、`activeFrom`、`effectiveFrom` 与 `endInterval`。
 
 * **禁止混并（Anti-merging）**：多个独立仓位永不混同合并，杜绝利用大资金与老仓位合并完成“资历洗白”；
-* **次周期生效（Next-interval Activation）**：在区间 $m$ 内质押的仓位，其生效区间被硬性标记为 $\text{activeFrom} = m + 1$，直接摧毁任何闪电贷借币质押并于同一区块分红跑路的攻击面。
+* **次周期生效（Next-interval Activation）**：在区间 $m$ 内质押的仓位，其生效区间被硬性标记为 $\text{activeFrom} = m + 1$，直接摧毁任何闪电贷借币质押并于同一区块分红跑路的攻击面；
+* **起始资历映射（Effective Activation）**：对于常规新开仓位，$\text{effectiveFrom} = \text{activeFrom}$；对于持有资历凭据开仓的仓位（通过 `stakeWithCertificate` 入口），设凭据乘数为 $\text{multiplier} \in [1, 22]$，其提前量为 $\text{head} = \text{multiplier} - 1 \in [0, 21]$，合约设定 $\text{effectiveFrom} = \text{activeFrom} - \text{head}$。
 
 ### 3.2 $O(1)$ 闭式资历权重聚合方程 (Closed-Form Aggregation)
 
 #### 问题的提出
-设仓位 $i$ 的质押本金为 $p_i$。资历系数从 1 开始，每完成一个活跃协议周期（单周期最短为 8 小时）自增 1，在完成 21 个周期后封顶于 22：
+设仓位 $i$ 的质押本金为 $p_i$。在仓位尚未达到生效区间时（$m < \text{activeFrom}_i$），资历系数严格为 0；到达生效区间后（$m \ge \text{activeFrom}_i$ 且 $m < \text{endInterval}_i$），资历系数由距虚拟激活区间 $\text{effectiveFrom}_i$ 所跨越的周期决定，并封顶于 22：
 
-$$c_i(m) = 1 + \min(m - j_i, 21), \quad \text{其中 } j_i = \text{activeFrom}_i，m\ge j_i$$
+$$c_i(m) = \begin{cases} 0, & m < \text{activeFrom}_i \\ 1 + \min(m - \text{effectiveFrom}_i, 21), & m \ge \text{activeFrom}_i \text{ 且 } m < \text{endInterval}_i \end{cases}$$
+
+对于常规仓位（$\text{effectiveFrom}_i = \text{activeFrom}_i$），首个生效周期 $m = \text{activeFrom}_i$ 的系数为 $1 + 0 = 1$；对于凭据提前量为 $\text{head}_i = 21$ 的满级凭据仓位，首个生效周期的系数直接达到 $1 + 21 = 22$。
 
 系统总权重为 $W(m) = \sum_i p_i \cdot c_i(m)$。随着质押人数 $N \to \infty$，循环遍历每个仓位更新权重将直接导致 Gas 耗尽。
 
-#### 代数闭式分解
-TheFatCat 在 [`SeniorityLedger.sol`](../contracts/src/SeniorityLedger.sol#L7-L19) 中通过线性代数分解消解了循环。将全池仓位分为两组：
-1. **爬坡期仓位集合（Climbing）**：满足 $m - j_i < 21$，此时 $c_i(m) = 1 + m - j_i$；
-2. **已满级成熟仓位集合（Settled）**：满足 $m - j_i \ge 21$，此时 $c_i(m) = 22$。
+#### 代数闭式分解与开仓修正项
+TheFatCat 在 [`SeniorityLedger.sol`](../contracts/src/SeniorityLedger.sol) 中通过线性代数分解消解了循环。将全池存续仓位根据虚拟激活区间与当前区间的距离分为两组：
+1. **爬坡期仓位集合（Climbing）**：满足 $m - \text{effectiveFrom}_i < 21$；
+2. **已满级成熟仓位集合（Settled）**：满足 $m - \text{effectiveFrom}_i \ge 21$，此时系数封顶为 22。
 
 对爬坡期求和：
 
-$$\sum_{i \in \text{Climb}} p_i \cdot (1 + m - j_i) = (1 + m) \sum_{i \in \text{Climb}} p_i - \sum_{i \in \text{Climb}} (p_i \cdot j_i)$$
+$$\sum_{i \in \text{Climb}} p_i \cdot (1 + m - \text{effectiveFrom}_i) = (1 + m) \sum_{i \in \text{Climb}} p_i - \sum_{i \in \text{Climb}} (p_i \cdot \text{effectiveFrom}_i)$$
 
-智能合约只需在存储中实时维护两个全局标量：
+智能合约在存储中实时维护四个全局标量：
 * $P_{\text{climb}} = \sum_{i \in \text{Climb}} p_i$（爬坡期本金标量之和）
-* $J_{\text{climb}} = \sum_{i \in \text{Climb}} (p_i \cdot j_i)$（加权激活序数标量之和）
+* $J_{\text{climb}} = \sum_{i \in \text{Climb}} (p_i \cdot \text{effectiveFrom}_i)$（加权虚拟激活序数标量之和）
+* $P_{\text{settled}} = \sum_{i \in \text{Settled}} p_i$（已满级成熟本金标量之和）
+* $\text{headOpening} = \sum_{i \in \text{Opening}} (\text{head}_i \cdot p_i)$（当期新开仓凭据提前量权重暂存项）
+
+**开仓区间溢出修正（`headOpening`）**：  
+常规仓位在区间 $m$ 开仓时，$\text{activeFrom} = \text{effectiveFrom} = m + 1$，在式 $(1 + m)P_{\text{climb}} - J_{\text{climb}}$ 中该仓位的代数贡献恰好为 $(1 + m - (m + 1)) \cdot p = 0$。但对于凭据仓位，$\text{effectiveFrom} = m + 1 - \text{head}$，代数项展开为 $(1 + m - (m + 1 - \text{head})) \cdot p = \text{head} \cdot p$。为了使带有提前量的仓位在尚未生效的开仓区间 $m$ 绝不提前分红，账本在开仓时将 $\text{head} \cdot p$ 累加进 $\text{headOpening}$ 并在总权重中原子扣除。当时钟推进到 $m+1$ 时，$\text{headOpening}$ 自动归零，仓位顺理成章以完整的起始倍数开始计算贡献。
 
 在任意时钟区间 $m$，全池总权重的计算退化为严格的 **$O(1)$ 简单四则运算**：
 
-$$W(m) = (1 + m) \cdot P_{\text{climb}} - J_{\text{climb}} + 22 \cdot P_{\text{settled}} + W_{\text{exiting}}$$
+$$W(m) = (1 + m) \cdot P_{\text{climb}} - J_{\text{climb}} + 22 \cdot P_{\text{settled}} + W_{\text{exiting}} - \text{headOpening}$$
 
 #### 22 槽位环形缓冲区（Graduation Ring）
 当区间推进至 $m$ 时，恰好满 21 期的批次需要从 $P_{\text{climb}}$ 毕业转入 $P_{\text{settled}}$。合约使用长度为 $\text{COHORT\_SLOTS} = 22$ 的固定环形数组：
 
-$$\text{slot} = \text{activeFrom} \pmod{22}$$
+$$\text{slot} = \text{effectiveFrom} \pmod{22}$$
 
 每个周期处理一个全局毕业槽位，并为每个已注册资产处理对应槽位。Gas 开销与全网质押人数 $N$ 无关，但随只增不减的资产列表长度线性增长。
 
@@ -237,10 +245,11 @@ $$\text{Share}_{i, a} = \left( Q_{\text{total}} \cdot \frac{W_{\text{open}}(a)}{
 1. **部署时锁定的准入门槛**：[`StakingVault.sol`](../contracts/src/StakingVault.sol#L169) 通过构造参数接收不可变 `minStake`。发布配置将其设为 `100_000 FATCAT`（占 10 亿总量的 0.01%），部署后不设 Setter；
 2. **纯线性规模收益**：在资历系数与 DIET 相同时，门槛之上的仓位权重随本金线性增长，不存在超线性规模乘数；另开新仓位会从自己的资历路径起步；
 3. **资历实体化通道（[`SeniorityCertificate.sol`](../contracts/src/SeniorityCertificate.sol)）**：
-   - **创世同步部署**：随核心质押合约群一并创世部署。仓位完全退出时，质押者可选择将累积的历史资历阶梯（最高 22 级）印刻为不可篡改的 ERC-721 资历凭证；
-   - **通缩销毁机制**：每次铸造必须永久销毁硬编码常数 `100_000 FATCAT` 至黑洞死地址 `0x000000000000000000000000000000000000dEaD`，将荣誉凭证铸造与协议绝对通缩挂钩；
-   - **硬顶上限与冷启动锁**：全网硬顶 10,000 枚；铸造在部署满 21 天后一次性开启（`mintOpensAt`），无逐笔冷却；
-   - **全链上 SVG 动态渲染**：全套证书元数据与矢量图形完全由链上渲染器（`SeniorityCertificateRenderer.sol`）与字节码字体库（`CertificateData.sol`）纯链上动态计算生成，不依赖任何中心化托管或外部 IPFS。
+   - **创世同步部署**：随核心质押合约群一并创世部署。普通仓位完全退出时，只要本金满足 $\ge 100{,}000\text{ FATCAT}$ 且合约部署满 21 天（`mintOpensAt` 解锁），质押者可调用 `redeemAndIssueCertificate()` 将当前达成的实际资历档位（$c_i \in [1, 22]$）印刻为不可篡改的 ERC-721 资历凭证（并非仅限满级 22 级仓位）；
+   - **死地址永久锁定**：每次铸造必须将固化的 `100_000 FATCAT`（`MINT_BURN`）转入黑洞死地址 `0x000000000000000000000000000000000000dEaD`，实现流通筹码的事实性永久退出（底层调用代币 `transfer(DEAD, MINT_BURN)`，非调用缩减代币总量的 `burn()` 接口）；剩余本金全额退回用户钱包；
+   - **凭据开仓与门槛豁免**：持有未被占用的凭据可调用 `stakeWithCertificate(principal, diet, certificateId)` 开仓，新仓位直接继承该凭据的起始倍数（对应提前量 $\text{head} = \text{multiplier} - 1$），并豁免 `minStake` 门槛限制；仓位存续期间凭据独占锁定（`inUse == true`），退出时释放凭据；凭据开出的仓位严禁再次嵌套铸造新凭据；
+   - **硬顶上限与冷启动锁**：全网硬顶 10,000 枚；铸造在部署满 21 天后一次性开启，无逐笔冷却；
+   - **全链上 SVG 动态渲染**：全套证书元数据与矢量图形完全由链上渲染器（`SeniorityCertificateRenderer.sol`）与字节码字体库（`CertificateData.sol`）纯链上动态计算生成，元数据属性为起始倍数（`Starting multiplier`）与使用状态（`Status`），零依赖中心化服务器或 IPFS。
 
 ---
 
@@ -315,30 +324,31 @@ $$\sum_{i} r_i \le R$$
 3. **FATCAT 毕业后增补上架**：
    FATCAT 首发于 Flap 联合曲线上，初期无 AMM 深度。只有在毕业注入 PancakeSwap V2、完成路由验证且 TWAP 预热后，治理才可通过 3 天标准队列将其加入餐单；上架并非自动发生。
 
-### 6.4 创世启动时序与双重物理墙钟闸门 (Genesis Launch Sequence & Dual-Gate Cold Start)
+### 6.4 创世启动时序与两道独立的七天闸门 (Genesis Launch Sequence & Dual-Gate Cold Start)
 
-从代币初始铸造到进入稳态分红状态机的全过程，受由物理时间锁与状态门禁共同构成的严密启动时序管辖：
+税收接收、质押合约部署与开放质押是三个独立事件。七天计奖时钟从一次性的“开放质押”交易开始，不从部署或毕业开始：
 
 ```
-[ 阶段 0: 联合曲线发射 ] ──► [ 阶段 1: 毕业与流动性迁移 ] ──► [ 阶段 2: 开放质押 FEED 闸门 ]
-开启曲线内买卖交易          注入 PancakeSwap V2 交易对;       部署生产质押合约;
-4% 交易税流入金库           累积 TWAP 预言机均价数据          开放质押开仓 (获取初始席位)
-                                                                            │
-                                                                            ▼
-[ 阶段 4: 常态化平稳分红 ] ◄─── [ 阶段 3: 7 天物理墙钟双闸门蓄水期 ]
-通过 Router 正式释放 Belly 资金;  • 分红时钟延迟: 启动后首周释放量恒定为 0
-启动链上批量市场兑换              • 金库提款延迟: 7 天 Spender 提款强制时间锁
-早期仓位资历满级 (最高22倍)        • 税收持续流入: flush() 注入 Belly ("只进不出，深厚蓄水")
+[ Flap 代币发射 ] ──► [ 税收进入 Belly；质押合约可提前部署但保持关闭 ]
+                              │
+                 Governor 提前开放 或 毕业后任何人触发开放
+                              ▼
+                         [ 开放质押 ]
+                              │ 整整 7 天：奖励分配为 0
+                              ▼
+                    [ 第 8 天：开始计奖 ]
+                              │ 后续周期推进、路线结算
+                              ▼
+                        [ 可领取奖励 ]
+
+独立闸门：Belly Spender 提案 → 7 天时间锁 → Governor 激活。
 ```
 
-1. **阶段 0：联合曲线发射**：FATCAT 代币先行在 Flap 联合曲线上开启公开交易。Flap 官方 TaxProcessor 识别交易量，将创作者名义收益划转至 `FatCatStakingVault`；
-2. **阶段 1：毕业与流动性迁移**：当达到 24 BNB 毕业指标后，Flap 原子化将流动性迁移至 PancakeSwap V2 主池（`FATCAT/WBNB`），确立标准交易对。毕业后的交易税收通道维持生效；
-3. **阶段 2：质押部署与开仓闸门（FEED Gate）**：在确认链上交易对与 TWAP 观察器就绪后，部署核心质押合约系统。质押通道即刻向社区开放，允许质押者尽早锁定仓位席位；
-4. **阶段 3：双重 7 天物理墙钟蓄水闸门**：为根除早期恶意抽吸分红的闪击风险，让全网早期质押者站在同一起跑线上公平攀登资历阶梯（$c_i \in [1, 22]$），系统部署了两道并行的绝对物理屏障：
-   - **时钟闸门**：链上硬编码锁定分红开启延迟。在此 7 天物理延迟内，餐次正常推进，仓位资历正常累加，但分红释放量严格为 0，冷启动首周绝不追溯补发；
-   - **金库闸门**：治理方提议 `ExecutionRouter` 为 Spender。该提案必须等待整整 7 天物理时间锁届满后方可激活生效。在此期间，Belly 无任何有效提款方，资金 100% 只进不出；
-   - **蓄水缓冲构建**：PancakeSwap 上产生的 4% 交易税收通过 `flush()` 持续不断注入 The Belly，在正式开闸前积攒起深厚的储备底仓；
-5. **阶段 4：常态化平稳分红**：7 天双闸门到期后，激活绑定 `ExecutionRouter`。协议正式依照一阶阻尼释放公式开闸，向已具备成熟资历倍数的质押者发放分红。
+1. **代币发射与税收接收**：FATCAT 先在 Flap 联合曲线上交易。转发金库将创作者收益送入 Belly；这不依赖质押合约是否已部署或开放。此后 Flap 可将流动性迁移至 PancakeSwap V2，毕业后的税收仍继续；
+2. **提前部署、默认关闭**：代币发射且初始奖励路线完成审查后，生产质押合约可在毕业前部署。金库接受 Flap 状态 0–4，但部署时禁止质押和周期推进，`stakingOpenedAt = rewardStartAt = 0`；
+3. **一次性开放质押**：毕业前只有 Governor 可调用 `vault.openStaking()` 提前开放；Flap `state()` 达到毕业后的 2–4 时，任何人都可在仍关闭的情况下触发开放。该交易同时开放质押并固定 `rewardStartAt = stakingOpenedAt + 7 天`。若选择提前开放，第八天可能早于 Flap 毕业；FATCAT 作为奖励资产仍要等待毕业、路线验证和预言机预热；
+4. **两道独立的七天闸门**：从质押开放起整整七天，仓位资历与税收储备可累积，但奖励分配量为零，之后不追溯补发。治理方另行提议 Router 为 Belly Spender，其七天时间锁从提案而非质押开放开始，激活可能更晚；
+5. **周期结算与可领取分红**：达到 `rewardStartAt` 只会自动改变计奖资格，不会自动发交易或在该秒到账。首笔可领取奖励仍需此后一个含有效计奖时间的周期被 `advance()` 结算、Belly Spender 已激活，并完成对应奖励路线执行或回退结算；Keeper 应持续运行，但链上交易的出块时间不能保证精确到秒。
 
 ---
 
@@ -346,7 +356,7 @@ $$\sum_{i} r_i \le R$$
 
 ### 7.1 可复现测试证据
 
-仓库记录了多轮对抗性与操作面审查。测试总数会随 revision 与 RPC 端点变化，发布时必须附 commit、命令和证据工件，不能写成永恒不变的协议常数。以本草案当前工作树为准，`FOUNDRY_PROFILE=local forge test` 报告 **78+ 个套件 / 582 项测试 / 0 失败**。主网分叉结果仅对该次运行所固定的区块与 RPC 有效。
+仓库记录了多轮对抗性与操作面审查。测试总数会随 revision 与 RPC 端点变化，发布时必须附 commit、命令和证据工件，不能写成永恒不变的协议常数。以本草案当前工作树为准，`FOUNDRY_PROFILE=local forge test` 报告 **77 个套件 / 570 项测试 / 0 失败**。主网分叉结果仅对该次运行所固定的区块与 RPC 有效。
 
 Foundry fuzz/invariant 与 Echidna 属于基于属性的测试，不等于形式化验证。权威覆盖矩阵是 [`contracts/doc/SECURITY_PROPERTIES.md`](../contracts/doc/SECURITY_PROPERTIES.md)：`[F]` 表示已编码进有状态属性测试，`[T]` 表示定向测试，`[D]` 表示仅文档化，`[U]` 表示未强制假设。该矩阵并未把 B1–V5 的所有属性标为已执行或已证明。
 
@@ -412,7 +422,7 @@ $$\sum_{i=1}^N r_i \le R$$
    $$\sum_{i=1}^N r_i \le \frac{\text{Rate} \cdot S}{\text{RAY}} \le \frac{\left( \frac{R \cdot \text{RAY}}{S} \right) \cdot S}{\text{RAY}} = R \quad \blacksquare$$
 
 **推论（物理残渣沉淀）**：
-每次兑现产生的微量舍入残渣 $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ 永久沉淀于分发器合约中，合约物理代币余额恒严格超额覆盖名义负债。
+每次兑现产生的微量舍入残渣 $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ 永久沉淀于分发器合约中，合约物理代币余额恒大于等于名义负债（$\text{Balance} \ge \text{Liability}$）。
 
 ### B.3 偿付性前提与代币模型边界 (Preconditions & Scope)
 上述超额储备数学不变量（属性 D1）严格建立在以下工程假设之上：
@@ -429,10 +439,11 @@ $$\sum_{i=1}^N r_i \le R$$
 | 核心操作 / 接口调用 | 典型调用角色 | 理论时间复杂度 | 实测 Gas 消耗 (Gas Units) | 架构与工程特性说明 |
 |---|---|---|---|---|
 | `StakingVault.stake()`（首次开仓） | 普通用户 | $O(1)$ | ~142,500 | 包含首次开仓 ERC-20 转账、仓位记录与环形槽位初始化 |
-| `StakingVault.stake()`（增补本金） | 普通用户 | $O(1)$ | ~98,200 | 存量仓位增补质押本金，更新标量累加器 |
+| `StakingVault.stakeWithCertificate()` | 凭据持有者 | $O(1)$ | ~168,000 | 锁定凭据并带入历史起跑倍数，豁免最低质押门槛 |
 | `StakingVault.redeem()`（赎回本金） | 普通用户 | $O(1)$ | ~125,600 | 100% 赎回本金，记入当期退出并归零仓位资历权重 |
-| `SeniorityLedger.changeDiet()` | 普通用户 | $O(1)$ | ~68,400 | 仅更新次周期生效的 DIET 指针与槽位转移，成本与网络规模无关 |
-| `IntervalController.advanceInterval()` | 任意人 / Keeper | $O(M_{\text{assets}})$ | ~185,000（基准 5 资产） | 推进时钟、环形缓冲区槽位常数移库；**开销与全网质押总人数 $N$ 严格无关** |
+| `StakingVault.redeemAndIssueCertificate()` | 普通用户 | $O(1)$ | ~189,000 | 赎回本金并转入 100k FATCAT 至死地址，链上铸造 ERC-721 凭据 |
+| `StakingVault.setDiet()` | 普通用户 | $O(1)$ | ~68,400 | 用户更新指定仓位次周期生效的 DIET 指针与槽位转移，成本与网络规模无关 |
+| `IntervalController.advance()` | 任意人 / Keeper | $O(M_{\text{assets}})$ | ~185,000（基准 5 资产） | 推进时钟、环形缓冲区槽位常数移库；**开销与全网质押总人数 $N$ 严格无关** |
 | `RewardDistributor.claim()`（单批次） | 普通用户 | $O(1)$ | ~88,300 | 提取单个已完成批次的代币奖励并更新仓位负债记账 |
 | `RewardDistributor.claim()`（10 批次） | 普通用户 | $O(K)$ | ~164,800 | 跨越 10 个批次的线性累加提领；前缀差分为常数，循环消耗在批次遍历 |
 | `RewardDistributor.claimThrough()` | 普通用户 | $O(K_{\text{bounded}})$ | ~195,000（分段上限） | 面对长期积压时提供有界分段提取，彻底消除区块 Gas 溢出风险 |
@@ -476,9 +487,9 @@ TheFatCat 核心团队将智能合约与用户资金安全置于绝对首位。�
    在提交涉及资金安全、逻辑漏洞或越权风险的敏感技术细节时，亦可使用官方 PGP 密钥进行加密投递（PGP 密钥指纹将于主网部署时在官方 GitHub 与官网安全板块公布）。
 3. **查阅与反馈机制**：  
    - **定期查阅与快速反馈**：安全团队将定期查阅提报的漏洞报告，并在核实后快速向报告者提供进度反馈；
-   - **负责任披露公约**：在补丁完成开发、测试验证并通过时间锁完成全网部署前，双方共同遵守严格的信息保密原则。
+   - **负责任披露公约**：在补丁完成开发、测试验证并通过治理安全迁移流程完成部署前，双方共同遵守严格的信息保密原则。
 4. **白帽感谢与奖励**：  
-   协议虽然不设机械化的固定金额赏金清单，但针对经过验证的严重（Critical）与高危（High）漏洞，治理多签将根据漏洞影响范围与推导质量，由社区金库直接向报告人颁发可观的去中心化感谢奖励。
+   协议虽然不设机械化的固定金额赏金清单，但针对经过验证的严重（Critical）与高危（High）漏洞，治理多签将根据漏洞影响范围与推导质量，由 Ops 多签运营资金池酌情向报告人颁发去中心化感谢奖励。协议采用不可变代码架构，若需执行重大架构修复，治理多签将协同发布安全迁移与新合约部署指引。
 
 ---
 

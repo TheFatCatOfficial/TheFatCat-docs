@@ -33,8 +33,8 @@ The mathematical engine of TheFatCat provides $O(1)$ constant-gas scalar weight 
 
 ---
 
-## 3. Seniority Certificate & Renderer (Genesis Infrastructure)
+## 3. Seniority Certificate & Renderer (Genesis Deployed, Upcoming Release)
 
-- **SeniorityCertificate (`SeniorityCertificate.sol`)**: Genesis-deployed ERC-721 credential minted upon maturity exit by burning 100,000 FATCAT (hard-capped at 10,000 tokens, 21-day cold-start lock before minting opens).
+- **SeniorityCertificate (`SeniorityCertificate.sol`)**: Genesis-deployed ERC-721 credential contract. Reserved as an advanced protocol feature to be officially released once the protocol matures; exact parameters and mechanics subject to future official announcement.
 - **CertificateData (`CertificateData.sol`)**: On-chain raw font bytecode and portrait vector graphics asset store deployed at genesis.
 - **CertificateRenderer (`SeniorityCertificateRenderer.sol`)**: Pure on-chain SVG renderer producing deterministic visual badge layers with zero external IPFS or HTTP dependencies.

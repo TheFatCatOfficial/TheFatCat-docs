@@ -2,8 +2,8 @@
 
 ### Decentralized Trading-Tax Routing Protocol with Adaptive Damping and Seniority-Weighted Allocation
 
-**Version: 1.0 Official Release | Date: September 15, 2026**
-*Derived from Project Plan v0.5 and checked against the current contract source and launch configuration. Equations identified as analytical models state their assumptions explicitly. The ordinary production path assumes no seniority head start; the current worktree's explicitly non-deployable `stakeWithHead` experiment is outside this specification and must not ship in the release build. This document contains no projected returns or promises of yield.*
+**Version: 1.0 Official Release | Date: September 20, 2026**
+*Derived from Project Plan v0.5 and checked against the current contract source and launch configuration. Equations identified as analytical models state their assumptions explicitly. The ordinary production path starts climbing from seniority notch 1; holders of verified on-chain Seniority Certificates may open positions via `stakeWithCertificate` carrying their permanent starting multiplier (corresponding to underlying `openWithHead`, with head start $\text{head} = \text{multiplier} - 1 \in [0, 21]$). This document contains no projected returns or promises of yield.*
 
 ---
 
@@ -12,7 +12,7 @@
 Common decentralized trading-tax (dividend / reflection) designs use a shared reward configuration, pass fees through with little or no time buffer, and allocate by capital without a seniority input. These are properties of the upstream pattern compared here, not claims about every tax-token implementation.
 
 TheFatCat combines the following mechanisms in one protocol architecture:
-1. **The Belly Kinetic Reservoir**: A permissionlessly advanced damping reservoir that can allocate once at least 8 hours have elapsed. At the nominal cadence it allocates $\frac{1}{21} \approx 4.7619\%$ of unreserved quote balance per interval, producing an idealized zero-inflow half-life of 4.735 days;
+1. **The Belly Kinetic Reservoir**: A permissionlessly advanced damping reservoir that can allocate once at least 8 hours have elapsed. At the nominal cadence it allocates $\frac{1}{21} \approx 4.7619\%$ of unreserved quote balance per interval, producing an idealized zero-inflow half-life of 4.736 days;
 2. **$O(1)$ Closed-Form Seniority Ledger**: Linear scalar decomposition aggregates dynamic seniority coefficients (levels 1 through 22) across arbitrary numbers of stakers without iterating over positions. End-to-end claims remain linear in the execution batches traversed and can be bounded with `claimThrough`;
 3. **Sovereign Diet Architecture**: Each position chooses its procurement asset. Ignoring probation caps and integer dust, the gross quote budget attributable to a position depends on its share of total weight; asset choice still affects execution, market value, issuer exposure, and outside incentives;
 4. **Dual-Liability Accounting & Conservative Rounding**: Canonical WBNB is the default and fallback quote asset. Batch accounting, exact-delivery checks, and downward rounding maintain tested solvency invariants under the supported token model.
@@ -69,7 +69,7 @@ $$\left(\frac{20}{21}\right)^{k_{1/2}} = \frac{1}{2} \implies k_{1/2} = \frac{\l
 
 Converting cycles into absolute physical time $t_{1/2}$:
 
-$$t_{1/2} = k_{1/2} \times 8 \text{ hours} \approx 113.65 \text{ hours} \approx 4.735 \text{ days}$$
+$$t_{1/2} = k_{1/2} \times 8 \text{ hours} \approx 113.654 \text{ hours} \approx 4.736 \text{ days}$$
 
 #### Decay Trajectory under Zero-Volume Regime
 
@@ -107,43 +107,51 @@ In production, block timestamps fluctuate, and external keepers may experience t
 
 Every stake of FATCAT is represented by an isolated logical position. Its state is split across two contracts rather than stored in one Solidity struct:
 
-$$\text{Position}_i = \{ \text{owner}, \text{principal}, \text{diet}, \text{activeFrom}, \text{endInterval} \}$$
+$$\text{Position}_i = \{ \text{owner}, \text{principal}, \text{diet}, \text{activeFrom}, \text{effectiveFrom}, \text{endInterval} \}$$
 
-`StakingVault` stores owner, principal, diet and optional Seniority Certificate association (`certificatePlusOne`); `SeniorityLedger` stores principal, `activeFrom` and `endInterval` for weight accounting.
+`StakingVault` stores owner, principal, diet and optional Seniority Certificate association (`certificatePlusOne`); `SeniorityLedger` stores principal, `activeFrom`, `effectiveFrom` and `endInterval` for weight accounting.
 
 * **Anti-Merging Guarantee**: Positions are strictly distinct and non-fungible. Stakers cannot merge new funds into existing mature positions to artificially wash or bypass seniority ramp-up;
-* **Next-Interval Activation**: Positions staked during interval $m$ are assigned $\text{activeFrom} = m + 1$, neutralizing flash-loan attacks seeking same-block staking and dividend extraction.
+* **Next-Interval Activation**: Positions staked during interval $m$ are assigned $\text{activeFrom} = m + 1$, neutralizing flash-loan attacks seeking same-block staking and dividend extraction;
+* **Effective Activation Mapping**: For standard positions, $\text{effectiveFrom} = \text{activeFrom}$; for positions opened with a Seniority Certificate (via `stakeWithCertificate`), let the certificate multiplier be $\text{multiplier} \in [1, 22]$, yielding head-start $\text{head} = \text{multiplier} - 1 \in [0, 21]$, and the contract records $\text{effectiveFrom} = \text{activeFrom} - \text{head}$.
 
 ### 3.2 $O(1)$ Closed-Form Seniority Weight Aggregation
 
 #### Problem Formulation
-Let $p_i$ be the staked principal of position $i$. The seniority multiplier initiates at 1, increments by 1 for each completed active protocol interval (whose minimum length is eight hours), and caps at 22 after 21 completed intervals:
+Let $p_i$ be the staked principal of position $i$. Prior to reaching the active interval ($m < \text{activeFrom}_i$), the seniority coefficient is strictly 0. Once active ($m \ge \text{activeFrom}_i$ and $m < \text{endInterval}_i$), the coefficient is determined by the interval distance elapsed from its virtual activation interval $\text{effectiveFrom}_i$, capping at 22:
 
-$$c_i(m) = 1 + \min(m - j_i, 21), \quad \text{where } j_i = \text{activeFrom}_i \text{ and } m\ge j_i$$
+$$c_i(m) = \begin{cases} 0, & m < \text{activeFrom}_i \\ 1 + \min(m - \text{effectiveFrom}_i, 21), & m \ge \text{activeFrom}_i \text{ and } m < \text{endInterval}_i \end{cases}$$
+
+For standard positions ($\text{effectiveFrom}_i = \text{activeFrom}_i$), the coefficient in the first active interval $m = \text{activeFrom}_i$ is $1 + 0 = 1$. For positions staked with a maximum certificate ($\text{head}_i = 21$), the coefficient in the first active interval immediately achieves $1 + 21 = 22$.
 
 Aggregate protocol weight is defined as $W(m) = \sum_i p_i \cdot c_i(m)$. As the participant count $N \to \infty$, iterative loops across individual positions become computationally infeasible and breach EVM block gas limits.
 
-#### Algebraic Closed-Form Decomposition
-TheFatCat eliminates loops in [`SeniorityLedger.sol`](../contracts/src/SeniorityLedger.sol#L7-L19) by decomposing the active staking population into two mutually exclusive sets:
-1. **Climbing Cohorts**: Positions where $m - j_i < 21$, yielding $c_i(m) = 1 + m - j_i$;
-2. **Settled Cohorts**: Positions where $m - j_i \ge 21$, yielding $c_i(m) = 22$.
+#### Algebraic Closed-Form Decomposition & Opening Correction
+TheFatCat eliminates loops in [`SeniorityLedger.sol`](../contracts/src/SeniorityLedger.sol) by decomposing active positions into two mutually exclusive sets based on their distance from $\text{effectiveFrom}$:
+1. **Climbing Cohorts**: Positions where $m - \text{effectiveFrom}_i < 21$;
+2. **Settled Cohorts**: Positions where $m - \text{effectiveFrom}_i \ge 21$, yielding capped coefficient 22.
 
 Summing over the climbing set:
 
-$$\sum_{i \in \text{Climb}} p_i \cdot (1 + m - j_i) = (1 + m) \sum_{i \in \text{Climb}} p_i - \sum_{i \in \text{Climb}} (p_i \cdot j_i)$$
+$$\sum_{i \in \text{Climb}} p_i \cdot (1 + m - \text{effectiveFrom}_i) = (1 + m) \sum_{i \in \text{Climb}} p_i - \sum_{i \in \text{Climb}} (p_i \cdot \text{effectiveFrom}_i)$$
 
-The smart contract maintains two global scalar storage accumulators:
+The smart contract maintains four global scalar storage accumulators:
 * $P_{\text{climb}} = \sum_{i \in \text{Climb}} p_i$ (Aggregate principal of climbing cohorts)
-* $J_{\text{climb}} = \sum_{i \in \text{Climb}} (p_i \cdot j_i)$ (Aggregate weighted activation scalar)
+* $J_{\text{climb}} = \sum_{i \in \text{Climb}} (p_i \cdot \text{effectiveFrom}_i)$ (Aggregate weighted virtual activation scalar)
+* $P_{\text{settled}} = \sum_{i \in \text{Settled}} p_i$ (Aggregate principal of settled cohorts)
+* $\text{headOpening} = \sum_{i \in \text{Opening}} (\text{head}_i \cdot p_i)$ (Transient opening-interval certificate head weight)
+
+**Opening Interval Correction (`headOpening`)**:  
+When a standard position is opened in interval $m$, $\text{activeFrom} = \text{effectiveFrom} = m + 1$, so its algebraic contribution in $(1 + m)P_{\text{climb}} - J_{\text{climb}}$ is $(1 + m - (m + 1)) \cdot p = 0$. However, for a certificate position, $\text{effectiveFrom} = m + 1 - \text{head}$, expanding to $(1 + m - (m + 1 - \text{head})) \cdot p = \text{head} \cdot p$. To prevent positions with head-starts from receiving unearned rewards in their opening interval $m$ prior to activation, the ledger records $\text{head} \cdot p$ into $\text{headOpening}$ upon creation and subtracts it atomically from total weight. When the clock advances to $m+1$, $\text{headOpening}$ is automatically reset to zero, allowing the position to contribute its full initial weight starting in $m+1$.
 
 At any arbitrary interval $m$, total protocol weight reduces to an **$O(1)$ constant-time scalar arithmetic evaluation**:
 
-$$W(m) = (1 + m) \cdot P_{\text{climb}} - J_{\text{climb}} + 22 \cdot P_{\text{settled}} + W_{\text{exiting}}$$
+$$W(m) = (1 + m) \cdot P_{\text{climb}} - J_{\text{climb}} + 22 \cdot P_{\text{settled}} + W_{\text{exiting}} - \text{headOpening}$$
 
 #### 22-Cohort Circular Graduation Buffer (Graduation Ring)
 As interval $m$ elapses, cohorts completing their 21st interval graduate from $P_{\text{climb}}$ into $P_{\text{settled}}$. The contract manages this transition via a fixed circular array of size $\text{COHORT\_SLOTS} = 22$:
 
-$$\text{slot} = \text{activeFrom} \pmod{22}$$
+$$\text{slot} = \text{effectiveFrom} \pmod{22}$$
 
 Each interval transition processes one global graduation slot and one slot per registered asset. The cost is independent of total staker count $N$ but scales linearly with the append-only asset list.
 
@@ -237,10 +245,11 @@ For active principal amounts $p_i$ and coefficients $c_i$, let $\bar c=\sum_i p_
 1. **Deployment-Pinned Entry Barrier**: [`StakingVault.sol`](../contracts/src/StakingVault.sol#L169) receives `minStake` as an immutable constructor argument. The launch configuration pins it to `100_000 FATCAT` (0.01% of the 1,000,000,000 total supply), with no post-deployment setter;
 2. **Strictly Linear Scale**: Holding coefficient and diet fixed, position weight is linear in principal above the threshold; there is no superlinear size multiplier. A separate new position begins its own seniority path;
 3. **Seniority Physicalization Channel ([`SeniorityCertificate.sol`](../contracts/src/SeniorityCertificate.sol))**:
-   - **Genesis Deployment**: Deployed alongside the core staking contracts; stakers exiting an active position may choose to imprint their accrued seniority notch (up to 22) into an immutable ERC-721 credential token;
-   - **Deflationary Burn Sink**: Minting permanently burns `100_000 FATCAT` directly to the blackhole dead address `0x000000000000000000000000000000000000dEaD`, coupling credential issuance to protocol deflation;
-   - **Fixed Hard Cap & Cold-Start Lock**: Capped at 10,000 tokens; minting opens once 21 days after deployment (`mintOpensAt = deploy + MINT_DELAY`); no per-mint cooldown;
-   - **100% On-Chain SVG Rendering**: Dynamic artwork and metadata are computed and rendered purely on-chain as vector SVGs by `SeniorityCertificateRenderer.sol` and `CertificateData.sol` without centralized servers or IPFS dependencies.
+   - **Genesis Deployment**: Deployed alongside the core staking contracts. When fully exiting an active standard position, as long as principal satisfies $\ge 100{,}000\text{ FATCAT}$ and the contract has been deployed for at least 21 days (`mintOpensAt` unlocked), stakers may call `redeemAndIssueCertificate()` to imprint their accrued seniority notch ($c_i \in [1, 22]$) into an immutable ERC-721 credential token (available across all notches, not restricted to notch 22);
+   - **Permanent Dead Address Lock**: Minting permanently transfers the fixed `100_000 FATCAT` (`MINT_BURN`) directly to the blackhole dead address `0x000000000000000000000000000000000000dEaD`, achieving factual permanent removal from circulation (underlying token `transfer(DEAD, MINT_BURN)`, not a `burn()` call that reduces `totalSupply`); remaining principal is refunded to the user;
+   - **Certificate Staking & Threshold Exemption**: Holders of an unallocated certificate can call `stakeWithCertificate(principal, diet, certificateId)` to open a position, inheriting the certificate's starting multiplier (head-start $\text{head} = \text{multiplier} - 1$) and exempt from the `minStake` requirement. The certificate is exclusively locked (`inUse == true`) during the position's lifetime and released upon exit. Re-issuing another certificate from a certificate-backed position is strictly prohibited;
+   - **Fixed Hard Cap & Cold-Start Lock**: Capped at 10,000 tokens; minting opens once 21 days after deployment (`deploy + MINT_DELAY`); no per-mint cooldown;
+   - **Pure On-Chain SVG Rendering**: Vector artwork and metadata are generated dynamically purely on-chain by `SeniorityCertificateRenderer.sol` and `CertificateData.sol`. Metadata attributes are strictly `Starting multiplier` and `Status` (`In use` or `Available`), with zero external dependencies on centralized servers or IPFS.
 
 ---
 
@@ -315,30 +324,31 @@ Within the multi-asset menu:
 3. **Post-Graduation FATCAT Listing**:
    FATCAT initiates on the Flap bonding curve without external AMM liquidity. Only after AMM graduation, route verification and oracle initialization may governance add FATCAT through the standard 3-day timelock; listing is not automatic.
 
-### 6.4 Genesis Launch Sequence & Dual-Gate Cold Start
+### 6.4 Genesis Launch Sequence & Two Independent Seven-Day Gates
 
-The transition from initial token minting to a continuous dividend-paying state machine is governed by an explicit chronological sequence enforced across physical wall-clock gates:
+Tax collection, staking deployment and staking opening are separate events. The one-time staking opening—not deployment or graduation—starts the seven-day reward clock:
 
 ```
-[ Stage 0: Flap Curve ] ──► [ Stage 1: Graduation & Migration ] ──► [ Stage 2: FEED Gate Open ]
-Token trading opens         PancakeSwap V2 pair seeded;             Production staking deployed;
-4% tax accrues to vault     TWAP observations accumulate            Staking deposits open
-                                                                            │
-                                                                            ▼
-[ Stage 4: Steady Emissions ] ◄─── [ Stage 3: 7-Day Dual Wall-Clock Accumulation ]
-Belly releases open via Router;     • Emission Delay: Distributions remain zero for first 7 days
-Batch market execution active       • Vault Outflow Timelock: 7-day spender activation window
-Seniority notches mature (up to 22) • Flap taxes flush to Belly ("accumulate only, zero outflow")
+[ Flap token launch ] ──► [ Tax flows to Belly; staking graph may deploy CLOSED ]
+                                  │
+                 Governor opens early OR anyone opens after graduation
+                                  ▼
+                       [ Staking deposits open ]
+                                  │ exactly 7 days: allocation = 0
+                                  ▼
+                   [ Day 8: reward time eligible ]
+                                  │ later interval advance + route settlement
+                                  ▼
+                       [ Claimable rewards ]
+
+Separate gate: Belly Spender proposal → 7-day timelock → Governor activation.
 ```
 
-1. **Stage 0: Bonding Curve Launch**: FATCAT trading initiates exclusively on Flap's bonding curve. The Flap TaxProcessor recognizes trading volume and routes nominal creator revenue to `FatCatStakingVault`;
-2. **Stage 1: Graduation & Liquidity Migration**: Upon reaching the curve target (24 BNB), Flap atomically migrates liquidity to PancakeSwap V2 (`FATCAT/WBNB`), establishing the canonical trading pair. Post-graduation trading tax remains active;
-3. **Stage 2: Staking Deployment & FEED Gate**: Once live pair routing is verified and TWAP price accumulators are initialized, production staking contracts are deployed. Deposits are unlocked immediately for stakers to secure initial positions;
-4. **Stage 3: Dual 7-Day Wall-Clock Accumulation Gates**: To eliminate unfair early-block dividend extraction and allow all launch participants to scale their seniority ladders ($c_i \in [1, 22]$) on an equal footing, the contracts enforce two parallel physical barriers:
-   - **Reward Emission Delay**: Pinned to an immutable 7-day wall-clock delay. Throughout this window, interval advances rotate the graduation ring and increment staker seniority notches normally, but dividend calculations yield zero. The cold-start week is never retroactively paid;
-   - **Treasury Outflow Delay**: The authorized `ExecutionRouter` proposal must wait for a 7-day physical timelock before activation. During this period, The Belly has zero active spenders, guaranteeing zero capital drawdown;
-   - **Reservoir Buffer Build-Up**: Taxes collected from PancakeSwap volume continue to be forwarded via `flush()`, filling The Belly with quote reserves;
-5. **Stage 4: Steady-State Protocol Emissions**: Following the expiration of both 7-day gates, `ExecutionRouter` is permanently activated. Protocol releases begin, distributing quote reserves according to the discrete damping formula to stakers holding mature seniority weights.
+1. **Token Launch & Tax Collection**: FATCAT begins trading on Flap's bonding curve. Its forwarding vault routes creator revenue to The Belly independently of whether staking contracts exist or accept deposits. Flap may later graduate liquidity to PancakeSwap V2; post-graduation tax continues;
+2. **Closed Staking Deployment**: After token launch and initial reward-route review, the production staking graph may deploy before graduation. It accepts Flap states 0–4 but starts with deposits and interval advances disabled, `stakingOpenedAt = rewardStartAt = 0`;
+3. **One-Time Staking Opening**: Before graduation only Governor may call `vault.openStaking()`; once Flap `state()` is 2–4, anyone may trigger it if still closed. This transaction opens deposits and fixes `rewardStartAt = stakingOpenedAt + 7 days`. An intentionally early opening can place day eight before Flap graduation. FATCAT as a reward asset still requires graduation, route verification and oracle warm-up;
+4. **Two Independent Seven-Day Gates**: The first seven full days after staking opens accumulate seniority and tax reserves but allocate zero rewards, without later back-pay. Governance separately proposes `ExecutionRouter` as Belly Spender; its own seven-day timelock begins at proposal, not staking opening, and activation may occur later;
+5. **Settlement & Claimable Rewards**: Reaching `rewardStartAt` automatically changes reward eligibility, but cannot send a transaction or guarantee a payout at that instant. The first claimable reward requires a later `advance()` closing an interval with eligible time, an activated Belly Spender, and route execution or fallback settlement. Keeper operation targets prompt settlement, not second-exact block inclusion.
 
 ---
 
@@ -346,7 +356,7 @@ Seniority notches mature (up to 22) • Flap taxes flush to Belly ("accumulate o
 
 ### 7.1 Reproducible Test Evidence
 
-The repository records multiple adversarial and operational review rounds. Test totals are revision- and endpoint-dependent and must be published with a commit, command and evidence artifact rather than as timeless protocol constants. As of this draft's current working tree, `FOUNDRY_PROFILE=local forge test` reports **78+ suites / 582 tests / 0 failures**. Mainnet-fork results are evidence only for the pinned block and RPC used by that run.
+The repository records multiple adversarial and operational review rounds. Test totals are revision- and endpoint-dependent and must be published with a commit, command and evidence artifact rather than as timeless protocol constants. As of this draft's current working tree, `FOUNDRY_PROFILE=local forge test` reports **77 suites / 570 tests / 0 failures**. Mainnet-fork results are evidence only for the pinned block and RPC used by that run.
 
 Foundry fuzzing/invariants and Echidna are property-based testing, not formal verification. The authoritative property matrix is [`contracts/doc/SECURITY_PROPERTIES.md`](../contracts/doc/SECURITY_PROPERTIES.md): `[F]` means encoded in a stateful property harness, `[T]` focused tests, `[D]` documented only, and `[U]` an unenforced assumption. It does not mark every B1–V5 property as executable or proved.
 
@@ -412,7 +422,7 @@ $$\sum_{i=1}^N r_i \le R$$
    $$\sum_{i=1}^N r_i \le \frac{\text{Rate} \cdot S}{\text{RAY}} \le \frac{\left( \frac{R \cdot \text{RAY}}{S} \right) \cdot S}{\text{RAY}} = R \quad \blacksquare$$
 
 **Corollary (Physical Dust Vesting)**:
-The residual rounding dust $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ permanently vests within the distributor contract. Physical token balances held by the contract strictly dominate recorded accounting liabilities.
+The residual rounding dust $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ permanently vests within the distributor contract, guaranteeing that physical token balances held by the contract are always greater than or equal to recorded accounting liabilities ($\text{Balance} \ge \text{Liability}$).
 
 ### B.3 Preconditions & Implementation Scope
 The excess reserve invariant (Security Invariant D1) holds strictly under the following system preconditions:
@@ -429,10 +439,12 @@ Under the deterministic Foundry local test profile (`FOUNDRY_PROFILE=local`), th
 | Core Function / Operation | Typical Caller | Theoretical Complexity | Measured Gas (Units) | Engineering Context & Notes |
 |---|---|---|---|---|
 | `StakingVault.stake()` (New Position) | User | $O(1)$ | ~142,500 | Includes initial ERC-20 transfer, position struct recording, and circular ring slot init |
+| `StakingVault.stakeWithCertificate()` | Holder | $O(1)$ | ~168,000 | Locks certificate and introduces starting multiplier; exempt from `minStake` floor |
 | `StakingVault.stake()` (Add Principal) | User | $O(1)$ | ~98,200 | Incremental deposit to existing position; updates scalar accumulators |
 | `StakingVault.redeem()` (Unstake) | User | $O(1)$ | ~125,600 | 100% principal return; logs mid-interval exit and zeroes active seniority weight |
-| `SeniorityLedger.changeDiet()` | User | $O(1)$ | ~68,400 | Updates next-interval DIET pointer and slot mapping; invariant to pool size |
-| `IntervalController.advanceInterval()` | Anyone / Keeper | $O(M_{\text{assets}})$ | ~185,000 (Baseline 5 assets) | Advances clock and rotates circular graduation buffer; **strictly independent of total stakers $N$** |
+| `StakingVault.redeemAndIssueCertificate()` | User | $O(1)$ | ~189,000 | Returns principal, transfers 100k FATCAT to DEAD address, mints on-chain ERC-721 credential |
+| `StakingVault.setDiet()` | User | $O(1)$ | ~68,400 | Updates next-interval DIET pointer and slot mapping; invariant to pool size |
+| `IntervalController.advance()` | Anyone / Keeper | $O(M_{\text{assets}})$ | ~185,000 (Baseline 5 assets) | Advances clock and rotates circular graduation buffer; **strictly independent of total stakers $N$** |
 | `RewardDistributor.claim()` (Single Batch) | User | $O(1)$ | ~88,300 | Claims token reward for a single finalized batch and updates liability record |
 | `RewardDistributor.claim()` (10 Batches) | User | $O(K)$ | ~164,800 | Multi-batch accumulation; prefix calculation is constant, loop overhead scales with batch count $K$ |
 | `RewardDistributor.claimThrough()` | User | $O(K_{\text{bounded}})$ | ~195,000 (Bounded cap) | Safe chunked claim for long backlogs, eliminating transaction block gas exhaustion |
@@ -476,9 +488,9 @@ TheFatCat core contributors prioritize smart contract security and user fund saf
    When submitting disclosures containing sensitive vulnerability details or exploit proofs, technical attachments may additionally be encrypted using the protocol's official PGP key (fingerprint published upon mainnet launch).
 3. **Review & Feedback Policy**:  
    - **Regular Review & Prompt Feedback**: The security team regularly reviews incoming disclosures and provides rapid triage feedback upon evaluation;
-   - **Coordinated Disclosure**: Both parties adhere to responsible disclosure principles while patches are engineered, verified, and deployed through standard governance timelocks.
+   - **Coordinated Disclosure**: Both parties adhere to responsible disclosure principles while patches are engineered, verified, and deployed through governance migration procedures.
 4. **White-Hat Recognition & Discretionary Bounties**:  
-   While the protocol avoids rigid mechanical bounty tiers, verified Critical and High severity findings are eligible for significant discretionary decentralized grants disbursed from the community treasury, scaled to impact and technical rigor.
+   While the protocol avoids rigid mechanical bounty tiers, verified Critical and High severity findings are eligible for discretionary decentralized grants disbursed from the Ops Safe operational funds, scaled to impact and technical rigor. The protocol employs an immutable architecture; in the event that remediation requires contract replacements, governance will coordinate migration procedures and deploy verified successors.
 
 ---
 

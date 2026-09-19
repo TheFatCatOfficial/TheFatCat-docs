@@ -11,11 +11,11 @@ nav_order: 2
 
 ---
 
-## 1. 本金与分红的物理隔离
+## 1. 本金与分红的严格合约隔离
 
 在 TheFatCat 架构中，质押的 FATCAT 代币始终是本金，绝不会与分红储备混淆：
 
-- **物理隔离存储**：质押代币严格锁定在 [`StakingVault.sol`]({% link zh/contracts.md %}) 内部。
+- **独立金库存储**：质押代币严格锁定在 [`StakingVault.sol`]({% link zh/contracts.md %}) 内部。
 - **与 The Belly 绝缘**：本金绝不流入 `Belly.sol`、路由合约或分发器合约。
 - **无条件随时赎回**：`redeem()` 函数故意忽略任何紧急暂停状态，且无需任何外部 Keeper 审批。
 
@@ -34,12 +34,12 @@ nav_order: 2
 
 ## 3. 偿付能力数学证明（非负粉尘定理）
 
-DeFi 分红分发器最隐蔽的系统性风险之一是舍入下溢/溢出：整数除法的累积舍入误差会导致金库账面欠款多于实际物理持有代币，从而导致最后提取的用户发生交易回滚（Bank Run）。
+DeFi 分红分发器最隐蔽的系统性风险之一是舍入下溢/溢出：整数除法的累积舍入误差会导致金库账面欠款多于实际持有代币，从而导致最后提取的用户发生交易回滚（Bank Run）。
 
 TheFatCat 通过双重 RAY 精度下的严格整除向下取整（Integer Floor Division），在数学层面上彻底清除了资不抵债的可能：
 
 ### 定理：非负粉尘归属定理（Non-Negative Dust Vesting）
-设 $R$（单位 D18{tok}）为单次执行批次中实际采购获得的分红代币总量，$S$（单位 D18{quote}）为该批次所消耗的计价资金预算。对于任意 $N$ 个满足 $\sum_{i=1}^N x_i \le S$ 的质押者应得计价份额 $x_i$，全网累计实际提取的代币总和 $\sum_{i=1}^N r_i$ 严格小于或等于物理到账代币总量 $R$：
+设 $R$（单位 D18{tok}）为单次执行批次中实际采购获得的分红代币总量，$S$（单位 D18{quote}）为该批次所消耗的计价资金预算。对于任意 $N$ 个满足 $\sum_{i=1}^N x_i \le S$ 的质押者应得计价份额 $x_i$，全网累计实际提取的代币总和 $\sum_{i=1}^N r_i$ 严格小于或等于实际到账代币总量 $R$：
 
 $$\sum_{i=1}^N r_i \le R$$
 
@@ -60,8 +60,8 @@ $$\sum_{i=1}^N r_i \le R$$
    
    $$\sum_{i=1}^N r_i \le \frac{\text{Rate} \cdot S}{\text{RAY}} \le \frac{\left( \frac{R \cdot \text{RAY}}{S} \right) \cdot S}{\text{RAY}} = R \quad \blacksquare$$
 
-### 推论：物理粉尘沉淀（安全不变量 D1）
-向下取整产生的微小正粉尘 $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ 永久沉淀在分发器内部。因此，分发器的物理代币储备始终严格大于或等于其链上登记的负债：
+### 推论：非负粉尘沉淀（安全不变量 D1）
+向下取整产生的微小正粉尘 $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ 永久沉淀在分发器内部。因此，分发器的链上代币储备始终严格大于或等于其登记的负债：
 
 $$\text{balanceOf}(\text{Distributor}, a) \ge \text{liability}[a]$$
 

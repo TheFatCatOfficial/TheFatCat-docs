@@ -15,5 +15,5 @@ Step-by-step operational tutorials for interacting with TheFatCat protocol.
 
 - **[Staking & Positions]({% link guides/staking.md %})**: How to open a staking position, meet the 100,000 FATCAT threshold, manage multi-position lifecycles, and understand activation rules.
 - **[Diets & Claiming Rewards]({% link guides/diets-and-claiming.md %})**: How to choose your reward asset (Diet), how interval allocations work, batch claiming, and native BNB unwrapping.
-- **[Seniority Certificates (ERC-721)]({% link guides/seniority-certificates.md %})**: Genesis credential architecture, 100k FATCAT deflationary burn minting, 10,000 hard cap, and multiplier inheritance.
+- **[Seniority Certificates (Upcoming)]({% link guides/seniority-certificates.md %})**: Genesis-deployed credential architecture; contracts deployed, scheduled for release once the protocol matures.
 - **[Emergency Exit (Without Front-End)]({% link guides/emergency-exit.md %})**: Complete self-custody instructions for interacting directly with the BscScan block explorer to redeem your principal if the web interface is offline.

@@ -14,15 +14,15 @@ Transparent disclosures regarding protocol assumptions, third-party dependencies
 ## 1. Protocol Pre-Launch Status
 
 {: .warning }
-TheFatCat protocol contracts are finalized in code and thoroughly verified across 78 test suites and 582 tests, but remain pre-launch on BNB Chain mainnet.
+TheFatCat protocol contracts are finalized in code and thoroughly verified across 77 test suites and 570 tests, but remain pre-launch on BNB Chain mainnet.
 
 - **Target Network**: BNB Chain (Chain ID: 56).
 - **Initial Launch Venue**: Flap bonding curve.
-- **FEED Activation Gate**: Token trading begins first on the bonding curve. Following graduation and DEX migration, staking opens for deposits.
-- **Dual 7-Day Warmup Timelock Regime**: Staking deposits climb seniority immediately, while dividend release is protected by two parallel 7-day physical timelocks:
-  1. **Reward Emission Delay**: During the first 7 days, protocol reward emissions are strictly zero, ensuring all early participants accrue seniority on equal footing;
-  2. **Treasury Outflow Delay**: The Belly reservoir enforces an immutable 7-day delay before allowing the execution router to withdraw any capital;
-  3. **Initial Cushion Building**: Throughout launch week, trading taxes flow continuously into The Belly with zero outflows, establishing deep backing before distributions begin.
+- **Staking Opening Timeline**: Token trading begins first on the bonding curve. Governance can open staking positions before graduation; if no governance intervention occurs, staking opens automatically once graduation milestones are reached and the token migrates to the DEX.
+- **7-Day Warmup & Treasury Timelock Protections**:
+  1. **Reward Emission Delay (Warmup Period)**: When staking is opened (calling `openStaking()` under the hood to start the clock), the protocol establishes a 7-day warmup period. During this window, diet intervals and seniority advance normally, but no rewards are emitted yet, ensuring early stakers can accumulate initial seniority on equal footing;
+  2. **Treasury Outflow Delay**: The Belly reservoir's authorization for the procurement execution module is set by governance through an independent proposal and is protected by a separate 7-day delay (these two gates operate on independent clocks and are not inherently synchronized);
+  3. **Initial Cushion Building**: During the initial 7-day warmup week, trading taxes flow continuously into The Belly, accumulating an initial buffer reserve before emissions commence.
 - **Contract Addresses**: Official contract addresses will be published on the [Verified Contracts]({% link contracts.md %}) page upon deployment. Any address claiming to represent the protocol prior to official publication is illegitimate.
 
 ---
@@ -30,13 +30,13 @@ TheFatCat protocol contracts are finalized in code and thoroughly verified acros
 ## 2. Material Risk Disclosures
 
 ### 1. Market Volume & Variable Rewards
-The protocol does not generate yield out of thin air; reward capital derives strictly from secondary DEX trading volume taxes (plus unsolicited donations). During market lulls, inflows may decrease significantly. While The Belly acts as an exponential shock absorber, it cannot create artificial yield when trading stops.
+The protocol does not promise or provide fixed yields; all reward funding derives strictly from secondary market trading volume taxes (plus voluntary donations). During market lulls, inflows may decrease significantly. While The Belly acts as an exponential shock absorber, it cannot create artificial yield when trading stops.
 
 ### 2. External Upstream Processor Dependency
-On BNB Chain, the transaction tax processor is an external contract owned by the Flap factory. Upstream changes can affect fee delivery timing and swap liquidation thresholds. The protocol operates active monitoring to mitigate this dependency.
+On BNB Chain, the transaction tax processor is an external contract owned by the Flap factory system. Upstream upgrades or configuration changes can affect fee delivery timing and liquidation pacing.
 
-### 3. Oracle & Slippage Delays
-Market execution requires valid on-chain TWAP observations from `PancakeV2TwapOracle` and bounded slippage. In periods of extreme market turbulence, execution batches may wait until prices stabilize or settle in quote via permissionless fallback.
+### 3. Market Volatility & Execution Delays
+Procuring non-native assets relies on oracle pricing and slippage protection. During extreme market volatility or sudden liquidity drying, procurement batches may pause until prices stabilize. If swaps cannot be executed over an extended period, eligible pending amounts can be settled in native BNB.
 
-### 4. Real-World Asset (RWA) Issuer Risk
-Non-default assets (such as tokenized US equities / bStocks) rely on institutional off-chain custody and token upgrade keys. The protocol mitigates this risk through a strict **5% probation allocation cap** and automatic fallback quote settlement.
+### 4. Third-Party Tokenized Assets (bStocks) & Settlement Boundaries
+Tokenized equities and similar assets are issued and custodied by third-party institutions and are not direct equity shares of the underlying companies. They carry risks of issuer default, trading halts, and regulatory restrictions. The protocol caps probation allocations at 5% per diet to reduce single-asset exposure; when an asset cannot be procured, eligible pending amounts can be settled in native BNB (this settlement remains subject to the Belly's 8-hour window velocity cap, rather than an instant full withdrawal).

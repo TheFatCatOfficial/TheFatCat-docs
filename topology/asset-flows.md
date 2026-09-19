@@ -7,7 +7,7 @@ nav_order: 1
 
 # Dual-Track Asset Topology & Vault Segregation
 
-TheFatCat enforces strict physical segregation between staker principal and fee routing reserves. Below is the complete capital topology map:
+TheFatCat enforces strict contract-level segregation between staker principal and fee routing reserves. Below is the complete capital topology map:
 
 ![TheFatCat Protocol Capital Flow & State Topology]({{ '/assets/images/fig1-topology.svg' | relative_url }})
 
@@ -20,9 +20,9 @@ TheFatCat enforces strict physical segregation between staker principal and fee 
 
 ---
 
-## 2. Atomic Forwarding Vault Division
+## 2. Forwarding Vault Accounting & `flush()` Dispatch
 
-Incoming funds are atomically divided in the exact transaction they arrive:
+Upon receiving native BNB tax proceeds, the forwarding vault securely records the balance delta. A keeper or any caller invokes `flush()` to wrap the accumulated native BNB into WBNB and automatically dispatch it according to immutable proportions:
 - **5/36 (~0.5% of trade value)** $\rightarrow$ **Protocol Operations**: Dedicated operational reserve for community art, hosting, keeper incentives, continuous security reviews, and infrastructure gas. This account possesses zero administrative privileges over user staking vaults or contracts.
 - **31/36 + integer floor remainder (~3.1% of trade value)** $\rightarrow$ **The Belly**: Deposited directly into the unprivileged reward reservoir.
 

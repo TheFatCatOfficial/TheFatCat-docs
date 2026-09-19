@@ -87,11 +87,11 @@ Even if the authorized `ExecutionRouter` were compromised by an unexpected vulne
 
 ---
 
-## 5. Genesis Cold Start & The 7-Day Dual Wall-Clock Gates
+## 5. Genesis Cold Start & 7-Day Timelock Protections
 
-At genesis, The Belly operates under a strict physical accumulation regime that guarantees fair launch and deep initial liquidity reserves:
+At genesis, The Belly operates under a strict accumulation regime that guarantees fair launch and deep initial liquidity reserves:
 
 - **Write-Once Spender Permanence**: The authorized spender address ([`ExecutionRouter`]({% link contracts.md %})) can be set exactly once in contract history. Once activated, it is permanently locked, eliminating unauthorized re-assignment or privilege escalation risks.
-- **7-Day Spender Timelock**: The execution router withdrawal authority requires an immutable 7-day wall-clock delay before activation. During launch week, The Belly has zero authorized spenders—preventing any capital outflows.
-- **Synchronized Clock Gate**: In tandem, protocol clock mechanics enforce zero emissions during launch week, ensuring all early participants accrue seniority on an equal footing.
-- **Deep Reservoir Accumulation**: Throughout this 7-day window, 4% trading taxes generated on PancakeSwap flush continuously into The Belly via `flush()`, accumulating substantial backing before steady-state emissions commence.
+- **7-Day Spender Timelock**: The execution router withdrawal authority requires an immutable 7-day timelock delay before activation. During launch week, The Belly has zero authorized spenders—preventing any capital outflows.
+- **Synchronized Clock Gate**: In tandem, protocol clock mechanics (initiated upon opening staking) enforce zero emissions during the 7-day warmup week (the two gates operate on independent clocks and are not inherently synchronized), ensuring all early participants accrue seniority on equal footing.
+- **Deep Reservoir Accumulation**: Throughout this 7-day window, trading taxes flush continuously into The Belly via `flush()`, accumulating substantial backing before steady-state emissions commence.

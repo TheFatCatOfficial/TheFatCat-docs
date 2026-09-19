@@ -16,7 +16,7 @@ How to choose your preferred reward assets (Diets), manage allocations across ma
 In TheFatCat, you are not forced into a single, uniform reward token. Instead, each position independently designates a **Diet Asset** from the protocol's approved [MENU]({% link protocol/execution.md %}):
 
 - **BNB (Canonical Network Asset)**: The default diet and protocol fallback asset (internally accounted via canonical WBNB). It requires zero market execution and carries zero counterparty or issuer risk. Stakers can receive native BNB directly with no manual unwrapping.
-- **bStocks (Tokenized Equities)**: Real-world asset backed tokens (e.g. tokenized Nvidia, SpaceX, Nasdaq-100, or S&P 500 ETFs) under a 5% per-meal probation cap.
+- **bStocks (Third-Party Tokenized Equity Certificates)**: Pass-through certificates issued by third-party providers (such as Backed, etc.) tracking traditional equity or index ETF price performance (does not confer direct corporate equity ownership or shareholder voting rights; e.g. tokenized Nvidia, SpaceX, Nasdaq-100, or S&P 500 tracking tokens). **Regulatory & Geographic Notice**: The regulatory status and availability of tokenized certificates strictly depend on specific issuer offering terms and prospectus filings, which typically impose explicit investor qualification standards and restricted jurisdiction exclusions (e.g. unavailable to residents of the US, UK, etc.). Participants are solely responsible for verifying legal compliance; these assets are subject to the 5% per-meal probation cap (exempt for genesis launch menu items).
 - **FATCAT (Protocol Native)**: Eligible for addition after AMM graduation, liquidity stabilization, and TWAP oracle warmup.
 - **Future Candidate Tokens (Ecosystem Expansion)**: Potential high-liquidity crypto assets, blue-chip ecosystem tokens, or stablecoins that may be approved and listed on the MENU via timelocked governance queues and on-chain TWAP verification.
 
@@ -47,16 +47,15 @@ Rewards in TheFatCat do not expire. They continuously accumulate across settled 
 
 ### How to Claim on the Dashboard:
 
-1. Open the **Dashboard** or **Rewards** section on [thefatcat.fun](https://thefatcat.fun).
-2. Review your accrued reward balances displayed across your designated diet assets (e.g. BNB, bStocks).
-3. **Individual Position Claim**: Click **Claim** on any specific position card to withdraw rewards for that stake.
-4. **One-Click Batch Claim**: If you manage multiple active positions, click **Claim All** to settle rewards across all your positions in a single transaction, minimizing gas fees.
-5. Confirm the transaction in your connected wallet.
+1. Open the **Dashboard** or **Belly / Positions** section on [thefatcat.fun](https://thefatcat.fun).
+2. Review your accrued reward balances across your active positions (e.g. BNB, bStocks).
+3. **Per-Position Claiming**: Click **Claim** on any specific position card. To protect your transaction from gas exhaustion across long histories, the interface automatically submits the claim up to the latest completed batch.
+4. Confirm the transaction in your connected wallet.
 
 ### Automatic Native BNB Unwrapping
-When your diet is set to BNB (accounted on-chain as canonical WBNB), the claim transaction automatically unwraps it into **native BNB**. You receive spendable BNB directly in your wallet without any extra unwrapping steps or manual transactions.
+When your diet is set to BNB (accounted on-chain as canonical WBNB), claiming automatically unwraps it into **native BNB**. You receive spendable BNB directly in your wallet without any extra unwrapping steps or manual transactions.
 
 {: .tip }
-**Long Absences & Batched Processing**: If you leave a position untouched for months, hundreds of meal settlements may accumulate. The interface will automatically optimize your claim batches so your transaction stays well within standard network gas limits.
+**Gas Safety for Long Backlogs**: If you leave a position untouched for months, hundreds of meal settlements may accumulate. The protocol supports chunked claims across bounded batch ranges (`claimThrough` / `claimNativeThrough`), ensuring that every claim transaction completes reliably within standard block gas limits.
 
 *(For advanced users wishing to claim directly from the contract on BscScan without using the web UI, refer to the [Emergency Exit Guide]({% link guides/emergency-exit.md %})).*

@@ -1,39 +1,28 @@
 ---
 layout: default
-title: Seniority Certificates (ERC-721)
+title: Seniority Certificates (Upcoming)
 parent: User Guides
 nav_order: 3
 ---
 
-# Seniority Certificates (ERC-721)
-
-An in-depth specification of TheFatCat's on-chain seniority credential system, deployed at genesis as an immutable companion to the staking engine.
-
----
+# Seniority Certificates
 
 {: .note }
-**Genesis Deployment Status: Deployed with Staking Stack**  
-The Seniority Certificate module is deployed alongside `StakingVault` at genesis. Stakers exiting an active position can choose between standard redemption (`redeem()`, returning 100% principal without burning) or issuing a permanent credential (`redeemAndIssueCertificate()`).
+**Upcoming Feature Notice**: The smart contracts supporting on-chain Seniority Certificates have been deployed alongside the genesis protocol. This module is planned as an advanced feature to be officially released once the protocol matures and is currently not open for public use. The exact release timeline, eligibility criteria, minting mechanics, and specific parameters will be announced in future official updates.
 
 ---
 
-## 1. Concept & Mechanics
+## 1. What Are Seniority Certificates?
 
-In traditional staking protocols, exiting a pool permanently wipes a participant's historical commitment and accumulated tenure. TheFatCat acknowledges long-term alignment through [`SeniorityCertificate.sol`]({% link contracts.md %}):
+In TheFatCat's long-term design, Seniority Certificates are an on-chain credential system (ERC-721).
 
-- **100% On-Chain SVG**: Artwork, layout, and dynamic attributes (achieved notch tier, seat number, activation milestones) are rendered entirely on-chain by `SeniorityCertificateRenderer.sol` using bytecode font tables in `CertificateData.sol`, free from IPFS or web server dependencies.
-- **Proof of Tenure**: Certificates permanently record the seniority multiplier ($c_i \in [1, 22]$) attained by the position upon redemption.
-- **Deflationary Token Burn**: Minting a certificate burns exactly **100,000 FATCAT** (`MINT_BURN`) directly to the dead address (`0x000000000000000000000000000000000000dEaD`), permanently shrinking circulating supply. The remaining principal is refunded directly to the user.
-- **Reusable Staking Multiplier**: An unencumbered certificate can be lent to a fresh deposit via `stakeWithCertificate(principal, diet, certificateId)`. The position immediately starts with the certificate's permanent notch multiplier, bypassing the notch climb. While the position remains open, the certificate is locked (`inUse(certificateId) == true`).
+They are designed to preserve the seniority and time value accumulated by stakers, allowing past tenure from retired positions to be carried forward into future staking, while serving as an on-chain badge of honor for long-term participants.
 
 ---
 
-## 2. Hardcoded Contract Constants
+## 2. Current Status
 
-The module parameters are pinned as immutable on-chain constants:
+- **Genesis Deployment**: The underlying certificate and on-chain rendering contracts have been deployed on-chain as part of the core protocol genesis suite;
+- **Scheduled Post-Maturation Release**: To ensure a smooth, stable cold start for core staking and reward distributions, the user-facing interface and feature rollout are reserved for a later phase;
+- **Rules Subject to Official Announcement**: Specific minting rules, qualification criteria, burn/cost parameters, and multiplier inheritance details will be formally released once the protocol reaches maturity.
 
-| Parameter | Value | Architectural Guarantee |
-|:---|:---|:---|
-| **`MINT_BURN`** | `100,000 FATCAT` | Flat token burn required per certificate issued, routed irreversibly to dead address |
-| **`MAX_SUPPLY`** | `10,000 Certificates` | Permanent finite ceiling on total credentials that can ever be minted |
-| **`MINT_DELAY`** | `21 Days` (504 Hours) | Cold-start lock; minting opens only after the network completes 21 days from deployment |

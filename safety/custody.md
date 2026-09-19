@@ -11,7 +11,7 @@ A formal exposition of TheFatCat's non-custodial capital boundaries, zero-sweep 
 
 ---
 
-## 1. Physical Isolation of Principal
+## 1. Strict Contract Separation of Principal
 
 In TheFatCat, staked FATCAT tokens are principal, never reward inventory:
 
@@ -34,7 +34,7 @@ If a contract holds user funds, nobody — not the developer, not the multi-sig,
 
 ## 3. Mathematical Proof of Solvency (Non-Negative Dust Theorem)
 
-A critical failure mode in DeFi dividend distributors is rounding overflow, where integer division rounding errors accumulate until the vault owes more tokens than it physically holds, causing transaction reverts for the final claimers.
+A critical failure mode in DeFi dividend distributors is rounding overflow, where integer division rounding errors accumulate until the vault owes more tokens than it actually holds, causing transaction reverts for the final claimers.
 
 TheFatCat mathematically eliminates insolvency through dual-scaled integer floor division:
 
@@ -60,8 +60,8 @@ $$\sum_{i=1}^N r_i \le R$$
    
    $$\sum_{i=1}^N r_i \le \frac{\text{Rate} \cdot S}{\text{RAY}} \le \frac{\left( \frac{R \cdot \text{RAY}}{S} \right) \cdot S}{\text{RAY}} = R \quad \blacksquare$$
 
-### Corollary: Physical Dust Vesting (Security Invariant D1)
-The residual rounding dust $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ permanently vests inside the distributor. Physical reserves strictly dominate recorded accounting liabilities:
+### Corollary: Non-Negative Dust Vesting (Security Invariant D1)
+The residual rounding dust $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ permanently vests inside the distributor. Actual on-chain reserves strictly dominate recorded accounting liabilities:
 
 $$\text{balanceOf}(\text{Distributor}, a) \ge \text{liability}[a]$$
 

@@ -7,7 +7,7 @@ nav_order: 1
 
 # Core Protocol Vault Contracts
 
-The core storage and capital custody layers of TheFatCat enforce strict physical separation between principal capital and reward distributions:
+The core storage and capital custody layers of TheFatCat enforce strict contract-level separation between principal capital and reward distributions:
 
 ---
 

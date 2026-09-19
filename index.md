@@ -37,7 +37,7 @@ Understand the structural flaws of traditional reflection tokens and why TheFatC
 Step-by-step operational guides for stakers and participants:
 - [Staking & Positions]({% link guides/staking.md %}): Opening positions, principal thresholds, and isolated position rules.
 - [Diets & Claiming Rewards]({% link guides/diets-and-claiming.md %}): Selecting reward assets, multi-batch claiming, and native BNB auto-unwrapping.
-- [Seniority Certificates (ERC-721)]({% link guides/seniority-certificates.md %}): On-chain credential tokens, deflationary burn mechanics, and multiplier inheritance.
+- [Seniority Certificates (Upcoming)]({% link guides/seniority-certificates.md %}): On-chain credential tokens (deployed at genesis, scheduled for a later release phase).
 - [Emergency Exit (Without Front-End)]({% link guides/emergency-exit.md %}): How to safely redeem principal directly on BscScan if the front-end is down.
 
 ### [3. Core Mechanics]({% link protocol.md %})
