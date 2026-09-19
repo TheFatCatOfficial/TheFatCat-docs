@@ -5,47 +5,22 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"
-  onload="renderMathInElement(document.body, {
-    delimiters: [
-      {left: '$$', right: '$$', display: true},
-      {left: '$', right: '$', display: false},
-      {left: '\\(', right: '\\)', display: false},
-      {left: '\\[', right: '\\]', display: true}
-    ],
-    throwOnError: false
-  });"></script>
+  onload="tfcRenderMath();"></script>
 <script>
-  (function() {
-    var path = window.location.pathname;
-    var isZh = path.indexOf("/zh/") !== -1 || path.endsWith("/zh") || path.endsWith("/zh.html");
-    document.documentElement.lang = isZh ? "zh-CN" : "en";
-
-    function filterSidebar() {
-      if (document.body && !document.body.getAttribute("data-lang")) {
-        document.body.setAttribute("data-lang", isZh ? "zh" : "en");
+  window.tfcRenderMath = function(target) {
+    if (typeof renderMathInElement === 'function') {
+      var el = target || document.getElementById('main-content') || document.querySelector('main') || document.body;
+      if (el) {
+        renderMathInElement(el, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });
       }
-      var navItems = document.querySelectorAll(".site-nav > .nav-list > .nav-list-item");
-      navItems.forEach(function(item) {
-        var lang = item.getAttribute("data-nav-lang");
-        if (!lang) {
-          var hasZh = item.querySelector('a[href*="/zh/"], a[href$="/zh"], a[href$="/zh/"]');
-          lang = hasZh ? "zh" : "en";
-          item.setAttribute("data-nav-lang", lang);
-        }
-        if (isZh) {
-          if (lang !== "zh") item.style.setProperty("display", "none", "important");
-          else item.style.removeProperty("display");
-        } else {
-          if (lang === "zh") item.style.setProperty("display", "none", "important");
-          else item.style.removeProperty("display");
-        }
-      });
     }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", filterSidebar);
-    } else {
-      filterSidebar();
-    }
-  })();
+  };
 </script>

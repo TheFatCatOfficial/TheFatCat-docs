@@ -653,3 +653,25 @@ body[data-lang="zh"] .site-nav > .nav-list > .nav-list-item[data-nav-lang="en"],
 body[data-lang="zh"] .site-nav > .nav-list > .nav-list-item:not([data-nav-lang="zh"]):not(:has(a[href*="/zh/"])):not(:has(a[href$="/zh"])):not(:has(a[href$="/zh/"])) {
   display: none !important;
 }
+
+// -----------------------------------------------------------------------------
+// 14. High-Performance PJAX Seamless Transition
+// -----------------------------------------------------------------------------
+.main-content-wrap {
+  transition: opacity 0.1s ease-out;
+  will-change: opacity;
+}
+
+#tfc-pjax-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: #48b78d;
+  width: 0%;
+  z-index: 99999;
+  transition: width 0.2s ease, opacity 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(72, 183, 141, 0.6);
+}
+
