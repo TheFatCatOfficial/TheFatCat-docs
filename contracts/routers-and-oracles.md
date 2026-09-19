@@ -15,7 +15,7 @@ The perimeter infrastructure layer handles decentralized market execution, oracl
 
 - **Architectural Scope**: Orchestrates batch market swaps from quote asset (WBNB) into diet tokens and handles fallback quote settlement.
 - **Key Invariants**:
-  - **Permanent Write-Once Spender**: In The Belly, the authorized `spender` can be set and activated exactly once. Once live, it is mathematically permanent and cannot be replaced or upgraded (reverting with `SpenderAlreadySet`). The 7-day activation delay is an immutable one-time lock preventing instant drawdown.
+  - **Permanent Write-Once Spender**: In The Belly, the authorized `spender` can be set and activated exactly once. Once live, it is permanently fixed and cannot be replaced or upgraded, eliminating unauthorized diversion risks. The 7-day activation delay is an immutable timelock safeguarding funds during launch week.
   - **Atomic Solvency Check**: Output tokens from batch market swaps are delivered directly to the `RewardDistributor` before the transaction completes.
   - **MEV-Resistant Batch Execution**: Aggregates all meal diet allocations into single unified swaps, eliminating sandwich vulnerability for individual stakers.
 

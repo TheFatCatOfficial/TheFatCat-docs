@@ -45,4 +45,3 @@ TheFatCat 协议在 BNB Chain 上的官方智能合约注册表。具体合约�
 | **V2 TWAP 预言机** | `PancakeV2TwapOracle.sol` | 内生 TWAP 观察器，评估 V2 交易对时间加权均价 | 确定性部署 | 创世批次 |
 | **V3 执行适配器** | `PancakeV3Adapter.sol` | 跨池多跳执行适配器，支持在 Pancake V3 多费率池间撮合兑换 | 确定性部署 | 创世批次 |
 | **V3 双跳预言机** | `PancakeV3TwoHopTwapOracle.sol` | V3 跨池双跳 TWAP 预言机（WBNB -> USDT -> bStock），为美股资产提供报价 | 确定性部署 | 创世批次 |
-| *(历史遗留)* **分账金库** | `ForwardingVault.sol` | Flap V3 前期原型金库（已被 FatCatStakingVault 替代，不得用于生产） | 历史原型 | 已归档 |

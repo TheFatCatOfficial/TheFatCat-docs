@@ -14,5 +14,5 @@ An exhaustive overview of TheFatCat's non-custodial custody invariants, on-chain
 ## Security Index
 
 - **[Custody & Solvency Proofs]({% link safety/custody.md %})**: Unprivileged vaults, zero sweep/rescue functions, and the non-negative dust theorem ($\sum r_i \le R$).
-- **[Operational Monitoring]({% link safety/monitoring.md %})**: Upstream tax processor tracking via `watch-processor.sh` and emergency response drills.
+- **[Operational Monitoring]({% link safety/monitoring.md %})**: Upstream tax processor metric tracking, Guardian roles, and emergency response procedures.
 - **[Risks & Launch Status]({% link safety/risks-and-status.md %})**: Material protocol dependencies, oracle trust models, and launch milestones.

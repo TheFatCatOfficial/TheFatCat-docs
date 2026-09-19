@@ -45,4 +45,3 @@ Explore detailed specifications for each contract subsystem:
 | **PancakeV2TwapOracle** | `PancakeV2TwapOracle.sol` | Endogenous TWAP reader evaluating time-weighted average prices for V2 pairs | Deterministic Deployment | Scheduled Genesis |
 | **PancakeV3Adapter** | `PancakeV3Adapter.sol` | Production execution adapter executing multi-hop swaps across Pancake V3 pools | Deterministic Deployment | Scheduled Genesis |
 | **PancakeV3TwoHopTwapOracle** | `PancakeV3TwoHopTwapOracle.sol` | Two-hop V3 TWAP oracle (WBNB -> USDT -> bStock) for equity feeds | Deterministic Deployment | Scheduled Genesis |
-| *(Legacy Reference)* **ForwardingVault** | `ForwardingVault.sol` | Pre-Flap V3 prototype router (superseded by FatCatStakingVault, do not deploy) | Legacy Prototype | Archived |

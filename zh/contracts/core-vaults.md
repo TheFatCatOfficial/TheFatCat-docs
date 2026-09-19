@@ -34,7 +34,7 @@ TheFatCat 的底层存储与资金托管层在合约代码层面强制实施质�
 
 ---
 
-## 3. 税道分账金库体系 (`FatCatStakingVault.sol` / 历史遗留: `ForwardingVault.sol`)
+## 3. 税道分账金库体系 (`FatCatStakingVault.sol`)
 
 - **架构职责**：中继接收上游 Flap 税收处理器推送的税费，并完成原子级分流。
 - **Flap V3 生产环境架构**：在 BNB Chain 主网上，生产部署采用 `FatCatStakingVault`（通过 `FatCatStakingVaultFactory` 部署）。其实时接收来自 Flap 官方 TaxProcessor 的原生 BNB，遵循 Flap V3 增量记账模型（balance-delta），并在调用 `flush()` 时将原生币包装为标准 WBNB 完成分流。
@@ -43,4 +43,4 @@ TheFatCat 的底层存储与资金托管层在合约代码层面强制实施质�
     - $5/36$（约 0.5% 交易额）拨付至独立的协议运维多签金库（`OPS_SAFE`，2-of-3 Gnosis Safe）；
     - $31/36$ + 截断向下取整余数（约 3.1% 交易额）直接注入 The Belly 储备金库。
   - **零资金驻留**：全量执行完毕后，金库内无任何静态资金沉淀。
-  - **信任边界与升级机制**：该金库本身无任何管理员取款后门，其架构遵循 Flap 官方 `VaultBaseV3` 标准作为 `UpgradeableBeacon` 代理运行，其逻辑合约实现由 Flap 官方 Guardian 托管升级（早期原型的 `ForwardingVault.sol` 不支持 Flap V3 Beacon 规范，已被标记为 Legacy 废弃，仅留存作历史参考）。
+  - **信任边界与升级机制**：该金库本身无任何管理员取款后门，其架构遵循 Flap 官方 `VaultBaseV3` 标准作为 `UpgradeableBeacon` 代理运行，其逻辑合约实现由 Flap 官方 Guardian 托管升级。

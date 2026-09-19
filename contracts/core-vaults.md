@@ -34,7 +34,7 @@ The core storage and capital custody layers of TheFatCat enforce strict physical
 
 ---
 
-## 3. Tax Forwarding Infrastructure (`FatCatStakingVault.sol` / Legacy: `ForwardingVault.sol`)
+## 3. Tax Forwarding Infrastructure (`FatCatStakingVault.sol`)
 
 - **Architectural Role**: Intermediate atomic tax router receiving revenue from the Flap processor.
 - **Flap V3 Production Architecture**: In production on BNB Chain, the protocol deploys `FatCatStakingVault` (deployed via `FatCatStakingVaultFactory`). It receives native value from Flap's TaxProcessor, adheres to Flap V3's balance-delta recognition model, and atomically wraps revenue through canonical WBNB during `flush()`.
@@ -43,4 +43,4 @@ The core storage and capital custody layers of TheFatCat enforce strict physical
     - $5/36$ (~0.5% of trade volume) is forwarded to the Protocol Operations multi-sig (`OPS_SAFE`, 2-of-3 Gnosis Safe).
     - $31/36$ + floor remainder (~3.1% of trade volume) is deposited directly into The Belly.
   - **Zero Balance Retention**: The contract holds zero persistent balances between complete flushes.
-  - **Trust Boundary & Upgrade Plane**: The vault has zero administrative withdrawal or sweeping keys. It conforms to Flap's `VaultBaseV3` standard as an `UpgradeableBeacon` proxy, where beacon implementation upgrades are governed by Flap's Guardian. (`ForwardingVault.sol` was an earlier prototype without Flap V3 beacon integration, retained as legacy code).
+  - **Trust Boundary & Upgrade Plane**: The vault has zero administrative withdrawal or sweeping keys. It conforms to Flap's `VaultBaseV3` standard as an `UpgradeableBeacon` proxy, where beacon implementation upgrades are governed by Flap's Guardian.

@@ -51,7 +51,7 @@ T_now ─────────────────────► Meal Cl
 3. **Climbing the Ladder**: For every subsequent 8-hour meal completed, your seniority notch automatically increases by $+1$ until reaching the maximum of 22 (after 21 completed active meals).
 
 {: .important }
-**The 7-Day Genesis Accumulation Ramp**: When the protocol is first launched, reward emissions are locked behind an immutable 7-day wall-clock delay (`LaunchIntervalController.MIN_REWARD_START_DELAY = 7 days`, where `rewardStartAt = block.timestamp + 7 days`). Intervals advance and seniority notches climb normally during this phase, allowing early stakers to climb toward Notch 22 on a level playing field, while DEX trading taxes accumulate safely inside The Belly with zero early outflows.
+**The 7-Day Genesis Accumulation Ramp**: When the protocol is first launched, reward emissions are locked behind an immutable 7-day wall-clock delay. Intervals advance and seniority notches climb normally during this phase, allowing early stakers to climb toward Notch 22 on a level playing field, while DEX trading taxes accumulate safely inside The Belly with zero early outflows.
 
 ---
 

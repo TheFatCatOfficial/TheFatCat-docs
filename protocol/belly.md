@@ -91,7 +91,7 @@ Even if the authorized `ExecutionRouter` were compromised by an unexpected vulne
 
 At genesis, The Belly operates under a strict physical accumulation regime that guarantees fair launch and deep initial liquidity reserves:
 
-- **Write-Once Spender Permanence**: The authorized spender address ([`ExecutionRouter`]({% link contracts.md %})) can be set exactly once in contract history. Once activated, it is permanent and cannot be replaced or upgraded (reverting with `SpenderAlreadySet`).
-- **7-Day Spender Timelock (`activationDelay = 604,800s`)**: After deployment, governance calls `proposeSpender(router)`. An immutable 7-day wall-clock delay must elapse before `activateSpender()` can be executed. During this first week, The Belly has no live spender—preventing any capital outflows.
-- **Synchronized Clock Gate (`LaunchIntervalController`)**: In tandem, the protocol clock enforces `rewardStartAt = block.timestamp + 7 days`, zeroing reward calculations for the cold-start week while stakers climb seniority notches.
+- **Write-Once Spender Permanence**: The authorized spender address ([`ExecutionRouter`]({% link contracts.md %})) can be set exactly once in contract history. Once activated, it is permanently locked, eliminating unauthorized re-assignment or privilege escalation risks.
+- **7-Day Spender Timelock**: The execution router withdrawal authority requires an immutable 7-day wall-clock delay before activation. During launch week, The Belly has zero authorized spenders—preventing any capital outflows.
+- **Synchronized Clock Gate**: In tandem, protocol clock mechanics enforce zero emissions during launch week, ensuring all early participants accrue seniority on an equal footing.
 - **Deep Reservoir Accumulation**: Throughout this 7-day window, 4% trading taxes generated on PancakeSwap flush continuously into The Belly via `flush()`, accumulating substantial backing before steady-state emissions commence.

@@ -50,7 +50,7 @@ Deep technical dives into the protocol's mathematical engines:
 ### [4. Security & Governance]({% link safety.md %})
 Trust assumptions, role separation, and invariant verifications:
 - [Custody & Solvency Proofs]({% link safety/custody.md %}): Integer floor truncation bounds, non-negative dust theorem ($\sum r_i \le R$), and zero admin sweeps.
-- [Operational Monitoring]({% link safety/monitoring.md %}): Upstream processor polling via `watch-processor.sh` and emergency response.
+- [Operational Monitoring]({% link safety/monitoring.md %}): Upstream processor state metric tracking and emergency response.
 - [Risks & Launch Status]({% link safety/risks-and-status.md %}): Unfinished scopes, dependencies, and material disclosures.
 
 ### [5. Reference & FAQ]({% link contracts.md %})

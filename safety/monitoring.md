@@ -17,8 +17,8 @@ On BNB Chain, the transaction tax processor is deployed and owned by the Flap fa
 
 To safeguard stakers, TheFatCat operates an automated monitoring watcher:
 
-### `watch-processor.sh`
-Located in [`contracts/ops/watch-processor.sh`](https://github.com/TheFatCatOfficial/TheFatCat/blob/main/contracts/ops/watch-processor.sh), this script polls eight vital on-chain view functions on the Flap processor:
+### Continuous On-Chain State Metrics
+The protocol continuously monitors eight canonical on-chain view functions on the upstream processor to ensure fee routing parameters remain completely unmutated:
 1. **`owner()`**: Confirms ownership remains with the canonical Flap Portal.
 2. **`getWalletConfig()`**: Ensures creator revenue proceeds continue routing to TheFatCat's tax vault (`FatCatStakingVault`).
 3. **`feeReceiver()`**: Tracks the platform fee recipient address.
@@ -28,17 +28,17 @@ Located in [`contracts/ops/watch-processor.sh`](https://github.com/TheFatCatOffi
 7. **`autoForward()`**: Verifies the automated forwarding toggle state.
 8. **`quoteToken()`**: Verifies the payout currency token pointer.
 
-If any deviation or unauthorized route mutation is detected against the baseline, automated alerts notify core security contributors immediately.
+If any deviation or unauthorized route mutation is detected against the baseline snapshot, automated alarms alert core security contributors immediately.
 
 ---
 
-## 2. Emergency Pause & Recovery Drills
+## 2. Emergency Pause & Recovery
 
 The protocol incorporates robust incident response mechanisms:
 
 - **Emergency Pause Controls**: Both protocol governance and the dedicated `Guardian` address hold the power to immediately pause The Belly's outflow.
 - **Scope of Pause**: Pausing halts releases and market swaps, preventing fund drainage. It **deliberately does not** pause principal redemption in `StakingVault.sol`.
-- **Rehearsed Unpause Drills**: Unpausing requires multi-signature governance authorization. The repository maintains complete offline pause/unpause drill scripts (`run-pause-drill.zsh`) and verification interfaces to ensure rapid recovery during live incidents.
+- **Unpause Recovery**: Unpausing requires multi-signature governance authorization. The protocol maintains rehearsed recovery procedures and automated verification test suites to ensure rapid recovery during live incidents.
 
 ---
 
@@ -47,7 +47,5 @@ The protocol incorporates robust incident response mechanisms:
 TheFatCat welcomes independent security researchers and white-hat hackers:
 
 - **Security Reporting**: Vulnerabilities should be submitted privately via [GitHub Security Advisories](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new).
-- **SLA Commitments**:
-  - **24-Hour Acknowledgment**: Initial receipt confirmation within 24 hours.
-  - **48-Hour Triage**: Preliminary vulnerability severity classification within 48 hours.
-- **Discretionary Grants**: Critical and High severity findings are eligible for decentralized grants disbursed directly from the community treasury.
+- **Review & Feedback**: The security response team regularly reviews submitted security reports and aims to provide prompt evaluation and feedback.
+- **Discretionary Grants**: Valid Critical and High severity findings verified by the community are eligible for discretionary security bounties from the community treasury.

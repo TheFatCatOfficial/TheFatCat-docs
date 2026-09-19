@@ -14,5 +14,5 @@ has_children: true
 ## 安全索引
 
 - **[金库托管与偿付能力证明]({% link zh/safety/custody.md %})**：无特权金库、零管理员扫仓/提取接口、以及非负粉尘数学定理（$\sum r_i \le R$）。
-- **[运行监控与应急演练]({% link zh/safety/monitoring.md %})**：上游税收处理器追踪工具 `watch-processor.sh`、守护者多签与紧急响应演练。
+- **[运行监控与应急机制]({% link zh/safety/monitoring.md %})**：上游税收处理器核心指标监控、守护者多签与紧急响应机制。
 - **[风险披露与上线前状态]({% link zh/safety/risks-and-status.md %})**：重大外部依赖、预言机信任模型与主网上线检查清单。
