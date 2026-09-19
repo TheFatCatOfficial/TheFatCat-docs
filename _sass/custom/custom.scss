@@ -129,14 +129,15 @@
 // 4. Sidebar Title & Boss Cat Cameo Lockup
 // -----------------------------------------------------------------------------
 .site-header {
-  height: auto !important;
-  min-height: 56px !important;
+  height: 58px !important;
+  min-height: 58px !important;
   display: flex !important;
   align-items: center !important;
-  padding: 0.85rem 1rem !important;
+  padding: 0 1.15rem !important;
   border-bottom: 1px solid #1c2622 !important;
   background-color: #0c100e !important;
   overflow: visible !important;
+  box-sizing: border-box !important;
 }
 
 .site-title {
@@ -144,16 +145,35 @@
   min-height: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
+  flex-grow: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
   text-decoration: none !important;
   color: inherit !important;
   overflow: visible !important;
   white-space: nowrap !important;
+  background: transparent !important;
+  background-image: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: opacity 0.15s ease !important;
 
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     text-decoration: none !important;
+    background: transparent !important;
+    background-image: none !important;
+    background-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    opacity: 0.88 !important;
   }
+}
+
+.site-button:hover {
+  background-image: none !important;
+  background-color: transparent !important;
 }
 
 .tfc-brand-lockup {
@@ -161,25 +181,29 @@
   align-items: center !important;
   gap: 0.55rem !important;
   flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  user-select: none !important;
 }
 
 .tfc-brand-logo {
-  width: 34px !important;
-  height: 34px !important;
+  width: 30px !important;
+  height: 30px !important;
   border-radius: 50% !important;
   display: block !important;
   flex-shrink: 0 !important;
-  box-shadow: 0 0 10px rgba(168, 135, 76, 0.25) !important;
+  box-shadow: 0 0 8px rgba(168, 135, 76, 0.25) !important;
 }
 
 .tfc-brand-name {
-  font-size: 1.05rem !important;
+  font-size: 0.95rem !important;
   font-weight: 800 !important;
-  letter-spacing: 0.06em !important;
+  letter-spacing: 0.05em !important;
   color: #e7dfc9 !important;
   text-transform: uppercase !important;
   line-height: 1 !important;
   white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
 }
 
 .tfc-brand-badge {
@@ -187,13 +211,14 @@
   font-size: 0.625rem !important;
   font-weight: 700 !important;
   color: #a8874c !important;
-  background: rgba(168, 135, 76, 0.14) !important;
-  border: 1px solid rgba(168, 135, 76, 0.38) !important;
+  background: rgba(168, 135, 76, 0.12) !important;
+  border: 1px solid rgba(168, 135, 76, 0.35) !important;
   border-radius: 3px !important;
   padding: 1px 4px !important;
   letter-spacing: 0.05em !important;
   line-height: 1 !important;
   flex-shrink: 0 !important;
+  display: inline-block !important;
 }
 
 // -----------------------------------------------------------------------------
