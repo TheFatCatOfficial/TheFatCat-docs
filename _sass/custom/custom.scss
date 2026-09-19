@@ -129,15 +129,27 @@
 // 4. Sidebar Title & Boss Cat Cameo Lockup
 // -----------------------------------------------------------------------------
 .site-header {
-  padding: 1.25rem 1.25rem 1rem 1.25rem !important;
+  height: auto !important;
+  min-height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.85rem 1rem !important;
   border-bottom: 1px solid #1c2622 !important;
+  background-color: #0c100e !important;
+  overflow: visible !important;
 }
 
 .site-title {
-  display: flex !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
   align-items: center !important;
   text-decoration: none !important;
   color: inherit !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
 
   &:hover {
     text-decoration: none !important;
@@ -145,59 +157,43 @@
 }
 
 .tfc-brand-lockup {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.55rem !important;
+  flex-wrap: nowrap !important;
 }
 
-.tfc-cameo-frame {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid #a8874c;
-  background: #111614;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(168, 135, 76, 0.25);
-  flex-shrink: 0;
-
-  .tfc-cameo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-}
-
-.tfc-brand-meta {
-  display: flex;
-  align-items: baseline;
-  gap: 0.45rem;
-  flex-wrap: wrap;
+.tfc-brand-logo {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 0 10px rgba(168, 135, 76, 0.25) !important;
 }
 
 .tfc-brand-name {
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #e7dfc9;
-  text-transform: uppercase;
-  line-height: 1;
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  color: #e7dfc9 !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
 }
 
 .tfc-brand-badge {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.625rem;
-  font-weight: 700;
-  color: #a8874c;
-  background: rgba(168, 135, 76, 0.14);
-  border: 1px solid rgba(168, 135, 76, 0.38);
-  border-radius: 3px;
-  padding: 1px 4px;
-  letter-spacing: 0.05em;
-  line-height: 1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 0.625rem !important;
+  font-weight: 700 !important;
+  color: #a8874c !important;
+  background: rgba(168, 135, 76, 0.14) !important;
+  border: 1px solid rgba(168, 135, 76, 0.38) !important;
+  border-radius: 3px !important;
+  padding: 1px 4px !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
 }
 
 // -----------------------------------------------------------------------------
@@ -297,133 +293,9 @@
 }
 
 // -----------------------------------------------------------------------------
-// 6. Micro-Branding Features
+// 6. Refined Dividers
 // -----------------------------------------------------------------------------
 
-// A. Document Header Protocol Seal
-.tfc-doc-header-seal {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #141c19;
-  border: 1px solid #23302a;
-  border-radius: 6px;
-  padding: 0.45rem 0.85rem;
-  margin-bottom: 1.75rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-
-  .tfc-seal-left {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-  }
-
-  .tfc-seal-cat {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1px solid #a8874c;
-    flex-shrink: 0;
-  }
-
-  .tfc-seal-title {
-    color: #e7dfc9;
-    font-weight: 600;
-  }
-
-  .tfc-seal-right {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .tfc-seal-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #48b78d;
-    box-shadow: 0 0 6px #48b78d;
-  }
-
-  .tfc-seal-badge {
-    color: #a7a894;
-    font-size: 0.68rem;
-  }
-
-  @media (max-width: 640px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.4rem;
-  }
-}
-
-// B. Sidebar Dossier Footer Card
-.tfc-sidebar-dossier-card {
-  margin: 0.85rem 0.75rem 0.5rem 0.75rem;
-  padding: 0.75rem;
-  background: #131a17;
-  border: 1px solid #1f2a24;
-  border-radius: 6px;
-
-  .tfc-dossier-header {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    margin-bottom: 0.45rem;
-  }
-
-  .tfc-dossier-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: 1px solid #a8874c;
-    flex-shrink: 0;
-  }
-
-  .tfc-dossier-info {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .tfc-dossier-name {
-    color: #e7dfc9;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
-  .tfc-dossier-sub {
-    color: #848a7b;
-    font-size: 0.68rem;
-  }
-
-  .tfc-dossier-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 0.4rem;
-    border-top: 1px solid #1c2622;
-    font-size: 0.68rem;
-    color: #a7a894;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-
-  .tfc-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .tfc-meta-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: #48b78d;
-  }
-}
 
 // C. Refined Brass Divider
 hr {
