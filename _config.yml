@@ -8,7 +8,7 @@ baseurl: /TheFatCat-docs
 repository: TheFatCatOfficial/TheFatCat-docs
 
 search_enabled: true
-heading_anchors: true
+heading_anchors: false
 nav_sort: case_sensitive
 back_to_top: true
 back_to_top_text: Back to top
