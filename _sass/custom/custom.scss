@@ -1,12 +1,15 @@
-// TheFatCat Documentation Modern Institutional Layout & Styling
+// TheFatCat Documentation — Institutional Noir & Sovereign Visual Identity
+// Aligned with thefatcat.fun brand tokens: Ink #111614, Newsprint #e7dfc9, Terminal Green #48b78d, Brass #a8874c, Emerald #0e3b32
 
-// 1. Sidebar: Fixed pinned left navigation across desktop & tablet, smooth scaling
+// -----------------------------------------------------------------------------
+// 1. Sidebar Structure & Responsive Frame
+// -----------------------------------------------------------------------------
 .side-bar {
-  background-color: #070a09 !important;
+  background-color: #0c100e !important;
 }
 
 .site-nav, .site-header {
-  background-color: #070a09 !important;
+  background-color: #0c100e !important;
   width: 100% !important;
 }
 
@@ -16,50 +19,97 @@
     top: 0 !important;
     bottom: 0 !important;
     left: 0 !important;
-    width: 270px !important;
-    min-width: 270px !important;
-    max-width: 270px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
     height: 100vh !important;
     overflow-y: auto !important;
     align-items: stretch !important;
     border-right: 1px solid #1c2622 !important;
-    background-color: #070a09 !important;
+    background-color: #0c100e !important;
     z-index: 100 !important;
   }
 
   .side-bar + .main, .main {
-    margin-left: 270px !important;
-    width: calc(100% - 270px) !important;
+    margin-left: 280px !important;
+    width: calc(100% - 280px) !important;
     min-width: 0 !important;
-    background-color: #0a0e0d !important;
+    background-color: #111614 !important;
     min-height: 100vh !important;
   }
 }
 
 @media (min-width: 64rem) {
   .side-bar {
-    width: 290px !important;
-    min-width: 290px !important;
-    max-width: 290px !important;
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
   }
 
   .side-bar + .main, .main {
-    margin-left: 290px !important;
-    width: calc(100% - 290px) !important;
+    margin-left: 300px !important;
+    width: calc(100% - 300px) !important;
   }
 }
 
-// 2. Header: Clean top bar matching dark aesthetic
+// -----------------------------------------------------------------------------
+// 2. Top Header & Search Area
+// -----------------------------------------------------------------------------
 .main-header {
-  background-color: #0a0e0d !important;
-  border-bottom: 1px solid #16201c !important;
+  background-color: #0e1411 !important;
+  border-bottom: 1px solid #1f2a24 !important;
   padding: 0.75rem 2.5rem !important;
   position: sticky !important;
   top: 0 !important;
   z-index: 90 !important;
 }
 
-// 3. Responsive content wrapper: expansive and comfortable on large screens
+.search-input-wrap {
+  .search-input {
+    background-color: #131a17 !important;
+    border: 1px solid #243029 !important;
+    color: #e7dfc9 !important;
+    border-radius: 6px !important;
+    &:focus {
+      border-color: #48b78d !important;
+      outline: none !important;
+      box-shadow: 0 0 0 2px rgba(72, 183, 141, 0.2) !important;
+    }
+  }
+
+  .search-label svg {
+    color: #848a7b !important;
+  }
+}
+
+.search-results {
+  background-color: #111614 !important;
+  border: 1px solid #243029 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+
+  .search-results-item {
+    border-bottom: 1px solid #1c2622 !important;
+    .search-result-title {
+      color: #e7dfc9 !important;
+    }
+    .search-result-doc-title {
+      color: #a7a894 !important;
+    }
+    .search-result-preview {
+      color: #848a7b !important;
+    }
+    &.active, &:hover {
+      background-color: #151d19 !important;
+      .search-result-title {
+        color: #48b78d !important;
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 3. Responsive Content Wrap
+// -----------------------------------------------------------------------------
 .main-content-wrap {
   max-width: 1060px !important;
   margin-left: auto !important;
@@ -75,92 +125,378 @@
   max-width: 100% !important;
 }
 
-// 4. Sidebar Branding & Navigation Links
+// -----------------------------------------------------------------------------
+// 4. Sidebar Title & Boss Cat Cameo Lockup
+// -----------------------------------------------------------------------------
 .site-header {
-  padding: 1.5rem 1.25rem 1rem 1.25rem !important;
-  border-bottom: 1px solid #141c19 !important;
+  padding: 1.25rem 1.25rem 1rem 1.25rem !important;
+  border-bottom: 1px solid #1c2622 !important;
 }
 
 .site-title {
-  font-size: 1.15rem !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-  color: #f8fafc !important;
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  color: inherit !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
 }
 
+.tfc-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.tfc-cameo-frame {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #a8874c;
+  background: #111614;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(168, 135, 76, 0.25);
+  flex-shrink: 0;
+
+  .tfc-cameo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.tfc-brand-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.tfc-brand-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #e7dfc9;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.tfc-brand-badge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #a8874c;
+  background: rgba(168, 135, 76, 0.14);
+  border: 1px solid rgba(168, 135, 76, 0.38);
+  border-radius: 3px;
+  padding: 1px 4px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+// -----------------------------------------------------------------------------
+// 5. Sidebar Navigation Hierarchy & Depth Shading (Parent vs Child)
+// -----------------------------------------------------------------------------
 .site-nav {
-  padding: 1rem 0.75rem !important;
+  padding: 0.85rem 0.75rem !important;
 }
 
-.nav-list .nav-list-item .nav-list-link {
-  color: #94a3b8 !important;
-  font-size: 0.875rem !important;
-  padding: 0.45rem 0.75rem !important;
-  border-radius: 6px !important;
-  transition: all 0.15s ease-in-out !important;
+// Top-Level Parent Items (Categories)
+.site-nav > .nav-list > .nav-list-item {
+  margin: 0.35rem 0 !important;
 
-  &:hover {
-    color: #38bdf8 !important;
-    background-color: rgba(56, 189, 248, 0.08) !important;
+  // Parent Category Placard Link
+  > .nav-list-link {
+    display: block !important;
+    background-color: #151d19 !important;
+    border: 1px solid #1f2a24 !important;
+    border-radius: 6px !important;
+    color: #e7dfc9 !important;
+    font-size: 0.86rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    padding: 0.45rem 0.75rem !important;
+    transition: all 0.15s ease-in-out !important;
+
+    &:hover {
+      background-color: #1a2520 !important;
+      color: #ffffff !important;
+      border-color: #2e3d35 !important;
+    }
+
+    &.active {
+      background-color: #16241e !important;
+      border-color: #48b78d !important;
+      color: #48b78d !important;
+      box-shadow: inset 0 0 0 1px rgba(72, 183, 141, 0.25) !important;
+    }
   }
 
-  &.active {
-    color: #10b981 !important;
-    font-weight: 600 !important;
-    background-color: rgba(16, 185, 129, 0.12) !important;
+  // Parent Expander Button
+  > .nav-list-expander {
+    color: #a7a894 !important;
+    padding: 0.35rem !important;
+    transition: color 0.15s ease, transform 0.15s ease !important;
+
+    &:hover {
+      color: #48b78d !important;
+    }
+
+    svg {
+      width: 14px !important;
+      height: 14px !important;
+    }
+  }
+
+  // Submenu Nested Container (Child Tree Guideline)
+  > .nav-list {
+    margin: 0.25rem 0 0.5rem 0.95rem !important;
+    padding-left: 0.7rem !important;
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2rem !important;
+    border-left: 1.5px solid #23302a !important;
+    background: transparent !important;
+
+    .nav-list-item {
+      margin: 0.12rem 0 !important;
+
+      // Child Sub-item Link
+      .nav-list-link {
+        display: block !important;
+        background: transparent !important;
+        color: #a7a894 !important;
+        font-size: 0.815rem !important;
+        font-weight: 400 !important;
+        padding: 0.35rem 0.65rem !important;
+        border-radius: 4px !important;
+        border-left: 2px solid transparent !important;
+        line-height: 1.4 !important;
+        transition: all 0.12s ease-in-out !important;
+
+        &:hover {
+          color: #e7dfc9 !important;
+          background-color: rgba(72, 183, 141, 0.08) !important;
+        }
+
+        &.active {
+          color: #48b78d !important;
+          font-weight: 600 !important;
+          background-color: rgba(72, 183, 141, 0.14) !important;
+          border-left: 2px solid #48b78d !important;
+          box-shadow: inset 1px 0 0 rgba(72, 183, 141, 0.3) !important;
+        }
+      }
+    }
   }
 }
 
-.nav-list-expander {
-  color: #64748b !important;
-  &:hover {
-    color: #38bdf8 !important;
+// -----------------------------------------------------------------------------
+// 6. Micro-Branding Features
+// -----------------------------------------------------------------------------
+
+// A. Document Header Protocol Seal
+.tfc-doc-header-seal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #141c19;
+  border: 1px solid #23302a;
+  border-radius: 6px;
+  padding: 0.45rem 0.85rem;
+  margin-bottom: 1.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+  .tfc-seal-left {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .tfc-seal-cat {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #a8874c;
+    flex-shrink: 0;
+  }
+
+  .tfc-seal-title {
+    color: #e7dfc9;
+    font-weight: 600;
+  }
+
+  .tfc-seal-right {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .tfc-seal-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #48b78d;
+    box-shadow: 0 0 6px #48b78d;
+  }
+
+  .tfc-seal-badge {
+    color: #a7a894;
+    font-size: 0.68rem;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
   }
 }
 
-// 5. Typography, Headings, and Colors
+// B. Sidebar Dossier Footer Card
+.tfc-sidebar-dossier-card {
+  margin: 0.85rem 0.75rem 0.5rem 0.75rem;
+  padding: 0.75rem;
+  background: #131a17;
+  border: 1px solid #1f2a24;
+  border-radius: 6px;
+
+  .tfc-dossier-header {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .tfc-dossier-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #a8874c;
+    flex-shrink: 0;
+  }
+
+  .tfc-dossier-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tfc-dossier-name {
+    color: #e7dfc9;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .tfc-dossier-sub {
+    color: #848a7b;
+    font-size: 0.68rem;
+  }
+
+  .tfc-dossier-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.4rem;
+    border-top: 1px solid #1c2622;
+    font-size: 0.68rem;
+    color: #a7a894;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .tfc-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .tfc-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #48b78d;
+  }
+}
+
+// C. Refined Brass Divider
+hr {
+  border: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent 0%, #2b3230 18%, #a8874c 50%, #2b3230 82%, transparent 100%) !important;
+  margin: 2.5rem 0 !important;
+  position: relative !important;
+}
+
+// -----------------------------------------------------------------------------
+// 7. Typography, Headings & Content
+// -----------------------------------------------------------------------------
 body {
-  background-color: #0a0e0d !important;
-  color: #cbd5e1 !important;
+  background-color: #111614 !important;
+  color: #cbd5cf !important;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  line-height: 1.7 !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #f8fafc !important;
+  color: #e7dfc9 !important;
   font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
 }
 
 h1 {
-  border-bottom: 1px solid #1a2420 !important;
+  border-bottom: 1px solid #2b3230 !important;
   padding-bottom: 0.5rem !important;
   margin-bottom: 1.5rem !important;
 }
 
+h2 {
+  margin-top: 2rem !important;
+  padding-bottom: 0.25rem !important;
+  border-bottom: 1px solid #1c2622 !important;
+}
+
 a {
-  color: #38bdf8;
+  color: #48b78d !important;
   text-decoration: none;
+  transition: color 0.15s ease;
+
   &:hover {
-    color: #7dd3fc;
+    color: #6ed1a9 !important;
     text-decoration: underline;
   }
 }
 
-// 6. Inline and Block Code (Unified Container Architecture - Zero Clipping)
+blockquote {
+  border-left: 4px solid #2b3230 !important;
+  color: #a7a894 !important;
+  padding-left: 1rem !important;
+  margin: 1.25rem 0 !important;
+}
+
+// -----------------------------------------------------------------------------
+// 8. Code Blocks & Syntax Highlighting
+// -----------------------------------------------------------------------------
 :not(pre) > code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
-  color: #34d399 !important;
-  background-color: #141c19 !important;
+  color: #48b78d !important;
+  background-color: #151c19 !important;
   padding: 0.15em 0.4em !important;
   border-radius: 4px !important;
   font-size: 88% !important;
-  border: 1px solid #1e2a25 !important;
+  border: 1px solid #222d28 !important;
 }
 
 div.highlighter-rouge {
   margin: 1.5rem 0 !important;
-  background-color: #0c1210 !important;
-  border: 1px solid #1e2a25 !important;
+  background-color: #0c100e !important;
+  border: 1px solid #1f2a24 !important;
   border-radius: 8px !important;
   position: relative !important;
   overflow: hidden !important;
@@ -192,14 +528,14 @@ div.highlighter-rouge {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
       font-size: 0.85rem !important;
       line-height: 1.6 !important;
-      color: #e2e8f0 !important;
+      color: #e7dfc9 !important;
     }
   }
 
   > button {
-    background-color: #141c19 !important;
-    border: 1px solid #24332d !important;
-    color: #94a3b8 !important;
+    background-color: #151c19 !important;
+    border: 1px solid #2a3832 !important;
+    color: #a7a894 !important;
     border-radius: 6px !important;
     padding: 0.25rem 0.5rem !important;
     font-size: 0.75rem !important;
@@ -211,16 +547,16 @@ div.highlighter-rouge {
     transition: all 0.15s ease !important;
 
     &:hover {
-      background-color: #1c2824 !important;
-      color: #38bdf8 !important;
-      border-color: #38bdf8 !important;
+      background-color: #1d2723 !important;
+      color: #48b78d !important;
+      border-color: #48b78d !important;
     }
   }
 }
 
 pre:not(.highlight) {
-  background-color: #0c1210 !important;
-  border: 1px solid #1e2a25 !important;
+  background-color: #0c100e !important;
+  border: 1px solid #1f2a24 !important;
   border-radius: 8px !important;
   padding: 1rem 1.25rem !important;
   margin: 1.5rem 0 !important;
@@ -233,11 +569,13 @@ pre:not(.highlight) {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
     font-size: 0.85rem !important;
     line-height: 1.6 !important;
-    color: #e2e8f0 !important;
+    color: #e7dfc9 !important;
   }
 }
 
-// 7. Tables
+// -----------------------------------------------------------------------------
+// 9. Tables & Financial Ledger Styling
+// -----------------------------------------------------------------------------
 table {
   width: 100% !important;
   border-collapse: collapse !important;
@@ -245,16 +583,16 @@ table {
   font-size: 0.9rem !important;
 
   th {
-    background-color: #131b18 !important;
-    color: #f1f5f9 !important;
+    background-color: #151c19 !important;
+    color: #e7dfc9 !important;
     font-weight: 600 !important;
-    border: 1px solid #1f2a25 !important;
+    border: 1px solid #243029 !important;
     padding: 0.75rem 1rem !important;
     text-align: left !important;
   }
 
   td {
-    border: 1px solid #1c2622 !important;
+    border: 1px solid #1e2723 !important;
     padding: 0.7rem 1rem !important;
   }
 
@@ -263,35 +601,69 @@ table {
   }
 
   tr:hover td {
-    background-color: #141d19 !important;
+    background-color: #151d1a !important;
   }
 }
 
-// 8. KaTeX math responsive container
+// -----------------------------------------------------------------------------
+// 10. Callout Boxes (Aligned with Brand Palette)
+// -----------------------------------------------------------------------------
+.note {
+  border-left: 4px solid #48b78d !important;
+  background-color: rgba(14, 59, 50, 0.25) !important;
+  border-radius: 4px;
+  padding: 0.75rem 1rem !important;
+}
+
+.warning {
+  border-left: 4px solid #bd6c75 !important;
+  background-color: rgba(124, 48, 56, 0.2) !important;
+  border-radius: 4px;
+  padding: 0.75rem 1rem !important;
+}
+
+.tip {
+  border-left: 4px solid #48b78d !important;
+  background-color: rgba(72, 183, 141, 0.1) !important;
+  border-radius: 4px;
+  padding: 0.75rem 1rem !important;
+}
+
+.important {
+  border-left: 4px solid #a8874c !important;
+  background-color: rgba(168, 135, 76, 0.12) !important;
+  border-radius: 4px;
+  padding: 0.75rem 1rem !important;
+}
+
+// -----------------------------------------------------------------------------
+// 11. KaTeX Math & Figures
+// -----------------------------------------------------------------------------
 .katex-display {
   overflow-x: auto !important;
   overflow-y: hidden !important;
   padding: 0.75rem 0 !important;
-  color: #f1f5f9 !important;
+  color: #e7dfc9 !important;
 }
 
 .katex {
   font-size: 1.05em !important;
-  color: #f8fafc !important;
+  color: #e7dfc9 !important;
 }
 
-// 9. Images & Figures
 img, svg {
   max-width: 100% !important;
   height: auto !important;
 }
 
-// 10. Language Switcher Widget
+// -----------------------------------------------------------------------------
+// 12. Language Switcher Widget
+// -----------------------------------------------------------------------------
 .lang-switcher {
   display: inline-flex;
   align-items: center;
-  background-color: #111816;
-  border: 1px solid #1f2a25;
+  background-color: #131a17;
+  border: 1px solid #243029;
   border-radius: 9999px;
   padding: 0.25rem 0.75rem;
   margin-left: 0.75rem;
@@ -302,17 +674,19 @@ img, svg {
   vertical-align: middle;
 
   .lang-icon {
-    font-size: 0.85rem;
-    opacity: 0.85;
+    width: 14px;
+    height: 14px;
+    color: #848a7b;
+    flex-shrink: 0;
   }
 
   .lang-divider {
-    color: #475569;
+    color: #4a544f;
     font-size: 0.75rem;
   }
 
   .lang-btn {
-    color: #94a3b8;
+    color: #a7a894;
     text-decoration: none;
     font-weight: 500;
     padding: 0.15rem 0.45rem;
@@ -320,19 +694,43 @@ img, svg {
     transition: all 0.15s ease-in-out;
 
     &:hover {
-      color: #38bdf8;
+      color: #e7dfc9;
       text-decoration: none;
     }
 
     &.active {
-      color: #10b981;
+      color: #e7dfc9;
       font-weight: 700;
-      background-color: rgba(16, 185, 129, 0.18);
+      background-color: #0e3b32;
+      border: 1px solid #48b78d;
     }
   }
 }
 
-// 11. Strict Sidebar Language Isolation (Top-Level Only)
+// Auxiliary links in header
+.aux-nav {
+  .aux-nav-list {
+    .aux-nav-list-item a {
+      color: #a7a894 !important;
+      background-color: #131a17 !important;
+      border: 1px solid #243029 !important;
+      border-radius: 4px !important;
+      padding: 0.25rem 0.6rem !important;
+      font-size: 0.8rem !important;
+      transition: all 0.15s ease !important;
+
+      &:hover {
+        color: #e7dfc9 !important;
+        border-color: #a8874c !important;
+        text-decoration: none !important;
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 13. Strict Sidebar Language Isolation (Top-Level Only)
+// -----------------------------------------------------------------------------
 body[data-lang="en"] .site-nav > .nav-list > .nav-list-item[data-nav-lang="zh"],
 body[data-lang="en"] .site-nav > .nav-list > .nav-list-item:has(> a[href*="/zh/"]),
 body[data-lang="en"] .site-nav > .nav-list > .nav-list-item:has(> a[href$="/zh"]),
@@ -344,5 +742,3 @@ body[data-lang="zh"] .site-nav > .nav-list > .nav-list-item[data-nav-lang="en"],
 body[data-lang="zh"] .site-nav > .nav-list > .nav-list-item:not([data-nav-lang="zh"]):not(:has(a[href*="/zh/"])):not(:has(a[href$="/zh"])):not(:has(a[href$="/zh/"])) {
   display: none !important;
 }
-
-
