@@ -55,7 +55,7 @@ Always verify browser domain names before connecting your Web3 wallet or signing
     <h3 class="tfc-portal-title">Official Telegram</h3>
     <p class="tfc-portal-desc">Official community group and announcement broadcast channel. Reserved; the official link will be populated prior to genesis launch.</p>
     <a href="javascript:void(0);" class="tfc-portal-btn disabled" aria-disabled="true">
-      Coming Soon (留空待公布)
+      Coming Soon (Pending Genesis)
     </a>
     <div class="tfc-portal-url">t.me/ (Pending Genesis)</div>
   </div>
@@ -72,7 +72,7 @@ Comprehensive references for developers, auditors, and integrators:
 | **Documentation Portal** | [thefatcatofficial.github.io/TheFatCat-docs/](https://thefatcatofficial.github.io/TheFatCat-docs/) | Canonical technical specifications & guides |
 | **Public Docs Repository** | [github.com/TheFatCatOfficial/TheFatCat-docs](https://github.com/TheFatCatOfficial/TheFatCat-docs) | Open-source Jekyll documentation repository |
 | **BNB Chain Explorer** | [bscscan.com](https://bscscan.com) | Official network explorer for deployed contracts |
-| **Security Contact** | `security@thefatcat.fun` | Responsible vulnerability disclosure channel |
+| **Security Advisories** | [GitHub Security Advisories](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new) | Responsible vulnerability disclosure channel (periodic review & prompt feedback) |
 
 ---
 

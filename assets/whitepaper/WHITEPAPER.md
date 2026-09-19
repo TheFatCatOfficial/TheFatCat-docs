@@ -321,17 +321,17 @@ The transition from initial token minting to a continuous dividend-paying state 
 
 ```
 [ Stage 0: Flap Curve ] ──► [ Stage 1: Graduation & Migration ] ──► [ Stage 2: FEED Gate Open ]
-Token trading opens         PancakeSwap V2 pair seeded;             Production contracts deployed;
+Token trading opens         PancakeSwap V2 pair seeded;             Production staking deployed;
 4% tax accrues to vault     TWAP observations accumulate            Staking deposits open
                                                                             │
                                                                             ▼
 [ Stage 4: Steady Emissions ] ◄─── [ Stage 3: 7-Day Dual Wall-Clock Accumulation ]
-Belly releases open via Router;     • Emission Delay: Rewards locked to zero during launch week
-Batch market execution active       • Timelock Gate: 7-day spender authorization delay
+Belly releases open via Router;     • Emission Delay: Distributions remain zero for first 7 days
+Batch market execution active       • Vault Outflow Timelock: 7-day spender activation window
 Seniority notches mature (up to 22) • Flap taxes flush to Belly ("accumulate only, zero outflow")
 ```
 
-1. **Stage 0: Bonding Curve Launch**: FATCAT trading initiates exclusively on Flap's bonding curve. The Flap TaxProcessor recognizes trading volume and routes creator revenue to `FatCatStakingVault`;
+1. **Stage 0: Bonding Curve Launch**: FATCAT trading initiates exclusively on Flap's bonding curve. The Flap TaxProcessor recognizes trading volume and routes nominal creator revenue to `FatCatStakingVault`;
 2. **Stage 1: Graduation & Liquidity Migration**: Upon reaching the curve target (24 BNB), Flap atomically migrates liquidity to PancakeSwap V2 (`FATCAT/WBNB`), establishing the canonical trading pair. Post-graduation trading tax remains active;
 3. **Stage 2: Staking Deployment & FEED Gate**: Once live pair routing is verified and TWAP price accumulators are initialized, production staking contracts are deployed. Deposits are unlocked immediately for stakers to secure initial positions;
 4. **Stage 3: Dual 7-Day Wall-Clock Accumulation Gates**: To eliminate unfair early-block dividend extraction and allow all launch participants to scale their seniority ladders ($c_i \in [1, 22]$) on an equal footing, the contracts enforce two parallel physical barriers:
@@ -470,13 +470,12 @@ The following matrix documents the target architecture for TheFatCat protocol on
 
 TheFatCat core contributors prioritize smart contract security and user fund safety above all else. We welcome independent vulnerability research, adversarial auditing, and white-hat penetration testing from the global security community:
 
-1. **Official Security Contact Email**:  
-   `security@thefatcat.fun`
+1. **Official Security Channel**:  
+   Please submit vulnerability disclosures through the official [GitHub Private Security Advisory Channel](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new).
 2. **Encrypted Communications**:  
-   When submitting reports concerning fund safety, logic vulnerabilities, or privilege escalation risks, please encrypt sensitive disclosures using the protocol's official PGP public key (the key fingerprint will be published upon mainnet deployment on official GitHub and website channels).
-3. **Response & Triage Commitments**:  
-   - **24-Hour Acknowledgment**: The security team commits to acknowledging receipt and initiating local reproduction within 24 hours of submission;
-   - **48-Hour Classification**: An initial severity classification and collaborative remediation timeline will be provided within 48 hours;
+   When submitting disclosures containing sensitive vulnerability details or exploit proofs, technical attachments may additionally be encrypted using the protocol's official PGP key (fingerprint published upon mainnet launch).
+3. **Review & Feedback Policy**:  
+   - **Regular Review & Prompt Feedback**: The security team regularly reviews incoming disclosures and provides rapid triage feedback upon evaluation;
    - **Coordinated Disclosure**: Both parties adhere to responsible disclosure principles while patches are engineered, verified, and deployed through standard governance timelocks.
 4. **White-Hat Recognition & Discretionary Bounties**:  
    While the protocol avoids rigid mechanical bounty tiers, verified Critical and High severity findings are eligible for significant discretionary decentralized grants disbursed from the community treasury, scaled to impact and technical rigor.

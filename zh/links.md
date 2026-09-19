@@ -55,7 +55,7 @@ TheFatCat 协议官方应用门户、质押工坊、社交媒体、智能合约�
     <h3 class="tfc-portal-title">官方 Telegram 社群</h3>
     <p class="tfc-portal-desc">官方社区交流群组与通知频道。为防范冒充钓鱼，正式社群链接将在创世部署前夕统一切换公布。</p>
     <a href="javascript:void(0);" class="tfc-portal-btn disabled" aria-disabled="true">
-      即将推出（留空待公布）
+      即将推出（创世前夕统一公布）
     </a>
     <div class="tfc-portal-url">t.me/ (创世前夕统一公布)</div>
   </div>
@@ -72,7 +72,7 @@ TheFatCat 协议官方应用门户、质押工坊、社交媒体、智能合约�
 | **官方技术文档站** | [thefatcatofficial.github.io/TheFatCat-docs/](https://thefatcatofficial.github.io/TheFatCat-docs/) | 权威数学规范、状态机模型与操作指南 |
 | **文档开源仓库** | [github.com/TheFatCatOfficial/TheFatCat-docs](https://github.com/TheFatCatOfficial/TheFatCat-docs) | 基于 Jekyll 的开源技术文档仓库 |
 | **BNB Chain 浏览器** | [bscscan.com](https://bscscan.com) | 创世部署合约链上源码与交易验证 |
-| **官方安全应急联络** | `security@thefatcat.fun` | 白帽漏洞负责任披露通道（24h 响应承诺） |
+| **安全通报通道** | [GitHub 私密安全通报通道](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new) | 负责任漏洞披露通道（定期查阅与快速反馈） |
 
 ---
 
