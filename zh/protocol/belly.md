@@ -1,21 +1,21 @@
 ---
 layout: default
-title: The Belly 水力阻尼机制
+title: The Belly 动态释放机制
 parent: 核心机制深度解析
 nav_order: 1
 ---
 
-# The Belly 水力阻尼系统深度解析
+# The Belly 动态释放机制与指数平滑储备池
 
 深入剖析 The Belly 的一阶指数阻尼物理模型、离散餐次释放公式与多窗口资金流出安全限额。
 
 ---
 
-## 1. 水力阻尼轨迹
+## 1. 指数平滑衰减轨迹
 
 与传统“即入即抛”的税收合约截然不同，The Belly 模拟具有粘滞阻尼效应的物理蓄水池。下图详细展示了在零外部流入极端场景下的指数衰减曲线，以及针对资金外流的 7-窗口安全限额阶梯防御：
 
-![The Belly 水力动力学与阻尼衰减轨迹]({{ '/assets/images/fig2-hydrodynamics.svg' | relative_url }})
+![The Belly 指数平滑与储备衰减轨迹]({{ '/assets/images/fig2-hydrodynamics.svg' | relative_url }})
 
 ---
 
