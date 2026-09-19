@@ -35,6 +35,6 @@ TheFatCat 的数学引擎在底层提供了常数 Gas 消耗（$O(1)$）的标�
 
 ## 3. 资历凭据与链上渲染器（创世生产组件）
 
-- **资历凭据 (`SeniorityCertificate.sol`)**：创世同步部署的 ERC-721 荣誉勋章，成熟仓位退出时可通过销毁 100,000 FATCAT 铸造（硬顶 10,000 枚，21 天冷却锁）。
+- **资历凭据 (`SeniorityCertificate.sol`)**：创世同步部署的 ERC-721 荣誉勋章，成熟仓位退出时可通过销毁 100,000 FATCAT 铸造（硬顶 10,000 枚，部署满 21 天解锁铸造）。
 - **凭据资产数据 (`CertificateData.sol`)**：创世部署的纯字节码存储容器，内置压缩矢量字体与美术资源包。
 - **凭据渲染器 (`SeniorityCertificateRenderer.sol`)**：100% 纯链上原生矢量 SVG 动态渲染引擎，不依赖任何中心化服务器或 IPFS 外部托管。

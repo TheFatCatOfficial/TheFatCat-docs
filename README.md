@@ -32,7 +32,7 @@ Browse the live documentation directly across our core architectural pillars:
 - **The Belly**: First-order exponential damping reservoir with window-capped outflows ($\le 16/168$ per window) and zero administrative withdrawal or sweep paths.
 - **$O(1)$ Seniority Ledger**: Evaluates seniority weights across cohorts in constant gas using a 22-slot circular graduation ring buffer.
 - **Sovereign Multi-Asset Diets**: Stakers independently select their reward asset (BNB, tokenized equities/bStocks, post-graduation FATCAT) with decoupled accounting and execution.
-- **Seniority Certificates (ERC-721)**: Genesis-deployed credential token allowing exiting mature stakers to permanently imprint achieved seniority notches (1–22) into on-chain SVG certificates by burning 100,000 FATCAT (`MAX_SUPPLY = 10,000`, 21-day transfer lock).
+- **Seniority Certificates (ERC-721)**: Genesis-deployed credential token allowing exiting mature stakers to permanently imprint achieved seniority notches (1–22) into on-chain SVG certificates by burning 100,000 FATCAT (`MAX_SUPPLY = 10,000`, 21-day cold-start lock before minting opens).
 - **Strict Non-Custodial Architecture**: Zero administrative balance sweep functions, timelocked router activation, and unconditionally unpausable staker principal redemptions (`redeem()` deliberately bypasses pause).
 
 ---
