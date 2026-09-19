@@ -33,6 +33,7 @@
   .side-bar + .main, .main {
     margin-left: 280px !important;
     width: calc(100% - 280px) !important;
+    max-width: none !important; // Override theme's 50rem cap
     min-width: 0 !important;
     background-color: #111614 !important;
     min-height: 100vh !important;
@@ -49,6 +50,7 @@
   .side-bar + .main, .main {
     margin-left: 300px !important;
     width: calc(100% - 300px) !important;
+    max-width: none !important;
   }
 }
 
@@ -236,7 +238,7 @@
 // 3. Responsive Content Wrap
 // -----------------------------------------------------------------------------
 .main-content-wrap {
-  max-width: 1060px !important;
+  max-width: min(1320px, calc(100% - 4rem)) !important;
   margin-left: auto !important;
   margin-right: auto !important;
   padding: 2.5rem clamp(1.25rem, 3.5vw, 3rem) !important;
