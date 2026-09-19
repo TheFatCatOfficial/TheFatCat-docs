@@ -34,29 +34,13 @@
       {%- assign node_lang = "zh" -%}
     {%- endif -%}
 
-    {%- assign is_current = false -%}
-    {%- assign is_ancestor = false -%}
-
-    {%- if node.url == page.url -%}
-      {%- assign is_current = true -%}
-    {%- endif -%}
-
-    {%- if page.parent == node.title or page.grand_parent == node.title -%}
-      {%- assign is_ancestor = true -%}
-    {%- endif -%}
-
-    {%- assign is_item_active = false -%}
-    {%- if is_current or is_ancestor -%}
-      {%- assign is_item_active = true -%}
-    {%- endif -%}
-
-    <li class="nav-list-item{% if is_item_active %} active{% endif %}" data-nav-lang="{{ node_lang }}">
+    <li class="nav-list-item" data-nav-lang="{{ node_lang }}">
       {%- if nav_children.size >= 1 -%}
-      <button class="nav-list-expander btn-reset" aria-label="{{ node.title }} submenu" aria-expanded="{% if is_item_active %}true{% else %}false{% endif %}">
+      <button class="nav-list-expander btn-reset" aria-label="{{ node.title }} submenu" aria-expanded="false">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
       </button>
       {%- endif -%}
-      <a href="{{ node.url | relative_url }}" class="nav-list-link{% if is_current %} active{% endif %}">{{ node.title }}</a>
+      <a href="{{ node.url | relative_url }}" class="nav-list-link">{{ node.title }}</a>
       {%- if nav_children.size >= 1 -%}
         {%- if node.child_nav_order == 'desc' or node.child_nav_order == 'reversed' -%}
           {%- assign nav_children = nav_children | reverse -%}

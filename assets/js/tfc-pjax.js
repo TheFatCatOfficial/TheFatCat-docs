@@ -95,43 +95,13 @@
     }
   }
 
-  function updateActiveSidebar(targetUrl, newDoc) {
-    // Strategy 1: Direct 1:1 state sync from Jekyll's pre-rendered active states in newDoc
-    if (newDoc) {
-      var currentItems = document.querySelectorAll('.site-nav .nav-list-item');
-      var newItems = newDoc.querySelectorAll('.site-nav .nav-list-item');
-      if (currentItems.length === newItems.length && currentItems.length > 0) {
-        for (var i = 0; i < currentItems.length; i++) {
-          var cur = currentItems[i];
-          var src = newItems[i];
-
-          if (src.classList.contains('active')) {
-            cur.classList.add('active');
-          } else {
-            cur.classList.remove('active');
-          }
-
-          var curExp = cur.querySelector(':scope > .nav-list-expander');
-          var srcExp = src.querySelector(':scope > .nav-list-expander');
-          if (curExp && srcExp) {
-            curExp.setAttribute('aria-expanded', srcExp.getAttribute('aria-expanded') || 'false');
-          }
-
-          var curLink = cur.querySelector(':scope > .nav-list-link');
-          var srcLink = src.querySelector(':scope > .nav-list-link');
-          if (curLink && srcLink) {
-            if (srcLink.classList.contains('active')) {
-              curLink.classList.add('active');
-            } else {
-              curLink.classList.remove('active');
-            }
-          }
-        }
-        return;
-      }
+  function updateActiveSidebar(targetUrl) {
+    // Neutralize any static nth-child rules from Just the Docs that might conflict with multi-lingual nav
+    var jtdStyle = document.getElementById('jtd-nav-activation');
+    if (jtdStyle) {
+      jtdStyle.textContent = '';
     }
 
-    // Strategy 2: Client-side DOM traversal & accordion collapse
     var targetPath = normalizePath(targetUrl);
 
     // 1. Reset all nav-list-item active states and collapse expanders across the entire sidebar
@@ -221,7 +191,7 @@
       updateLanguageSwitcher(newDoc);
 
       // 5. Update sidebar active item and accordion collapse without unmounting sidebar
-      updateActiveSidebar(url, newDoc);
+      updateActiveSidebar(url);
 
       // 6. Handle URL history
       if (pushState !== false) {
@@ -278,6 +248,21 @@
 
   // Intercept click events
   document.addEventListener('click', function(e) {
+    // 1. Check if user clicked an accordion expander button directly
+    var expander = e.target.closest('.nav-list-expander');
+    if (expander) {
+      if (!window.jtd || typeof window.jtd.addEvent !== 'function') {
+        e.preventDefault();
+        var parentItem = expander.closest('.nav-list-item');
+        if (parentItem) {
+          var isExpanded = parentItem.classList.toggle('active');
+          expander.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        }
+      }
+      return;
+    }
+
+    // 2. Check if user clicked an internal link for PJAX navigation
     var anchor = e.target.closest('a');
     if (!anchor) return;
 
@@ -311,5 +296,14 @@
   window.addEventListener('popstate', function() {
     navigateTo(window.location.href, false);
   });
+
+  // Synchronize active sidebar state immediately on initial page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      updateActiveSidebar(window.location.href);
+    });
+  } else {
+    updateActiveSidebar(window.location.href);
+  }
 
 })();
