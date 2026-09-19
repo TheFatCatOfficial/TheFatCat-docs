@@ -21,9 +21,12 @@ nav_order: 1
 
 ## 2. 释放量代数公式
 
-在每次有效餐次推进时，`IntervalController` 触发 The Belly 按照下列公式精确计算本期释放量：
+在每次有效餐次推进时，`LaunchIntervalController` 推进离散周期并根据 The Belly 状态计算归属于本期的奖励配额：
 
-$$\text{释放量}_k = (\text{accounted} - \text{outstandingClaims}) \times \frac{\min(\Delta t, 16\text{h})}{T_{\text{week}}}$$
+$$\text{释放配额}_k = (\text{accounted} - \text{outstandingClaims}) \times \frac{\min(\Delta t, 16\text{h})}{T_{\text{week}}}$$
+
+{: .note }
+**时钟推进与资金提取解耦**：`LaunchIntervalController` 在调用 `advance()` 时仅推进离散时钟与代数记账，并不会在此步骤转移实体资金；实际资产的提取（`release()`）完全由受信任执行路由（[`ExecutionRouter`]({% link zh/contracts.md %})）在为质押者执行具体兑换批次时按需即时触发。
 
 其中：
 - $\text{accounted}$：The Belly 认定的当前计价资产总储备。

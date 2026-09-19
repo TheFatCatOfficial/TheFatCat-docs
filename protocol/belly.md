@@ -21,9 +21,12 @@ Unlike pass-through fee contracts, The Belly is modeled after a physical reservo
 
 ## 2. Mathematical Release Formula
 
-Upon each valid meal closing, the `IntervalController` queries The Belly and triggers a release calculated as:
+Upon each valid meal closing, `LaunchIntervalController` advances the discrete accounting clock and evaluates the interval's attributable reward allocation:
 
-$$\text{Release}_k = (\text{accounted} - \text{outstandingClaims}) \times \frac{\min(\Delta t, 16\text{h})}{T_{\text{week}}}$$
+$$\text{Allocation}_k = (\text{accounted} - \text{outstandingClaims}) \times \frac{\min(\Delta t, 16\text{h})}{T_{\text{week}}}$$
+
+{: .note }
+**Clock Advance vs. Capital Draw**: `LaunchIntervalController` calculates and attributes this emission during `advance()`. Physical capital is not moved during clock advances; rather, the authorized Spender ([`ExecutionRouter`]({% link contracts.md %})) calls `release()` on `Belly.sol` strictly when executing swaps for staker reward batches.
 
 Where:
 - $\text{accounted}$: Total quote asset recognized by The Belly.
