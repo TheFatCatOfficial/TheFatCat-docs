@@ -2,6 +2,7 @@
 layout: default
 title: 合约规范与地址
 nav_order: 7
+has_children: true
 ---
 
 # 权威合约注册与规范表
@@ -10,10 +11,20 @@ TheFatCat 协议在 BNB Chain 上的官方智能合约注册表。具体合约�
 
 ---
 
-## 核心协议合约矩阵
+## 合约子系统导览
+
+深入查阅各子系统智能合约的技术细节与不变量约束：
+
+- **[核心协议金库合约]({% link zh/contracts/core-vaults.md %})**：质押本金金库（StakingVault，本金隔离托管与不可暂停赎回）、The Belly（无特权指数平滑储备池）与分账金库（ForwardingVault，原子级比例分流）。
+- **[周边路由与预言机]({% link zh/contracts/routers-and-oracles.md %})**：批量执行路由（ExecutionRouter，防三明治夹子批量兑换）、TWAP 预言机（PancakeV2TwapOracle，滑点保护与内生均价）以及食谱资产注册表。
+- **[资历与账本数学合约]({% link zh/contracts/seniority-ledger.md %})**：资历账本（SeniorityLedger，$O(1)$ 标量权重闭式解核算）、收益分发器（RewardDistributor，双重负债结算会计）以及纯链上 SVG 资历凭据渲染器。
+
+---
+
+## 协议核心合约总表
 
 {: .note }
-**主网创世部署说明**：官方链上合约地址将通过 `CREATE2` 确定性部署生成，并在 BNB Chain 创世广播后正式公布。下表详列了各核心合约的源码定位、职责边界与部署规范。正式部署后将在此直接接入 BscScan 实时开源验证链接。
+**主网创世部署说明**：官方链上合约地址将通过 `CREATE2` 确定性部署生成，并在 BNB Chain 创世广播后正式公布。正式部署后将在此直接接入 BscScan 实时开源验证链接。
 
 | 核心组件 | 源码合约 | 架构职责与系统边界 | 部署规范 | 创世开源验证 |
 |:---|:---|:---|:---|:---|
@@ -30,10 +41,3 @@ TheFatCat 协议在 BNB Chain 上的官方智能合约注册表。具体合约�
 | **资历凭据** | `SeniorityCertificate.sol` | 退仓荣誉勋章；销毁代币铸造，100% 纯链上 SVG ERC-721 资产 | 确定性 CREATE2 | 上线后后续规划 |
 | **凭据渲染器** | `SeniorityCertificateRenderer.sol` | 纯链上原生矢量 SVG 生成器，动态计算并实时渲染视觉元数据 | 确定性 CREATE2 | 上线后后续规划 |
 | **TWAP 预言机** | `PancakeV2TwapOracle.sol` | 内生 TWAP 观察器，防三明治夹子攻击的时间加权均价评估引擎 | 确定性 CREATE2 | 创世批次 |
-
----
-
-## 字节码与开源验证准则
-
-{: .note }
-所有已部署合约均通过标准 Foundry 工具链进行编译，采用严格的确定性编译器配置。合约字节码与元数据将在部署上链的第一时间，在 [BscScan](https://bscscan.com) 上完成 100% 完整开源验证。

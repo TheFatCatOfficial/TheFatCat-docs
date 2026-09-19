@@ -2,6 +2,7 @@
 layout: default
 title: Verified Contracts
 nav_order: 7
+has_children: true
 ---
 
 # Verified Contracts Schedule
@@ -10,10 +11,20 @@ Official smart contract registry for TheFatCat protocol on BNB Chain. Addresses 
 
 ---
 
-## Core Protocol Contracts Matrix
+## Architectural Breakdown
+
+Explore detailed specifications for each contract subsystem:
+
+- **[Core Vault Contracts]({% link contracts/core-vaults.md %})**: StakingVault (principal isolation & unpausable redemptions), The Belly (unprivileged damping reservoir), and ForwardingVault (atomic fee division).
+- **[Routers & Oracles]({% link contracts/routers-and-oracles.md %})**: ExecutionRouter (MEV-guarded single-activation router), PancakeV2TwapOracle (endogenous price checks), and RewardAssetRegistry.
+- **[Seniority Ledger & Math]({% link contracts/seniority-ledger.md %})**: SeniorityLedger ($O(1)$ scalar weight accounting), RewardDistributor (dual-liability solvency engine), and on-chain SeniorityCertificate renderers.
+
+---
+
+## Master Protocol Registry
 
 {: .note }
-**Mainnet Genesis Deployment Note**: Official on-chain contract addresses will be deterministically derived via `CREATE2` and published upon genesis broadcast on BNB Chain. This table details the core contract sources, invariants, and deployment specifications. Live BscScan explorer links will be populated immediately upon launch.
+**Mainnet Genesis Deployment Note**: Official on-chain contract addresses will be deterministically derived via `CREATE2` and published upon genesis broadcast on BNB Chain. Live BscScan explorer links will be populated immediately upon launch.
 
 | Component | Source Contract | Architectural Scope & Role | Deployment Standard | Genesis Verification |
 |:---|:---|:---|:---|:---|
@@ -30,10 +41,3 @@ Official smart contract registry for TheFatCat protocol on BNB Chain. Addresses 
 | **SeniorityCertificate** | `SeniorityCertificate.sol` | Exit credential; burn FATCAT to mint, 100% on-chain SVG ERC-721 | Deterministic CREATE2 | Post-Launch Phase |
 | **CertificateRenderer** | `SeniorityCertificateRenderer.sol` | Pure on-chain SVG generator rendering dynamic visual attributes | Deterministic CREATE2 | Post-Launch Phase |
 | **PancakeV2TwapOracle** | `PancakeV2TwapOracle.sol` | Endogenous TWAP reader evaluating time-weighted average prices | Deterministic CREATE2 | Scheduled Genesis |
-
----
-
-## Bytecode & Verification Guidelines
-
-{: .note }
-All deployed contracts are compiled via standard Foundry toolchains with strict deterministic compiler settings. Contract bytecodes and metadata will be fully verified on [BscScan](https://bscscan.com) simultaneously with deployment.
