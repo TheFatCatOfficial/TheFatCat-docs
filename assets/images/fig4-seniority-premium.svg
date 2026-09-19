@@ -31,12 +31,12 @@
     
     <!-- Title & Formula (Left aligned) -->
     <text x="25" y="28" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">Seniority Coefficient Ramp</text>
-    <text x="25" y="46" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11">c_i(m) = 1 + min(m - j_i, 21)</text>
+    <text x="25" y="46" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11">c<tspan font-size="8" baseline-shift="sub">i</tspan>(m) = 1 + min(m − j<tspan font-size="8" baseline-shift="sub">i</tspan>, 21)</text>
 
     <!-- Mature Plateau Badge (Right aligned, completely separated from title) -->
     <rect x="350" y="14" width="145" height="36" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1" />
     <text x="422" y="28" fill="#fbbf24" font-family="ui-monospace, monospace" font-size="10" font-weight="700" text-anchor="middle">Mature Plateau</text>
-    <text x="422" y="41" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">c_i = 22 (No Compounding)</text>
+    <text x="422" y="41" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">c<tspan font-size="6.5" baseline-shift="sub">i</tspan> = 22 (No Compounding)</text>
 
     <!-- Y-Axis Grid Lines & Labels (All labels right-aligned at x=125, safely padded inside card) -->
     <line x1="135" y1="75" x2="490" y2="75" stroke="#f59e0b" stroke-dasharray="3" stroke-width="1" />
@@ -142,7 +142,7 @@
     <g transform="translate(30, 48)">
       <rect width="250" height="95" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
       <text x="125" y="30" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11" font-weight="700" text-anchor="middle">Effective Weight Equation:</text>
-      <text x="125" y="58" fill="#fbbf24" font-family="ui-monospace, monospace" font-size="16" font-weight="700" text-anchor="middle">w_i = p_i × c_i(m)</text>
+      <text x="125" y="58" fill="#fbbf24" font-family="ui-monospace, monospace" font-size="16" font-weight="700" text-anchor="middle">w<tspan font-size="11" baseline-shift="sub">i</tspan> = p<tspan font-size="11" baseline-shift="sub">i</tspan> × c<tspan font-size="11" baseline-shift="sub">i</tspan>(m)</text>
       <text x="125" y="78" fill="#64748b" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">Principal × Seniority Coefficient</text>
     </g>
 

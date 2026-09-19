@@ -110,7 +110,7 @@
     <text x="20" y="50" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="11">Cadence: ≥ 8 Hours (Permissionless)</text>
     
     <line x1="20" y1="64" x2="250" y2="64" stroke="#1e293b" stroke-width="1" />
-    <text x="20" y="82" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">Locks Open Weights: W_open(a)</text>
+    <text x="20" y="82" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">Locks Open Weights: W<tspan font-size="8" baseline-shift="sub">open</tspan>(a)</text>
     <text x="20" y="98" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">Rotates 22-Slot Graduation Ring</text>
   </g>
 
@@ -149,7 +149,7 @@
     
     <line x1="20" y1="60" x2="230" y2="60" stroke="#1e293b" stroke-width="1" />
     <text x="20" y="78" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="10">liability[a] &amp; quoteLiability[a]</text>
-    <text x="20" y="94" fill="#10b981" font-family="ui-monospace, monospace" font-size="10">Floor Truncation: Σ r_i ≤ R (Solvency)</text>
+    <text x="20" y="94" fill="#10b981" font-family="ui-monospace, monospace" font-size="10">Floor Truncation: Σ r<tspan font-size="7" baseline-shift="sub">i</tspan> ≤ R (Solvency)</text>
     <text x="20" y="110" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">claimNative() Unwraps WBNB</text>
   </g>
 
@@ -160,13 +160,13 @@
     <text x="81" y="4" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle">SENIORITY LEDGER</text>
 
     <text x="20" y="30" fill="#38bdf8" font-family="-apple-system, sans-serif" font-size="13" font-weight="700">O(1) Closed-Form Engine</text>
-    <text x="20" y="48" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">W(m) = (1+m)P_climb - J_climb</text>
-    <text x="20" y="62" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">     + 22×P_settled + W_exiting</text>
+    <text x="20" y="48" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">W(m) = (1+m)P<tspan font-size="7" baseline-shift="sub">climb</tspan> − J<tspan font-size="7" baseline-shift="sub">climb</tspan></text>
+    <text x="20" y="62" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">     + 22×P<tspan font-size="7" baseline-shift="sub">settled</tspan> + W<tspan font-size="7" baseline-shift="sub">exiting</tspan></text>
 
     <line x1="20" y1="74" x2="240" y2="74" stroke="#1e293b" stroke-width="1" />
     <text x="20" y="92" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="11" font-weight="600">Dual Prefix Accumulators (RAY)</text>
-    <text x="20" y="108" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="10">A_m = A_{m-1} + (1+m)ω_m</text>
-    <text x="20" y="122" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="10">B_m = B_{m-1} + ω_m</text>
+    <text x="20" y="108" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="10">A<tspan font-size="7" baseline-shift="sub">m</tspan> = A<tspan font-size="7" baseline-shift="sub">m−1</tspan> + (1+m)ω<tspan font-size="7" baseline-shift="sub">m</tspan></text>
+    <text x="20" y="122" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="10">B<tspan font-size="7" baseline-shift="sub">m</tspan> = B<tspan font-size="7" baseline-shift="sub">m−1</tspan> + ω<tspan font-size="7" baseline-shift="sub">m</tspan></text>
     <text x="20" y="142" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">Forfeiture: Unspent pot nets to loyalists</text>
   </g>
 
@@ -198,8 +198,8 @@
     <rect width="270" height="125" rx="10" fill="#0c121d" stroke="#1e293b" stroke-width="1" />
     <text x="20" y="28" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="12" font-weight="700">CORE FORMAL INVARIANTS</text>
     
-    <text x="20" y="52" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="10">S10: Σ W_open(a) == W_total</text>
-    <text x="20" y="68" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="10">O(1): (1+m)P_climb - J_climb ...</text>
+    <text x="20" y="52" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="10">S10: Σ W<tspan font-size="7" baseline-shift="sub">open</tspan>(a) == W<tspan font-size="7" baseline-shift="sub">total</tspan></text>
+    <text x="20" y="68" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="10">O(1): (1+m)P<tspan font-size="7" baseline-shift="sub">climb</tspan> − J<tspan font-size="7" baseline-shift="sub">climb</tspan> ...</text>
     <text x="20" y="84" fill="#10b981" font-family="ui-monospace, monospace" font-size="10">D1: Bal(Distributor) ≥ liability</text>
     <text x="20" y="100" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">B2: Outflow ≤ Bal × 16/168</text>
     <text x="20" y="116" fill="#64748b" font-family="ui-monospace, monospace" font-size="9">74 suites / 538 tests / 0 failures</text>
