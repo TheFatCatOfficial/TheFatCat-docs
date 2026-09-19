@@ -27,6 +27,9 @@ The table below outlines the exact mathematical allocation of each nominal trade
 {: .note }
 **Wallet-to-Wallet Transfers Are Untaxed**: Moving FATCAT tokens between personal wallets is not a trade and incurs **0% tax**. Only transactions routed through designated AMM pair contracts trigger the tax processor.
 
+{: .important }
+**Operations Share Scope & Non-Committal Forward Guidance**: The Operations Share is allocated toward early-stage and ongoing protocol operational expenditures (hosting, art, keeper bounties, security audits, and infrastructure gas). This distribution split ($5/36$ of vault receipt) is an immutable, hardcoded on-chain constant with a one-time bound recipient (`OPS_SAFE`); the protocol currently contains no automated rebalancing mechanisms. In the future, once the protocol reaches operational maturity, any proposal to transition portions of this share toward core protocol reserves, buyback-and-burn, or a decentralized DAO governance treasury would be announced separately through official governance processes — such directional statements do not constitute a binding commitment or promise.
+
 ---
 
 ## 2. Liquidation Mechanics & Initial Delay
