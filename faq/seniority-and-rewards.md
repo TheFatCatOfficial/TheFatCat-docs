@@ -27,5 +27,5 @@ You can call `claim()` at any time to claim any realized diet tokens. For staker
 
 ---
 
-## 4. What is a Seniority Certificate, and when will it launch?
-A [Seniority Certificate]({% link guides/seniority-certificates.md %}) is an upcoming on-chain ERC-721 credential planned for activation in a subsequent protocol release following launch stabilization. In upcoming updates, exiting stakers will have the option to burn FATCAT to mint a permanent on-chain SVG certificate capturing their achieved seniority notch (1–22). Further mechanics and parameters will be announced prior to rollout.
+## 4. What is a Seniority Certificate, and how does it work?
+A [Seniority Certificate]({% link guides/seniority-certificates.md %}) is an on-chain ERC-721 credential deployed at genesis. When exiting a mature position, stakers can burn 100,000 FATCAT to permanently imprint their achieved seniority notch (1–22) into an immutable on-chain SVG certificate (`MAX_SUPPLY = 10,000`, 21-day transfer lock). The certificate can subsequently be attached when opening a new position to inherit the achieved seniority multiplier from day one.

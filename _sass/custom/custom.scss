@@ -228,6 +228,15 @@
   padding: 0.85rem 0.75rem !important;
 }
 
+// Eliminate any default gradient overlays from theme
+.nav-list .nav-list-item .nav-list-link,
+.nav-list .nav-list-item .nav-list-link:hover,
+.nav-list .nav-list-item .nav-list-link.active,
+.nav-list .nav-list-item .nav-list-expander,
+.nav-list .nav-list-item .nav-list-expander:hover {
+  background-image: none !important;
+}
+
 // Top-Level Parent Items (Categories)
 .site-nav > .nav-list > .nav-list-item {
   margin: 0.35rem 0 !important;
@@ -236,6 +245,7 @@
   > .nav-list-link {
     display: block !important;
     background-color: #151d19 !important;
+    background-image: none !important;
     border: 1px solid #1f2a24 !important;
     border-radius: 6px !important;
     color: #e7dfc9 !important;
@@ -247,21 +257,31 @@
 
     &:hover {
       background-color: #1a2520 !important;
+      background-image: none !important;
       color: #ffffff !important;
       border-color: #2e3d35 !important;
     }
 
     &.active {
       background-color: #16241e !important;
+      background-image: none !important;
       border-color: #48b78d !important;
       color: #48b78d !important;
       box-shadow: inset 0 0 0 1px rgba(72, 183, 141, 0.25) !important;
     }
   }
 
+  &.active > .nav-list-link {
+    background-color: #16241e !important;
+    background-image: none !important;
+    border-color: #48b78d !important;
+    color: #48b78d !important;
+  }
+
   // Parent Expander Button
   > .nav-list-expander {
     color: #a7a894 !important;
+    background-image: none !important;
     padding: 0.35rem !important;
     transition: color 0.15s ease, transform 0.15s ease !important;
 
@@ -525,6 +545,7 @@ table {
   border-collapse: collapse !important;
   margin: 1.75rem 0 !important;
   font-size: 0.88rem !important;
+  background-color: #0c100e !important;
 
   th {
     background-color: #141f1a !important;
@@ -541,16 +562,18 @@ table {
   }
 
   td {
+    background-color: #111614 !important;
+    color: #e7dfc9 !important;
     border: 1px solid #1e2723 !important;
     padding: 0.75rem 1rem !important;
   }
 
-  tr:nth-child(even) {
-    background-color: #0e1311 !important;
+  tr:nth-child(even) td {
+    background-color: #0c100e !important;
   }
 
   tr:hover td {
-    background-color: #151d1a !important;
+    background-color: #16241e !important;
   }
 }
 
@@ -564,6 +587,12 @@ table {
   border-radius: 4px;
   padding: 0.85rem 1.15rem !important;
   margin: 1.25rem 0 !important;
+
+  &::before, & > .note-title {
+    color: #48b78d !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+  }
 }
 
 .warning {
@@ -574,6 +603,12 @@ table {
   padding: 0.85rem 1.15rem !important;
   margin: 1.25rem 0 !important;
   box-shadow: inset 0 0 16px rgba(189, 108, 117, 0.08) !important;
+
+  &::before, & > .warning-title {
+    color: #bd6c75 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+  }
 }
 
 .tip {
@@ -583,6 +618,12 @@ table {
   border-radius: 4px;
   padding: 0.85rem 1.15rem !important;
   margin: 1.25rem 0 !important;
+
+  &::before, & > .tip-title {
+    color: #48b78d !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+  }
 }
 
 .important {
@@ -592,6 +633,12 @@ table {
   border-radius: 4px;
   padding: 0.85rem 1.15rem !important;
   margin: 1.25rem 0 !important;
+
+  &::before, & > .important-title {
+    color: #a8874c !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -828,7 +875,9 @@ html[data-theme="light"] {
   }
 
   .side-bar + .main,
-  .main {
+  .main,
+  .main-content,
+  .main-content-wrap {
     background-color: #f6f2e8 !important;
   }
 
@@ -898,28 +947,43 @@ html[data-theme="light"] {
   .site-nav > .nav-list > .nav-list-item {
     > .nav-list-link {
       background-color: #e4dcc7 !important;
+      background-image: none !important;
       border: 1px solid #d8cea8 !important;
       color: #111614 !important;
 
       &:hover {
         background-color: #dacfb6 !important;
-        color: #000000 !important;
+        background-image: none !important;
+        color: #0e3b32 !important;
         border-color: #c9bda4 !important;
       }
 
       &.active {
-        background-color: #dcece4 !important;
+        background-color: #d6e8de !important;
+        background-image: none !important;
         border-color: #0e3b32 !important;
         color: #0e3b32 !important;
+        font-weight: 700 !important;
         box-shadow: inset 0 0 0 1px rgba(14, 59, 50, 0.3) !important;
       }
     }
 
+    &.active > .nav-list-link {
+      background-color: #d6e8de !important;
+      background-image: none !important;
+      border-color: #0e3b32 !important;
+      color: #0e3b32 !important;
+      font-weight: 700 !important;
+      box-shadow: inset 0 0 0 1px rgba(14, 59, 50, 0.3) !important;
+    }
+
     > .nav-list-expander {
       color: #5d6155 !important;
+      background-image: none !important;
 
       &:hover {
         color: #0e3b32 !important;
+        background-image: none !important;
       }
     }
 
@@ -929,19 +993,31 @@ html[data-theme="light"] {
       .nav-list-item {
         .nav-list-link {
           color: #4a4f45 !important;
+          background-image: none !important;
 
           &:hover {
-            color: #111614 !important;
+            color: #0e3b32 !important;
             background-color: rgba(14, 59, 50, 0.08) !important;
+            background-image: none !important;
           }
 
           &.active {
             color: #0e3b32 !important;
             font-weight: 600 !important;
-            background-color: rgba(14, 59, 50, 0.12) !important;
+            background-color: rgba(14, 59, 50, 0.14) !important;
+            background-image: none !important;
             border-left: 2px solid #0e3b32 !important;
             box-shadow: inset 1px 0 0 rgba(14, 59, 50, 0.25) !important;
           }
+        }
+
+        &.active > .nav-list-link {
+          color: #0e3b32 !important;
+          font-weight: 600 !important;
+          background-color: rgba(14, 59, 50, 0.14) !important;
+          background-image: none !important;
+          border-left: 2px solid #0e3b32 !important;
+          box-shadow: inset 1px 0 0 rgba(14, 59, 50, 0.25) !important;
         }
       }
     }
@@ -985,6 +1061,8 @@ html[data-theme="light"] {
   }
 
   table {
+    background-color: #fbf8f0 !important;
+
     th {
       background-color: #eae1cb !important;
       color: #111614 !important;
@@ -993,16 +1071,17 @@ html[data-theme="light"] {
     }
 
     td {
+      background-color: #fcf9f2 !important;
       border: 1px solid #dad0b9 !important;
-      color: #202722 !important;
+      color: #111614 !important;
     }
 
-    tr:nth-child(even) {
-      background-color: #f1ebd9 !important;
+    tr:nth-child(even) td {
+      background-color: #f3ecda !important;
     }
 
     tr:hover td {
-      background-color: #e7dfc9 !important;
+      background-color: #e8deca !important;
     }
   }
 
@@ -1011,6 +1090,12 @@ html[data-theme="light"] {
     border-left: 4px solid #0e3b32 !important;
     background-color: rgba(14, 59, 50, 0.08) !important;
     color: #092822 !important;
+
+    &::before, & > .note-title {
+      color: #0e3b32 !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.05em !important;
+    }
   }
 
   .warning {
@@ -1019,6 +1104,12 @@ html[data-theme="light"] {
     background-color: rgba(124, 48, 56, 0.08) !important;
     color: #4c1a20 !important;
     box-shadow: inset 0 0 16px rgba(124, 48, 56, 0.06) !important;
+
+    &::before, & > .warning-title {
+      color: #7c3038 !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.05em !important;
+    }
   }
 
   .tip {
@@ -1026,6 +1117,12 @@ html[data-theme="light"] {
     border-left: 4px solid #0e3b32 !important;
     background-color: rgba(14, 59, 50, 0.08) !important;
     color: #092822 !important;
+
+    &::before, & > .tip-title {
+      color: #0e3b32 !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.05em !important;
+    }
   }
 
   .important {
@@ -1033,6 +1130,12 @@ html[data-theme="light"] {
     border-left: 4px solid #a8874c !important;
     background-color: rgba(168, 135, 76, 0.14) !important;
     color: #443216 !important;
+
+    &::before, & > .important-title {
+      color: #8c6827 !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.05em !important;
+    }
   }
 
   .katex-display {
