@@ -32,7 +32,7 @@ Where:
 - $P_{\text{settled}} = \sum_{i \in \text{Settled}} p_i$ (Aggregate principal of settled positions)
 - $W_{\text{exiting}}$: Residual weight from stakers who redeemed mid-meal.
 
-When `advanceInterval()` executes, the slot buffer `graduatingPrincipal[m % 22]` is transferred from $P_{\text{climb}}$ to $P_{\text{settled}}$ in a single constant-gas operation.
+When `advance()` executes, the slot buffer `graduatingPrincipal[m % 22]` is transferred from $P_{\text{climb}}$ to $P_{\text{settled}}$ in a single constant-gas operation.
 
 ---
 

@@ -35,7 +35,7 @@ If the official front-end is down, you can execute your redemption directly on *
 1. Look up your wallet address on [BscScan](https://bscscan.com).
 2. Filter your transaction history for your original `stake` transaction to the `StakingVault`.
 3. In the **Transaction Details**, click on **Logs**.
-4. The `Staked(address indexed user, uint256 indexed positionId, ...)` event emits your numeric `positionId`.
+4. The `Staked(uint256 indexed id, address indexed owner, uint256 principal, address diet)` event emits your numeric position `id` in **Topic 1** (Topic 2 is the owner address).
 
 ### Step 2: Open the Staking Vault Contract
 1. Navigate to the verified [`StakingVault` contract page on BscScan]({% link contracts.md %}).
@@ -45,9 +45,9 @@ If the official front-end is down, you can execute your redemption directly on *
 ### Step 3: Execute `redeem`
 1. Locate function `redeem`:
    ```solidity
-   redeem(uint256 positionId)
+   redeem(uint256 id)
    ```
-2. Enter your numeric `positionId` in the input field.
+2. Enter your numeric position `id` in the input field.
 3. Click **Write** and confirm the transaction in your wallet.
 4. Upon block inclusion, **100% of your staked FATCAT principal is returned directly to your wallet**.
 
@@ -57,7 +57,7 @@ If the official front-end is down, you can execute your redemption directly on *
 
 In some protocols, closing an accounting cycle is mandatory before capital can exit. In TheFatCat:
 
-- `redeem()` **does not call or depend on `advanceInterval()`**.
+- `redeem()` **does not call or depend on `advance()`**.
 - Even if all keeper bots crash or gas prices spike to extreme levels, your principal can be withdrawn instantly at any second.
 - The only effect of redeeming mid-meal is that you forfeit the single currently open interval; all previously completed intervals and settled rewards remain yours forever.
 
@@ -69,10 +69,13 @@ To claim your accrued reward tokens without the website:
 
 1. Navigate to the verified [`RewardDistributor`]({% link contracts.md %}) contract on BscScan.
 2. Under **Write Contract**, connect your wallet.
-3. Locate function `claimNative` (for BNB) or `claim` (for other diet tokens):
-   - Enter your `positionId`.
-   - Set `maxBatches` to `0` (or `20` if claiming in chunks).
-4. Click **Write** and confirm.
+3. Locate function `claimNative` (for native BNB unwrapping) or `claim` (for other diet tokens):
+   - `id`: Enter your position ID.
+   - `asset`: Enter the diet asset address (e.g. canonical WBNB contract address for BNB).
+   - `gen`: Enter the generation index for this asset (typically `0` for positions that have not redirected diets).
+4. For positions with extensive backlogs seeking bounded gas consumption, use `claimThrough` or `claimNativeThrough`:
+   - Pass `id`, `asset`, `gen`, and `toBatch` (the highest batch index to claim up to).
+5. Click **Write** and confirm.
 
 ---
 
@@ -85,12 +88,11 @@ If the web application is offline or if you are automating deposits programmatic
 
 ```solidity
 function stake(
-    uint256 amount,
-    address dietAsset,
-    uint256 certificateTokenId
-) external returns (uint256 positionId);
+    uint256 principal,
+    address diet
+) external returns (uint256 id);
 ```
 
-- `amount`: Token amount in wei (must be $\ge 100{,}000 \times 10^{18}$ FATCAT).
-- `dietAsset`: Target reward asset address (canonical WBNB contract address for default BNB rewards).
-- `certificateTokenId`: Set to `0` for standard entry at Notch 1 (certificate linking is reserved for future protocol phases).
+- `principal`: Token amount in wei (must be $\ge 100{,}000 \times 10^{18}$ FATCAT).
+- `diet`: Target reward asset address (canonical WBNB contract address for default BNB rewards).
+- *Certificate Entry*: To stake with an unencumbered Seniority Certificate (lending its permanent starting multiplier), call the dedicated `stakeWithCertificate(uint256 principal, address diet, uint256 certificateId)` function.

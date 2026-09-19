@@ -18,13 +18,17 @@ On BNB Chain, the transaction tax processor is deployed and owned by the Flap fa
 To safeguard stakers, TheFatCat operates an automated monitoring watcher:
 
 ### `watch-processor.sh`
-Located in [`contracts/ops/watch-processor.sh`](https://github.com/TheFatCatOfficial/TheFatCat/blob/main/contracts/ops/watch-processor.sh), this script polls four vital on-chain storage slots:
-1. **Target Vault Address**: Ensures routing proceeds continue pointing to TheFatCat's Forwarding Vault.
-2. **Fee Rate Configuration**: Verifies the tax percentage remains fixed.
-3. **Liquidation Threshold**: Monitors the FATCAT accumulation trigger before AMM sell liquidations.
-4. **Primary Liquidity Pair**: Validates the taxed trading pair address.
+Located in [`contracts/ops/watch-processor.sh`](https://github.com/TheFatCatOfficial/TheFatCat/blob/main/contracts/ops/watch-processor.sh), this script polls eight vital on-chain view functions on the Flap processor:
+1. **`owner()`**: Confirms ownership remains with the canonical Flap Portal.
+2. **`getWalletConfig()`**: Ensures creator revenue proceeds continue routing to TheFatCat's tax vault (`FatCatStakingVault`).
+3. **`feeReceiver()`**: Tracks the platform fee recipient address.
+4. **`feeConfig()`**: Verifies the platform fee fraction (`marketBps`, 1000 bps) remains unchanged.
+5. **`dividendAddress()`**: Monitors dividend distribution routing.
+6. **`forwardAddress()`**: Confirms unauthorized forwarding targets are not armed.
+7. **`autoForward()`**: Verifies the automated forwarding toggle state.
+8. **`quoteToken()`**: Verifies the payout currency token pointer.
 
-If any deviation or unauthorized route mutation is detected, automated alerts notify the core security contributors within seconds.
+If any deviation or unauthorized route mutation is detected against the baseline, automated alerts notify core security contributors immediately.
 
 ---
 

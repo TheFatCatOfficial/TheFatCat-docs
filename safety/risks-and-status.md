@@ -14,11 +14,15 @@ Transparent disclosures regarding protocol assumptions, third-party dependencies
 ## 1. Protocol Pre-Launch Status
 
 {: .warning }
-TheFatCat protocol contracts are finalized in code and thoroughly verified across 74 test suites and 538 tests, but remain pre-launch on BNB Chain mainnet.
+TheFatCat protocol contracts are finalized in code and thoroughly verified across 78 test suites and 582 tests, but remain pre-launch on BNB Chain mainnet.
 
 - **Target Network**: BNB Chain (Chain ID: 56).
 - **Initial Launch Venue**: Flap bonding curve.
-- **FEED Activation Gate**: Trading begins first; staking (FEED) opens only after live route verification, TWAP warm-up, and end-to-end dry runs.
+- **FEED Activation Gate**: Token trading begins first on the bonding curve. Following graduation and DEX migration, staking opens for deposits.
+- **Dual 7-Day Wall-Clock Accumulation Gates**: Stakers begin climbing seniority immediately, while rewards are protected by two parallel 7-day physical locks:
+  1. *Clock Gate (`LaunchIntervalController`)*: Pinned to `rewardStartAt = block.timestamp + 7 days`. Reward release calculations yield zero until this timestamp passes, ensuring fair seniority accrual.
+  2. *Treasury Gate (`Belly.activationDelay`)*: The execution router's spender role requires an immutable 7-day activation delay, preventing any capital withdrawals from The Belly during launch week.
+  3. Throughout these 7 days, trading taxes flow continuously into The Belly via `flush()`, accumulating deep initial reserves without early dilution.
 - **Contract Addresses**: Official contract addresses will be published on the [Verified Contracts]({% link contracts.md %}) page upon deployment. Any address claiming to represent the protocol prior to official publication is illegitimate.
 
 ---

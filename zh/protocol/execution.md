@@ -48,7 +48,8 @@ $$\text{protocolMinOut} = \left\lfloor \frac{\text{expectedOut} \cdot (10000 - \
 
 现实世界代币化资产（bStocks）包含发行方对手方信用与合约升级风险。TheFatCat 在协议层面进行了严格风控：
 
-- **5% 观察期上限**：非网络原生资产在观察期内受制于严格的 **5% 配额上限**。
+- **单餐次 5% 观察期上限**：新上线非原生资产在进入系统的最初 7 天观察期（`PROBATION = 7 days`）内，单餐次分配上限严格被钳制为 500 bps（`PROBATION_CAP_BPS = 5%`），7 天后解除并恢复为 100%（`BPS`）。此上限为单餐预算比例上限，而非终身累计硬顶。
+- **创世初始菜单豁免**：在创世注册表 [`InitialRewardAssetRegistry`]({% link zh/contracts.md %}) 中，签署于部署构造函数中的首发菜单标的已在部署前完成了严格的深度审核与流动性验证，因此享受初始 7 天观察期豁免（`_isProbationExempt` 为 `true`）。后续若关闭后重新启用，则必须按普通规则重新服满 7 天观察期。
 - **风险物理隔离**：单一 bStock 标的的违约或暂停交易，绝不会波及其他资产的正常运行。WBNB 始终作为不可篡改的默认与兜底清偿储备。
 
 ---
@@ -60,9 +61,9 @@ $$\text{protocolMinOut} = \left\lfloor \frac{\text{expectedOut} \cdot (10000 - \
 若某个采购批次在超时窗口期（`maxPendingAge`，默认 **3 天**）内仍无法成功兑换：
 
 ```solidity
-function fallbackFinalize(uint256 batchId) external;
+function fallbackFinalize(address asset) external returns (uint256 quoteIn);
 ```
 
-- **全员免许可**：任何人（Keeper、普通质押者、套利机器人）均可直接调用 `fallbackFinalize()`。
+- **全员免许可**：任何人（Keeper、普通质押者、套利机器人）均可直接调用 `fallbackFinalize(asset)`。
 - **计价资产兜底清偿**：未执行兑换的底层计价资金（WBNB）以 1:1 比例直接确认为质押者的 `quoteLiability[asset]`。
 - **零坏账锁定**：协议直接以最高流动性的网络原生储备资产安全结算，彻底消除资金被困死或沦为坏账的系统性隐患。

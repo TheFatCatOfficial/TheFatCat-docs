@@ -7,28 +7,33 @@ nav_order: 3
 
 # Seniority Certificates (ERC-721)
 
-A conceptual overview of TheFatCat's upcoming on-chain seniority credential system, planned for rollout in a subsequent protocol release.
+An in-depth specification of TheFatCat's on-chain seniority credential system, deployed at genesis as an immutable companion to the staking engine.
 
 ---
 
 {: .note }
-**Launch Status: Post-Launch Roadmap Feature**  
-The Seniority Certificate module is **not enabled during initial protocol launch**. At launch, all position exits perform standard principal redemptions (100% of principal returned, zero burn fee). The certificate system is reserved for an upcoming protocol phase.
+**Genesis Deployment Status: Deployed with Staking Stack**  
+The Seniority Certificate module is deployed alongside `StakingVault` at genesis. Stakers exiting an active position can choose between standard redemption (`redeem()`, returning 100% principal without burning) or issuing a permanent credential (`redeemAndIssueCertificate()`).
 
 ---
 
-## 1. Concept & Vision
+## 1. Concept & Mechanics
 
-In traditional staking protocols, exiting a pool permanently wipes a participant's historical commitment and accumulated tenure. TheFatCat is designed to acknowledge long-term alignment.
+In traditional staking protocols, exiting a pool permanently wipes a participant's historical commitment and accumulated tenure. TheFatCat acknowledges long-term alignment through [`SeniorityCertificate.sol`]({% link contracts.md %}):
 
-The planned [`SeniorityCertificate`]({% link contracts.md %}) system introduces an on-chain **ERC-721 credential** designed to capture and honor a staker's dedication:
-
-- **100% On-Chain SVG**: Artwork and dynamic visual attributes (such as achieved notch tier, seat number, and activation milestones) are computed and rendered entirely on-chain without IPFS or external hosting dependencies.
-- **Proof of Tenure**: Certificates permanently record the seniority notch ($c_i \in [1, 22]$) attained by a position prior to redemption.
-- **Deflationary Burn Mechanism**: Minting a certificate upon position exit will require burning FATCAT tokens directly to the blackhole dead address (`0x000000000000000000000000000000000000dEaD`), tying credential creation directly to protocol-level token deflation.
+- **100% On-Chain SVG**: Artwork, layout, and dynamic attributes (achieved notch tier, seat number, activation milestones) are rendered entirely on-chain by `SeniorityCertificateRenderer.sol` using bytecode font tables in `CertificateData.sol`, free from IPFS or web server dependencies.
+- **Proof of Tenure**: Certificates permanently record the seniority multiplier ($c_i \in [1, 22]$) attained by the position upon redemption.
+- **Deflationary Token Burn**: Minting a certificate burns exactly **100,000 FATCAT** (`MINT_BURN`) directly to the dead address (`0x000000000000000000000000000000000000dEaD`), permanently shrinking circulating supply. The remaining principal is refunded directly to the user.
+- **Reusable Staking Multiplier**: An unencumbered certificate can be lent to a fresh deposit via `stakeWithCertificate(principal, diet, certificateId)`. The position immediately starts with the certificate's permanent notch multiplier, bypassing the notch climb. While the position remains open, the certificate is locked (`inUse(certificateId) == true`).
 
 ---
 
-## 2. Activation Roadmap
+## 2. Hardcoded Contract Constants
 
-Specific deployment schedules, token burn parameters, and complete utility specifications for Seniority Certificates will be announced via official protocol channels following initial launch stabilization and liquidity maturation.
+The module parameters are pinned as immutable on-chain constants:
+
+| Parameter | Value | Architectural Guarantee |
+|:---|:---|:---|
+| **`MINT_BURN`** | `100,000 FATCAT` | Flat token burn required per certificate issued, routed irreversibly to dead address |
+| **`MAX_SUPPLY`** | `10,000 Certificates` | Permanent finite ceiling on total credentials that can ever be minted |
+| **`MINT_DELAY`** | `21 Days` (504 Hours) | Cold-start lock; minting opens only after the network completes 21 days from deployment |

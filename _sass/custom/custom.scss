@@ -574,8 +574,70 @@ img, svg {
 }
 
 // -----------------------------------------------------------------------------
-// 12. Language Switcher Widget
+// 12. Header Controls & Day/Night Mode Switcher
 // -----------------------------------------------------------------------------
+.header-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  margin-left: 0.75rem !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
+
+  .lang-switcher {
+    margin-left: 0 !important;
+  }
+}
+
+.theme-toggle-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background-color: #131a17 !important;
+  border: 1px solid #243029 !important;
+  color: #a8874c !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease-in-out !important;
+  outline: none !important;
+  user-select: none !important;
+
+  &:hover {
+    color: #48b78d !important;
+    border-color: #48b78d !important;
+    transform: rotate(15deg);
+    box-shadow: 0 0 10px rgba(72, 183, 141, 0.25) !important;
+  }
+
+  svg {
+    display: block !important;
+    width: 16px !important;
+    height: 16px !important;
+    pointer-events: none !important;
+  }
+}
+
+// Icon visibility rules
+html[data-theme="dark"] .theme-icon-sun,
+html:not([data-theme="light"]) .theme-icon-sun {
+  display: block !important;
+}
+html[data-theme="dark"] .theme-icon-moon,
+html:not([data-theme="light"]) .theme-icon-moon {
+  display: none !important;
+}
+
+html[data-theme="light"] .theme-icon-sun {
+  display: none !important;
+}
+html[data-theme="light"] .theme-icon-moon {
+  display: block !important;
+}
+
 .lang-switcher {
   display: inline-flex !important;
   align-items: center !important;
@@ -693,5 +755,556 @@ body[data-lang="zh"] .site-nav > .nav-list > .nav-list-item:not([data-nav-lang="
   transition: width 0.2s ease, opacity 0.3s ease;
   pointer-events: none;
   box-shadow: 0 0 8px rgba(72, 183, 141, 0.6);
+}
+
+// -----------------------------------------------------------------------------
+// 15. Light Mode Theme Overrides
+// -----------------------------------------------------------------------------
+html[data-theme="light"] {
+  body {
+    background-color: #f8faf9 !important;
+    color: #2c3832 !important;
+  }
+
+  .side-bar {
+    background-color: #ffffff !important;
+    border-right: 1px solid #e1e7e4 !important;
+  }
+
+  .site-nav,
+  .site-header {
+    background-color: #ffffff !important;
+  }
+
+  .site-header {
+    border-bottom: 1px solid #e1e7e4 !important;
+  }
+
+  .side-bar + .main,
+  .main {
+    background-color: #f8faf9 !important;
+  }
+
+  .main-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e1e7e4 !important;
+  }
+
+  .search-input-wrap {
+    .search-input {
+      background-color: #f2f5f3 !important;
+      border: 1px solid #d0d8d4 !important;
+      color: #18221e !important;
+
+      &:focus {
+        border-color: #0e6648 !important;
+        box-shadow: 0 0 0 2px rgba(14, 102, 72, 0.2) !important;
+      }
+    }
+
+    .search-label svg {
+      color: #5a6660 !important;
+    }
+  }
+
+  .search-results {
+    background-color: #ffffff !important;
+    border: 1px solid #d0d8d4 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+
+    .search-results-item {
+      border-bottom: 1px solid #edf1ef !important;
+
+      .search-result-title {
+        color: #111614 !important;
+      }
+
+      .search-result-doc-title {
+        color: #6a7670 !important;
+      }
+
+      .search-result-preview {
+        color: #4a5550 !important;
+      }
+
+      &.active,
+      &:hover {
+        background-color: #eaf5f0 !important;
+
+        .search-result-title {
+          color: #0e6648 !important;
+        }
+      }
+    }
+  }
+
+  .tfc-brand-name {
+    color: #111614 !important;
+  }
+
+  .tfc-brand-badge {
+    color: #8c6827 !important;
+    background: rgba(168, 135, 76, 0.1) !important;
+    border: 1px solid rgba(168, 135, 76, 0.35) !important;
+  }
+
+  .site-nav > .nav-list > .nav-list-item {
+    > .nav-list-link {
+      background-color: #f4f7f5 !important;
+      border: 1px solid #dbe2de !important;
+      color: #1f2a24 !important;
+
+      &:hover {
+        background-color: #eaf1ed !important;
+        color: #000000 !important;
+        border-color: #cbd7d0 !important;
+      }
+
+      &.active {
+        background-color: #e6f4ee !important;
+        border-color: #0e6648 !important;
+        color: #0e6648 !important;
+        box-shadow: inset 0 0 0 1px rgba(14, 102, 72, 0.25) !important;
+      }
+    }
+
+    > .nav-list-expander {
+      color: #6a7670 !important;
+
+      &:hover {
+        color: #0e6648 !important;
+      }
+    }
+
+    > .nav-list {
+      border-left: 1.5px solid #d0dbd5 !important;
+
+      .nav-list-item {
+        .nav-list-link {
+          color: #55625c !important;
+
+          &:hover {
+            color: #111614 !important;
+            background-color: rgba(14, 102, 72, 0.08) !important;
+          }
+
+          &.active {
+            color: #0e6648 !important;
+            background-color: rgba(14, 102, 72, 0.12) !important;
+            border-left: 2px solid #0e6648 !important;
+            box-shadow: inset 1px 0 0 rgba(14, 102, 72, 0.3) !important;
+          }
+        }
+      }
+    }
+  }
+
+  hr {
+    background: linear-gradient(90deg, transparent 0%, #cbd6d0 18%, #a8874c 50%, #cbd6d0 82%, transparent 100%) !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #111614 !important;
+  }
+
+  h1 {
+    border-bottom: 1px solid #dbe2de !important;
+  }
+
+  h2 {
+    border-bottom: 1px solid #e5ebe8 !important;
+  }
+
+  a {
+    color: #0e6648 !important;
+
+    &:hover {
+      color: #168a62 !important;
+    }
+  }
+
+  blockquote {
+    border-left: 4px solid #0e6648 !important;
+    color: #4a5550 !important;
+    background-color: #eef5f1 !important;
+  }
+
+  :not(pre) > code {
+    color: #0e6648 !important;
+    background-color: #edf4f0 !important;
+    border: 1px solid #d0dcd4 !important;
+  }
+
+  div.highlighter-rouge,
+  pre:not(.highlight) {
+    background-color: #f4f7f5 !important;
+    border: 1px solid #d5ded9 !important;
+
+    code {
+      color: #1c2822 !important;
+    }
+
+    > button {
+      background-color: #e5ece8 !important;
+      border: 1px solid #cedad3 !important;
+      color: #4a5550 !important;
+
+      &:hover {
+        background-color: #dbe4df !important;
+        color: #0e6648 !important;
+        border-color: #0e6648 !important;
+      }
+    }
+  }
+
+  table {
+    th {
+      background-color: #edf2ef !important;
+      color: #111614 !important;
+      border: 1px solid #d5ded9 !important;
+    }
+
+    td {
+      border: 1px solid #e1e7e4 !important;
+      color: #2d3732 !important;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f6f9f7 !important;
+    }
+
+    tr:hover td {
+      background-color: #edf5f1 !important;
+    }
+  }
+
+  .note {
+    border-left: 4px solid #0e6648 !important;
+    background-color: #eaf5f0 !important;
+    color: #143527 !important;
+  }
+
+  .warning {
+    border-left: 4px solid #c93b48 !important;
+    background-color: #fdf0f1 !important;
+    color: #5c181e !important;
+  }
+
+  .tip {
+    border-left: 4px solid #0e6648 !important;
+    background-color: #eaf5f0 !important;
+    color: #143527 !important;
+  }
+
+  .important {
+    border-left: 4px solid #a8874c !important;
+    background-color: #fbf6ec !important;
+    color: #4f3912 !important;
+  }
+
+  .katex-display,
+  .katex {
+    color: #111614 !important;
+  }
+
+  .lang-switcher {
+    background-color: #f2f5f3 !important;
+    border: 1px solid #d5ddd7 !important;
+
+    .lang-icon {
+      color: #5a6660 !important;
+    }
+
+    .lang-divider {
+      color: #b5c2ba !important;
+    }
+
+    .lang-btn {
+      color: #55625c !important;
+
+      &:hover {
+        color: #111614 !important;
+        border-color: rgba(14, 102, 72, 0.25) !important;
+      }
+
+      &.active {
+        color: #ffffff !important;
+        background-color: #0e6648 !important;
+        border-color: #0e6648 !important;
+        box-shadow: 0 0 6px rgba(14, 102, 72, 0.2) !important;
+      }
+    }
+  }
+
+  .theme-toggle-btn {
+    background-color: #f2f5f3 !important;
+    border: 1px solid #d5ddd7 !important;
+    color: #0e6648 !important;
+
+    &:hover {
+      color: #0e6648 !important;
+      border-color: #0e6648 !important;
+      background-color: #e6f5ee !important;
+      box-shadow: 0 0 10px rgba(14, 102, 72, 0.2) !important;
+    }
+  }
+
+  .aux-nav .aux-nav-list .aux-nav-list-item a {
+    background-color: #f2f5f3 !important;
+    border: 1px solid #d5ddd7 !important;
+    color: #55625c !important;
+
+    &:hover {
+      color: #111614 !important;
+      border-color: #0e6648 !important;
+    }
+  }
+
+  .breadcrumb-nav-list-item a {
+    color: #5a6660 !important;
+
+    &:hover {
+      color: #0e6648 !important;
+    }
+  }
+
+  .text-grey-dk-000 {
+    color: #5a6660 !important;
+  }
+
+  .site-footer {
+    border-top: 1px solid #e1e7e4 !important;
+    color: #5a6660 !important;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 16. Portal Cards Matrix (Ecosystem & Links Directory)
+// -----------------------------------------------------------------------------
+.tfc-portal-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 1.25rem !important;
+  margin: 1.75rem 0 !important;
+}
+
+.tfc-portal-card {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background-color: #151d19 !important;
+  border: 1px solid #23302a !important;
+  border-radius: 10px !important;
+  padding: 1.5rem !important;
+  transition: all 0.2s ease-in-out !important;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: #48b78d !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  &.highlight {
+    border-color: rgba(72, 183, 141, 0.45) !important;
+    background: linear-gradient(145deg, #16241e 0%, #111a16 100%) !important;
+    box-shadow: 0 4px 20px rgba(72, 183, 141, 0.12) !important;
+
+    &:hover {
+      border-color: #48b78d !important;
+      box-shadow: 0 8px 30px rgba(72, 183, 141, 0.22) !important;
+    }
+  }
+
+  &.muted {
+    opacity: 0.78;
+
+    &:hover {
+      border-color: #2e3d35 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .tfc-portal-badge {
+    position: absolute !important;
+    top: 1.25rem !important;
+    right: 1.25rem !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    padding: 2px 7px !important;
+    border-radius: 9999px !important;
+    line-height: 1.2 !important;
+
+    &.live {
+      color: #48b78d !important;
+      background: rgba(72, 183, 141, 0.12) !important;
+      border: 1px solid rgba(72, 183, 141, 0.3) !important;
+    }
+
+    &.pending {
+      color: #a8874c !important;
+      background: rgba(168, 135, 76, 0.12) !important;
+      border: 1px solid rgba(168, 135, 76, 0.3) !important;
+    }
+  }
+
+  .tfc-portal-icon {
+    font-size: 2rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1 !important;
+  }
+
+  .tfc-portal-title {
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    color: #e7dfc9 !important;
+    margin: 0 0 0.5rem 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .tfc-portal-desc {
+    font-size: 0.865rem !important;
+    color: #a7a894 !important;
+    line-height: 1.5 !important;
+    margin: 0 0 1.25rem 0 !important;
+    flex-grow: 1 !important;
+  }
+
+  .tfc-portal-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    padding: 0.55rem 1rem !important;
+    border-radius: 6px !important;
+    background-color: #1f2c25 !important;
+    color: #e7dfc9 !important;
+    border: 1px solid #2e4036 !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease-in-out !important;
+
+    &:hover {
+      background-color: #27372e !important;
+      color: #ffffff !important;
+      border-color: #48b78d !important;
+      text-decoration: none !important;
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, #0e3b32 0%, #134e42 100%) !important;
+      border: 1px solid #48b78d !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 10px rgba(72, 183, 141, 0.25) !important;
+
+      &:hover {
+        background: linear-gradient(135deg, #134e42 0%, #196354 100%) !important;
+        box-shadow: 0 4px 14px rgba(72, 183, 141, 0.35) !important;
+      }
+    }
+
+    &.disabled {
+      background-color: #161e1a !important;
+      color: #647069 !important;
+      border-color: #232d27 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+    }
+  }
+
+  .tfc-portal-url {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    font-size: 0.72rem !important;
+    color: #647069 !important;
+    margin-top: 0.6rem !important;
+    text-align: center !important;
+  }
+}
+
+// Light Mode for Portal Cards
+html[data-theme="light"] {
+  .tfc-portal-card {
+    background-color: #ffffff !important;
+    border-color: #e1e7e4 !important;
+
+    &:hover {
+      border-color: #0e6648 !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    &.highlight {
+      background: linear-gradient(145deg, #f0f8f4 0%, #ffffff 100%) !important;
+      border-color: rgba(14, 102, 72, 0.4) !important;
+      box-shadow: 0 4px 20px rgba(14, 102, 72, 0.08) !important;
+
+      &:hover {
+        border-color: #0e6648 !important;
+        box-shadow: 0 8px 30px rgba(14, 102, 72, 0.16) !important;
+      }
+    }
+
+    &.muted {
+      background-color: #f7faf8 !important;
+      border-color: #e5ece8 !important;
+      opacity: 0.85;
+    }
+
+    .tfc-portal-badge.live {
+      color: #0e6648 !important;
+      background: rgba(14, 102, 72, 0.1) !important;
+      border: 1px solid rgba(14, 102, 72, 0.25) !important;
+    }
+
+    .tfc-portal-badge.pending {
+      color: #8c6827 !important;
+      background: rgba(168, 135, 76, 0.1) !important;
+      border: 1px solid rgba(168, 135, 76, 0.25) !important;
+    }
+
+    .tfc-portal-title {
+      color: #111614 !important;
+    }
+
+    .tfc-portal-desc {
+      color: #55625c !important;
+    }
+
+    .tfc-portal-btn {
+      background-color: #f2f5f3 !important;
+      border: 1px solid #d5ddd7 !important;
+      color: #2c3832 !important;
+
+      &:hover {
+        background-color: #e6ede9 !important;
+        border-color: #0e6648 !important;
+        color: #0e6648 !important;
+      }
+
+      &.primary {
+        background: linear-gradient(135deg, #0e6648 0%, #168a62 100%) !important;
+        border: 1px solid #0e6648 !important;
+        color: #ffffff !important;
+        box-shadow: 0 2px 10px rgba(14, 102, 72, 0.25) !important;
+
+        &:hover {
+          background: linear-gradient(135deg, #0b5239 0%, #137452 100%) !important;
+          box-shadow: 0 4px 14px rgba(14, 102, 72, 0.35) !important;
+        }
+      }
+
+      &.disabled {
+        background-color: #e9eeeb !important;
+        border: 1px solid #d5ddd7 !important;
+        color: #8c9791 !important;
+      }
+    }
+
+    .tfc-portal-url {
+      color: #8c9791 !important;
+    }
+  }
 }
 

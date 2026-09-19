@@ -31,7 +31,7 @@ The documentation is organized into five primary sections:
 2. **User Guides**: Step-by-step guides for staking, position management, diet selection, seniority certificate roadmap overview, and emergency exits via BscScan.
 3. **Core Mechanics**: Deep dives into the Belly's hydrodynamic release formulas, the 22-slot graduation ring, batch procurement, and the 4% tax distribution model.
 4. **Security & Governance**: Non-custodial custody invariants, emergency pause scope, integer floor solvency proofs ($\sum r_i \le R$), and on-chain monitoring.
-5. **Reference & FAQ**: Verified smart contracts schedule, frequently asked questions, whitepaper downloads, and legal disclaimers.
+5. **Reference & FAQ**: Verified smart contracts schedule, frequently asked questions, whitepaper downloads, legal disclaimers, and official ecosystem links.
 
 ---
 

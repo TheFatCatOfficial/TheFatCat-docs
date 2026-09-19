@@ -41,17 +41,17 @@ The 100,000 FATCAT entry threshold is an immutable parameter passed to the contr
 Staking does not grant retroactive rewards for the meal currently in progress:
 
 ```
-T_now ─────────────────────► Meal Closes (advanceInterval) ──► Next Meal Closes
+T_now ─────────────────────► Meal Closes (advance) ──────────► Next Meal Closes
 [ User Calls stake() ]       [ Position Active (j_i = m+1) ]    [ First Rewards Earned ]
 (Interval m: Weight = 0)     (Notch = 1, Weight = p_i × 1)      (Notch climbs to 2)
 ```
 
 1. **Pending Interval ($m$)**: When you stake during interval $m$, your deposit is recorded in the vault immediately, but your effective weight in the currently active meal is 0.
-2. **Active From ($j_i = m + 1$)**: When the keeper or any caller triggers `advanceInterval()`, your position activates at **Notch 1**.
+2. **Active From ($j_i = m + 1$)**: When the keeper or any caller triggers `advance()`, your position activates at **Notch 1**.
 3. **Climbing the Ladder**: For every subsequent 8-hour meal completed, your seniority notch automatically increases by $+1$ until reaching the maximum of 22 (after 21 completed active meals).
 
 {: .important }
-**The 7-Day Pre-Launch Ramp**: When the protocol is first launched, rewards are deliberately disabled for the first 21 intervals (approx. 7 days). This allows all early stakers to climb from Notch 1 to Notch 22 in a level playing field, ensuring fair reward distribution before trading taxes begin releasing.
+**The 7-Day Genesis Accumulation Ramp**: When the protocol is first launched, reward emissions are locked behind an immutable 7-day wall-clock delay (`LaunchIntervalController.MIN_REWARD_START_DELAY = 7 days`, where `rewardStartAt = block.timestamp + 7 days`). Intervals advance and seniority notches climb normally during this phase, allowing early stakers to climb toward Notch 22 on a level playing field, while DEX trading taxes accumulate safely inside The Belly with zero early outflows.
 
 ---
 

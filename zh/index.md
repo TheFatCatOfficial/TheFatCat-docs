@@ -37,7 +37,7 @@ TheFatCat 彻底重构了传统分红代币（Reflection Token）简单的“即
 面向质押者与生态参与者的逐步操作指南：
 - [质押与仓位管理]({% link zh/guides/staking.md %})：开仓规则、本金门槛以及独立仓位隔离原则。
 - [食谱自选与收益提取]({% link zh/guides/diets-and-claiming.md %})：选择分红代币、多批次领取、以及原生 BNB 自动解包功能。
-- [资历凭据（ERC-721）]({% link zh/guides/seniority-certificates.md %})：链上资质凭据的概念解析与未来上线规划。
+- [资历凭据（ERC-721）]({% link zh/guides/seniority-certificates.md %})：链上资质勋章、确定性通缩销毁与倍数继承机制。
 - [紧急退出通道]({% link zh/guides/emergency-exit.md %})：在前端不可用时的安全紧急退回指引。
 
 ### [3. 核心机制深度解析]({% link zh/protocol.md %})
@@ -45,7 +45,7 @@ TheFatCat 彻底重构了传统分红代币（Reflection Token）简单的“即
 - [The Belly 动态释放机制]({% link zh/protocol/belly.md %})：离散释放公式、半衰期衰减与 7-窗口安全限额。
 - [餐次周期与资历倍数]({% link zh/protocol/meals-and-seniority.md %})：22-槽位闭合环形缓冲区、$O(1)$ 复杂度的封闭式加权聚合计算法。
 - [批量撮合与资产执行]({% link zh/protocol/execution.md %})：解耦记账模型、TWAP 滑点保护与免许可报价保护。
-- [费用流向拓扑与费率]({% link zh/protocol/fees.md %})：4% 动态交易税、Flap 平台费（仅联合曲线阶段）与运营分配。
+- [费用流向拓扑与费率]({% link zh/protocol/fees.md %})：4% 动态交易税、Flap 平台分成与运营多签金库（Ops Safe）分配。
 
 ### [4. 安全性与治理设计]({% link zh/safety.md %})
 信任假设、权限隔离与不变量验证：
@@ -58,3 +58,4 @@ TheFatCat 彻底重构了传统分红代币（Reflection Token）简单的“即
 - [常见问题解答（FAQ）]({% link zh/faq.md %})：针对社区与质押者高频疑问的权威答疑。
 - [学术白皮书]({% link zh/whitepaper.md %})：学术双栏 PDF 与 DOCX 官方版本下载。
 - [法律声明]({% link zh/notices.md %})：非投资建议与去中心化法律边界。
+- [官方导航与链接]({% link zh/links.md %})：协议门户、质押工坊、官方推特 X、电报与生态导航。

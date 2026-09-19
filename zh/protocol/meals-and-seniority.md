@@ -32,7 +32,7 @@ $$W(m) = (1 + m) P_{\text{climb}} - J_{\text{climb}} + 22 P_{\text{settled}} + W
 - $P_{\text{settled}} = \sum_{i \in \text{Settled}} p_i$（所有已达满级仓位的本金总和）
 - $W_{\text{exiting}}$：在餐次中间提前赎回退出仓位的剩余权重。
 
-当调用 `advanceInterval()` 推进时，当前槽位缓冲区 `graduatingPrincipal[m % 22]` 从 $P_{\text{climb}}$ 划入 $P_{\text{settled}}$，全过程仅涉及一条代数减法与加法，Gas 消耗与全网质押人数完全解耦。
+当调用 `advance()` 推进时，当前槽位缓冲区 `graduatingPrincipal[m % 22]` 从 $P_{\text{climb}}$ 划入 $P_{\text{settled}}$，全过程仅涉及一条代数减法与加法，Gas 消耗与全网质押人数完全解耦。
 
 ---
 

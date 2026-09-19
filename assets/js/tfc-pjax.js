@@ -209,11 +209,13 @@
         targetWrap.style.opacity = '1';
       }
 
-      // 3. Update body data-lang if needed
+      // 3. Update body data-lang if needed & preserve theme
       var newBodyLang = newDoc.body.getAttribute('data-lang');
       if (newBodyLang && newBodyLang !== document.body.getAttribute('data-lang')) {
         document.body.setAttribute('data-lang', newBodyLang);
       }
+      var curTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      document.body.setAttribute('data-theme', curTheme);
 
       // 4. Update language switcher widget
       updateLanguageSwitcher(newDoc);

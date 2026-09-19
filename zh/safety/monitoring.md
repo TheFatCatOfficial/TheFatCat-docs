@@ -18,13 +18,17 @@ nav_order: 3
 为捍卫质押者的资产安全，TheFatCat 部署了常态化链上哨兵：
 
 ### `watch-processor.sh` 哨兵脚本
-位于主仓库 [`contracts/ops/watch-processor.sh`](https://github.com/TheFatCatOfficial/TheFatCat/blob/main/contracts/ops/watch-processor.sh)，该工具实时持续轮询四大核心链上存储槽位：
-1. **目标金库地址（Target Vault）**：核验分账目标始终精确指向 TheFatCat 的 Forwarding Vault。
-2. **费率配置参数（Fee Rates）**：核验税率维持在规定常数。
-3. **清算触发阈值（Liquidation Threshold）**：监控 AMM 卖单清算前的 FATCAT 代币累积量。
-4. **主流动性交易对（Primary Pair）**：核验证券化征税交易池地址。
+位于主仓库 [`contracts/ops/watch-processor.sh`](https://github.com/TheFatCatOfficial/TheFatCat/blob/main/contracts/ops/watch-processor.sh)，该工具持续轮询 Flap 处理器的八大核心链上只读函数：
+1. **`owner()`**：确认所有权指针始终为规范的 Flap Portal。
+2. **`getWalletConfig()`**：核验创建者分账目标始终精确指向 TheFatCat 的税道金库（`FatCatStakingVault`）。
+3. **`feeReceiver()`**：监控 Flap 平台费接收地址。
+4. **`feeConfig()`**：核验平台费率分成（`marketBps`，当前为 1000 bps）维持不变。
+5. **`dividendAddress()`**：核验分红路由配置。
+6. **`forwardAddress()`**：确认未被插入未授权的转发目标。
+7. **`autoForward()`**：跟踪自动转发开关状态。
+8. **`quoteToken()`**：校验清算收益结算代币。
 
-一旦探测到任何未授权的路由偏移或参数篡改，自动化报警系统将在数秒内唤醒核心安全贡献者。
+一旦探测到与基准快照不符的任何异常参数偏移或路由篡改，自动化报警系统将在数秒内唤醒核心安全贡献者。
 
 ---
 

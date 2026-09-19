@@ -35,7 +35,7 @@ nav_order: 4
 1. 在 [BscScan](https://bscscan.com) 搜索并打开您的钱包地址。
 2. 在交易历史中找到您最初向 `StakingVault` 发起质押的 `stake` 交易记录。
 3. 点击进入 **交易详情（Transaction Details）**，切换到 **Logs（日志）** 标签页。
-4. 在 `Staked(address indexed user, uint256 indexed positionId, ...)` 事件中，即可查阅到您的数字 `positionId`（仓位编号）。
+4. 在 `Staked(uint256 indexed id, address indexed owner, uint256 principal, address diet)` 事件中，查阅 **Topic 1** 即为您的数字仓位编号 `id`（Topic 2 为所有者地址）。
 
 ### 第二步：进入质押金库合约页面
 1. 打开官方已开源验证的 [`StakingVault` 合约页面]({% link zh/contracts.md %})。
@@ -45,9 +45,9 @@ nav_order: 4
 ### 第三步：调用 `redeem` 函数
 1. 在函数列表中找到 `redeem`：
    ```solidity
-   redeem(uint256 positionId)
+   redeem(uint256 id)
    ```
-2. 在输入框中填入您的数字 `positionId`。
+2. 在输入框中填入您的数字仓位编号 `id`。
 3. 点击 **Write** 并在钱包中确认该笔交易。
 4. 交易被区块打包确认后，**您质押的 100% FATCAT 本金将原路即时退回您的个人钱包**。
 
@@ -57,7 +57,7 @@ nav_order: 4
 
 在某些传统分红协议中，退出资金前必须先结算当期会计周期。而在 TheFatCat 中：
 
-- `redeem()` **完全不调用也不依赖 `advanceInterval()` 时钟推进**。
+- `redeem()` **完全不调用也不依赖 `advance()` 时钟推进**。
 - 即使全网所有 Keeper 机器人宕机，或网络 Gas 费飙升至极端水平，您的本金在任意区块、任意秒数均可随调随取。
 - 餐次中途赎回退仓的唯一影响是：您仅放弃当前正在开放结算的这单个餐次收益；所有此前已结算的历史餐次与代币收益依然永久归您所有。
 
@@ -69,10 +69,13 @@ nav_order: 4
 
 1. 打开 BscScan 上已验证的 [`RewardDistributor`]({% link zh/contracts.md %}) 合约页面。
 2. 在 **Write Contract** 界面连接钱包。
-3. 找到 `claimNative`（适用于默认 BNB 收益）或 `claim`（适用于其他食谱代币）：
-   - 填入您的 `positionId`。
-   - `maxBatches` 填入 `0`（表示一次性提取全部已结算批次；若历史期数过多可填 `20` 分批提取）。
-4. 点击 **Write** 并在钱包中确认即可。
+3. 找到 `claimNative`（适用于默认 BNB 收益并自动解包为原生币）或 `claim`（适用于其他食谱代币）：
+   - `id`：填入您的仓位编号。
+   - `asset`：填入食谱代币合约地址（默认 BNB 请填入标准 WBNB 合约地址）。
+   - `gen`：填入当前资产的世代编号（若未重定向过食谱，填 `0`）。
+4. 若历史积压批次过多导致单笔 Gas 过高，可调用 `claimThrough` 或 `claimNativeThrough`：
+   - 额外填入 `toBatch`（目标提取截止的批次下标，按需分段领取）。
+5. 点击 **Write** 并在钱包中确认即可。
 
 ---
 
@@ -85,12 +88,11 @@ nav_order: 4
 
 ```solidity
 function stake(
-    uint256 amount,
-    address dietAsset,
-    uint256 certificateTokenId
-) external returns (uint256 positionId);
+    uint256 principal,
+    address diet
+) external returns (uint256 id);
 ```
 
-- `amount`：以 wei 为单位的代币数量（必须 $\ge 100{,}000 \times 10^{18}$ FATCAT）。
-- `dietAsset`：目标分红资产合约地址（默认 BNB 分红请填入规范 WBNB 合约地址）。
-- `certificateTokenId`：普通标准开仓填 `0`（以 1 档资历起步；凭据绑定功能预留给协议后续阶段）。
+- `principal`：以 wei 为单位的代币数量（必须 $\ge 100{,}000 \times 10^{18}$ FATCAT）。
+- `diet`：目标分红资产合约地址（默认 BNB 分红请填入规范 WBNB 合约地址）。
+- *凭证开仓*：若持有空闲资历凭证希望继承固定起跑倍数，请调用独立函数 `stakeWithCertificate(uint256 principal, address diet, uint256 certificateId)`。

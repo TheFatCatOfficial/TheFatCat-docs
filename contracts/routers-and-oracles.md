@@ -13,27 +13,29 @@ The perimeter infrastructure layer handles decentralized market execution, oracl
 
 ## 1. Execution Router (`ExecutionRouter.sol`)
 
-- **Architectural Scope**: Orchestrates batch market swaps from quote asset (WBNB) into diet tokens.
+- **Architectural Scope**: Orchestrates batch market swaps from quote asset (WBNB) into diet tokens and handles fallback quote settlement.
 - **Key Invariants**:
-  - **Single Active Implementation**: Upgrades are guarded behind a multi-day timelock; only one active router can receive funds from The Belly.
+  - **Permanent Write-Once Spender**: In The Belly, the authorized `spender` can be set and activated exactly once. Once live, it is mathematically permanent and cannot be replaced or upgraded (reverting with `SpenderAlreadySet`). The 7-day activation delay is an immutable one-time lock preventing instant drawdown.
   - **Atomic Solvency Check**: Output tokens from batch market swaps are delivered directly to the `RewardDistributor` before the transaction completes.
   - **MEV-Resistant Batch Execution**: Aggregates all meal diet allocations into single unified swaps, eliminating sandwich vulnerability for individual stakers.
 
 ---
 
-## 2. TWAP Oracle (`PancakeV2TwapOracle.sol`)
+## 2. TWAP Oracles (`PancakeV2TwapOracle.sol` & `PancakeV3TwoHopTwapOracle.sol`)
 
-- **Architectural Scope**: Reads cumulative prices directly from the PancakeSwap V2 `FATCAT/WBNB` pool.
+- **Architectural Scope**: Reads cumulative prices directly from decentralized liquidity pools.
 - **Key Invariants**:
-  - **Endogenous Time-Weighted Averages**: Requires at least 2 consecutive price observations across a minimum time window before publishing valid rates.
+  - **PancakeSwap V2 TWAP**: Reads endogenous time-weighted prices for standard pairs (`FATCAT/WBNB`), requiring consecutive price observations over a verified time window.
+  - **PancakeSwap V3 Two-Hop TWAP**: Prices tokenized equities (bStocks) through deep intermediary pools (WBNB $\to$ USDT $\to$ bStock) via `PancakeV3Adapter`, enforcing rigorous observation tick window verification.
   - **Slippage Bounds**: Provides verified price bounds to `ExecutionRouter`, enforcing the `protocolMinOut` safety threshold.
 
 ---
 
-## 3. Reward Asset Registry (`RewardAssetRegistry.sol`)
+## 3. Reward Asset Registry (`RewardAssetRegistry.sol` & `InitialRewardAssetRegistry.sol`)
 
-- **Architectural Scope**: Maintains the authoritative MENU whitelist of approved diet assets.
+- **Architectural Scope**: Maintains the authoritative MENU whitelist of approved diet assets and handles probation limits.
 - **Key Invariants**:
   - **Canonical Assets**: Native BNB (via WBNB) is permanent and immutable.
-  - **Probation Assets (bStocks)**: Tokenized equities are subject to a strict 5% cumulative allocation cap, containing real-world issuer risks.
+  - **Probation Assets (bStocks)**: Non-canonical assets operate under a 5% allocation cap per meal (`PROBATION_CAP_BPS = 500`) during their 7-day probation period (`PROBATION = 7 days`).
+  - **Genesis Menu Exemption**: The initial signed launch menu in `InitialRewardAssetRegistry` is pre-vetted and exempt from probation (`_isProbationExempt`).
   - **Native FATCAT**: Eligible for addition only post-graduation and after TWAP warmup stabilization.

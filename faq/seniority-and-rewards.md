@@ -10,7 +10,10 @@ nav_order: 2
 ---
 
 ## 1. Why are there zero reward emissions during the first 7 days?
-During the initial 21 intervals (approx. 7 days at 8-hour cadence), the protocol runs a fair-launch **Seniority Ramp Period**. Trading volume accumulates in The Belly, but reward emissions are paused so that all early stakers climb simultaneously from Notch 1 to Notch 22. This eliminates unfair early-block skimming and ensures long-term stakers establish full weight before the first meal is distributed.
+During the first 7 days following deployment, the protocol runs a fair-launch **Dual-Gate Accumulation Period**:
+1. **Clock Gate (`LaunchIntervalController`)**: The clock pins `rewardStartAt = block.timestamp + 7 days`. Until this 7-day wall-clock timestamp elapses, reward emission calculations yield zero (`_rewardedElapsed = 0`). Intervals advance and stakers climb notches (from Notch 1 toward Notch 22) on equal footing, without premature dividend extractions.
+2. **Treasury Gate (`Belly.activationDelay`)**: The execution router's `spender` role in The Belly requires an immutable 7-day activation delay (`activationDelay = 7 days`). The router cannot draw funds from The Belly until this timelock matures.
+3. **Reservoir Cushion**: All trading taxes generated during launch week flush continuously into The Belly with zero outflows, establishing deep backing before distributions begin.
 
 ---
 

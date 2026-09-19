@@ -48,7 +48,8 @@ If price deviation exceeds the configured threshold (default 200 bps / 2%), the 
 
 Tokenized real-world assets (bStocks) carry institutional counterparty and issuer upgrade risks. TheFatCat limits this exposure at the protocol level:
 
-- **5% Probation Cap**: Non-canonical assets operate under a strict **5% allocation cap** during their probation period.
+- **Per-Interval 5% Probation Cap**: Newly listed non-canonical assets operate under a strict **5% single-meal allocation cap** (`PROBATION_CAP_BPS = 500`) during their 7-day probation window (`PROBATION = 7 days`). After 7 days, the cap lifts to 100% (`BPS`). It is a per-interval allocation throttle, not a cumulative lifetime cap.
+- **Genesis Menu Exemption**: In [`InitialRewardAssetRegistry`]({% link contracts.md %}), assets in the signed launch menu have completed depth verification prior to genesis and are explicitly exempt from the initial 7-day probation (`_isProbationExempt`). Any later re-enabled asset must serve the standard 7-day probation.
 - **Credit Isolation**: Problems with a bStock issuer can never impair more than its allocated share. WBNB remains the invariant default and fallback asset.
 
 ---
@@ -60,9 +61,9 @@ What happens if a reward asset halts trading or liquidity dries up?
 If a procurement pot remains unexecuted beyond the timeout threshold (`maxPendingAge`, default **3 days**):
 
 ```solidity
-function fallbackFinalize(uint256 batchId) external;
+function fallbackFinalize(address asset) external returns (uint256 quoteIn);
 ```
 
-- **Permissionless**: Anyone (keeper, user, or bot) can invoke `fallbackFinalize()`.
+- **Permissionless**: Anyone (keeper, user, or bot) can invoke `fallbackFinalize(asset)`.
 - **Quote Settlement**: The unexecuted quote funds (WBNB) are credited 1:1 to stakers as `quoteLiability[asset]`.
 - **Zero Asset Liquidation**: The protocol settles directly in safe network quote currency, preventing bad debt or trapped funds.

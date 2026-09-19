@@ -28,10 +28,10 @@ If trading volume completely ceases, the balance decays gracefully rather than d
 | Days After Volume Ceases | Belly Balance Remaining |
 |:---|---:|
 | Day 1 | 86.4% |
-| Day 3 | 64.1% |
-| Day 7 (1 Week) | 36.2% |
-| Day 14 (2 Weeks) | 13.1% |
-| Day 30 (1 Month) | 1.2% |
+| Day 3 | 64.5% |
+| Day 7 (1 Week) | 35.9% |
+| Day 14 (2 Weeks) | 12.9% |
+| Day 30 (1 Month) | 1.24% |
 
 Under ideal zero-inflow assumptions, the half-life is approximately **4.735 days**. It acts as a physical shock absorber: a quiet week is absorbed without starvation, while stakers are never lured with unsustainable promises.
 
