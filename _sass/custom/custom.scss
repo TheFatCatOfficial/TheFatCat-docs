@@ -332,14 +332,17 @@ img, svg {
   }
 }
 
-// 11. Strict Sidebar Language Isolation
-body[data-lang="en"] .site-nav .nav-list-item:has(> a[href*="/zh/"]),
-body[data-lang="en"] .site-nav .nav-list-item:has(> a[href$="/zh"]),
-body[data-lang="en"] .site-nav .nav-list-item:has(> a[href$="/zh/"]) {
+// 11. Strict Sidebar Language Isolation (Top-Level Only)
+body[data-lang="en"] .site-nav > .nav-list > .nav-list-item[data-nav-lang="zh"],
+body[data-lang="en"] .site-nav > .nav-list > .nav-list-item:has(> a[href*="/zh/"]),
+body[data-lang="en"] .site-nav > .nav-list > .nav-list-item:has(> a[href$="/zh"]),
+body[data-lang="en"] .site-nav > .nav-list > .nav-list-item:has(> a[href$="/zh/"]) {
   display: none !important;
 }
 
-body[data-lang="zh"] .site-nav .nav-list-item:not(:has(a[href*="/zh/"])):not(:has(a[href$="/zh"])):not(:has(a[href$="/zh/"])) {
+body[data-lang="zh"] .site-nav > .nav-list > .nav-list-item[data-nav-lang="en"],
+body[data-lang="zh"] .site-nav > .nav-list > .nav-list-item:not([data-nav-lang="zh"]):not(:has(a[href*="/zh/"])):not(:has(a[href$="/zh"])):not(:has(a[href$="/zh/"])) {
   display: none !important;
 }
+
 

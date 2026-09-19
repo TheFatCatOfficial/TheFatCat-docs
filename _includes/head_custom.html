@@ -17,16 +17,23 @@
     document.documentElement.lang = isZh ? "zh-CN" : "en";
 
     function filterSidebar() {
-      if (document.body) {
+      if (document.body && !document.body.getAttribute("data-lang")) {
         document.body.setAttribute("data-lang", isZh ? "zh" : "en");
       }
       var navItems = document.querySelectorAll(".site-nav > .nav-list > .nav-list-item");
       navItems.forEach(function(item) {
-        var hasZh = item.querySelector('a[href*="/zh/"], a[href$="/zh"], a[href$="/zh/"]');
+        var lang = item.getAttribute("data-nav-lang");
+        if (!lang) {
+          var hasZh = item.querySelector('a[href*="/zh/"], a[href$="/zh"], a[href$="/zh/"]');
+          lang = hasZh ? "zh" : "en";
+          item.setAttribute("data-nav-lang", lang);
+        }
         if (isZh) {
-          if (!hasZh) item.style.setProperty("display", "none", "important");
+          if (lang !== "zh") item.style.setProperty("display", "none", "important");
+          else item.style.removeProperty("display");
         } else {
-          if (hasZh) item.style.setProperty("display", "none", "important");
+          if (lang === "zh") item.style.setProperty("display", "none", "important");
+          else item.style.removeProperty("display");
         }
       });
     }
