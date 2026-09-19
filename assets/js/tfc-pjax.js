@@ -85,29 +85,83 @@
       .catch(function() {});
   }
 
-  function updateActiveSidebar(targetUrl) {
-    var urlObj = new URL(targetUrl, window.location.origin);
-    var targetPath = urlObj.pathname;
+  function normalizePath(p) {
+    if (!p) return '';
+    try {
+      var pathname = new URL(p, window.location.origin).pathname;
+      return pathname.replace(/\/index(\.html)?$/, '').replace(/\.html$/, '').replace(/\/$/, '');
+    } catch (e) {
+      return p.replace(/\/index(\.html)?$/, '').replace(/\.html$/, '').replace(/\/$/, '');
+    }
+  }
 
-    // Remove active from links
+  function updateActiveSidebar(targetUrl, newDoc) {
+    // Strategy 1: Direct 1:1 state sync from Jekyll's pre-rendered active states in newDoc
+    if (newDoc) {
+      var currentItems = document.querySelectorAll('.site-nav .nav-list-item');
+      var newItems = newDoc.querySelectorAll('.site-nav .nav-list-item');
+      if (currentItems.length === newItems.length && currentItems.length > 0) {
+        for (var i = 0; i < currentItems.length; i++) {
+          var cur = currentItems[i];
+          var src = newItems[i];
+
+          if (src.classList.contains('active')) {
+            cur.classList.add('active');
+          } else {
+            cur.classList.remove('active');
+          }
+
+          var curExp = cur.querySelector(':scope > .nav-list-expander');
+          var srcExp = src.querySelector(':scope > .nav-list-expander');
+          if (curExp && srcExp) {
+            curExp.setAttribute('aria-expanded', srcExp.getAttribute('aria-expanded') || 'false');
+          }
+
+          var curLink = cur.querySelector(':scope > .nav-list-link');
+          var srcLink = src.querySelector(':scope > .nav-list-link');
+          if (curLink && srcLink) {
+            if (srcLink.classList.contains('active')) {
+              curLink.classList.add('active');
+            } else {
+              curLink.classList.remove('active');
+            }
+          }
+        }
+        return;
+      }
+    }
+
+    // Strategy 2: Client-side DOM traversal & accordion collapse
+    var targetPath = normalizePath(targetUrl);
+
+    // 1. Reset all nav-list-item active states and collapse expanders across the entire sidebar
+    var allItems = document.querySelectorAll('.site-nav .nav-list-item');
+    allItems.forEach(function(item) {
+      item.classList.remove('active');
+      var exp = item.querySelector(':scope > .nav-list-expander');
+      if (exp) {
+        exp.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // 2. Reset all nav-list-link active states
     var allLinks = document.querySelectorAll('.site-nav .nav-list-link');
     allLinks.forEach(function(link) {
       link.classList.remove('active');
     });
 
-    // Match exact or trailing-slash normalized
+    // 3. Find matching link using normalized path
     var matchedLink = null;
     allLinks.forEach(function(link) {
-      var p = link.pathname;
-      if (p === targetPath || p.replace(/\/$/, '') === targetPath.replace(/\/$/, '')) {
+      if (normalizePath(link.pathname) === targetPath) {
         matchedLink = link;
       }
     });
 
+    // 4. Activate the matched link and expand ONLY its ancestor chain
     if (matchedLink) {
       matchedLink.classList.add('active');
 
-      // Expand and activate parent categories
       var parentItem = matchedLink.closest('.nav-list-item');
       while (parentItem) {
         parentItem.classList.add('active');
@@ -164,8 +218,8 @@
       // 4. Update language switcher widget
       updateLanguageSwitcher(newDoc);
 
-      // 5. Update sidebar active item without unmounting sidebar
-      updateActiveSidebar(url);
+      // 5. Update sidebar active item and accordion collapse without unmounting sidebar
+      updateActiveSidebar(url, newDoc);
 
       // 6. Handle URL history
       if (pushState !== false) {

@@ -277,6 +277,7 @@
 
   // Submenu Nested Container (Child Tree Guideline)
   > .nav-list {
+    display: none !important;
     margin: 0.25rem 0 0.5rem 0.95rem !important;
     padding-left: 0.7rem !important;
     padding-top: 0.2rem !important;
@@ -314,6 +315,10 @@
         }
       }
     }
+  }
+
+  &.active > .nav-list {
+    display: block !important;
   }
 }
 
