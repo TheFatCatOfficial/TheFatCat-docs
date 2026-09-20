@@ -20,7 +20,7 @@ TheFatCat restructures traditional pass-through meme token tax plumbing into an 
 1. **The Belly (Hydrodynamic Damping)**: Trading taxes accumulate in an unprivileged vault that acts as a first-order exponential damping reservoir. Instead of dumping fees instantly on stakers, funds are released smoothly at $\alpha = 8/168 \approx 4.7619\%$ per 8-hour meal cadence, converting transient market volatility into persistent inventory.
 2. **Sovereign Multi-Asset Diets**: Each staker chooses their preferred payout asset (BNB, tokenized equities/bStocks, post-graduation FATCAT, or future governance-approved tokens). Allocation is decoupled from execution: rewards are algebraically locked at interval boundaries, eliminating sandwich attacks and front-running.
 3. **Linear Capital with Seniority Weighting**: Staking weight scales strictly linearly with capital above the 100,000 FATCAT threshold ($p_i \times c_i$). Seniority notches climb additively ($+1$ per active 8-hour meal) up to a hard cap of 22 ($22\times$ weight), mathematically favoring time commitment over flash-capital predatory farming.
-4. **Seniority Certificates (ERC-721)**: Deployed at genesis, exiting mature stakers may burn 100,000 FATCAT to imprint their achieved seniority notch (1–22) into an immutable on-chain SVG certificate (hard-capped at 10,000 tokens, 21-day cold-start lock before minting opens).
+4. **Seniority Certificates (ERC-721)**: An on-chain credential system deployed at genesis. Exiting mature stakers will carry their achieved seniority notch (1–22) into an on-chain credential; the feature is scheduled for a later release phase, with mechanics and parameters to be announced via official channels.
 
 ---
 
