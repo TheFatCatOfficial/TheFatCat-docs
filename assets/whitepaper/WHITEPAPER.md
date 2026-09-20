@@ -47,6 +47,8 @@ Under nominal conditions, the protocol advances its state clock at a minimum int
 
 $$\alpha = \frac{\Delta t_{\min}}{T_{\text{week}}} = \frac{8}{168} = \frac{1}{21} \approx 4.7619\%$$
 
+This quota arises naturally from calendar symmetry: 7 days $\times$ 3 meals/day (8 hours each) yields exactly 21 meals per week. Emitting $1/21$ ($\approx 4.7619\%$) per nominal interval anchors release to a weekly budget ($T_{\text{week}} = 168\text{ hours}$), enables continuous time-proration based on exact elapsed seconds ($\Delta t / 168\text{h}$) during clock delays, and establishes a dynamic equilibrium depth equal to one full week of fee inflows ($21 \cdot I$).
+
 Let $B_k$ denote unreserved quote balance immediately before nominal settlement interval $k$. If external inflow is zero, every interval closes exactly eight hours apart, each meal is valid, every allocation is executed immediately, and integer dust is ignored, the analytical model follows a discrete first-order exponential decay:
 
 $$B_{k+1} = B_k \cdot (1 - \alpha) = B_k \cdot \left(\frac{20}{21}\right)$$

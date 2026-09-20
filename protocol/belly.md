@@ -42,6 +42,12 @@ $$\alpha = \frac{8}{168} = \frac{1}{21} \approx 4.7619\%$$
 
 The Belly emits exactly $1/21$ of its net unreserved quote balance per 8-hour meal.
 
+{: .tip }
+**Why $1/21$ ($\approx 4.76\%$) instead of a round 5%?**  
+1. **Calendar Symmetry**: 7 days $\times$ 3 meals/day (8 hours each) = exactly **21 meals per week**. Emitting $1/21$ per interval anchors the reservoir emission rate to a natural weekly budget ($T_{\text{week}} = 168\text{ hours}$).  
+2. **Continuous Time-Proration Protection**: Clock ticks are triggered permissionlessly by external callers. If network congestion or delay postpones an advance (e.g. 10 hours instead of 8), the contract automatically scales the allocation using exact elapsed seconds ($\text{base} \times \Delta t / 168\text{h}$), ensuring stakers never lose earned time interest due to keeper delays. A flat, dimensionless 5% would break this continuous second-by-second proration algebra.  
+3. **Steady-State Watermark Depth ($B_{\text{eq}} = 21 I$)**: Under steady fee inflows, the reservoir watermark settles precisely at **one full week (21 intervals) of total fee inflows**, forming a mathematically clean and robust dampening buffer.
+
 ---
 
 ## 3. Ideal Half-Life Derivation

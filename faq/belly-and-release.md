@@ -9,8 +9,11 @@ nav_order: 3
 
 ---
 
-## 1. Why doesn't The Belly payout match the exact trading fees from the last 8 hours?
-The Belly operates as an **exponential damping reservoir**, not a direct pass-through pipe. Each meal releases a proportional slice of its net unreserved balance ($\approx 4.76\%$), not the raw fees of that specific interval. Spikes in volume are absorbed and smoothed across weeks, ensuring payments continue even when trading enters quiet periods.
+## 1. Why doesn't The Belly payout match the exact trading fees from the last 8 hours? Why is the allocation 1/21 (~4.76%)?
+The Belly operates as an **exponential damping reservoir**, not a direct pass-through pipe:
+- **Why 1/21:** The protocol benchmarks time against a natural week (7 days = 168 hours) with 3 meals/day (8 hours each), totaling exactly 21 meals per week. Each standard interval emits $8/168 = 1/21 \approx 4.76\%$ of net unreserved balance, ensuring the reservoir naturally maintains a steady-state buffer equal to one full week (21 meals) of fee inflows.
+- **Volumetric Smoothing:** Spikes in trading volume are absorbed and smoothed across weeks, ensuring dividends continue even when trading enters quiet periods.
+- **Permissionless Time Compensation:** The contract prorates emissions using exact elapsed seconds ($\text{base} \times \Delta t / 168\text{h}$). If an advance is delayed by keeper lag, stakers are credited for the full elapsed duration rather than penalized.
 
 ---
 
