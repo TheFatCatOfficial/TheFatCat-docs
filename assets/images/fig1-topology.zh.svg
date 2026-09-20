@@ -56,7 +56,7 @@
     
     <line x1="20" y1="74" x2="240" y2="74" stroke="#1e293b" stroke-width="1" />
     <text x="20" y="92" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">分账金库（记账与分流）</text>
-    <text x="20" y="107" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="10">31/36 ➔ 大肚皮 | 5/36 ➔ 协议运营</text>
+    <text x="20" y="107" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="10">31/36 ➔ Belly 金库 | 5/36 ➔ 协议运营</text>
   </g>
 
   <!-- Flow 1 -> 2 Arrow (To Belly) -->
@@ -82,7 +82,7 @@
   <g transform="translate(378, 95)">
     <rect width="250" height="180" rx="10" fill="url(#cardGrad)" stroke="#f59e0b" stroke-width="2" />
     <rect x="16" y="-10" width="130" height="20" rx="4" fill="#f59e0b" />
-    <text x="81" y="4" fill="#0f172a" font-family="-apple-system, sans-serif" font-size="10" font-weight="800" text-anchor="middle">THE BELLY 蓄水池</text>
+    <text x="81" y="4" fill="#0f172a" font-family="-apple-system, sans-serif" font-size="10" font-weight="800" text-anchor="middle">BELLY 金库</text>
 
     <text x="20" y="34" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="14" font-weight="700">指数阻尼动力学水库</text>
     <text x="20" y="54" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="11">无特权金库（零管理员扫仓）</text>

@@ -30,9 +30,9 @@ TheFatCat 协议在 BNB Chain 上的官方智能合约注册表。具体合约�
 |:---|:---|:---|:---|:---|
 | **FATCAT 代币** | `FATCAT.sol` | 1,000,000,000 恒定总供应量、零预售、不可篡改的 BEP-20 代币 | Flap 联合曲线工厂 | 待发射上线 |
 | **PancakeSwap V2 交易对** | `PancakePair` | 主流动性交易对池（`FATCAT/WBNB`），累积 TWAP 价格数据源 | PancakeFactory | 达成毕业指标后 |
-| **FatCatStakingVault** | `FatCatStakingVault.sol` | Flap V3 税道金库；增量识别、包装 WBNB、分账 5/36 至运营、31/36 至大肚皮 | Flap BeaconProxy | 创世批次 |
+| **FatCatStakingVault** | `FatCatStakingVault.sol` | Flap V3 税道金库；增量识别、包装 WBNB、分账 5/36 至运营、31/36 至 Belly 金库 | Flap BeaconProxy | 创世批次 |
 | **FatCatStakingVaultFactory** | `FatCatStakingVaultFactory.sol` | 用于 Flap VaultPortal 接入部署 BeaconProxy 实例的专属工厂 | Flap FactoryBaseV2 | 创世批次 |
-| **大肚皮蓄水池** | `Belly.sol` | 一阶指数阻尼蓄水池；单窗口流出限额 $\le 16/168$，单次永久写死 Spender | 确定性部署 | 创世批次 |
+| **Belly 金库** | `Belly.sol` | 一阶指数阻尼蓄水池；单窗口流出限额 $\le 16/168$，单次永久写死 Spender | 确定性部署 | 创世批次 |
 | **质押金库** | `StakingVault.sol` | 隔离托管质押本金；不可暂停的 `redeem()`、10 万 FATCAT 门槛与凭据联动 | 确定性部署 | 创世批次 |
 | **资历账本** | `SeniorityLedger.sol` | $O(1)$ 标量权重核算、22-槽位环形缓冲区、RAY 精度前缀引擎 | 确定性部署 | 创世批次 |
 | **创世时钟控制器** | `LaunchIntervalController.sol` | 生产时钟引擎（$\ge 8\text{h}$ 节奏），内嵌 7 天初始零分红爬坡期 | 确定性部署 | 创世批次 |
