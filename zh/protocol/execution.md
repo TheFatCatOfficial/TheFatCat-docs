@@ -67,6 +67,6 @@ $$\text{protocolMinOut} = \left\lfloor \frac{\text{expectedOut} \cdot (10000 - \
 function fallbackFinalize(address asset) external returns (uint256 quoteIn);
 ```
 
-- **全员免许可**：任何人（普通质押者、Keeper 等）均可直接调用底层接口 `fallbackFinalize(asset)` 触发兜底。
+- **全员免许可**：任何人（普通质押者、Keeper 等）均可直接调用底层接口 `fallbackFinalize(asset)` 触发兜底。你可以亲自执行这些步骤，参考[帮协议跑起来]({% link zh/guides/community-keeper.md %})。
 - **原生 BNB 兜底结算**：未采购目标资产的底层资金以 1:1 比例转为该资产对应质押者的待结算 BNB 权益（即底层 `quoteLiability[asset]`），质押者后续可在收益分发器中直接提取原生 BNB。
 - **流速与结算边界约束**：兜底清偿确立的资金提取依然受制于 The Belly 金库 8 小时窗口流速上限（$\le 16/168$）与整餐次离散结算规则，保护协议资金安全，并非无视窗口限额瞬间全额提款。

@@ -96,3 +96,77 @@ function stake(
 - `principal`: Token amount in wei (must be $\ge 100{,}000 \times 10^{18}$ FATCAT).
 - `diet`: Target reward asset address (canonical WBNB contract address for default BNB rewards).
 - *Certificate Entry*: To stake with an unencumbered Seniority Certificate (lending its permanent starting multiplier), call the dedicated `stakeWithCertificate(uint256 principal, address diet, uint256 certificateId)` function.
+
+---
+
+## 6. Advancing the Protocol Without the Front-End
+
+The same self-reliance applies to settlement. When the keeper has not run yet, **anyone** can perform its steps directly on-chain: every settlement entry point is permissionless, value cannot be redirected by the caller, and a call whose time has not come simply reverts without harming anything. The only thing you ever spend is gas — still, use a dedicated wallet for it.
+
+Contract addresses are published on the [Contracts]({% link contracts.md %}) page at genesis; the web application exposes the same wiring. The steps below run in the same order the project's own keeper uses.
+
+### Step 1: Close the current meal
+
+On the **Interval Controller**, call:
+
+```solidity
+function advance() external;
+```
+
+This closes the finished 8-hour meal and opens the next one. Under eight hours it reverts with `TooEarly` — wait and retry later; nothing is wrong.
+
+```sh
+cast send $CONTROLLER "advance()" --rpc-url $RPC --private-key $KEY
+```
+
+### Step 2: Buy the reward asset for a pending pot
+
+On the **Execution Router**, call:
+
+```solidity
+function execute(address asset, uint256 quoteIn, uint256 callerMinOut) external returns (uint256 received);
+```
+
+- `asset`: the reward asset to procure (from the menu).
+- `quoteIn`: how much quote to spend. Read the pending amount first (`pendingQuote(asset)` on the Interval Controller); the router clamps it to the pot, the asset's minimum/maximum bounds (registry `entry(asset)`), and the current batch boundary automatically.
+- `callerMinOut`: an optional personal floor. `0` is acceptable — the on-chain TWAP floor always applies on top. To tighten it, size it against `previewMinOut(asset, spendFor(asset, quoteIn))` on the Router and Distributor.
+
+If somebody already executed the pot, or the amount is below the asset's floor, the call reverts harmlessly — nothing has moved.
+
+```sh
+cast call $CONTROLLER "pendingQuote(address)(uint256)" $ASSET --rpc-url $RPC
+cast send $ROUTER "execute(address,uint256,uint256)" $ASSET $QUOTE_IN $MIN_OUT --rpc-url $RPC --private-key $KEY
+```
+
+### Step 3: Settle a stalled pot in BNB
+
+If a reward asset has been disabled, or its pot has waited longer than the pending age (three days), anyone can settle that pot in native BNB on the **Execution Router**:
+
+```solidity
+function fallbackFinalize(address asset) external returns (uint256 quoteIn);
+```
+
+```sh
+cast send $ROUTER "fallbackFinalize(address)" $ASSET --rpc-url $RPC --private-key $KEY
+```
+
+### Step 4: Forward the revenue intake (optional)
+
+Fees land in the revenue relay vault before reaching The Belly. If the wake call has not been delivered, anyone can forward the whole pending balance — it splits automatically between the operations Safe and The Belly:
+
+```solidity
+function flush() external;
+function sync() external;
+```
+
+```sh
+cast send $VAULT "flush()" --rpc-url $RPC --private-key $KEY
+```
+
+### Step 5: Refresh a stale price window
+
+If `execute` reverts on a stale oracle (the price window is about an hour), call `update()` on the asset's TWAP oracle first, then repeat Step 2.
+
+---
+
+None of the above is ever needed for redemption. Section 1 works at any second, under any pause, with every keeper offline.

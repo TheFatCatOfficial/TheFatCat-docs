@@ -67,6 +67,6 @@ The fallback settlement route becomes eligible if and only if any of the followi
 function fallbackFinalize(address asset) external returns (uint256 quoteIn);
 ```
 
-- **Permissionless**: Anyone (keeper, user, or arbitrageur) can invoke the low-level `fallbackFinalize(asset)` interface.
+- **Permissionless**: Anyone (keeper, user, or arbitrageur) can invoke the low-level `fallbackFinalize(asset)` interface. You can run these steps yourself — see [Help Keep the Protocol Running]({% link guides/community-keeper.md %}).
 - **Native BNB Fallback Settlement**: The unexecuted quote funds (WBNB) are credited 1:1 to stakers as pending BNB entitlements (`quoteLiability[asset]`), claimable as native BNB through `RewardDistributor`.
 - **Rate Limiting & Interval Constraints**: Claimed quote funds remain governed by The Belly's 8-hour window outflow throttle cap ($\le 16/168$) and whole-interval accounting boundaries to protect treasury reserves, rather than permitting unbounded instant withdrawals.

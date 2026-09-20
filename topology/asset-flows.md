@@ -22,7 +22,7 @@ TheFatCat enforces strict contract-level segregation between staker principal an
 
 ## 2. Forwarding Vault Accounting & `flush()` Dispatch
 
-Upon receiving native BNB tax proceeds, the forwarding vault securely records the balance delta. A keeper or any caller invokes `flush()` to wrap the accumulated native BNB into WBNB and automatically dispatch it according to immutable proportions:
+Upon receiving native BNB tax proceeds, the forwarding vault securely records the balance delta. A keeper or any caller invokes `flush()` to wrap the accumulated native BNB into WBNB and automatically dispatch it according to immutable proportions (see [Help Keep the Protocol Running]({% link guides/community-keeper.md %}) to run this yourself):
 - **5/36 (~0.5% of trade value)** $\rightarrow$ **Protocol Operations**: Dedicated operational reserve for community art, hosting, keeper incentives, continuous security reviews, and infrastructure gas. This account possesses zero administrative privileges over user staking vaults or contracts.
 - **31/36 + integer floor remainder (~3.1% of trade value)** $\rightarrow$ **The Belly**: Deposited directly into the unprivileged reward reservoir.
 

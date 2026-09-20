@@ -96,3 +96,77 @@ function stake(
 - `principal`：以 wei 为单位的代币数量（必须 $\ge 100{,}000 \times 10^{18}$ FATCAT）。
 - `diet`：目标分红资产合约地址（默认 BNB 分红请填入规范 WBNB 合约地址）。
 - *凭证开仓*：若持有空闲资历凭证希望继承固定起跑倍数，请调用独立函数 `stakeWithCertificate(uint256 principal, address diet, uint256 certificateId)`。
+
+---
+
+## 6. 绕过前端推进协议运行
+
+自托管同样适用于结算侧。当 keeper 还没有运行时，**任何人**都可以在链上直接完成它的步骤：所有结算入口均为免许可，调用者无法改变任何资金去向，而时机未到的调用只会无害地 revert。你唯一消耗的是 gas——即便如此，仍请使用专用钱包。
+
+合约地址在创世广播后公布于[合约]({% link zh/contracts.md %})页面；网页应用展示同样的接线关系。以下步骤的顺序与项目自有 keeper 完全一致。
+
+### 第一步：结束当前餐次
+
+在 **Interval Controller** 上调用：
+
+```solidity
+function advance() external;
+```
+
+结束已完成的 8 小时餐次并开启下一餐。不足八小时会以 `TooEarly` revert——稍后再试即可，没有任何异常。
+
+```sh
+cast send $CONTROLLER "advance()" --rpc-url $RPC --private-key $KEY
+```
+
+### 第二步：为待处理份额采购奖励资产
+
+在 **Execution Router** 上调用：
+
+```solidity
+function execute(address asset, uint256 quoteIn, uint256 callerMinOut) external returns (uint256 received);
+```
+
+- `asset`：要采购的奖励资产（来自菜单）。
+- `quoteIn`：本次花费的报价数量。先在 Interval Controller 上读取 `pendingQuote(asset)`；路由会自动将其钳制到池子余量、该资产的最低/最高边界（registry `entry(asset)`）以及当前批次边界。
+- `callerMinOut`：可选的个人下限。填 `0` 即可——链上 TWAP 下限始终额外生效。如需收紧，请按 Router 与 Distributor 上的 `previewMinOut(asset, spendFor(asset, quoteIn))` 取值。
+
+如果别人已经执行过该份额，或金额低于资产下限，调用会无害地 revert——没有任何东西移动。
+
+```sh
+cast call $CONTROLLER "pendingQuote(address)(uint256)" $ASSET --rpc-url $RPC
+cast send $ROUTER "execute(address,uint256,uint256)" $ASSET $QUOTE_IN $MIN_OUT --rpc-url $RPC --private-key $KEY
+```
+
+### 第三步：将停滞份额以 BNB 结算
+
+若某奖励资产已被禁用，或其份额等待时间超过暂存上限（三天），任何人都可以在 **Execution Router** 上将该份额以原生 BNB 结算：
+
+```solidity
+function fallbackFinalize(address asset) external returns (uint256 quoteIn);
+```
+
+```sh
+cast send $ROUTER "fallbackFinalize(address)" $ASSET --rpc-url $RPC --private-key $KEY
+```
+
+### 第四步：转发收入中继（可选）
+
+费用先落在收入中继金库，再进入 The Belly。若唤醒调用尚未送达，任何人都可以转发全部待处理余额——它会自动在运营 Safe 与 The Belly 之间分配：
+
+```solidity
+function flush() external;
+function sync() external;
+```
+
+```sh
+cast send $VAULT "flush()" --rpc-url $RPC --private-key $KEY
+```
+
+### 第五步：刷新过期价格窗口
+
+若 `execute` 因预言机过期而 revert（价格窗口约一小时），先在该资产的 TWAP 预言机上调用 `update()`，然后重复第二步。
+
+---
+
+以上所有步骤对赎回都永非必需。第一节在任何一秒、任何暂停状态、所有 keeper 离线的情况下都照常工作。

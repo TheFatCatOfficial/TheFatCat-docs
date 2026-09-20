@@ -21,7 +21,7 @@ Interval m-1              Interval m              Interval m+1
 
 ## 1. Cadence & Permissionless Advancement
 - An interval may be closed once at least **8 hours** have elapsed since the previous closing ($\Delta t \ge 8\text{h}$).
-- Anyone—automated keeper bots, community members, or stakers—may invoke `advance()` without administrative keys.
+- Anyone—automated keeper bots, community members, or stakers—may invoke `advance()` without administrative keys. You can run these steps yourself; see [Help Keep the Protocol Running]({% link guides/community-keeper.md %}).
 
 ---
 
