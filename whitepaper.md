@@ -16,5 +16,5 @@ has_children: true
 
 Access the technical whitepaper specifications and download official distribution formats:
 
-- **[Official Downloads & Specs]({% link whitepaper/downloads.md %})**: Academic double-column PDF (Typst 0.15), institutional OpenXML DOCX, and GitHub repository Markdown sources.
+- **[Official Downloads & Specs]({% link whitepaper/downloads.md %})**: Academic double-column PDF in English and Chinese (Typst 0.15).
 - **[Mathematical Architecture Abstract]({% link whitepaper/math-overview.md %})**: Theoretical derivations of The Belly exponential damping, $O(1)$ closed-form seniority algebra, and tested solvency invariants.

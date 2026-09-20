@@ -16,5 +16,5 @@ has_children: true
 
 查阅技术白皮书理论推导与官方多格式下载：
 
-- **[官方多格式下载与规范]({% link zh/whitepaper/downloads.md %})**：Typst 学术双栏排版 PDF、机构 OpenXML DOCX 以及 GitHub 仓库开源 Markdown 源码。
+- **[官方下载]({% link zh/whitepaper/downloads.md %})**：Typst 学术双栏排版 PDF，提供中英双语版本。
 - **[理论与数学架构摘要]({% link zh/whitepaper/math-overview.md %})**：The Belly 指数平滑阻尼动力学、$O(1)$ 闭式解资历代数分解、主权食谱预算公式与非负粉尘超额偿付定理。
