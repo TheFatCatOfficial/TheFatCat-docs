@@ -15,7 +15,7 @@ nav_order: 2
 
 在 EVM 交易中，若通过 `for` 循环遍历 $N$ 个质押者来累增资历，会瞬间打满区块 Gas 上限。TheFatCat 彻底消除了任何循环遍历，采用 **22-槽位闭合环形缓冲区（22-Slot Circular Graduation Ring）** 对质押群体进行代数分解：
 
-![22-槽位毕业环形缓冲区架构]({{ '/assets/images/fig3-graduation-ring.svg' | relative_url }})
+![22-槽位毕业环形缓冲区架构]({{ '/assets/images/fig3-graduation-ring.zh.svg' | relative_url }})
 
 ### 数学分组架构
 在任意离散餐次 $m$，所有活跃仓位被代数拆分为两个集合：
@@ -40,7 +40,7 @@ $$W(m) = (1 + m) P_{\text{climb}} - J_{\text{climb}} + 22 P_{\text{settled}} + W
 
 资历仅单调增加权重，绝不产生指数复利。下图展示了单调递增的资历台阶以及稳态下的相对优势倍数分布：
 
-![资历倍数与相对优势曲线]({{ '/assets/images/fig4-seniority-premium.svg' | relative_url }})
+![资历倍数与相对优势曲线]({{ '/assets/images/fig4-seniority-premium.zh.svg' | relative_url }})
 
 ### 资历档位与倍数阶梯
 - **1 档（$1\times$）**：新激活的起始仓位（$j_i = m_{\text{stake}} + 1$）。

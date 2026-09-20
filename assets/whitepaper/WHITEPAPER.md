@@ -245,10 +245,10 @@ For active principal amounts $p_i$ and coefficients $c_i$, let $\bar c=\sum_i p_
 1. **Deployment-Pinned Entry Barrier**: [`StakingVault.sol`](../contracts/src/StakingVault.sol#L169) receives `minStake` as an immutable constructor argument. The launch configuration pins it to `100_000 FATCAT` (0.01% of the 1,000,000,000 total supply), with no post-deployment setter;
 2. **Strictly Linear Scale**: Holding coefficient and diet fixed, position weight is linear in principal above the threshold; there is no superlinear size multiplier. A separate new position begins its own seniority path;
 3. **Seniority Physicalization Channel ([`SeniorityCertificate.sol`](../contracts/src/SeniorityCertificate.sol))**:
-   - **Genesis Deployment**: Deployed alongside the core staking contracts. When fully exiting an active standard position, as long as principal satisfies $\ge 100{,}000\text{ FATCAT}$ and the contract has been deployed for at least 21 days (`mintOpensAt` unlocked), stakers may call `redeemAndIssueCertificate()` to imprint their accrued seniority notch ($c_i \in [1, 22]$) into an immutable ERC-721 credential token (available across all notches, not restricted to notch 22);
+   - **Genesis Deployment**: Deployed alongside the core staking contracts. Once the Governor multisig has opened issuance, stakers fully exiting an active standard position with principal $\ge 100{,}000\text{ FATCAT}$ may call `redeemAndIssueCertificate()` to imprint their accrued seniority notch ($c_i \in [1, 22]$) into an immutable ERC-721 credential token (available across all notches, not restricted to notch 22);
    - **Permanent Dead Address Lock**: Minting permanently transfers the fixed `100_000 FATCAT` (`MINT_BURN`) directly to the blackhole dead address `0x000000000000000000000000000000000000dEaD`, achieving factual permanent removal from circulation (underlying token `transfer(DEAD, MINT_BURN)`, not a `burn()` call that reduces `totalSupply`); remaining principal is refunded to the user;
    - **Certificate Staking & Threshold Exemption**: Holders of an unallocated certificate can call `stakeWithCertificate(principal, diet, certificateId)` to open a position, inheriting the certificate's starting multiplier (head-start $\text{head} = \text{multiplier} - 1$) and exempt from the `minStake` requirement. The certificate is exclusively locked (`inUse == true`) during the position's lifetime and released upon exit. Re-issuing another certificate from a certificate-backed position is strictly prohibited;
-   - **Fixed Hard Cap & Cold-Start Lock**: Capped at 10,000 tokens; minting opens once 21 days after deployment (`deploy + MINT_DELAY`); no per-mint cooldown;
+   - **Fixed Hard Cap & One-Time Opening**: Capped at 9,999 tokens; issuance deploys closed and can be opened once by the Governor multisig, after which it cannot be closed. There is no automatic unlock or on-chain minimum waiting period;
    - **Pure On-Chain SVG Rendering**: Vector artwork and metadata are generated dynamically purely on-chain by `SeniorityCertificateRenderer.sol` and `CertificateData.sol`. Metadata attributes are strictly `Starting multiplier` and `Status` (`In use` or `Available`), with zero external dependencies on centralized servers or IPFS.
 
 ---
@@ -356,7 +356,7 @@ Separate gate: Belly Spender proposal → 7-day timelock → Governor activation
 
 ### 7.1 Reproducible Test Evidence
 
-The repository records multiple adversarial and operational review rounds. Test totals are revision- and endpoint-dependent and must be published with a commit, command and evidence artifact rather than as timeless protocol constants. As of this draft's current working tree, `FOUNDRY_PROFILE=local forge test` reports **77 suites / 570 tests / 0 failures**. Mainnet-fork results are evidence only for the pinned block and RPC used by that run.
+The repository records multiple adversarial and operational review rounds. Test totals are revision- and endpoint-dependent and must be published with a commit, command and evidence artifact rather than as timeless protocol constants. The local non-fork suite (`FOUNDRY_PROFILE=local forge test`) passes; mainnet-fork results are evidence only for the pinned block and RPC used by that run.
 
 Foundry fuzzing/invariants and Echidna are property-based testing, not formal verification. The authoritative property matrix is [`contracts/doc/SECURITY_PROPERTIES.md`](../contracts/doc/SECURITY_PROPERTIES.md): `[F]` means encoded in a stateful property harness, `[T]` focused tests, `[D]` documented only, and `[U]` an unenforced assumption. It does not mark every B1–V5 property as executable or proved.
 
@@ -469,7 +469,7 @@ The following matrix documents the target architecture for TheFatCat protocol on
 | **InitialRewardAssetRegistry** | BNB Chain Mainnet | `0x... (Pending Deployment)` | Production MENU whitelist with signed constructor menu exempt from probation |
 | **ExecutionRouter** | BNB Chain Mainnet | `0x... (Pending Deployment)` | Permanent write-once router, MEV-guarded batch market swapper & fallback |
 | **RewardDistributor** | BNB Chain Mainnet | `0x... (Pending Deployment)` | Dual-liability accounting and integer floor division solvency custody |
-| **SeniorityCertificate (ERC-721)** | BNB Chain Mainnet | `0x... (Pending Deployment)` | Genesis exit credential; burn 100k FATCAT to mint, 10k cap, 21d delay, 100% on-chain SVG |
+| **SeniorityCertificate (ERC-721)** | BNB Chain Mainnet | `0x... (Pending Deployment)` | Genesis exit credential; transfer 100k FATCAT to the dead address to mint, 9,999-token cap, one-time Governor multisig opening, 100% on-chain SVG |
 | **SeniorityCertificateRenderer** | BNB Chain Mainnet | `0x... (Pending Deployment)` | Pure on-chain SVG generator rendering dynamic visual attributes |
 | **CertificateData** | BNB Chain Mainnet | `0x... (Pending Deployment)` | Bytecode container storing compressed fonts and vector artwork data |
 | **PancakeV2TwapOracle** | BNB Chain Mainnet | `0x... (Pending Deployment)` | Reads separated V2 Pair price accumulators to compute execution TWAP bounds |

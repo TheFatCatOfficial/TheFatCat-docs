@@ -9,7 +9,7 @@ nav_order: 2
 
 TheFatCat 彻底抛弃了直通式管道，引入了一个具备自律物理特性的无特权蓄水池：**The Belly（指数平滑储备池）**。
 
-![协议拓扑图与资金流向]({{ '/assets/images/fig1-topology.svg' | relative_url }})
+![协议拓扑图与资金流向]({{ '/assets/images/fig1-topology.zh.svg' | relative_url }})
 
 ---
 

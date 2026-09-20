@@ -9,7 +9,7 @@ nav_order: 1
 
 TheFatCat 在智能合约层实施质押本金与税收分红金库的严格合约隔离。下图详细展示了资金流转全景：
 
-![TheFatCat 协议资金流向与状态拓扑图]({{ '/assets/images/fig1-topology.svg' | relative_url }})
+![TheFatCat 协议资金流向与状态拓扑图]({{ '/assets/images/fig1-topology.zh.svg' | relative_url }})
 
 ---
 

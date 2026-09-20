@@ -33,7 +33,7 @@ TheFatCat 将以下机制组合为一套协议架构：
 
 TheFatCat 将直通管道重构为具有自主黏性的物理蓄水池——**The Belly**。在 4.0% 交易税中，Flap 平台扣留 10%（约 0.4%），金库将所获资金按 5/36（约 0.5%）原子划至独立的运维多签（Ops Safe），其余 31/36（约 3.1%）作为势能注入蓄水池，由确定性时钟按比例释放。资金从“瞬时流量”被转化为“跨周期阻尼存量”。
 
-![图 1：TheFatCat 协议资金流动拓扑与状态机状态转换架构全景](assets/figures/fig1-topology.svg)
+![图 1：TheFatCat 协议资金流动拓扑与状态机状态转换架构全景](assets/figures/fig1-topology.zh.svg)
 
 ---
 
@@ -97,7 +97,7 @@ $$t_{1/2} = k_{1/2} \times 8 \text{ 小时} \approx 113.654 \text{ 小时} \appr
    $$n_{1/2}^{\text{eq}} = \frac{\ln(0.5)}{\ln(152/168)} \approx 6.92569 \text{ 个窗口} \approx 55.4055 \text{ 小时}$$
    合约执行是离散的：六次满额提取后剩余 54.8537%，第七次后剩余 49.6295%，因此需要七个完整窗口额度。若被攻破时当前额度可立即使用，第七次提取可在首次提取后 48 小时发生；若必须先等待新窗口，则约为失陷后的 56 小时。额度若已部分使用，所需时间还会更长。准确口径应为：**需要七个完整窗口额度，实际时间取决于失陷时的窗口相位，不能宣称无条件“至少 55 小时”。**
 
-![图 2：The Belly 流体动力学衰减曲线与离散限速防御模型](assets/figures/fig2-hydrodynamics.svg)
+![图 2：The Belly 流体动力学衰减曲线与离散限速防御模型](assets/figures/fig2-hydrodynamics.zh.svg)
 
 ---
 
@@ -155,7 +155,7 @@ $$\text{slot} = \text{effectiveFrom} \pmod{22}$$
 
 每个周期处理一个全局毕业槽位，并为每个已注册资产处理对应槽位。Gas 开销与全网质押人数 $N$ 无关，但随只增不减的资产列表长度线性增长。
 
-![图 3：22 槽位环形缓冲区常数移库机制](assets/figures/fig3-graduation-ring.svg)
+![图 3：22 槽位环形缓冲区常数移库机制](assets/figures/fig3-graduation-ring.zh.svg)
 
 ### 3.3 双累加器应得收益计算模型 (Dual-Accumulator Formulation)
 
@@ -238,17 +238,17 @@ $$\text{Share}_{i, a} = \left( Q_{\text{total}} \cdot \frac{W_{\text{open}}(a)}{
 
 设活跃仓位本金为 $p_i$、系数为 $c_i$，则 $\bar c=\sum_i p_i c_i/\sum_i p_i$。由于 $1\le\bar c\le22$，满级仓位相对全池单位本金均值的倍数 $22/\bar c$ 位于 1 至 22。常见的 1.913 倍只是一种情景：若本金均匀分布在 1 至 22 级，则 $\bar c=11.5$。任何更窄范围都必须先给出进入率、退出率与年龄分布，不能称为协议的理论上限。该优势按单位本金比较；绝对收益仍与本金线性相关。
 
-![图 4：分段线性资历爬坡阶梯、全池稳态溢价关系与本金线性约束](assets/figures/fig4-seniority-premium.svg)
+![图 4：分段线性资历爬坡阶梯、全池稳态溢价关系与本金线性约束](assets/figures/fig4-seniority-premium.zh.svg)
 
 ### 4.3 `MIN_STAKE` 硬台阶与资历证书（SeniorityCertificate）规范
 
 1. **部署时锁定的准入门槛**：[`StakingVault.sol`](../contracts/src/StakingVault.sol#L169) 通过构造参数接收不可变 `minStake`。发布配置将其设为 `100_000 FATCAT`（占 10 亿总量的 0.01%），部署后不设 Setter；
 2. **纯线性规模收益**：在资历系数与 DIET 相同时，门槛之上的仓位权重随本金线性增长，不存在超线性规模乘数；另开新仓位会从自己的资历路径起步；
 3. **资历实体化通道（[`SeniorityCertificate.sol`](../contracts/src/SeniorityCertificate.sol)）**：
-   - **创世同步部署**：随核心质押合约群一并创世部署。普通仓位完全退出时，只要本金满足 $\ge 100{,}000\text{ FATCAT}$ 且合约部署满 21 天（`mintOpensAt` 解锁），质押者可调用 `redeemAndIssueCertificate()` 将当前达成的实际资历档位（$c_i \in [1, 22]$）印刻为不可篡改的 ERC-721 资历凭证（并非仅限满级 22 级仓位）；
+   - **创世同步部署**：随核心质押合约群一并创世部署。Governor 多签开放签发后，普通仓位完全退出时，只要本金满足 $\ge 100{,}000\text{ FATCAT}$，质押者可调用 `redeemAndIssueCertificate()` 将当前达成的实际资历档位（$c_i \in [1, 22]$）印刻为不可篡改的 ERC-721 资历凭证（并非仅限满级 22 级仓位）；
    - **死地址永久锁定**：每次铸造必须将固化的 `100_000 FATCAT`（`MINT_BURN`）转入黑洞死地址 `0x000000000000000000000000000000000000dEaD`，实现流通筹码的事实性永久退出（底层调用代币 `transfer(DEAD, MINT_BURN)`，非调用缩减代币总量的 `burn()` 接口）；剩余本金全额退回用户钱包；
    - **凭据开仓与门槛豁免**：持有未被占用的凭据可调用 `stakeWithCertificate(principal, diet, certificateId)` 开仓，新仓位直接继承该凭据的起始倍数（对应提前量 $\text{head} = \text{multiplier} - 1$），并豁免 `minStake` 门槛限制；仓位存续期间凭据独占锁定（`inUse == true`），退出时释放凭据；凭据开出的仓位严禁再次嵌套铸造新凭据；
-   - **硬顶上限与冷启动锁**：全网硬顶 10,000 枚；铸造在部署满 21 天后一次性开启，无逐笔冷却；
+   - **硬顶上限与一次性开放**：全网硬顶 9,999 枚；部署后默认关闭，由 Governor 多签决定何时一次性开放，开放后不可关闭；没有自动解锁或链上最短等待期；
    - **全链上 SVG 动态渲染**：全套证书元数据与矢量图形完全由链上渲染器（`SeniorityCertificateRenderer.sol`）与字节码字体库（`CertificateData.sol`）纯链上动态计算生成，元数据属性为起始倍数（`Starting multiplier`）与使用状态（`Status`），零依赖中心化服务器或 IPFS。
 
 ---
@@ -356,7 +356,7 @@ $$\sum_{i} r_i \le R$$
 
 ### 7.1 可复现测试证据
 
-仓库记录了多轮对抗性与操作面审查。测试总数会随 revision 与 RPC 端点变化，发布时必须附 commit、命令和证据工件，不能写成永恒不变的协议常数。以本草案当前工作树为准，`FOUNDRY_PROFILE=local forge test` 报告 **77 个套件 / 570 项测试 / 0 失败**。主网分叉结果仅对该次运行所固定的区块与 RPC 有效。
+仓库记录了多轮对抗性与操作面审查。测试总数会随 revision 与 RPC 端点变化，发布时必须附 commit、命令和证据工件，不能写成永恒不变的协议常数。本地非 fork 测试（`FOUNDRY_PROFILE=local forge test`）已通过；主网分叉结果仅对该次运行所固定的区块与 RPC 有效。
 
 Foundry fuzz/invariant 与 Echidna 属于基于属性的测试，不等于形式化验证。权威覆盖矩阵是 [`contracts/doc/SECURITY_PROPERTIES.md`](../contracts/doc/SECURITY_PROPERTIES.md)：`[F]` 表示已编码进有状态属性测试，`[T]` 表示定向测试，`[D]` 表示仅文档化，`[U]` 表示未强制假设。该矩阵并未把 B1–V5 的所有属性标为已执行或已证明。
 
@@ -468,7 +468,7 @@ $$\sum_{i=1}^N r_i \le R$$
 | **创世奖励注册表 (InitialRewardAssetRegistry)** | BNB Chain 主网 | `0x... (待部署回填)` | 生产 MENU 白名单注册表，创世菜单签署豁免 5% 观察期额度上限 |
 | **执行路由器 (ExecutionRouter)** | BNB Chain 主网 | `0x... (待部署回填)` | 永久单次绑定路由器，TWAP 防夹滑点保护市价批量兑换与回退兜底 |
 | **奖励分发器 (RewardDistributor)** | BNB Chain 主网 | `0x... (待部署回填)` | 双重负债独立核算，严格向下取整超额储备保障定理 |
-| **资历证书 (SeniorityCertificate ERC-721)** | BNB Chain 主网 | `0x... (待部署回填)` | 创世退出凭证；硬编码销毁 100k FATCAT 铸造，10k 硬顶，部署后 21 天解锁铸造，全链上 SVG |
+| **资历证书 (SeniorityCertificate ERC-721)** | BNB Chain 主网 | `0x... (待部署回填)` | 创世退出凭证；硬编码销毁 100k FATCAT 铸造，9,999 枚硬顶，由 Governor 多签一次性开放铸造，全链上 SVG |
 | **证书渲染器 (SeniorityCertificateRenderer)** | BNB Chain 主网 | `0x... (待部署回填)` | 纯链上 SVG 动态生成器，实时计算排版矢量图形元数据 |
 | **证书数据存储 (CertificateData)** | BNB Chain 主网 | `0x... (待部署回填)` | 纯字节码存储容器，内置压缩矢量字体与美术资源包 |
 | **V2 TWAP 预言机 (PancakeV2TwapOracle)** | BNB Chain 主网 | `0x... (待部署回填)` | 读取 V2 Pair 价格累加器计算时间加权均价保护滑点 |
