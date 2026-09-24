@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="100%" stop-color="#141923" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c2331" />
+      <stop offset="100%" stop-color="#161c27" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrow-slate" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <rect width="1000" height="680" fill="url(#bgGrad)" rx="16" />
+  
+  <!-- Outer Title -->
+  <text x="50" y="48" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="20" font-weight="700" letter-spacing="0.5">图 1：协议全景资金流动拓扑与状态机架构</text>
+  <text x="50" y="70" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="12">端到端资金流入、流体动力学蓄水池与状态结算机全景</text>
+
+  <!-- 1. Market & Flap Stage -->
+  <g transform="translate(50, 95)">
+    <rect width="260" height="120" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5" />
+    <rect x="16" y="-10" width="110" height="20" rx="4" fill="#334155" />
+    <text x="71" y="4" fill="#f1f5f9" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle">二级市场交易</text>
+
+    <text x="20" y="30" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="13" font-weight="600">DEX 二级市场交易</text>
+    <text x="20" y="48" fill="#f59e0b" font-family="-apple-system, sans-serif" font-size="11">4% FATCAT 交易税</text>
+    <text x="20" y="64" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">Flap 扣费后以 QQQB 接收收入</text>
+    
+    <line x1="20" y1="74" x2="240" y2="74" stroke="#1e293b" stroke-width="1" />
+    <text x="20" y="92" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">QQQB → USDT → WBNB → BNB</text>
+    <text x="20" y="107" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="10">净 BNB 包装：16/19 Belly | 3/19 运营</text>
+  </g>
+
+  <!-- Flow 1 -> 2 Arrow (To Belly) -->
+  <path d="M 310 155 L 368 155" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="339" y="139" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="10" font-weight="600" text-anchor="middle">16/19 WBNB</text>
+  <text x="339" y="173" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="9" text-anchor="middle">（净所得）</text>
+
+  <!-- Operations Reserve Node -->
+  <g transform="translate(50, 235)">
+    <rect width="260" height="80" rx="10" fill="url(#cardGrad)" stroke="#475569" stroke-width="1.5" />
+    <rect x="16" y="-10" width="90" height="20" rx="4" fill="#334155" />
+    <text x="61" y="4" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle">协议运营</text>
+
+    <text x="20" y="28" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="12" font-weight="600">协议运营收入</text>
+    <text x="20" y="46" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="10">净兑换所得的 3/19 运营份额</text>
+    <text x="20" y="62" fill="#64748b" font-family="-apple-system, sans-serif" font-size="9">协议的运营维护以及持续开发</text>
+  </g>
+
+  <!-- Flow 1 -> Operations Arrow -->
+  <path d="M 180 215 L 180 225" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-slate)" />
+
+  <!-- 2. The Belly Reservoir -->
+  <g transform="translate(378, 95)">
+    <rect width="250" height="180" rx="10" fill="url(#cardGrad)" stroke="#f59e0b" stroke-width="2" />
+    <rect x="16" y="-10" width="130" height="20" rx="4" fill="#f59e0b" />
+    <text x="81" y="4" fill="#0f172a" font-family="-apple-system, sans-serif" font-size="10" font-weight="800" text-anchor="middle">BELLY 金库</text>
+
+    <text x="20" y="34" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="14" font-weight="700">指数阻尼动力学水库</text>
+    <text x="20" y="54" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="11">无特权金库（零管理员扫仓）</text>
+
+    <rect x="18" y="68" width="214" height="42" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <text x="28" y="86" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11">Release: (accounted - claims)</text>
+    <text x="28" y="101" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="11">× min(Δt, 16h) / 168</text>
+
+    <text x="20" y="132" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">单窗口流出上限: 16/168</text>
+    <text x="20" y="148" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">紧急防御人暂停控制权限</text>
+    <text x="20" y="164" fill="#10b981" font-family="ui-monospace, monospace" font-size="10">半衰抽干防御期: 48–56 小时</text>
+  </g>
+
+  <!-- Flow 2 -> 3 Arrow (Belly to ExecutionRouter) -->
+  <path d="M 503 275 L 503 330" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="515" y="308" fill="#f59e0b" font-family="-apple-system, sans-serif" font-size="10">计价资金提取</text>
+
+  <!-- Interval Controller Side Controller -->
+  <g transform="translate(680, 95)">
+    <rect width="270" height="120" rx="10" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5" />
+    <rect x="16" y="-10" width="140" height="20" rx="4" fill="#0284c7" />
+    <text x="86" y="4" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle">餐次推进控制器</text>
+
+    <text x="20" y="32" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="13" font-weight="600">advance()</text>
+    <text x="20" y="50" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="11">推进节奏: ≥ 8 小时（免许可触发）</text>
+    
+    <line x1="20" y1="64" x2="250" y2="64" stroke="#1e293b" stroke-width="1" />
+    <text x="20" y="82" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">锁定开仓总权重: W_open(a)</text>
+    <text x="20" y="98" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">轮转 22-槽位毕业环形缓冲区</text>
+  </g>
+
+  <!-- Controller to Belly & Router trigger line -->
+  <path d="M 680 155 L 628 155" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow-blue)" />
+  <path d="M 815 215 L 815 390 L 660 390" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow-blue)" />
+
+  <!-- 3. ExecutionRouter & Oracles -->
+  <g transform="translate(378, 340)">
+    <rect width="250" height="140" rx="10" fill="url(#cardGrad)" stroke="#334155" stroke-width="1.5" />
+    <rect x="16" y="-10" width="130" height="20" rx="4" fill="#334155" />
+    <text x="81" y="4" fill="#f1f5f9" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle">采购执行路由</text>
+
+    <text x="20" y="32" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="13" font-weight="600">批量市价撮合兑换</text>
+    <text x="20" y="50" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="11">多资产食谱集中采购</text>
+    
+    <rect x="18" y="62" width="214" height="42" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1" />
+    <text x="26" y="78" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="10">PancakeV2TwapOracle (TWAP 预言机)</text>
+    <text x="26" y="93" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="10">protocolMinOut 防夹滑点保护</text>
+
+    <text x="20" y="122" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="10">BNB（自选基准）| bStocks | FATCAT</text>
+  </g>
+
+  <!-- Flow Router to Distributor -->
+  <path d="M 503 480 L 503 520" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="515" y="504" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="10">finalize()</text>
+
+  <!-- 4. Reward Distributor -->
+  <g transform="translate(378, 525)">
+    <rect width="250" height="125" rx="10" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5" />
+    <rect x="16" y="-10" width="145" height="20" rx="4" fill="#059669" />
+    <text x="88" y="4" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle">收益分发器</text>
+
+    <text x="20" y="30" fill="#34d399" font-family="-apple-system, sans-serif" font-size="12" font-weight="700">双重负债核算系统</text>
+    <text x="20" y="48" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">BatchRate = ⌊Tokens × RAY / Pot⌋</text>
+    
+    <line x1="20" y1="60" x2="230" y2="60" stroke="#1e293b" stroke-width="1" />
+    <text x="20" y="78" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="10">记账负债: liability[a] 与 quoteLiability[a]</text>
+    <text x="20" y="94" fill="#10b981" font-family="-apple-system, sans-serif" font-size="10">向下取整截断: Σ r_i ≤ R (超额偿付保证)</text>
+    <text x="20" y="110" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">claimNative() 自动解包为原生 BNB</text>
+  </g>
+
+  <!-- 5. Seniority Ledger -->
+  <g transform="translate(50, 340)">
+    <rect width="260" height="160" rx="10" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5" />
+    <rect x="16" y="-10" width="130" height="20" rx="4" fill="#0284c7" />
+    <text x="81" y="4" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle">资历账本</text>
+
+    <text x="20" y="30" fill="#38bdf8" font-family="-apple-system, sans-serif" font-size="13" font-weight="700">O(1) 闭式方程计算引擎</text>
+    <text x="20" y="48" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">W(m) = (1+m)P_climb - J_climb</text>
+    <text x="20" y="62" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">     + 22×P_settled + W_exiting</text>
+
+    <line x1="20" y1="74" x2="240" y2="74" stroke="#1e293b" stroke-width="1" />
+    <text x="20" y="92" fill="#fbbf24" font-family="-apple-system, sans-serif" font-size="11" font-weight="600">双前缀累加器（RAY 精度）</text>
+    <text x="20" y="108" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="10">A_m = A_{m-1} + (1+m)ω_m</text>
+    <text x="20" y="122" fill="#cbd5e1" font-family="ui-monospace, monospace" font-size="10">B_m = B_{m-1} + ω_m</text>
+    <text x="20" y="142" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">罚没再分配: 未耗尽预算净归忠实质押者</text>
+  </g>
+
+  <!-- Connect SeniorityLedger to Distributor & StakingVault -->
+  <path d="M 310 420 L 378 420" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3" />
+  <path d="M 180 500 L 180 520" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-emerald)" />
+
+  <!-- 6. Staking Vault & User Positions -->
+  <g transform="translate(50, 525)">
+    <rect width="260" height="125" rx="10" fill="url(#cardGrad)" stroke="#10b981" stroke-width="1.5" />
+    <rect x="16" y="-10" width="120" height="20" rx="4" fill="#059669" />
+    <text x="76" y="4" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle">质押金库</text>
+
+    <text x="20" y="30" fill="#34d399" font-family="-apple-system, sans-serif" font-size="12" font-weight="700">独立仓位管理</text>
+    <text x="20" y="48" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="11">最低开仓门槛: 100,000 FATCAT</text>
+    
+    <line x1="20" y1="60" x2="240" y2="60" stroke="#1e293b" stroke-width="1" />
+    <text x="20" y="78" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="11">资历凭据（预留联动，后续发布）</text>
+    <text x="20" y="94" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="10">redeem() 赎回永远无视紧急暂停</text>
+    <text x="20" y="110" fill="#10b981" font-family="-apple-system, sans-serif" font-size="10">setDiet() 免费切换，次期餐次生效</text>
+  </g>
+
+  <!-- User Claim Return Flow -->
+  <path d="M 378 590 L 310 590" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-emerald)" />
+  <text x="344" y="582" fill="#10b981" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">提取 claim()</text>
+
+  <!-- Legend & Invariant Tag -->
+  <g transform="translate(680, 525)">
+    <rect width="270" height="125" rx="10" fill="#0c121d" stroke="#1e293b" stroke-width="1" />
+    <text x="20" y="28" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="12" font-weight="700">核心形式化安全不变量</text>
+    
+    <text x="20" y="52" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="10">S10: Σ W_open(a) == W_total</text>
+    <text x="20" y="68" fill="#38bdf8" font-family="ui-monospace, monospace" font-size="10">O(1): (1+m)P_climb - J_climb ...</text>
+    <text x="20" y="84" fill="#10b981" font-family="ui-monospace, monospace" font-size="10">D1: Bal(Distributor) ≥ liability</text>
+    <text x="20" y="100" fill="#e2e8f0" font-family="ui-monospace, monospace" font-size="10">B2: Outflow ≤ Bal × 16/168</text>
+    <text x="20" y="116" fill="#64748b" font-family="-apple-system, sans-serif" font-size="10">77 套件 / 570 测试 / 0 失败</text>
+  </g>
+
+</svg>

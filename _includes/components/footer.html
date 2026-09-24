@@ -1,0 +1,35 @@
+<footer class="doc-footer">
+  <hr class="doc-footer-divider">
+  {% if site.back_to_top %}
+    <p class="back-to-top-container" id="back-to-top-container" style="display: none;">
+      <a href="#top" id="back-to-top">
+        {% if page.url contains '/zh/' or page.lang == 'zh' %}
+          返回顶部
+        {% else %}
+          {{ site.back_to_top_text | default: "Back to top" }}
+        {% endif %}
+      </a>
+    </p>
+  {% endif %}
+
+  <p class="text-small mb-0">
+    {% if page.url contains '/zh/' or page.lang == 'zh' %}
+      TheFatCat 是一个融合 Meme 文化与去中心化交易税收路由机制的 DeFi 实验性协议。本文档内任何内容均不构成投资建议或收益承诺。
+    {% else %}
+      {{ site.footer_content }}
+    {% endif %}
+  </p>
+
+  <div class="d-flex mt-2">
+  </div>
+
+  <div class="d-md-none mt-4 fs-2">
+    <span class="text-small text-grey-dk-000">
+      {% if page.url contains '/zh/' or page.lang == 'zh' %}
+        &copy; TheFatCat &bull; 协议技术文档
+      {% else %}
+        &copy; TheFatCat &bull; Documentation
+      {% endif %}
+    </span>
+  </div>
+</footer>

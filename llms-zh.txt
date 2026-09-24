@@ -1,0 +1,38 @@
+# TheFatCat 官方技术文档 (llms.txt)
+
+> TheFatCat 是构建在 BNB Chain 上的去中心化交易税收动态平滑与收益分配协议。协议基于一阶指数平滑储备水库（The Belly）与时长资历加权阶梯（1.0× 至 22.0×），支持将协议税收收益直接输出为追踪实体核心股票资产价值的股票代币（bStocks），使用户无需传统券商账户即可让持币收益直接捕获实体资产价值。
+
+## 形式化基础与核心架构
+- [项目简介](https://thefatcatofficial.github.io/TheFatCat-docs/zh/): TheFatCat 架构总览、离散指数平滑机制及 bStocks 输出概述。
+- [核心定义与符号体系](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions.html): 形式化代数符号系统、双轨术语映射表与核心底层架构不变量。
+- [范式转变](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/paradigm-shift.html): 对传统分红代币结构性缺陷的形式化剖析、稀释抑制与波动平滑量化证明。
+- [参照协议与机制对照](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/prior-art.html): 深入对比 Curve Finance、Pendle V2 与 Synthetix V3 的全景机制矩阵。
+- [The Belly 水库模型](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/reservoir-model.html): 一阶指数平滑模型、衰减释放及 8 小时/餐 (1/21) 释放节拍。
+- [时长资历加权模型](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/time-weighting.html): 质押时长作为唯一的非资本加权变量（1.0× 至 22.0× 线性资历加成）。
+- [核心设计原则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/principles.html): 不可篡改的主权性、持续不可剥夺的收益与严格线性的资本规模。
+- [系统全局拓扑](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology.html): 完整智能合约拓扑架构与资金流向。
+- [资产流向拓扑](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/asset-flows.html): QQQB 税费接收、固定兑换、收益分账与本金隔离。
+
+## 协议经济学与费率模型
+- [交易税收与费用路由](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/fees.html): 4% FATCAT 税费以 QQQB 接收；扣费并固定路线兑换后，净 WBNB 的 3/19 至 Ops，余款（16/19）至 Belly。
+- [The Belly 动态释放机制](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html): 指数平滑释放公式、半衰期推导与 7-窗口安全限额。
+- [餐次周期与资历阶梯](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html): O(1) 闭式资历聚合、22-槽位环形缓冲区与在途收益罚没。
+- [批量采购与结算执行](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html): 记账与执行解耦、TWAP 滑点保护与 5% bStocks 试用期熔断。
+
+## 用户实操与使用指南
+- [质押与仓位管理指南](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/staking.html): 100,000 FATCAT 活跃准入门槛、独立仓位机制与持续质押规则。
+- [食谱选择与收益领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html): 自选收益资产（BNB、bStocks、FATCAT）、多批次聚合领取与原生 BNB 自动解包。
+- [紧急退出机制（无前端）](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html): 遭遇前端故障时直接在 BscScan 上安全赎回本金的操作指南。
+- [时间资历凭证 (ERC-721)](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/seniority-certificates.html): 链上时长资历结晶凭证体系、燃烧铸造规则与 5% Belly 版税反哺。
+- [协议去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html): 公众一笔维护、QQQB 兑换、餐次到期即开放，以及符合资格的调用者可领取的 0.1% WBNB 转换推动奖励。
+
+## 智能合约参考与安全设计
+- [核心金库架构](https://thefatcatofficial.github.io/TheFatCat-docs/zh/contracts/core-vaults.html): QQQB 金库与 Factory、仅 Guardian 可升级的 Beacon、固定 BNB 接收器及奖励/本金边界。
+- [路由器与预言机](https://thefatcatofficial.github.io/TheFatCat-docs/zh/contracts/routers-and-oracles.html): DietRouter.sol、PancakeV3TwapOracle 及执行管线。
+- [资金托管与偿付证明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html): 整数下取整截断边界、非负粉尘定理及零管理员提取权限。
+- [安全审计与缺陷加固复盘](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/audits-and-hardening.html): PocAudit 对抗测试套件针对上游交割竞态、大规模舍入残差与分成防抽资的加固证明。
+- [运行监控与核心不变量](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/monitoring.html): 上游税收处理器核心指标监控与守护者应急响应机制。
+- [安全模型与风险边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html): 信任假设、升级权限边界与风险缓解措施。
+
+## 全量上下文注入 (面向 LLM / 智能体)
+- [全站完整文档知识库 (llms-full-zh.txt)](https://thefatcatofficial.github.io/TheFatCat-docs/llms-full-zh.txt): 汇聚全站所有章节的完整技术文档全集，专为大模型单次全量阅读优化。

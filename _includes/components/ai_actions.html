@@ -1,0 +1,149 @@
+{%- assign is_zh = false -%}
+{%- if page.url contains '/zh/' or page.url == '/zh' or page.url == '/zh.html' or page.path contains 'zh/' -%}
+  {%- assign is_zh = true -%}
+{%- endif -%}
+
+<!-- AI & LLM Split Action Button (Pinned to far right of header) -->
+<div class="ai-actions-wrap" id="tfc-ai-actions-wrap">
+  <div class="ai-btn-group" id="tfc-ai-btn-group">
+    <!-- Left: Direct Copy Markdown Button -->
+    <button type="button" class="ai-btn-action" id="tfc-ai-btn-copy" title="{% if is_zh %}一键复制本页纯净 Markdown，供 ChatGPT、Claude 等大模型与 AI 智能体阅读解析{% else %}Copy page as clean Markdown for ChatGPT, Claude & AI Agents{% endif %}">
+      <svg class="ai-btn-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span class="ai-btn-label">{% if is_zh %}复制本页{% else %}Copy page{% endif %}</span>
+    </button>
+
+    <span class="ai-btn-divider" aria-hidden="true"></span>
+
+    <!-- Right: Dropdown Menu Trigger Chevron -->
+    <button type="button" class="ai-btn-trigger" id="tfc-ai-btn-dropdown" aria-expanded="false" aria-haspopup="true" title="{% if is_zh %}面向大模型与智能体的操作菜单 (ChatGPT, Claude, MCP...){% else %}AI & LLM actions (ChatGPT, Claude, MCP...){% endif %}">
+      <svg class="ai-btn-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Dropdown Menu -->
+  <div class="ai-actions-dropdown" id="tfc-ai-dropdown" role="menu" aria-label="AI Actions Menu">
+    <!-- Header: Explicit AI prompt -->
+    <div class="ai-dropdown-header">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true">
+        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+      </svg>
+      <span>{% if is_zh %}面向 AI 智能体与大模型{% else %}For AI Agents & LLMs{% endif %}</span>
+    </div>
+
+    <!-- Item 1: Copy page as Markdown for LLMs -->
+    <button type="button" class="ai-dropdown-item" id="tfc-action-copy-md" role="menuitem" data-path="{{ page.path }}">
+      <span class="ai-item-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      </span>
+      <span class="ai-item-text">
+        <span class="ai-item-title">{% if is_zh %}复制当前页 (Markdown){% else %}Copy page (Markdown){% endif %}</span>
+        <span class="ai-item-desc">{% if is_zh %}复制本页纯净 Markdown 供 AI 深入提问{% else %}Copy page as Markdown for LLMs{% endif %}</span>
+      </span>
+    </button>
+
+    <!-- Item 2: Copy FULL Protocol Documentation (All 41 chapters) -->
+    <button type="button" class="ai-dropdown-item" id="tfc-action-copy-full" role="menuitem">
+      <span class="ai-item-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          <line x1="9" y1="7" x2="15" y2="7"></line>
+          <line x1="9" y1="11" x2="15" y2="11"></line>
+        </svg>
+      </span>
+      <span class="ai-item-text">
+        <span class="ai-item-title">{% if is_zh %}复制全协议完整知识库 (41章节){% else %}Copy full protocol docs (41 chapters){% endif %}</span>
+        <span class="ai-item-desc">{% if is_zh %}聚合全量技术文档（约113KB），适合发给 AI 全局分析机制{% else %}Full unabridged knowledge base for complete AI reasoning{% endif %}</span>
+      </span>
+    </button>
+
+    <!-- Item 3: View as Markdown -->
+    <a href="https://raw.githubusercontent.com/TheFatCatOfficial/TheFatCat-docs/main/{{ page.path }}" id="tfc-action-view-raw" target="_blank" rel="noopener noreferrer" class="ai-dropdown-item" role="menuitem">
+      <span class="ai-item-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </span>
+      <span class="ai-item-text">
+        <span class="ai-item-title">{% if is_zh %}查看本页原始 Markdown{% else %}View page as Markdown{% endif %}</span>
+        <span class="ai-item-desc">{% if is_zh %}在新标签页以纯文本格式查看本页{% else %}View this page as plain text{% endif %}</span>
+      </span>
+      <span class="ai-item-arrow">↗</span>
+    </a>
+
+    <div class="ai-dropdown-divider"></div>
+
+    <!-- Item 4: Open in ChatGPT -->
+    <button type="button" class="ai-dropdown-item" id="tfc-action-chatgpt" role="menuitem">
+      <span class="ai-item-icon ai-icon-chatgpt">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.8956zm16.5997 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.4035-.6669zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813v6.7227zm1.1449-2.0729l2.5536-1.4727 2.5537 1.4727v2.9455l-2.5537 1.4727-2.5536-1.4727z"/>
+        </svg>
+      </span>
+      <span class="ai-item-text">
+        <span class="ai-item-title">{% if is_zh %}在 ChatGPT 中打开{% else %}Open in ChatGPT{% endif %}</span>
+        <span class="ai-item-desc">{% if is_zh %}就本页内容向 ChatGPT 发起提问{% else %}Ask ChatGPT about this page{% endif %}</span>
+      </span>
+      <span class="ai-item-arrow">↗</span>
+    </button>
+
+    <!-- Item 5: Open in Claude -->
+    <button type="button" class="ai-dropdown-item" id="tfc-action-claude" role="menuitem">
+      <span class="ai-item-icon ai-icon-claude">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M13.5 2h-3l-.8 6.2-5-3.8-1.7 2.5 5.5 3-5.9 2.2 1 2.8 6.1-.9-3 5.4 2.6 1.5 3.7-5 3.7 5 2.6-1.5-3-5.4 6.1.9 1-2.8-5.9-2.2 5.5-3-1.7-2.5-5 3.8z"/>
+        </svg>
+      </span>
+      <span class="ai-item-text">
+        <span class="ai-item-title">{% if is_zh %}在 Claude 中打开{% else %}Open in Claude{% endif %}</span>
+        <span class="ai-item-desc">{% if is_zh %}就本页内容在 Claude 中深度分析{% else %}Ask Claude about this page{% endif %}</span>
+      </span>
+      <span class="ai-item-arrow">↗</span>
+    </button>
+
+    <div class="ai-dropdown-divider"></div>
+
+    <!-- Item 6: Connect with MCP -->
+    <button type="button" class="ai-dropdown-item" id="tfc-action-mcp" role="menuitem">
+      <span class="ai-item-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+      </span>
+      <span class="ai-item-text">
+        <span class="ai-item-title">{% if is_zh %}连接 MCP (智能体接口){% else %}Connect with MCP{% endif %}</span>
+        <span class="ai-item-desc">{% if is_zh %}在 Cursor / Claude Code 中挂载知识库{% else %}Add this MCP to any compatible client{% endif %}</span>
+      </span>
+    </button>
+
+    <!-- Item 7: View llms.txt -->
+    <a href="{% if is_zh %}{{ '/llms-zh.txt' | relative_url }}{% else %}{{ '/llms.txt' | relative_url }}{% endif %}" target="_blank" rel="noopener noreferrer" class="ai-dropdown-item" role="menuitem">
+      <span class="ai-item-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+      </span>
+      <span class="ai-item-text">
+        <span class="ai-item-title">{% if is_zh %}查看 llms.txt 标准索引{% else %}View llms.txt index{% endif %}</span>
+        <span class="ai-item-desc">{% if is_zh %}面向 AI 智能体的标准化全站索引大纲{% else %}Standard index for agents & LLMs{% endif %}</span>
+      </span>
+      <span class="ai-item-arrow">↗</span>
+    </a>
+  </div>
+</div>
+
