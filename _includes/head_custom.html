@@ -1,0 +1,353 @@
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
+<link rel="alternate icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
+<meta name="theme-color" content="#111614">
+
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem('tfc_docs_theme');
+      var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', theme === 'light' ? '#f6f2e8' : '#111614');
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+  onload="tfcRenderMath();"></script>
+<script>
+  window.tfcRenderMath = function(target) {
+    if (typeof renderMathInElement === 'function') {
+      var el = target || document.getElementById('main-content') || document.querySelector('main') || document.body;
+      if (el) {
+        renderMathInElement(el, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+  };
+</script>
+<style>
+  #back-to-top-container {
+    display: none;
+  }
+
+  /* Universal code block & copy button styles inlined to eliminate client-side cache latency */
+  div.highlighter-rouge,
+  pre:not(.highlight) {
+    position: relative !important;
+    padding: 5px 6px !important;
+    box-sizing: border-box !important;
+  }
+
+  div.highlighter-rouge div.highlight,
+  div.highlighter-rouge.tfc-code-wrap pre {
+    border-radius: 4px !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(168, 135, 76, 0.35) transparent;
+  }
+
+  /* Inner code cushioning: keeps code text strictly away from decorative border lines */
+  div.highlighter-rouge div.highlight code,
+  div.highlighter-rouge.tfc-code-wrap pre code,
+  pre:not(.highlight) code {
+    display: inline-block !important;
+    padding-right: 3.75rem !important;
+  }
+
+  div.highlighter-rouge.tfc-code-wrap {
+    margin: 1.75rem 0 !important;
+    background-color: #0a2d25 !important;
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(231, 223, 201, 0.04), transparent 30%),
+      repeating-linear-gradient(0deg, transparent 0 3px, rgba(0, 0, 0, 0.08) 4px) !important;
+    border: 1px solid rgba(168, 135, 76, 0.45) !important;
+    border-radius: 6px !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(17, 22, 20, 0.85),
+      inset 0 0 0 4px rgba(3, 16, 13, 0.65),
+      inset 0 0 32px rgba(0, 0, 0, 0.45),
+      0 4px 16px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden !important;
+    padding: 5px 6px !important;
+  }
+
+  div.highlighter-rouge.tfc-code-wrap pre {
+    background: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 1.15rem 1.35rem !important;
+    overflow-x: auto !important;
+    display: inline-block !important;
+    min-width: 100% !important;
+  }
+
+  /* Professional Icon-Only Copy Button: NO blue outline, crisp vector rendering */
+  .tfc-code-copy-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    background: rgba(10, 45, 37, 0.82) !important;
+    border: 1px solid rgba(168, 135, 76, 0.45) !important;
+    color: rgba(231, 223, 201, 0.8) !important;
+    border-radius: 5px !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    cursor: pointer !important;
+    position: absolute !important;
+    top: 9px !important;
+    right: 9px !important;
+    z-index: 10 !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(-2px);
+    transition: opacity 160ms ease, transform 160ms ease, background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease, color 140ms ease !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .tfc-code-copy-btn:focus,
+  .tfc-code-copy-btn:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 1px rgba(72, 183, 141, 0.6) !important;
+  }
+
+  .tfc-code-copy-btn svg {
+    flex-shrink: 0 !important;
+    width: 14px !important;
+    height: 14px !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    display: block !important;
+  }
+
+  .tfc-code-copy-btn:hover {
+    transform: translateY(0) !important;
+    background: rgba(18, 75, 63, 0.95) !important;
+    color: #ffffff !important;
+    border-color: rgba(72, 183, 141, 0.7) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .tfc-code-copy-btn.copied {
+    background: rgba(7, 36, 29, 0.95) !important;
+    border-color: #48b78d !important;
+    color: #48b78d !important;
+    box-shadow: 0 0 10px rgba(72, 183, 141, 0.4) !important;
+  }
+  .tfc-code-copy-btn.copied svg {
+    stroke: #48b78d !important;
+    fill: none !important;
+  }
+
+  /* Smooth hover and focus reveal across all code containers */
+  div.highlighter-rouge:hover > .tfc-code-copy-btn,
+  div.highlighter-rouge:focus-within > .tfc-code-copy-btn,
+  div.highlighter-rouge:hover .tfc-code-copy-btn,
+  div.highlighter-rouge:focus-within .tfc-code-copy-btn,
+  pre:not(.highlight):hover > .tfc-code-copy-btn,
+  pre:not(.highlight):focus-within > .tfc-code-copy-btn {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+  }
+
+  @media (hover: none) {
+    .tfc-code-copy-btn {
+      opacity: 0.85 !important;
+      pointer-events: auto !important;
+      transform: translateY(0) !important;
+    }
+  }
+
+  html[data-theme="light"] .tfc-code-copy-btn {
+    background: rgba(236, 229, 214, 0.88) !important;
+    border-color: rgba(168, 135, 76, 0.45) !important;
+    color: rgba(14, 59, 50, 0.75) !important;
+    box-shadow: none !important;
+  }
+  html[data-theme="light"] .tfc-code-copy-btn:focus,
+  html[data-theme="light"] .tfc-code-copy-btn:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 1px rgba(14, 59, 50, 0.5) !important;
+  }
+  html[data-theme="light"] .tfc-code-copy-btn:hover {
+    background: rgba(222, 214, 197, 0.98) !important;
+    border-color: rgba(14, 59, 50, 0.65) !important;
+    color: #0e3b32 !important;
+  }
+  html[data-theme="light"] .tfc-code-copy-btn.copied {
+    background: rgba(219, 235, 226, 0.95) !important;
+    border-color: rgba(19, 78, 66, 0.7) !important;
+    color: #134e42 !important;
+    box-shadow: 0 0 8px rgba(19, 78, 66, 0.25) !important;
+  }
+  /* Architecture Diagram & Flowchart Frame (Option A: Explicitly Non-Copyable) */
+  .tfc-diagram-frame {
+    margin: 1.75rem 0 !important;
+    background: #080f0c !important;
+    border: 1px solid rgba(168, 135, 76, 0.35) !important;
+    border-radius: 6px !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(17, 22, 20, 0.8),
+      inset 0 0 24px rgba(0, 0, 0, 0.5),
+      0 4px 16px rgba(0, 0, 0, 0.3) !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  .tfc-diagram-bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 7px 14px !important;
+    background: rgba(14, 25, 20, 0.85) !important;
+    border-bottom: 1px solid rgba(168, 135, 76, 0.22) !important;
+    font-size: 0.75rem !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+
+  .tfc-diagram-tag {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    color: #a8874c !important;
+    text-transform: uppercase !important;
+    flex-shrink: 0 !important;
+  }
+
+  .tfc-diagram-title {
+    color: rgba(231, 223, 201, 0.75) !important;
+    font-weight: 500 !important;
+    margin-left: 2px !important;
+  }
+
+  .tfc-diagram-content {
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 1.15rem 1.35rem !important;
+    overflow-x: auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(168, 135, 76, 0.3) transparent !important;
+  }
+
+  .tfc-diagram-content code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    font-size: 0.85rem !important;
+    line-height: 1.65 !important;
+    color: #e7dfc9 !important;
+    white-space: pre !important;
+    display: inline-block !important;
+    padding-right: 1.5rem !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  /* Diagrams NEVER have copy buttons */
+  .tfc-diagram-frame .tfc-code-copy-btn,
+  .tfc-diagram-frame button {
+    display: none !important;
+  }
+
+  /* Refined Callout Boxes: Note / Important / Warning / Tip */
+  .note, .important, .warning, .tip {
+    margin: 1.35rem 0 !important;
+    padding: 0.95rem 1.25rem !important;
+    border-radius: 6px !important;
+    font-size: 0.92rem !important;
+    line-height: 1.65 !important;
+    position: relative !important;
+  }
+
+  .note {
+    background: rgba(10, 38, 30, 0.45) !important;
+    border: 1px solid rgba(72, 183, 141, 0.35) !important;
+    border-left: 4px solid #48b78d !important;
+    color: #d6e8dc !important;
+  }
+  .note strong, .note .note-title { color: #48b78d !important; }
+
+  .important {
+    background: rgba(38, 32, 18, 0.45) !important;
+    border: 1px solid rgba(168, 135, 76, 0.4) !important;
+    border-left: 4px solid #a8874c !important;
+    color: #ebe2cf !important;
+  }
+  .important strong, .important .important-title { color: #f0deb4 !important; }
+
+  .warning {
+    background: rgba(45, 18, 22, 0.45) !important;
+    border: 1px solid rgba(189, 108, 117, 0.4) !important;
+    border-left: 4px solid #bd6c75 !important;
+    color: #f0d5d8 !important;
+  }
+  .warning strong, .warning .warning-title { color: #e89da5 !important; }
+
+  .tip {
+    background: rgba(14, 45, 36, 0.4) !important;
+    border: 1px solid rgba(72, 183, 141, 0.3) !important;
+    border-left: 4px solid #48b78d !important;
+    color: #d6e8dc !important;
+  }
+  .tip strong, .tip .tip-title { color: #48b78d !important; }
+
+  /* KaTeX Math Styling: Distinct academic styling, completely separate from terminal code blocks */
+  .katex-display {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 1.15rem 1.25rem !important;
+    margin: 1.6rem 0 !important;
+    background-color: rgba(231, 223, 201, 0.025) !important;
+    border-top: 1px solid rgba(231, 223, 201, 0.12) !important;
+    border-bottom: 1px solid rgba(231, 223, 201, 0.12) !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-align: center !important;
+    color: #e7dfc9 !important;
+  }
+  .katex {
+    font-size: 1.05em !important;
+    color: #e7dfc9 !important;
+  }
+  html[data-theme="light"] .katex-display {
+    background-color: rgba(17, 22, 20, 0.02) !important;
+    border-top: 1px solid rgba(17, 22, 20, 0.12) !important;
+    border-bottom: 1px solid rgba(17, 22, 20, 0.12) !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #111614 !important;
+  }
+  html[data-theme="light"] .katex {
+    color: #111614 !important;
+  }
+</style>

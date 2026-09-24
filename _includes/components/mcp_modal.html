@@ -1,0 +1,110 @@
+<!-- MCP Connection Modal (Global Root Component) -->
+<div class="tfc-mcp-modal-backdrop" id="tfc-mcp-modal" aria-hidden="true">
+  <div class="tfc-mcp-modal-card">
+    <div class="tfc-mcp-modal-header">
+      <div class="tfc-mcp-modal-title">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+        <span class="tfc-mcp-zh">连接 TheFatCat 文档知识库 (MCP)</span>
+        <span class="tfc-mcp-en">Connect TheFatCat Docs with MCP</span>
+      </div>
+      <button type="button" class="tfc-mcp-modal-close" id="tfc-mcp-close" aria-label="Close">✕</button>
+    </div>
+    <div class="tfc-mcp-modal-body">
+      <p class="tfc-mcp-modal-intro tfc-mcp-zh">
+        通过 Model Context Protocol (MCP)，您可以让 Cursor、Claude Desktop、Claude Code 等本地智能体直接检索和读取 TheFatCat 官方协议文档。
+      </p>
+      <p class="tfc-mcp-modal-intro tfc-mcp-en">
+        Connect TheFatCat documentation to Cursor, Claude Desktop, Claude Code, or VSCode via Model Context Protocol (MCP).
+      </p>
+
+      <!-- Side-by-side URL Grid -->
+      <div class="tfc-mcp-url-grid">
+        <div class="tfc-mcp-url-card">
+          <span class="tfc-mcp-url-label">
+            <span class="tfc-mcp-zh">📖 官方文档发布站</span>
+            <span class="tfc-mcp-en">📖 Official Docs Site</span>
+          </span>
+          <a href="https://thefatcatofficial.github.io/TheFatCat-docs/" target="_blank" rel="noopener noreferrer" class="tfc-mcp-url-val" title="https://thefatcatofficial.github.io/TheFatCat-docs/">https://thefatcatofficial.github.io/TheFatCat-docs/ ↗</a>
+        </div>
+        <div class="tfc-mcp-url-card">
+          <span class="tfc-mcp-url-label">
+            <span class="tfc-mcp-zh">🐙 官方文档仓库</span>
+            <span class="tfc-mcp-en">🐙 Official Docs Repo</span>
+          </span>
+          <a href="https://github.com/TheFatCatOfficial/TheFatCat-docs" target="_blank" rel="noopener noreferrer" class="tfc-mcp-url-val" title="https://github.com/TheFatCatOfficial/TheFatCat-docs">https://github.com/TheFatCatOfficial/TheFatCat-docs ↗</a>
+        </div>
+      </div>
+
+      <div class="tfc-mcp-tabs">
+        <button type="button" class="tfc-mcp-tab active" data-tab="cursor">Cursor / Claude Desktop</button>
+        <button type="button" class="tfc-mcp-tab" data-tab="cli">Claude Code CLI</button>
+        <button type="button" class="tfc-mcp-tab" data-tab="llms">llms.txt / llms-full.txt</button>
+      </div>
+
+      <div class="tfc-mcp-tab-content active" id="tfc-tab-cursor">
+        <div class="tfc-mcp-code-header">
+          <span>claude_desktop_config.json / cursor mcp.json</span>
+          <button type="button" class="tfc-mcp-copy-code" data-target="cursor-config-code">
+            <span class="tfc-mcp-zh">复制代码</span>
+            <span class="tfc-mcp-en">Copy JSON</span>
+          </button>
+        </div>
+        <pre><code id="cursor-config-code">{
+  "mcpServers": {
+    "thefatcat-docs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch",
+        "--allowed-origins",
+        "https://thefatcatofficial.github.io"
+      ]
+    }
+  }
+}</code></pre>
+      </div>
+
+      <div class="tfc-mcp-tab-content" id="tfc-tab-cli" style="display: none;">
+        <div class="tfc-mcp-code-header">
+          <span>Claude Code / Terminal CLI</span>
+          <button type="button" class="tfc-mcp-copy-code" data-target="cli-config-code">
+            <span class="tfc-mcp-zh">复制指令</span>
+            <span class="tfc-mcp-en">Copy Command</span>
+          </button>
+        </div>
+        <pre><code id="cli-config-code">claude mcp add thefatcat-docs -- npx -y @modelcontextprotocol/server-fetch --allowed-origins https://thefatcatofficial.github.io</code></pre>
+      </div>
+
+      <div class="tfc-mcp-tab-content" id="tfc-tab-llms" style="display: none;">
+        <div class="tfc-mcp-code-header">
+          <span>Direct AI Ingestion URLs (llmstxt.org)</span>
+          <button type="button" class="tfc-mcp-copy-code" data-target="llms-urls-code">
+            <span class="tfc-mcp-zh">复制全部链接</span>
+            <span class="tfc-mcp-en">Copy URLs</span>
+          </button>
+        </div>
+        <pre><code id="llms-urls-code"># English
+Index: https://thefatcatofficial.github.io/TheFatCat-docs/llms.txt
+Full Knowledge Base: https://thefatcatofficial.github.io/TheFatCat-docs/llms-full.txt
+
+# 简体中文 (Chinese)
+Index (ZH): https://thefatcatofficial.github.io/TheFatCat-docs/llms-zh.txt
+Full Knowledge Base (ZH): https://thefatcatofficial.github.io/TheFatCat-docs/llms-full-zh.txt</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Toast Feedback -->
+<div class="tfc-toast" id="tfc-toast" aria-live="polite">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>
+  <span id="tfc-toast-message">
+    <span class="tfc-mcp-zh">已复制</span>
+    <span class="tfc-mcp-en">Copied</span>
+  </span>
+</div>
