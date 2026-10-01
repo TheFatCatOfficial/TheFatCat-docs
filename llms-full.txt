@@ -1,0 +1,2285 @@
+# TheFatCat Protocol: Complete Technical Documentation for LLMs & AI Agents
+
+> This document contains the complete, unabridged official technical documentation for TheFatCat protocol on BNB Chain.
+> Generated for AI agent context windows, automated research, and comprehensive analysis.
+> Official Website: https://thefatcat.fun | Docs: https://thefatcatofficial.github.io/TheFatCat-docs/
+
+================================================================================
+
+---
+# SOURCE: index.md
+---
+
+# TheFatCat Documentation
+
+Welcome to the official developer and protocol documentation for **TheFatCat** — a decentralized trading-tax routing and yield distribution protocol on BNB Chain, implementing discrete first-order exponential smoothing and duration-seniority weighting. In addition to hydrodynamic fee smoothing, the protocol's output assets include tokenized stocks (bStocks) tracking the value of core real-world equities, enabling stakers to route their protocol yield directly into stock tokens without traditional brokerage accounts.
+
+{: .note }
+For contract interactions, use the addresses, network and verified source referenced in the [official contract registry]({% link contracts.md %}).
+
+---
+
+## Architectural Pillars
+
+TheFatCat not only fundamentally restructures the simple pass-through plumbing of traditional reflection tokens, but is also a protocol that combines an innovative time-weighting mechanism with high decentralization, establishing an unprivileged reservoir governed by physical conservation laws:
+
+1. **The Belly (Inventory Reserve)**: Trading taxes accumulate in an unprivileged single-quote treasury functioning as a discrete first-order exponential smoothing filter. Capital releases are rate-limited to a deterministic fraction $\alpha = 1/21 \approx 4.76\%$ per 8-hour meal cadence, converting transient order-flow spikes into persistent reward inventory.
+2. **Sovereign Multi-Asset Diets**: Each staker independently designates an output settlement asset (native BNB, tokenized stocks (**bStocks**), or post-graduation FATCAT). Allocation accounting is decoupled from swap execution: reward claims are algebraically locked at discrete interval boundaries, confining sandwich and front-running exposure strictly to the time-weighted aggregate batch execution window.
+3. **Entry Floor & Time-Seniority Ladder**: Opening a staking position requires a minimum deposit of 100,000 FATCAT (an immutable smart-contract threshold preventing dust spam). Staking weight scales strictly linearly with capital without whale leverage; duration multipliers climb additively ($+1.0\times$ per active 8-hour interval) across 21 meals up to a $22.0\times$ ceiling. Early unstaking immediately exits the seniority ladder, forfeiting unfinalized reward allocations for the active interval to remaining stakers.
+4. **Time-Seniority Certificates (ERC-721)**: An on-chain credential standard assetizing realized duration upon position exit via FATCAT burns, designed to couple position closure with supply deflation and secondary royalty treasury routing (governed by the Protocol Roadmap).
+
+---
+
+## Documentation Navigation
+
+Explore the documentation sections below:
+
+### [1. Definitions & Notation]({% link definitions.md %})
+Formal algebraic notation, variable index, dual-track terminology mapping, and core invariants:
+- **[Formal Notation Table]({% link definitions/notation.md %})**: Canonical mathematical symbols, state variables, and dimension scopes.
+- **[Dual-Track Terminology Mapping]({% link definitions/terminology.md %})**: Cultural metaphors mapped to smart contract components.
+- **[Core Architectural Invariants]({% link definitions/invariants.md %})**: Formal proofs for principal isolation, rate-limited outflow, and solvency.
+
+### [2. Background & Philosophy]({% link background.md %})
+Understand the structural flaws of traditional reflection tokens and why TheFatCat was designed as a physical reservoir:
+- [Paradigm Shift]({% link background/paradigm-shift.md %}): Escaping the high-FDV, low-float dilution trap.
+- [Prior Art & Comparative Matrix]({% link background/prior-art.md %}): Comprehensive mechanism comparison against Curve, Pendle, and Synthetix.
+- [The Belly Reservoir Model]({% link background/reservoir-model.md %}): Transforming transient fee flow into damped inventory.
+- [Time-Weighting Model]({% link background/time-weighting.md %}): Staked time as the sole non-capital weighting variable.
+- [Core Principles & Non-Goals]({% link background/principles.md %}): Architectural boundaries and sovereign invariants.
+
+### [3. System Topology]({% link topology.md %})
+Full capital flow diagram, state transitions, and execution pipelines:
+- [Dual-Track Asset Flows]({% link topology/asset-flows.md %}): Trading tax capture, fixed conversion, and vault isolation.
+- [State Machine & Intervals]({% link topology/state-machine.md %}): 8-hour meal clock cadences and state transitions.
+- [Procurement & Claims Pipeline]({% link topology/claim-pipeline.md %}): TWAP-guarded batch execution and reward claims.
+
+### [4. User Guides]({% link guides.md %})
+Step-by-step operational guides for stakers and participants:
+- [Staking & Positions]({% link guides/staking.md %}): Opening positions, principal thresholds, and isolated position rules.
+- [Diets & Claiming Rewards]({% link guides/diets-and-claiming.md %}): Selecting reward assets, multi-batch claiming, and native BNB auto-unwrapping.
+- [Time-Seniority Certificates]({% link guides/seniority-certificates.md %}): On-chain credential tokens assetizing duration via burning.
+- [Decentralized Maintenance]({% link guides/community-keeper.md %}): Anyone can advance eligible maintenance, one-tx execution, and conversion bounty targeting 0.1% of represented trade value (actual WBNB output / 38).
+- [Emergency Exit (Without Front-End)]({% link guides/emergency-exit.md %}): How to safely redeem principal directly on BscScan if the front-end is down.
+
+### [5. Core Mechanics]({% link protocol.md %})
+Deep technical dives into the protocol's mathematical engines:
+- [The Belly Hydrodynamics]({% link protocol/belly.md %}): Discrete release formulas, half-life decay, and 7-window rate limits.
+- [Meals & Seniority Ladder]({% link protocol/meals-and-seniority.md %}): 22-slot circular graduation ring, $O(1)$ closed-form weight aggregation, and settled premium curves.
+- [Batch Procurement & Execution]({% link protocol/execution.md %}): Decoupled accounting, TWAP slippage guards, and permissionless quote fallback.
+- [Tax Routing & Model]({% link protocol/fees.md %}): The 4% dynamic trading tax, Flap platform fee, operations split, and 100-year tax span.
+
+### [6. Security & Governance]({% link safety.md %})
+Trust assumptions, role separation, invariant verifications, and post-mortems:
+- [Custody & Solvency Proofs]({% link safety/custody.md %}): Integer floor truncation bounds, non-negative dust theorem ($\sum r_i \le R$), and zero admin sweeps.
+- [Audits & Hardening Post-Mortems]({% link safety/audits-and-hardening.md %}): Vulnerability post-mortems and formal defenses from PocAudit regression suites.
+- [Operational Monitoring]({% link safety/monitoring.md %}): Upstream processor state metric tracking and emergency response.
+- [Risks & Launch Status]({% link safety/risks-and-status.md %}): Unfinished scopes, dependencies, and material disclosures.
+
+### [7. Reference & FAQ]({% link contracts.md %})
+- [Verified Contracts Matrix]({% link contracts.md %}): Canonical deployment addresses, bytecode verification, and immutable pointers.
+- [FAQ & Known Limitations]({% link faq.md %}): Answers to high-frequency community and staker questions.
+- [Whitepaper & Specifications]({% link whitepaper.md %}): Academic publication-grade PDF downloads.
+- [Notices & Disclaimers]({% link notices.md %}): Non-financial advice and legal boundaries.
+- [Official Links & Directory]({% link links.md %}): Official portals, staking dApp, X (Twitter), Telegram, and ecosystem links.
+
+---
+
+## Protocol Roadmap & Governance Disclosures
+
+Features currently in active research, formal specification, or pending governance activation are strictly segregated from the core launch phase:
+- **Secondary Market Certificate Royalties**: The dedicated receiver contract (`CertificateRevenueVault.sol`) is already implemented and verified to route BNB/WBNB royalties back into The Belly. Its standalone deployment binding, product activation, and operational parameters will be ratified by governance post-genesis.
+
+---
+# SOURCE: definitions.md
+---
+
+# Definitions & Mathematical Notation
+
+Mathematical invariants, formal definitions, and discrete state-machine equations form the foundational specification of TheFatCat protocol. Metaphors such as "The Belly", "Meals", "Diets", and "Seniority" serve as intuitive anchors for user interfaces and conceptual clarity. All smart contract implementations, state transitions, and solvency proofs operate strictly upon the formal definitions and algebraic equations specified in this section.
+
+---
+
+## Section Navigation
+
+Explore TheFatCat's formal mathematical foundations, notation, and core invariants:
+
+- **[Formal Notation Table]({% link definitions/notation.md %})**: Canonical algebraic symbols, dimensions, and operational scopes used across specifications and audit proofs.
+- **[Dual-Track Terminology Mapping]({% link definitions/terminology.md %})**: Comprehensive matrix connecting community product metaphors to formal engineering terms and smart contract state variables.
+- **[Core Architectural Invariants]({% link definitions/invariants.md %})**: Formally proved invariants governing principal isolation, rate-limited outflow, $O(1)$ constant-time transitions, and non-negative dust solvency.
+
+---
+# SOURCE: definitions/notation.md
+---
+
+# Formal Algebraic Notation Table
+
+The table below defines the canonical algebraic symbols used across all protocol specifications, smart contract docstrings, and audit proofs.
+
+| Symbol | Formal Concept | Dimensionality / Unit | Definition & Scope |
+|:---|:---|:---|:---|
+| $m$ | **Accounting Interval Index** | Discrete $\mathbb{N}$ ($m \ge 0$) | Global sequence counter of completed intervals ($\ge 8\text{h}$ each); advanced permissionlessly by `advance()`. |
+| $t$ | **Block Timestamp** | Seconds ($\text{s}$) | EVM block timestamp `block.timestamp`. |
+| $\Delta t$ | **Elapsed Interval Time** | Seconds ($\text{s}$) | $\Delta t = t - t_{\text{lastAdvance}}$, with structural gate $\Delta t \ge 28,800\text{ s}$ ($8\text{ hours}$). |
+| $p_i$ | **Staked Principal** | $D18\text{ \{FATCAT\}}$ | Principal tokens deposited into `StakingVault.sol` by position $i$ ($p_i \ge 100,000 \cdot 10^{18}$). |
+| $j_i$ | **Weight Reference Interval** | Discrete $\mathbb{N}$ | `effectiveFrom`, used in the weight formula. Actual eligibility begins at `activeFrom`; ordinary positions have both equal to $m_{\text{stake}} + 1$. |
+| $c_i(m)$ | **Seniority Coefficient** | Dimensionless ($[0, 22]$) | Zero before `activeFrom`; while active, $c_i(m) = \min(1 + m - j_i, 22)$. |
+| $w_i(m)$ | **Position Seniority Weight** | $D18\text{ \{weight\}}$ | Effective voting/claim weight: $w_i(m) = p_i \cdot c_i(m)$. |
+| $W(m)$ | **Aggregate Active Weight** | $D18\text{ \{weight\}}$ | Global sum of all active position weights: $W(m) = \sum_{i \in \text{Active}(m)} w_i(m)$, computed in $O(1)$ with the opening correction `headOpening` and current-meal exiting weight. |
+| $\mathcal{B}$ | **The Belly Treasury** | Smart Contract | Unprivileged rate-limited reservoir holding quote currency (`Belly.sol`). |
+| $B(t)$ | **Recognized Quote Stock** | $D18\text{ \{WBNB\}}$ | Total WBNB balance recognized in the Belly reservoir at timestamp $t$. |
+| $L(t)$ | **Cumulative Quote Liabilities** | $D18\text{ \{WBNB\}}$ | Sum of quote funds reserved for in-flight batches, pending procurement, and unfinalized intervals. |
+| $U(m)$ | **Unreserved Net Balance** | $D18\text{ \{WBNB\}}$ | Clean capital stock available for emission: $U(m) = \max(0, B(t) - L(t))$. |
+| $a \in \mathcal{A}$ | **Reward Asset** | Address (`address`) | An approved reward asset whitelist entry registered in `InitialRewardAssetRegistry.sol`. |
+| $W_a(m)$ | **Asset Cohort Weight** | $D18\text{ \{weight\}}$ | Aggregate seniority weight of all active stakers who designated asset $a$ as their output selection. |
+| $A_a(m)$ | **Asset Quote Budget** | $D18\text{ \{WBNB\}}$ | Net quote currency allocated to procurement pool $a$ for interval $m$. |
+| $\text{deviationBps}$ | **Price Deviation Threshold** | Basis Points ($10^{-4}$) | Permissible TWAP slippage bound enforced by `ExecutionRouter.sol` (default 200 bps = 2.0%). |
+| $\text{protocolMinOut}$ | **Slippage Floor** | Asset Units ($D_{\text{asset}}$) | Lower-bound output quantity for market swaps: $\lfloor \text{expectedOut} \cdot (10000 - \text{deviationBps}) / 10000 \rfloor$. |
+
+---
+# SOURCE: definitions/terminology.md
+---
+
+# Dual-Track Terminology Mapping
+
+To maintain bridging between community communications and mathematical specifications, the protocol defines an exact two-way mapping between product metaphors and formal smart contract components:
+
+| Product Metaphor | Technical Formal Term | Smart Contract Entity | Mathematical Symbol | Implementation Invariant |
+|:---|:---|:---|:---|:---|
+| **The Belly** | Rate-Limited Treasury Reservoir | `Belly.sol` | $\mathcal{B}$ | Single authorized spender (`ExecutionRouter`), unprivileged, zero admin sweep. |
+| **Meal** | Discrete Accounting Interval | `IntervalController.sol` | $m$ ($\Delta t \ge 8\text{h}$) | Advances only when $\Delta t \ge 8\text{h}$; evaluated at discrete boundaries. |
+| **Diet** | Output Reward Asset | Whitelisted `address asset` | $a \in \mathcal{A}$ | User-selected; WBNB default fallback; decoupled accounting from execution. |
+| **Seniority Ladder** | Additive Duration Multiplier | `SeniorityLedger.sol` notch | $c_i(m) \in [1, 22]$ | Linear additive climbing ($+1/\text{interval}$); capped at 22; non-compounding. |
+| **Graduation Ring** | 22-Slot Circular Buffer | `graduatingPrincipal[m % 22]` | $P_{\text{settled}}, P_{\text{climb}}$ | Cohort scalar shift in $O(1)$ constant gas, independent of staker count $N$. |
+| **Forfeit** | Unfinalized Interval Weight Surrender | `forfeitedWeight` | $W_{\text{exiting}}$ | Early exit before interval close surrenders current interval's unfinalized rewards. |
+| **Belly Flush / Drain** | Outflow Cap Throttle | `Belly.release(amount)` | $\text{OutflowLimit}_m$ | Maximum single-window draw $\le U(m) \times 16/168 \approx 9.5238\%$. |
+
+---
+# SOURCE: definitions/invariants.md
+---
+
+# Core Architectural Invariants
+
+Every subsystem in TheFatCat is bound by strict, formally tested mathematical invariants:
+
+1. **Principal Isolation Invariant (`StakingVault.sol`)**:
+   $$\text{balanceOf}(\text{StakingVault}) \ge \sum_{i \in \text{Stakers}} p_i$$
+   The principal vault receives 0% of trading taxes and 0% of external swaps. Redemption (`redeem()`) is unpausable and operates without administrator intervention under all conditions.
+
+2. **Discrete Rate-Limiting Invariant (`Belly.sol`)**:
+   $$\text{Emission}(m) \le U(m) \times \frac{\min(\Delta t, 16\text{h})}{168\text{h}}$$
+   The reservoir never discharges 100% of accumulated inflows in a single transaction or block. Release rate is governed by an exponential damping operator anchored to a 168-hour calendar week.
+
+3. **Constant-Time Evaluation Invariant (`SeniorityLedger.sol`)**:
+   $$\text{GasCost}(\text{advance}()) = \mathcal{O}(|\mathcal{A}|), \quad \text{independent of } N$$
+   State transitions require zero loops across individual stakers. Active weight evaluation $W(m)$ is maintained via scalar prefix sums updated in constant time.
+
+4. **Non-Negative Dust Solvency Bound (`RewardDistributor.sol`)**:
+   $$\sum_{i} \text{claimable}_i(a) \le \text{liability}(a) \le \text{balanceOf}(a)$$
+   Integer truncation during share division floors payouts in favor of the protocol pool (claimant-adverse). Residual dust remains permanently within the distribution contract, ensuring zero under-collateralization.
+
+---
+# SOURCE: background.md
+---
+
+# Background & Philosophy
+
+Why TheFatCat was designed this way, the mathematical flaws of traditional dividend tokens, comparative mechanisms across benchmark DeFi protocols, the time-seniority mechanics, and what the protocol deliberately refuses to promise.
+
+---
+
+## Chapter Overview
+
+Explore the fundamental architectural pillars and design philosophy of TheFatCat:
+
+- **[Paradigm Shift & Dilemmas]({% link background/paradigm-shift.md %})**: A quantitative examination of the triple structural vulnerabilities in traditional reflection tokens (single-asset monopoly, volatility spikes, and hot-capital dilution).
+- **[Prior Art & Comparative Matrix]({% link background/prior-art.md %})**: An exhaustive comparative matrix benchmarking TheFatCat against Curve Finance, Pendle V2, and Synthetix V3 across accounting, rounding, and rate-limiting dimensions.
+- **[The Reservoir Model]({% link background/reservoir-model.md %})**: How The Belly transforms transient fee volume into a viscous, damped stock with discrete $1/21$ meal releases and multi-week shock absorption.
+- **[The Power of Staked Time]({% link background/time-weighting.md %})**: Dismantling the TVL-only monopoly by introducing staked time as the core innovation variable—additive linear ramps (1.0× → 22.0×), natural defense moats, and ERC-721 duration crystallization.
+- **[Core Principles & Non-Goals]({% link background/principles.md %})**: The protocol's three foundational design principles (The Belly reservoir damping, capital sovereignty & diet autonomy, the power of staked time) alongside four explicit Non-Goals.
+
+---
+# SOURCE: background/paradigm-shift.md
+---
+
+# The Structural Dilemmas of Pass-Through Dividend Tokens
+
+In the decentralized exchange (DEX) ecosystem, earlier generations of "tax-reflection" or "dividend" tokens attempted to route trading transaction fees back to token holders. The overwhelming majority rely on a simplistic pass-through pipe:
+1. Deduct tax on DEX swaps;
+2. Immediately liquidate accrued tokens for a single pre-configured reward token;
+3. Push or stream rewards directly to holders proportionally to raw token balance.
+
+This primitive architecture suffers from three fatal structural vulnerabilities, which we formalize below with quantitative proofs.
+
+---
+
+## Dilemma 1: The Upstream Single-Asset Monopoly
+
+Traditional dividend contracts dictate a single, static reward token for the entire community (e.g., USDT or BNB). When market regimes rotate, users desiring exposure to real-world assets (such as tokenized US stocks like NVDA or AAPL) or protocol governance tokens are forced to receive the single asset, incurring friction:
+- Secondary swap slippage and DEX routing costs ($0.25\% - 1.0\%$ per transaction).
+- Repetitive gas overhead across hundreds of individual claim transactions.
+- Inability to automate capital compounding into diversified treasury assets.
+
+---
+
+## Dilemma 2: High-Frequency Volatility Dump & Zero Damping
+
+Trading volume on automated market makers is inherently spiky: immense trading frenzy during rallies, followed by prolonged dry spells. Let trading tax inflow at discrete interval $k$ be modeled as an impulse train $X_k$.
+
+In a pass-through pipe, the payout $R_k$ directly mirrors the instantaneous inflow:
+
+$$R_k = X_k$$
+
+When volume spikes ($X_k \gg 0$), payouts surge unsustainably. When trading halts ($X_{k+1} \approx 0$), payouts collapse to zero within a single block. The protocol possesses zero inventory buffer and zero shock absorption.
+
+### Hydrodynamic Damping Resolution
+
+TheFatCat routes all incoming tax revenue into an unprivileged inventory reservoir (The Belly) governed by a discrete first-order exponential smoothing filter:
+
+$$S_k = (1 - \alpha) S_{k-1} + X_k$$
+
+$$R_k = \alpha S_k, \quad \text{where } \alpha = \frac{1}{21} \approx 0.047619$$
+
+Under an isolated volume impulse $X_0 = V$ at $k=0$ followed by zero subsequent volume ($X_k = 0$ for $k \ge 1$):
+- Pass-through payout: $R_0 = V$, then $R_k = 0$ for all $k \ge 1$.
+- Reservoir payout: $R_k = \alpha (1 - \alpha)^k V$.
+- The half-life of released inventory is:
+
+  $$k_{1/2} = \frac{\ln(0.5)}{\ln(1 - \alpha)} = \frac{\ln(0.5)}{\ln(20/21)} \approx 14.21 \text{ intervals} \approx 4.74 \text{ days}$$
+
+Transient volume surges are thus transformed into persistent, multi-week payout inventory.
+
+---
+
+## Dilemma 3: Free-Riding Hot Capital & Just-In-Time Dilution
+
+In standard TVL-weighted distribution engines, reward distribution is strictly linear with raw capital:
+
+$$r_i = R \cdot \frac{C_i}{\sum_{j} C_j}$$
+
+Because duration has zero weight, mercenary hot capital bearing no price risk can deposit immediately before an epoch boundary, harvest the yield, and withdraw immediately afterwards.
+
+### Quantitative Dilution Proof
+
+Consider a protocol with existing long-term staked capital $N$. At epoch boundary $k$, an opportunistic whale injects capital $9N$, temporarily expanding total deposits to $10N$ (a $10\times$ TVL expansion).
+
+#### Standard TVL-Weighted System
+The long-term stakers' collective share is:
+
+$$\text{Share}_{\text{loyal}} = \frac{N}{N + 9N} = 10\%$$
+
+The long-term holders suffer an immediate **$90\%$ dilution** ($10\times$ dilution factor) from hot capital bearing zero duration commitment.
+
+#### TheFatCat Time-Seniority Engine
+Under TheFatCat's [Seniority Ladder]({% link definitions/notation.md %}), long-term stakers who have completed 21 meals reside at Notch 22 with a duration multiplier $w_{\text{loyal}} = 22.0\times$.
+
+Their effective weight is:
+
+$$W_{\text{loyal}} = N \cdot 22.0 = 22N$$
+
+The incoming whale has zero weight in its opening meal, then activates at Notch 1 with the initial multiplier $w_{\text{whale}} = 1.0\times$:
+
+$$W_{\text{whale}} = 9N \cdot 1.0 = 9N$$
+
+The total effective system weight becomes:
+
+$$W_{\text{total}} = 22N + 9N = 31N$$
+
+The long-term stakers' collective share is:
+
+$$\text{Share}_{\text{loyal}} = \frac{22N}{31N} \approx 70.97\%$$
+
+The resulting dilution experienced by long-term stakers is:
+
+$$\text{Dilution} = 1 - \frac{22}{31} \approx 29.03\%$$
+
+$$\text{Protection Factor} = \frac{90\% - 29.03\%}{90\%} \approx 67.74\% \text{ dilution dampening}$$
+
+The whale captures only $29.03\%$ of the interval yield instead of $90\%$. To reach the maximum $22.0\times$ multiplier and achieve proportional capital parity, the whale must maintain its deposit uninterrupted across 21 consecutive 8-hour intervals (7 full days) without withdrawing.
+
+---
+# SOURCE: background/prior-art.md
+---
+
+# Prior Art & Comparative Matrix
+
+To contextualize the architectural design of TheFatCat within the decentralized finance landscape, this document presents a comparative analysis against benchmark protocols: **Curve Finance** (veCRV / Gauge / crvUSD), **Pendle Finance V2**, and **Synthetix V3**.
+
+All comparisons are verified against pinned open-source repository commits (Curve AMM `574f4402`, Curve DAO `fa127b1c`, Pendle V2 `87685c89`, Synthetix V3 `23585f73`).
+
+---
+
+## Comparative Matrix
+
+| Domain | Mechanism | TheFatCat | Benchmark Implementation | Comparative Finding | Verification Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Accounting** | Granularity | 8-hour discrete interval snapshot (`IntervalController.sol:63, 338–347`) | Curve: continuous per-second `rate × dt` (`LiquidityGaugeV5.vy:279–343`)<br>Pendle: per-block lazy index (`RewardManager.sol:27–46`) | Discrete epoch snapshots bound gas overhead and isolate state transitions from block-level flash volatility. | `[Verified]` |
+| **Accounting** | User Checkpointing | Prefix subtraction at claim (`SeniorityLedger.sol:846–861`); zero per-transfer hooks | Pendle: transfer hooks update both parties (`PendleGauge.sol:40–42`)<br>Curve: lazy `integrate_checkpoint` | Eliminates $O(N)$ iteration and receiver approval overhead during position lifetime. | `[Verified]` |
+| **Rounding** | Residual Dust | Residual dust unclaimable and unassignable (`RewardDistributor.sol:136–142`) | Pendle: `lastBalance` updates by full increment (`RewardManager.sol:48–49, 73`); residue stays absorbed below watermark | Both protocols absorb integer truncation residue into contract balance rather than recycling. | `[Verified]` |
+| **Rounding** | Truncation Direction | Claimant-adverse integer floor once (`SeniorityLedger.sol:863–867`) | Curve: pool-adverse (`StableSwap3Pool.vy:465, 477–478`)<br>Pendle: `mulDown` / `divDown` floor | Consistent across all three protocols: rounding always favors protocol solvency over claimant maximization. | `[Verified]` |
+| **Weighting** | Time Dynamic | Additive climb $1.0\times \to 22.0\times$ across 21 intervals, then constant (`SeniorityLedger.sol:30–33`) | ve-model decay: Curve $A \cdot (t_{\text{end}} - t)/4\text{y}$ (`VotingEscrow.vy:250–255`)<br>Pendle $\text{bias} - \text{slope} \cdot t$ (`VeBalanceLib.sol:58–61`) | Inverted polarity: rewards duration seniority rather than locking duration decay. | `[Novel / No Precedent]` |
+| **Weighting** | Exit Forfeiture | In-flight interval yield forfeited to remaining stakers upon exit (`SeniorityLedger.sol:414–435`) | Curve / Pendle: no mid-interval forfeiture | Forfeits reduce the claimable denominator for remaining claimants of the same asset and funded batch; they do not generally roll into the next meal. | `[Novel / No Precedent]` |
+| **Release** | Rate Limiting | Exponential smoothing $\min(\Delta t, 16\text{h}) / 168\text{h}$ on net unexecuted inventory (`IntervalController.sol:338–347`) | Synthetix V3: linear stream `scheduled × Δt / duration` (`RewardDistribution.sol:231–254`) | Net-balance rate limiting guarantees bounded inventory outflow regardless of incoming transaction spikes. | `[Verified]` |
+| **Governance** | Revenue Fee Split | 15% of net revenue (exactly $3/20$) to the project development, operations and marketing Safe without admin setter (`FatCatStakingVault.sol:94–95`) | Curve: mutable `admin_fee` with upper bound (`MAX_ADMIN_FEE`) | Immutable constant eliminates governance skimming risk and parameter migration attack surfaces. | `[Verified]` |
+| **Execution** | DEX Settlement Quality | TWAP window + harmonic liquidity floor + slippage bounds + fallback (`ExecutionRouter.sol:466–484`) | Curve / Pendle / SNX: not applicable (no on-chain spot execution) | Autonomous DEX routing introduces spot oracle dependency, mitigated via harmonic liquidity bounds. | `[Novel / No Precedent]` |
+
+---
+
+## Detailed Mechanism Evaluations
+
+### 1. Residual Dust Accounting: TheFatCat vs. Pendle V2
+
+In discrete yield distribution engines, integer division truncation inevitably leaves residual dust units:
+
+$$\text{dust} = R - \sum_{i=1}^{M} r_i \ge 0$$
+
+- **Pendle V2 Mechanism (`RewardManager.sol:48–49, 73`)**: `lastBalance` records the entire token balance increment, which includes the integer division remainder from `divDown`. When claimants withdraw rewards, `lastBalance` and the contract token balance decrease synchronously. As a result, truncation dust remains permanently absorbed below the `lastBalance` high-water mark; it does **not** roll over into subsequent reward cycles.
+- **TheFatCat Mechanism (`RewardDistributor.sol:136–142`)**: Truncation dust is mathematically provable to satisfy $\sum r_i \le R$ (the Non-Negative Dust Theorem). Dust units remain in the contract balance as an unclaimable buffer, ensuring that cumulative liabilities never exceed physical custody $\sum \text{liability}_k \le \text{balance}(k)$.
+- **Synthesis**: Neither protocol implements automatic dust recycling. Permitting residual dust to flow back into unfinalized inventory without formal non-liability proofs would risk reallocating funds rightfully belonging to uncleared claimants. TheFatCat preserves non-extractable dust stability as a core solvency invariant.
+
+### 2. Parameter Bound Architecture: TheFatCat vs. Pendle V2
+
+- **Pendle V2 Fee Overrides (`PendleMarketFactoryV7Upg.sol:131–140`)**: Pendle's `setOverriddenFee` enforces that any overridden swap fee must be strictly lower than the market's base rate (`getNonOverrideLnFeeRateRoot`). This semantic enforces an *upper bound relative to an external anchor*, not a monotonic ratchet.
+- **TheFatCat Parameter Philosophy**: Key parameters governing solvency and accessibility are either **strictly immutable** (`minStake = 100,000`, `minReleaseWeight`) or constrained to **one-way tightening**:
+  - Reward procurement `maxDeviationBps` belongs to `RewardAssetRegistry.Bounds`. Guardian or Governor may tighten it immediately through `tighten`; Governor loosening requires `queueLoosen` and `executeLoosen` after the three-day delay, with stale-bound checks. It is not an oracle setter. QQQB revenue conversion uses separate Vault configuration.
+  - Adding setters to immutable parameters (such as `minStake`) is rejected as an unnecessary expansion of protocol privilege surface.
+
+### 3. Distribution Flow Topology: TheFatCat vs. Synthetix V3
+
+- **Synthetix V3 (`RewardDistribution.sol:26–75`)**: Employs continuous linear streaming via `scheduledValueD18` (typed as `int128`), allowing the system to support negative reward streams (clawbacks or debt reallocations).
+- **TheFatCat**: Operates strictly on a non-negative discrete outflow model:
+  
+  $$R_k = \min\left(\frac{\Delta t}{T_{\text{window}}}, \frac{16\text{h}}{168\text{h}}\right) \cdot \text{Balance}_{\text{unfinalized}}$$
+
+  There is no mechanism for negative distributions or retroactive stake deductions. Outflow failure handling in TheFatCat verifies delivered token quantities via balance deltas (`balanceOf(after) - balanceOf(before)`) in `RewardDistributor.sol:1075–1102`, preventing phantom payouts without requiring global transaction rollback.
+
+---
+
+## Engineering Precedents Adopted
+
+From contemporary high-assurance protocols, TheFatCat adopts three core engineering practices:
+
+1. **Stateful Invariant Fuzzing**: Tests custody and liability coverage under randomized transaction sequences. Individual continuing positions climb toward their cap, but aggregate system weight can fall after exits. Fuzzing is test evidence, not formal verification.
+2. **Deterministic Role Separation (`Belly.sol`, `StakingVault.sol`)**:
+   - `pause`: Guardian or Governor may trigger pause to halt outbound flows and new settlements.
+   - `unpause`: Restricted exclusively to Governor (`Belly.sol:328–332`) to prevent compromised guardian keys from unilaterally restoring execution.
+   - Redemptions: `redeem` in `StakingVault.sol` is structurally independent of the pause state, guaranteeing that principal custody cannot be locked by administrative action.
+3. **Explicit Adversarial Regression Suites**: PoC test harnesses mirroring real-world attack vectors (e.g., wrapper re-entrancy, sweep races, and oracle liquidity manipulation) are maintained directly within the contract test directory (`contracts/test/`).
+
+---
+# SOURCE: background/reservoir-model.md
+---
+
+# The Reservoir Philosophy: Turning Flow into Stock
+
+TheFatCat solves traditional dividend vulnerabilities by replacing the pass-through pipe with a physics-inspired, unprivileged reservoir: **The Belly**.
+
+![Protocol Topology & Capital Flow]({{ '/assets/images/fig1-topology.svg' | relative_url }}?v=20260923p6)
+
+---
+
+## 1. Exponential Damping & Discrete Release
+
+The Belly never pays out a fixed lump sum or promised APY. Instead, upon each permissionless clock advance ($\Delta t \ge 8\text{ hours}$), it releases a fraction:
+
+$$\text{Release} = \text{Unreserved Balance} \times \frac{\min(\Delta t, 16\text{h})}{168\text{h}}$$
+
+For an on-time 8-hour meal, this is exactly $\frac{8}{168} = \frac{1}{21} \approx 4.7619\%$. Volume surges raise the reservoir's water level, which is then released smoothly across subsequent weeks.
+
+### Theoretical Decay Trajectory
+
+If trading volume completely ceases, the balance decays gracefully rather than dropping off a cliff:
+
+| Days After Volume Ceases | Belly Balance Remaining |
+|:---|---:|
+| Day 1 | 86.4% |
+| Day 3 | 64.5% |
+| Day 7 (1 Week) | 35.9% |
+| Day 14 (2 Weeks) | 12.9% |
+| Day 30 (1 Month) | 1.24% |
+
+Under ideal zero-inflow assumptions, the half-life is approximately **4.735 days**. It acts as a physical shock absorber: a quiet week is absorbed without starvation, while stakers are never lured with unsustainable promises.
+
+---
+
+## 2. Sovereign Multi-Asset Diets
+
+Each staker chooses their preferred menu asset (BNB, tokenized equities/bStocks, post-graduation FATCAT, or future governance-approved tokens). The protocol locks quote budgets at meal boundaries and executes batch swaps separately via an execution router. Front-running, MEV sandwiching, and execution delays are mathematically decoupled from entitlement accounting.
+
+---
+
+## 3. Beyond the Reservoir: Introducing the Time Dimension
+
+While The Belly solves volatility damping and Sovereign Diets ensure asset autonomy, TheFatCat goes one step further by establishing "Staked Time" as the core innovation variable governing reward distribution.
+
+Explore the next chapter: **[The Power of Staked Time: Duration Weighting & The Time Variable]({% link background/time-weighting.md %})**.
+
+---
+# SOURCE: background/time-weighting.md
+---
+
+# The Power of Staked Time: Duration Weighting & The Time Variable
+
+In conventional decentralized finance (DeFi) and dividend protocols, reward allocation is dominated by simplistic capital supremacy. TheFatCat establishes **"Staked Time"** as the protocol's primary innovation variable, restructuring on-chain dividend distribution through the product of capital and duration weighting.
+
+---
+
+## 1. Dilemmas of Traditional Architectures
+
+### The TVL-Only Trap in Conventional DeFi
+The vast majority of yield farming and reflection protocols rely exclusively on Total Value Locked (TVL) to determine reward shares. Under this paradigm, raw capital scale becomes an absolute tyrant: speculative hot capital can enter moments before a distribution boundary, capture an outsized share of rewards, and exit immediately. Long-term stakers who endure token price volatility and build protocol resilience see their payouts diluted by capital that spent zero time in the system.
+
+### Coercive Lockups in Vote-Escrow (ve) Models
+To incentivize long-term alignment, the industry developed vote-escrow (ve) architectures popularized by Curve. Users lock tokens for months or years in exchange for higher voting weight and boosted emissions. However, ve-tokenomics achieves this by **stripping users of principal liquidity sovereignty**: capital becomes frozen and illiquid, eliminating the user's ability to respond to extreme market shifts or sudden personal liquidity needs.
+
+---
+
+## 2. TheFatCat's Solution: Staked Time as a Variable
+
+TheFatCat rejects both the predatoriness of TVL-only farming and the coercive rigidity of ve-lockups. Instead, it introduces **Staked Time** as the protocol's sole non-capital weighting input.
+
+A staking position's effective allocation weight is determined by multiplying its staked principal by its accrued time multiplier:
+
+$$\text{Effective Weight} = \text{Staked Principal} \times \text{Time Multiplier}, \quad \text{Time Multiplier} \in [1.0\times, 22.0\times]$$
+
+### The Linear Ramp Mechanics
+- **Entry Floor**: Stakers must deposit at least 100,000 FATCAT to open a staking position (an immutable entry floor that prevents dust spamming);
+- **Baseline Start**: A newly opened standard position enters with a baseline multiplier of $1.0\times$;
+- **Discrete Accrual**: For every completed active meal (8 hours) spent seated, the multiplier increases additively by $+1.0\times$;
+- **Ceiling**: Stakers who remain continuously seated for 21 meals (exactly 7 days under standard cadence) reach the maximum $22.0\times$ multiplier ceiling.
+
+---
+
+## 3. Liquidity Sovereignty & Time Defense
+
+### 100% Unlocked Principal (Zero Coercive Lockups)
+Stakers retain sovereign custody of their capital at all times. Users may call `redeem()` at any arbitrary block to withdraw 100% of their principal. The smart contract deliberately bypasses the emergency pause mechanism for redemptions, ensuring user funds can never be held hostage by governance or protocol halts.
+
+### Multiplier Forfeiture & Defense Moat
+While stakers enjoy unconditional liquidity freedom, exiting immediately **resets the accrued time multiplier to zero**. Leaving an active meal forfeits only that single unfinalized interval.
+
+This design achieves an elegant economic equilibrium between liquidity freedom and long-term loyalty:
+- **Time as a Natural Moat**: Mercenary capital attempting sudden entries receives only the baseline $1.0\times$ notch due to a lack of duration history;
+- **Rewarding Continuous Presence**: Seated stakers with 7 days of tenure hold a $22.0\times$ multiplier, capturing 22 times more yield per unit of capital than fresh arrivals. Large capital seeking maximum yield efficiency must also remain continuously seated alongside the community.
+
+---
+
+## 4. Respecting Capital Scale While Preserving Linearity
+
+TheFatCat's philosophy does not oppose large capital. Stakers with large positions naturally retain their proportional economic weight:
+
+- **Strict Capital Linearity**: Under identical time multipliers, $10\times$ principal earns exactly $10\times$ the effective weight. The protocol respects genuine capital commitment without quadratic scaling or whale-tier multipliers;
+- **Capital Cannot Override Time**: Large capital enjoys its rightful linear return, but cannot bypass the duration ramp solely through sheer volume. On the time axis, all positions must spend 21 intervals climbing from $1.0\times$ to $22.0\times$.
+
+---
+
+## 5. Assetization of Duration: Time-Seniority Certificates (ERC-721)
+
+Irreversible on-chain time is the protocol's most scarce and authentic asset. Real duration committed by seated stakers should not simply vanish upon exit.
+
+The protocol incorporates an on-chain credential mechanism—the **Time-Seniority Certificate**:
+- **Crystallizing Duration via Burning**: Exiting stakers can burn FATCAT upon retiring a position to permanently crystallize their accumulated duration into an on-chain credential;
+- **Dual Economic Mechanisms**:
+  - **Token Deflation**: Minting certificates permanently burns FATCAT out of circulation, generating continuous supply-side deflationary pressure;
+  - **Treasury Accretion**: Secondary transfers and trades route exclusive transaction fees directly into The Belly reservoir, continuously bolstering rewards for active seated stakers;
+- **Contract Constraints**: Capped at 9,999 total units (`MAX_SUPPLY`), with 5% ERC-2981 secondary royalties routed to `CertificateRevenueVault` and activation governed via `CERTIFICATE_BINDING_DELAY` in `StakingVault.sol`.
+
+---
+# SOURCE: background/principles.md
+---
+
+# Core Design Principles & Explicit Non-Goals
+
+To uphold radical transparency and protect the interests of long-term participants, TheFatCat establishes three foundational design principles at the protocol level, alongside four explicit Non-Goals:
+
+---
+
+## Three Core Design Principles
+
+### Principle 1: Physical Damping Reservoir Philosophy (The Belly)
+Abandoning the fragile pass-through "stream-and-dump" pipes of traditional reflection tokens, TheFatCat introduces a first-order exponentially smoothed reserve pool (**The Belly**) governed by physical damping dynamics. It converts unpredictable on-chain trading surges into a smooth, controlled reservoir, decoupling discrete payouts (exactly $1/21$ released every on-time 8-hour meal) from the instantaneous tax volume of the preceding 8 hours, smoothing cross-cycle volatility without token inflation or false promises.
+
+### Principle 2: Sovereign Capital & Diet Autonomy
+Every participant retains absolute, inviolable custody over their staked principal. In the smart contract architecture, the redemption routine (`redeem()`) deliberately bypasses the emergency pause mechanism, guaranteeing that staker funds can never be held hostage by governance or protocol halts. Furthermore, breaking the single-asset monopoly of traditional reflection systems, each staking position may independently select its preferred settlement asset from the official diet menu (such as native BNB, tokenized US equities like bStocks, or post-graduation FATCAT).
+
+### Principle 3: The Power of Staked Time — Introducing Duration as the Core Innovation Variable
+In conventional DeFi, capital scale is almost the sole determinant: large capital enters and exits at will, instantly diluting existing stakers by sheer volume; while traditional vote-escrow (ve) models introduce duration, they do so by stripping users of principal liquidity for months or years.
+
+TheFatCat innovatively establishes **"Staked Time"** as the protocol's core innovation variable:
+- **Time as the sole non-capital weighting input**: A position starts with a baseline multiplier of $1.0\times$ and increases additively by $+1.0\times$ for each completed active meal, gracefully climbing across 21 meals (exactly 7 days under standard cadence) to the maximum $22.0\times$ ceiling;
+- **Reconciling liquidity sovereignty with time defense**: Principal is 100% accessible at any time without lockup, but exiting immediately resets the accrued time multiplier to zero. Opportunistic short-term capital cannot instantly override seated stakers solely through capital volume—time serves as the loyal staker's most resilient yield moat;
+- **Assetization of duration**: Upon exiting, mature positions can burn FATCAT to permanently crystallize their accumulated duration into an ERC-721 **Time-Seniority Certificate**, providing supply deflation for FATCAT and potential 5% royalties for The Belly, subject to marketplace payment in BNB/WBNB and a flush transaction.
+
+---
+
+## Explicit Protocol Non-Goals
+
+---
+
+## 1. Not a Fixed-Income Product
+The protocol does not publish, promise, or model any APY, APR, or guaranteed rate of return. Yield derives strictly from secondary DEX trading taxes and verified on-chain reserve balances. In zero-volume market regimes, payouts faithfully reflect true economic reality.
+
+---
+
+## 2. Not a Capital Lockup (Unpausable Redeem)
+Every staker maintains sovereign custody of their capital. At any arbitrary block, any staker may freely call `redeem()` to withdraw their entire principal. The redemption function deliberately bypasses the contract emergency pause flag, guaranteeing that stakers are never held hostage by governance or protocol halts. Leaving an active meal forfeits only that single unfinalized interval.
+
+---
+
+## 3. Rejection of Superlinear Scaling (Strict Capital Linearity)
+The protocol respects the natural weight of capital scale while strictly preserving linear capital scaling, providing zero quadratic scaling or superlinear leverage:
+- **Strict Capital Linearity**: Under identical time multipliers, $10\times$ principal receives exactly $10\times$ effective weight. Large capital receives its rightful proportional share, but gains no artificial scale-based multiplication;
+- **Time Cannot Be Fabricated**: The protocol provides zero administrative backdoors to bypass duration requirements. New positions started from scratch must climb the 21-interval linear ramp; even when bootstrapping via a secondary-market **Time-Seniority Certificate (ERC-721)**, that certificate originated strictly from an earlier staker who spent genuine duration and burned tokens upon exit, and the resulting position remains strictly bound by linear capital weighting.
+
+---
+
+## 4. Rejection of the Perpetual Motion Myth
+The Belly is a first-order exponential damping buffer, not an infinite printing press. It smooths volatility across intervals; it does not fabricate value out of thin air. In prolonged zero-volume environments, releases asymptotically decay toward zero.
+
+---
+# SOURCE: topology.md
+---
+
+# System Topology & Capital Architecture
+
+A complete architectural map of TheFatCat's capital flows, smart contract state machines, and lifecycle transitions.
+
+---
+
+## Chapter Overview
+
+Explore the end-to-end capital pipeline and deterministic state engine of TheFatCat:
+
+- **[Dual-Track Asset Flows]({% link topology/asset-flows.md %})**: Secondary DEX tax collection, atomic forwarding net-income splits (85% The Belly reward treasury and 15% project development, operations and marketing), and physical isolation between principal and reward vaults.
+- **[State Machine & Intervals]({% link topology/state-machine.md %})**: The deterministic 8-hour meal cycle, permissionless clock advances, instant weight snapshots, and 22-slot circular buffer rotations.
+- **[Procurement & Claims Pipeline]({% link topology/claim-pipeline.md %})**: MEV-resistant batch market swaps, TWAP oracle protections, dual-liability accounting, and native BNB automatic unwrapping.
+
+---
+# SOURCE: topology/asset-flows.md
+---
+
+# Dual-Track Asset Topology & Vault Segregation
+
+TheFatCat enforces strict contract-level segregation between staker principal and fee routing reserves. Below is the complete capital topology map:
+
+![TheFatCat Protocol Capital Flow & State Topology]({{ '/assets/images/fig1-topology.svg' | relative_url }}?v=20260923p6)
+
+---
+
+## 1. Tax Inflow in QQQB
+
+Eligible FATCAT trades carry the configured 4% tax. Flap deducts its platform fee and sends QQQB revenue to `FatCatQqqbVault`. After graduation, FATCAT tax-token liquidation is batched; revenue does not necessarily arrive on every trade. The final launch must verify the actual fee configuration, quote asset and routing.
+
+---
+
+## 2. Fixed Conversion and Existing Receiver
+
+<div class="tfc-diagram-frame">
+  <div class="tfc-diagram-bar">
+    <span class="tfc-diagram-tag">ASSET FLOW</span>
+    <span class="tfc-diagram-title">QQQB Tax Liquidation & Routing Pipeline</span>
+  </div>
+  <pre class="tfc-diagram-content"><code>Flap QQQB revenue
+  -> FatCatQqqbVault: QQQB -> USDT -> WBNB
+     -> eligible FEED caller after successful conversion: WBNB output / 38 bounty (0.1% represented trade-value target)
+  -> Proceeds allocation:
+     -> 15% of remaining WBNB to Ops Safe (project development / operations / marketing)
+     -> 85%, including rounding remainder, to Belly (reward treasury)</code></pre>
+</div>
+
+Anyone may use the public one-tx executor or individual protected entrypoints as soon as on-chain conditions permit; official maintenance can step in when needed. The caller pays gas and supplies no QQQB. The output recipient, route and price protections are enforced by the contracts. Conversion and revenue allocation complete automatically in the same transaction. Standalone conversion earns no bounty. Later advancement or purchase failures do not undo a successful FEED conversion or its eligible bounty; failed work remains available for retry. The conversion layer charges no second Ops allocation. The downstream percentages apply to actual proceeds after upstream fees, market execution and any earned bounty, not to trade value. See [Tax Routing]({% link protocol/fees.md %}) and [Decentralized Maintenance]({% link guides/community-keeper.md %}).
+
+The upstream QQQB Vault is a Beacon proxy. Its Factory owns the Beacon; only Flap Guardian can upgrade or permanently lock it through the Factory. The BNB receiver is a fixed-implementation clone and the reward core remains separate.
+
+---
+
+## 3. Strict Vault Boundary Isolation
+
+- **Principal Vault (`StakingVault.sol`)**: Holds 100% of user-deposited FATCAT principal. It contains zero trading tax inflow and zero swap logic.
+- **Reward Reservoir (`Belly.sol`)**: Holds only tax proceeds in quote asset (WBNB). It cannot access, sweep, or transfer staker principal.
+
+---
+# SOURCE: topology/claim-pipeline.md
+---
+
+# Batch Procurement & Reward Distribution Pipeline
+
+TheFatCat decouples entitlement accounting from actual market swaps, insulating stakers from slippage, front-running, and DEX execution delays:
+
+---
+
+## 1. Diet Budget Allocation
+- The Controller records per-asset quote budgets proportional to locked weights. The allocated funds remain in Belly until execution or fallback releases them.
+
+---
+
+## 2. MEV-Protected Batch Swaps
+- `ExecutionRouter` uses each Registry entry's oracle and adapter: V3 two-hop TWAP for the five initial bStocks, V2 TWAP for compatible V2 routes, and a direct WBNB path without a market swap.
+- Enforces strict slippage bounds (`protocolMinOut`).
+- Large batches execute via unified single swaps, removing individual user-transaction sandwich vulnerabilities by confining execution risk to the TWAP-bounded aggregate batch window.
+
+---
+
+## 3. Dual-Liability Settlement Accounting
+- Upon swap execution, `RewardDistributor` increments the realized token liability (`liability[asset]`) while decrementing quote reserves.
+- Accruals are tracked via $O(1)$ prefix sum accumulators ($A_{a, m}, B_{a, m}$).
+
+---
+
+## 4. User Reward Claims
+- Stakers may claim their accrued rewards at any time via `claim()`.
+- Unclaimed rewards never expire and remain fully solvent on-chain.
+- For stakers selecting native BNB, calling `claimNative()` automatically unwraps WBNB into native BNB in a single atomic transaction without extra manual steps.
+
+---
+# SOURCE: topology/state-machine.md
+---
+
+# Temporal State Machine & Meal Cadence
+
+TheFatCat advances through deterministic discrete intervals called **Meals** via the [`IntervalController`]({% link contracts.md %}):
+
+<div class="tfc-diagram-frame">
+  <div class="tfc-diagram-bar">
+    <span class="tfc-diagram-tag">STATE MACHINE</span>
+    <span class="tfc-diagram-title">Discrete Interval Transitions & Cadence</span>
+  </div>
+  <pre class="tfc-diagram-content"><code>Interval m-1              Interval m              Interval m+1
+[  Active Meal  ] ───► [  Active Meal  ] ───► [  Active Meal  ]
+                      ▲                      ▲
+                  advance()              advance()
+                (Cadence: ≥ 8h)        (Cadence: ≥ 8h)</code></pre>
+</div>
+
+---
+
+## 1. Cadence & Permissionless Advancement
+- An interval may be closed once at least **8 hours** have elapsed since the previous closing ($\Delta t \ge 8\text{h}$).
+- **Permissionless Advance**: Anyone may call `advance()` when due. Public callers or official maintenance must submit a successful transaction; automation cannot guarantee timing or availability.
+- **Participation and Delays**: Stakers usually need not maintain the protocol themselves when other callers are doing so. Each successful advance closes one meal, opens the next at the current timestamp, and prorates allocation using at most 16 elapsed hours. A 48-hour delay does not create six meals or allocate 48 hours of budget. See [Decentralized Maintenance]({% link guides/community-keeper.md %}).
+
+---
+
+## 2. Boundary Weight Snapshotting
+At the exact atomic instant when interval $m$ advances:
+- Active staker weights for each diet asset ($W_{\text{open}}(a, m)$) are permanently locked.
+- No retrospective weight adjustments are possible.
+
+---
+
+## 3. 22-Slot Circular Graduation Ring
+- The 22-slot circular buffer rotates forward by one notch.
+- Maturing cohorts graduate from the climbing registry into settled cohorts in $O(1)$ constant time, without iterating through staker addresses.
+
+---
+
+## 4. Damped Quota Release
+- `advance()` calls `Belly.sync()` and computes allocation from net unreserved balance: `base × min(elapsed, 16 hours) / 168 hours`, or 1/21 at the standard eight-hour cadence.
+- The Controller records pending/outstanding quotas while funds stay in Belly. Only subsequent Router execution or fallback calls `Belly.release()` to move quote funds.
+
+---
+# SOURCE: protocol.md
+---
+
+# Core Mechanics & Mathematical Specifications
+
+A deep dive into the engineering principles, algebraic formulas, and state machines powering TheFatCat protocol.
+
+---
+
+## Mechanics Index
+
+- **[The Belly Hydrodynamics]({% link protocol/belly.md %})**: First-order exponential damping, discrete interval emission ratios, half-life decay trajectories, and 7-window outflow throttling.
+- **[Meals & Seniority Ladder]({% link protocol/meals-and-seniority.md %})**: The discrete 8-hour meal clock, 22-slot circular graduation ring, $O(1)$ scalar weight aggregation, and settled premium curves.
+- **[Batch Procurement & Execution]({% link protocol/execution.md %})**: Decoupled accounting vs. market swaps, on-chain TWAP slippage protection, and permissionless fallback realization.
+- **[Tax Routing & Model]({% link protocol/fees.md %})**: The 4% dynamic trading tax, Flap platform fee, net-income split (85% reward treasury and 15% project development, operations and marketing), and 100-year tax span.
+
+---
+# SOURCE: protocol/belly.md
+---
+
+# The Belly Hydrodynamics & Exponential Damping
+
+A detailed mathematical specification of The Belly's first-order exponential smoothing reservoir, discrete interval release mechanics, and multi-window outflow security throttles.
+
+---
+
+## 1. The Damping Trajectory
+
+Unlike pass-through fee contracts, The Belly is modeled as an inventory reservoir governed by discrete exponential smoothing. The diagram below illustrates the exponential decay curve under zero external inflow alongside the 7-window discrete outflow defense:
+
+![The Belly Hydrodynamics & Trajectory Defense]({{ '/assets/images/fig2-hydrodynamics.svg' | relative_url }}?v=20260923p6)
+
+---
+
+## 2. Mathematical Release Formula
+
+Upon each valid meal closing, `LaunchIntervalController` advances the discrete accounting clock and evaluates the interval's attributable reward allocation $R_k$:
+
+$$\text{Allocation}_k = (\text{accounted} - \text{outstandingClaims}) \times \frac{\min(\Delta t, 16\text{h})}{T_{\text{week}}}$$
+
+{: .note }
+**Clock Advance vs. Capital Draw**: `LaunchIntervalController` evaluates and attributes this emission during `advance()`. Physical capital is not moved during clock advances; rather, the authorized Spender ([`ExecutionRouter`]({% link contracts.md %})) calls `release()` on `Belly.sol` strictly when executing swaps for staker reward batches.
+
+Where:
+- $\text{accounted}$: Total quote asset recognized by The Belly.
+- $\text{outstandingClaims}$: Cumulative quote pool reserved for pending and unfinalized batches.
+- $\Delta t$: Elapsed time since the last meal advance ($\Delta t \ge 8\text{ hours}$).
+- $\min(\Delta t, 16\text{h})$: Credited duration, strictly capped at **16 hours** to prevent long-dormancy fee surges.
+- $T_{\text{week}} = 168\text{ hours}$ (the normalization denominator).
+
+### Standard 8-Hour Emission
+For an ordinary on-time meal ($\Delta t = 8\text{h}$):
+
+$$\alpha = \frac{8}{168} = \frac{1}{21} \approx 4.7619\%$$
+
+The Belly emits exactly $1/21$ of its net unreserved quote balance per 8-hour meal.
+
+{: .tip }
+**Why $1/21$ ($\approx 4.76\%$) instead of a round 5%?**  
+1. **Calendar Symmetry**: 7 days $\times$ 3 meals/day (8 hours each) = exactly **21 meals per week**. Emitting $1/21$ per interval anchors the reservoir emission rate to a natural weekly budget ($T_{\text{week}} = 168\text{ hours}$).  
+2. **Bounded Time-Proration**: External transactions advance the clock. Delays such as ten hours instead of eight increase the allocation proportionally, but elapsed time is capped at 16 hours: `base × min(elapsed, 16 hours) / 168 hours`. Each successful advance closes one meal and starts the next at the current timestamp; it does not backfill every missed interval.
+3. **Steady-State Watermark Depth ($B_{\text{eq}} = 21 I$)**: Under steady fee inflows, the reservoir watermark settles precisely at **one full week (21 intervals) of total fee inflows**, forming a mathematically clean and robust dampening buffer.
+
+---
+
+## 3. Ideal Half-Life Derivation
+
+Assuming continuous time with zero new fee inflow, the reservoir balance $B(t)$ follows the differential equation:
+
+$$\frac{dB(t)}{dt} = -\lambda B(t), \quad \lambda = \frac{1}{168\text{ hours}}$$
+
+Integrating over time $t$:
+
+$$B(t) = B(0) \cdot e^{-\lambda t}$$
+
+The continuous half-life $t_{1/2}$ is:
+
+$$t_{1/2} = \frac{\ln(2)}{\lambda} = 168 \cdot \ln(2) \approx 116.44\text{ hours} \approx 4.85\text{ days}$$
+
+Under discrete 8-hour steps ($B_{k+1} = B_k \cdot (1 - 1/21) = B_k \cdot \frac{20}{21}$):
+
+$$B_k = B_0 \cdot \left(1 - \alpha\right)^k = B_0 \cdot \left(\frac{20}{21}\right)^k$$
+
+Setting $B_k / B_0 = 0.5$:
+
+$$\left(\frac{20}{21}\right)^k = 0.5 \implies k = \frac{\ln(0.5)}{\ln(20/21)} \approx 14.206\text{ intervals}$$
+
+Converting intervals back to days:
+
+$$\text{Discrete Half-Life} = 14.206 \times 8\text{ hours} \approx 113.65\text{ hours} \approx 4.735\text{ days}$$
+
+After 30 days of zero trading volume, remaining balance is:
+
+$$B(30\text{d}) \approx B_0 \cdot \left(\frac{20}{21}\right)^{90} \approx 1.24\%$$
+
+---
+
+## 4. The 7-Window Outflow Defense (Anti-Drain Throttle)
+
+Even if the authorized `ExecutionRouter` were compromised by an unexpected vulnerability, The Belly's hardcoded outflow allowance throttles any potential draining:
+
+- **Window Cap**: In any single 8-hour window, cumulative outflows cannot exceed:
+  
+  $$\text{Window Allowance} = \text{Balance} \times \frac{16}{168} \approx 9.5238\%$$
+
+- **Seven Discrete Windows**:
+  - After 6 maximum draws: $(1 - 16/168)^6 \approx 54.8537\%$ remains.
+  - After 7 maximum draws: $(1 - 16/168)^7 \approx 49.6295\%$ remains.
+- **Critical Reaction Time**: Drawing down 50% of the reservoir requires at least **7 full window intervals**, guaranteeing a minimum security reaction window of **48 to 56 hours** for protocol governance or the designated Guardian to trigger an emergency pause if anomalous conditions arise.
+
+---
+
+## 5. Genesis Cold Start & 7-Day Timelock Protections
+
+At genesis, The Belly operates under a strict accumulation regime that guarantees fair launch and deep initial liquidity reserves:
+
+- **Write-Once Spender Permanence**: The authorized spender address ([`ExecutionRouter`]({% link contracts.md %})) can be set exactly once in contract history. Once activated, it is permanently locked, guarding against unauthorized re-assignment or privilege escalation risks.
+- **7-Day Spender Timelock**: The execution router withdrawal authority requires an immutable 7-day timelock delay before activation. During launch week, The Belly has zero authorized spenders—preventing any capital outflows.
+- **Synchronized Clock Gate**: In tandem, protocol clock mechanics (initiated upon opening staking) enforce zero emissions during the 7-day warmup week (the two gates operate on independent clocks and are not inherently synchronized), ensuring all early participants accrue seniority on equal footing.
+- **Deep Reservoir Accumulation**: Throughout this 7-day window, trading taxes flush continuously into The Belly via `flush()`, accumulating substantial backing before steady-state emissions commence.
+
+---
+# SOURCE: protocol/meals-and-seniority.md
+---
+
+# Meals & Seniority Ladder
+
+How TheFatCat tracks millions of stakers across discrete 8-hour meals in $O(1)$ constant time using circular graduation ring buffers and RAY-scaled dual prefix accumulators.
+
+---
+
+## 1. The 22-Slot Graduation Ring Buffer
+
+Iterating across $N$ stakers in an EVM transaction to increment seniority would hit the block gas limit almost immediately. Instead of looping across accounts, TheFatCat decomposes stakers into cohorts using a **22-Slot Circular Graduation Ring**:
+
+![22-Slot Graduation Ring Buffer Architecture]({{ '/assets/images/fig3-graduation-ring.svg' | relative_url }}?v=20260923p6)
+
+### Mathematical Partitioning
+At any discrete interval $m$, stakers are algebraically partitioned into:
+1. **Climbing Cohort** ($m - j_i < 21$): Positions that have not yet reached Notch 22.
+2. **Settled Cohort** ($m - j_i \ge 21$): Positions that have completed 21 meals and capped at Notch 22.
+
+The global active seniority weight $W(m)$ is computed via scalar variables in **$O(1)$ constant gas**:
+
+$$W(m) = (1 + m) P_{\text{climb}} - J_{\text{climb}} + 22 P_{\text{settled}} + W_{\text{exiting}} - H_{\text{opening}}$$
+
+Here $j_i$ is the weight reference `effectiveFrom`; eligibility starts only at `activeFrom`. $H_{\text{opening}}$ is the Ledger's `headOpening` correction that removes opening-meal weight before a position is eligible. Ordinary positions have `effectiveFrom = activeFrom` and zero opening correction.
+
+Where:
+- $P_{\text{climb}} = \sum_{i \in \text{Climb}} p_i$ (Aggregate principal of climbing positions)
+- $J_{\text{climb}} = \sum_{i \in \text{Climb}} (p_i \cdot j_i)$ (Weighted activation interval sum)
+- $P_{\text{settled}} = \sum_{i \in \text{Settled}} p_i$ (Aggregate principal of settled positions)
+- $W_{\text{exiting}}$: Residual weight from stakers who redeemed mid-meal.
+
+When `advance()` executes, the slot buffer `graduatingPrincipal[m % 22]` is transferred from $P_{\text{climb}}$ to $P_{\text{settled}}$ in a single constant-gas operation.
+
+---
+
+## 2. Seniority Multipliers & Settled Premium Curves
+
+Seniority adds weight monotonically; it never compounds. The graph below displays the linear ramp ladder alongside the steady-state premium curve:
+
+![Seniority Multiplier & Settled Premium Curve]({{ '/assets/images/fig4-seniority-premium.svg' | relative_url }}?v=20260923p6)
+
+### Notches and Multipliers
+- **Notch 1 ($1.0\times$)**: Newly active position ($j_i = m_{\text{stake}} + 1$).
+- **Notches 2 through 21 ($2.0\times \dots 21.0\times$)**: Increments additively by $+1.0$ upon each completed active meal.
+- **Notch 22 ($22.0\times$)**: Maximum cap reached after 21 completed active meals (7 days at minimum cadence).
+
+### The Realized Relative Advantage ($22 / \bar{c}$)
+A common misconception is that Notch 22 guarantees a perpetual $22\times$ earnings boost. In reality:
+
+$$\text{Settled Relative Advantage} = \frac{22}{\bar{c}}, \quad \text{where } \bar{c} = \frac{\sum p_i c_i}{\sum p_i}$$
+
+- **Lower Bound ($1.0\times$)**: In a mature pool where all stakers have reached Notch 22 ($\bar{c} = 22$), all participants earn strictly proportional to their capital.
+- **Uniform Distribution Case**: If unfinished positions are uniformly distributed across notches ($\bar{c} = 11.5$), the settled premium is $22 / 11.5 \approx \mathbf{1.913\times}$.
+- **Upper Bound ($22.0\times$)**: Measured only in the extreme edge case against a brand-new entry at Notch 1.
+
+---
+
+## 3. RAY-Scaled Dual Prefix Accumulators
+
+To distribute rewards across varying seniority curves in $O(1)$ complexity, `SeniorityLedger` maintains two prefix accumulators scaled by $\text{RAY} = 10^{27}$:
+
+$$A_{a, m} = A_{a, m-1} + (1 + m) \cdot \omega_{a, m}$$
+
+$$B_{a, m} = B_{a, m-1} + \omega_{a, m}$$
+
+Where $\omega_{a, m} = \lfloor \text{Share}_{a, m} \cdot \text{RAY} / W_{\text{open}}(a, m) \rfloor$.
+
+For an ordinary climbing position $i$ with no starting adjustment, active across intervals $[j_i, k]$, its cumulative quote entitlement is evaluated in $O(1)$ scalar arithmetic:
+
+$$\text{Entitlement}_i = \left\lfloor \frac{p_i \cdot \left[ (A_{a, k} - A_{a, j_i - 1}) - j_i \cdot (B_{a, k} - B_{a, j_i - 1}) \right]}{\text{RAY}} \right\rfloor$$
+
+Settled positions simply multiply principal by the prefix difference $\Delta B$ and the scalar 22.
+
+---
+
+## 4. Mid-Interval Exit Penalty & In-Flight Forfeiture
+
+To enforce duration discipline and protect against just-in-time yield harvesting, `SeniorityLedger` implements an immutable mid-interval forfeiture rule (`SeniorityLedger.sol:414–435`):
+
+- **Full Principal Protection**: Position principal $p_i$ is 100% non-custodial and can be withdrawn at any block via `redeem()`, returning raw FATCAT principal directly to the caller.
+- **Active Interval Forfeiture**: If an unstaking transaction executes during active meal interval $m$, any unfinalized reward allocation accrued during that current interval is permanently forfeited:
+
+  $$\text{ClaimableReward}_i = \text{Entitlement}_i(m - 1)$$
+
+- **Same-Asset Batch Netting**: Unexecuted quote stays in Belly. At settlement, the Distributor subtracts forfeits from that batch's `pot` to obtain `claimablePot`; the same received tokens are divided among the remaining claimants of the same asset and funded interval range. This is not a general transfer to the next meal. Only a disabled asset's provably fully forfeited, unexecuted range can be voided and its reservation released for future Belly allocations.
+
+---
+# SOURCE: protocol/execution.md
+---
+
+# Batch Procurement & Execution
+
+How TheFatCat decouples entitlement accounting from market execution, confines MEV sandwich exposure via discrete interval boundaries and on-chain TWAPs, and provides permissionless fallback realization.
+
+---
+
+## 1. Decoupled Accounting vs. Market Swaps
+
+In traditional DEX dividend protocols, purchasing reward tokens occurs synchronously within user transactions or scheduled intervals. If a trade encounters high slippage or front-running, stakers suffer immediate loss.
+
+TheFatCat addresses this via a **two-phase decoupled architecture**:
+
+<div class="tfc-diagram-frame">
+  <div class="tfc-diagram-bar">
+    <span class="tfc-diagram-tag">ARCHITECTURE</span>
+    <span class="tfc-diagram-title">Two-Phase Decoupled Execution Pipeline</span>
+  </div>
+  <pre class="tfc-diagram-content"><code>Phase 1: Interval Roll (Accounting)     Phase 2: Batch Execution (Swaps)
+┌─────────────────────────────────┐     ┌─────────────────────────────────┐
+│ Meal Closes: W_open Locked      │ ──► │ Router Swaps Quote for Target   │
+│ Entitlements Locked In          │     │ TWAP & protocolMinOut Guarded   │
+└─────────────────────────────────┘     │ Distributor Updates liability   │
+                                        └─────────────────────────────────┘</code></pre>
+</div>
+
+1. **Phase 1: Deterministic Entitlement Locking**: When a meal closes, quote budgets are allocated to each diet asset pool. Staker entitlement shares are mathematically locked. Market volatility or external sandwich attacks cannot rewrite eligible entitlement units.
+2. **Phase 2: Asynchronous Market Execution**: The [`ExecutionRouter`]({% link contracts.md %}) executes purchases in aggregate batches only when market liquidity and price boundaries are favorable.
+
+### Architectural Tradeoff Analysis
+Decoupling execution from entitlement yields significant security benefits but introduces operational tradeoffs:
+- **Advantage**: User transactions (deposits, claims, redemptions) incur zero DEX routing risk or slippage exposure. Front-running individual stakers is structurally impossible.
+- **Tradeoff**: Payout delivery depends on aggregate batch execution. The protocol concentrates swap volume into discrete, permissionlessly triggered batches, confining the MEV attack surface to the aggregate execution window, which is governed by TWAP bounds and harmonic liquidity floors.
+
+---
+
+## 2. On-Chain TWAP & Slippage Bounds
+
+To confine MEV exposure and prevent predatory sandwich extraction during batch swaps:
+
+- **Route-Specific Oracles**: The Router uses the adapter and oracle configured in Registry. The initial menu is BNB/WBNB, QQQB, SPCXB, NVDAB, SPYB and GOOGLB. WBNB uses the direct identity route; the five bStocks use V3 two-hop WBNB → USDT → asset routes with `PancakeV3TwoHopTwapOracle`. V2 routes use `PancakeV2TwapOracle` where appropriate. FATCAT requires a separately verified reward route; its FATCAT/QQQB launch pair is not a direct FATCAT/WBNB oracle.
+- **Strict Slippage Verification**: Before submitting a market swap, the router verifies that actual output cannot drop below:
+
+$$\text{protocolMinOut} = \left\lfloor \frac{\text{expectedOut} \cdot (10000 - \text{deviationBps})}{10000} \right\rfloor$$
+
+If price deviation exceeds the configured threshold (default 200 bps / 2%), the swap reverts safely on-chain.
+
+---
+
+## 3. The 5% Probation Cap for Tokenized Equities (bStocks)
+
+Tokenized real-world assets (bStocks) carry institutional counterparty and issuer upgrade risks. TheFatCat limits this exposure at the protocol level:
+
+- **Per-Interval 5% Probation Cap**: Newly listed non-canonical assets operate under a strict **5% single-meal allocation cap** (`PROBATION_CAP_BPS = 500`) during their 7-day probation window (`PROBATION = 7 days`). After 7 days, the cap lifts to 100% (`BPS`). It is a per-interval allocation throttle, not a cumulative lifetime cap.
+- **Genesis Menu Exemption**: In [`InitialRewardAssetRegistry`]({% link contracts.md %}), assets in the signed launch menu have completed depth verification prior to genesis and are explicitly exempt from the initial 7-day probation (`_isProbationExempt`). Any later re-enabled asset must serve the standard 7-day probation.
+- **Credit Isolation**: Problems with a bStock issuer can never impair more than its allocated share. WBNB remains the invariant default and fallback asset.
+
+---
+
+## 4. Permissionless Fallback Finalization
+
+What happens if a reward asset halts trading, liquidity dries up, or execution encounters structural ceilings? The protocol provides a permissionless fallback mechanism: when an asset cannot be procured, eligible pending amounts can be settled in native network currency (BNB).
+
+The fallback settlement route becomes eligible if and only if any of the following conditions are met:
+1. **Execution Timeout**: A procurement pool remains unexecuted beyond the timeout threshold (default **1 day**, corresponding to contract state `pendingAge > maxPendingAge`);
+2. **Asset Disabled**: The asset is deactivated by risk parameters or governance (corresponding to contract state `!enabled`);
+3. **Single Execution Cap Insufficient for First Interval**: When the quote funds required for an interval exceed the maximum permissible execution quote (`maxExecQuote`), preventing procurement of the first whole interval from starting (corresponding to contract state `spendFor == 0`). **Note**: Standard slippage fluctuations during market trades do not trigger this route; it activates strictly when procurement cannot be structurally initiated.
+
+```solidity
+function fallbackFinalize(address asset) external returns (uint256 quoteIn);
+```
+
+- **Permissionless**: Anyone can invoke the low-level `fallbackFinalize(asset)` interface when its contract conditions are met. See [Decentralized Maintenance]({% link guides/community-keeper.md %}) for the public maintenance model.
+- **Native BNB Fallback Settlement**: The unexecuted quote funds (WBNB) are credited 1:1 to stakers as pending BNB entitlements (`quoteLiability[asset]`), claimable as native BNB through `RewardDistributor`.
+- **Rate Limiting & Interval Constraints**: Claimed quote funds remain governed by The Belly's 8-hour window outflow throttle cap ($\le 16/168$) and whole-interval accounting boundaries to protect treasury reserves, rather than permitting unbounded instant withdrawals.
+
+
+## Sustainable menu lifecycle
+
+The Registry exposes `menuCapacity` (default 16, hard limit 32) and `feedBatchSize` (default 4, hard limit 8 and no larger than capacity). Governor queues both settings with `queueMaintenanceConfig`, waits three days, then calls `executeMaintenanceConfig`; Governor/Guardian can cancel. Execution rechecks current listed occupancy and the proposal's configuration version. This adds no withdrawal or route-replacement authority.
+
+Capacity includes the permanent WBNB fallback, enabled assets and disabled assets still winding down. To free a slot, disable a non-default asset, advance past its opening/exiting weights, clear pending quote and unconsumed forfeits through normal settlement, then call `remove` as Governor. The Ledger archives it without deleting historical claims or requiring all users to claim first. A disabled asset can be re-enabled only before permanent migration; a migrated/archived token address cannot be relisted in this version.
+
+Only active assets participate in per-meal loops. The historical index stays append-only and archived cumulative snapshots remain available for old rewards. Increasing the number of archived assets therefore does not grow the per-meal loop. FEED checks the cursor-assigned batch, not the full selection menu. Flap and the website retain separate current-menu and historical-reward views.
+
+Before increasing capacity or batch size, verify gas use against the actual routes and active-menu workload. See [FEED operation and reward conditions]({% link guides/community-keeper.md %}).
+
+---
+# SOURCE: protocol/fees.md
+---
+
+# Tax Routing & Fee Distribution Model
+
+A complete accounting breakdown of TheFatCat's 4% dynamic trading tax, Flap platform withholdings, atomic vault splits, and the 100-year tax expiration schedule.
+
+---
+
+## 1. The 4% Trading Tax in Percentages
+
+Every eligible buy and sell on the Flap bonding curve or PancakeSwap V2 primary pool incurs a **4.0% FATCAT trading tax**. The Belly is the protocol's reward treasury; the Ops Safe receives income for project development, operations and marketing.
+
+### Platform fee and FEED reward target
+
+| Allocation | Percentage | Calculation basis |
+|:---|---:|:---|
+| **Flap platform fee** | **0.2%** | **Eligible FATCAT trade value** |
+| **Eligible FEED conversion reward** | **0.1% target** | **Eligible trade value represented by this conversion** |
+
+The Flap platform fee is included in the 4% trading tax: `4% × 5% = 0.2%`, or 5% of collected tax, deducted upstream.
+
+The FEED reward targets **0.1% of the eligible trade value represented by this conversion**. Under the standard 4% tax and 5% platform share of tax, the protocol receives a nominal `4% × 95% = 3.8%` of trade value. Paying `1/38` of actual WBNB output gives the nominal equivalent `3.8% / 38 = 0.1%`. The on-chain reward is `floor(actual WBNB output / 38)`, about **2.63158% of conversion output**. Prices, conversion costs and rounding affect its trade-value equivalent.
+
+### Shares of actual project revenue
+
+After the platform deduction and market conversion, an eligible successful FEED conversion first earns **one thirty-eighth of its gross WBNB output**, rounded down. This implements the nominal trade-value target through a conversion-output share. Direct conversion and an ineligible caller earn no bounty.
+
+The WBNB **remaining after any earned bounty** is allocated as follows:
+
+| Destination | Share of that remaining net revenue | Receiver |
+|:---|---:|:---|
+| **Reward treasury** | **85%** | The Belly |
+| **Project development, operations and marketing** | **15%** | Ops Safe |
+
+The fixed contract implements the exact 85% treasury and 15% team shares using `17/20` and `3/20`: the team share is rounded down to the smallest unit and every remainder goes to the treasury. Revenue splitting occurs only in the receiver.
+
+For gross conversion output `G`, the eligible bounty is `C = floor(G / 38)`; otherwise `C = 0`. Let `R = G - C`. The team receives `floor(R × 3 / 20)` and the treasury receives everything left. A later advance or purchase failure does not cancel a successful conversion's bounty. Eligibility and claiming are explained in [Decentralized Maintenance]({% link guides/community-keeper.md %}).
+
+### Worked example: 10,000 units of trade value
+
+Using one common unit of account, the 4% tax is **400**. Under the same no-cost/no-price-movement assumptions:
+
+| Destination | No earned FEED bounty | Eligible FEED earns a bounty |
+|:---|---:|---:|
+| Flap platform | 20 | 20 |
+| FEED caller | 0 | 10 |
+| Project development, operations and marketing | 57 | 55.5 |
+| Reward treasury | 323 | 314.5 |
+| **Total** | **400** | **400** |
+
+Without a bounty: `400 × 5% = 20` goes to Flap, leaving `380`; `380 × 15% = 57` goes to the team and `380 × 85% = 323` to the treasury.
+
+With an eligible FEED bounty: `380 / 38 = 10` goes to the caller first, leaving `370`. The same exact net-revenue split yields `55.5` for the team and `314.5` for the treasury. The project and treasury receive **15%** and **85%** of the remaining protocol net revenue. The bounty has an equivalent **0.1%** share of trade value in this example; Flap receives **0.2%** of trade value, and all four amounts sum to the collected tax. These are illustrative equivalents, not guaranteed token amounts.
+
+{: .note }
+Ordinary wallet-to-wallet FATCAT transfers are untaxed in the tested token implementation. Tax applies to eligible trades, not to a user's staking deposit merely because it is an ERC-20 transfer.
+
+---
+
+## 2. Liquidation Mechanics & Vault Routing
+
+1. **Bonding curve**: Under Flap's Prebond Tax mechanism, the selected quote asset is **QQQB**. The curve collects the configured FATCAT trading tax in QQQB alongside its separate venue fee. Platform fees are deducted upstream.
+2. **After graduation**: Eligible pool trades accrue FATCAT tax tokens. Once the liquidation conditions are met, including an eligible sell and the processor’s configured liquidation threshold, the upstream processor converts them into QQQB.
+3. **QQQB conversion**: `FatCatQqqbVault` receives the protocol's QQQB. Its permissionless conversion follows fixed QQQB → USDT → WBNB pools. Only conversion through FEED can credit one thirty-eighth of gross WBNB to an eligible original caller, independently of later advancement or purchases. Standalone `convertAndFlush` and `convertAndFlushWithPosition` earn no bounty. Amount, capacity, TWAP, slippage, deadline and pause checks are enforced on-chain. Callers supply gas, not QQQB, and cannot select the output recipient.
+4. **Revenue allocation**: In the same transaction, the remaining WBNB is allocated: 85% to the Belly reward treasury and 15% to the Ops Safe for project development, operations and marketing, using the exact fixed contract shares.
+
+{: .tip }
+A delay may occur before upstream liquidation or while QQQB awaits a permitted conversion. Check each balance and transaction before diagnosing missing Belly inflow. If conversion fails, that transaction rolls back; accumulated QQQB is not counted as WBNB already available to Belly.
+
+---
+
+## 3. Venue Trading Fees (Isolated from Token Tax)
+
+In addition to token trading taxes, underlying decentralized trading venues charge standard swap fees:
+- **Flap Bonding Curve (Pre-Graduation Only)**: 1.0% venue fee charged by the platform while trading on the bonding curve. Once FATCAT graduates to PancakeSwap V2, the bonding curve permanently closes and this 1.0% venue fee ceases to exist.
+- **PancakeSwap V2 Pool (Post-Graduation)**: Standard 0.25% decentralized swap fee. According to PancakeSwap's official fee schedule, **0.17%** is captured by decentralized liquidity providers (LP), while the remaining **0.08%** is routed to the PancakeSwap Protocol Treasury (0.03%) and CAKE buyback-and-burn (0.05%), rather than being entirely captured by LPs.
+
+These venue fees are captured directly by AMM liquidity providers and curve platforms, and are strictly isolated from TheFatCat's internal tax routing.
+
+---
+
+## 4. 100-Year Tax Duration & Anti-Farmer Protection
+
+According to the currently deployed Flap tax-token implementation and TaxProcessor bytecode on BNB Chain:
+- **100-Year Post-Graduation Expiration**: The trading tax is configured with an immutable expiration of **100 years post-graduation**. Upon expiration, the token automatically becomes permanently **0% tax-free**.
+- **1-Year Anti-Farmer Window**: For the first 365 days post-graduation, secondary liquidity pools are restricted from bypassing taxes. After 1 year, taxes apply exclusively to the primary liquidity pool pair.
+
+---
+# SOURCE: guides.md
+---
+
+# User Guides
+
+Step-by-step operational tutorials for interacting with TheFatCat protocol.
+
+---
+
+## Guide Index
+
+- **[Staking & Positions]({% link guides/staking.md %})**: How to open a staking position, meet the 100,000 FATCAT threshold, manage multi-position lifecycles, and understand activation rules.
+- **[Diets & Claiming Rewards]({% link guides/diets-and-claiming.md %})**: How to choose your reward asset (Diet), how interval allocations work, batch claiming, and native BNB unwrapping.
+- **[Time-Seniority Certificates]({% link guides/seniority-certificates.md %})**: Credential tokens minted via burning FATCAT upon position retirement, enabling duration assetization, supply deflation, and Belly treasury accretion.
+- **[Decentralized Maintenance]({% link guides/community-keeper.md %})**: Public one-tx maintenance, individual actions, conversion bounty eligibility and claiming.
+- **[Emergency Exit (Without Front-End)]({% link guides/emergency-exit.md %})**: Self-custody instructions for redeeming principal or advancing settlement directly on-chain when the website is unavailable.
+
+---
+# SOURCE: guides/staking.md
+---
+
+# Staking & Position Management
+
+A comprehensive guide to opening positions, managing isolated stakes, and climbing the seniority ladder in TheFatCat.
+
+---
+
+## 1. Prerequisites & The Entry Threshold
+
+To open a position in TheFatCat's [`StakingVault`]({% link contracts.md %}):
+
+- **Minimum Principal & Whole Token Requirement**: **100,000 FATCAT** (representing exactly 0.01% of the 1,000,000,000 total supply). **Note**: The contract strictly enforces whole-token principal (an integer multiple of $10^{18}$ wei); fractional token decimals will cause the transaction to revert.
+- **Approved FATCAT**: You must approve the `StakingVault` contract to spend your FATCAT tokens.
+- **Gas**: A small amount of native BNB for transaction fees on BNB Chain.
+
+{: .note }
+The 100,000 FATCAT entry threshold is an immutable parameter passed to the contract's constructor. It acts as an anti-spam barrier, ensuring the state tree remains gas-efficient for all participants.
+
+---
+
+## 2. How to Open a Position
+
+1. Connect your Web3 wallet (MetaMask, Binance Web3 Wallet, OKX Wallet, Trust Wallet, or WalletConnect) at [thefatcat.fun](https://thefatcat.fun).
+2. Enter the amount of FATCAT you wish to stake (must be a whole token amount $\ge 100{,}000$).
+3. Select your desired initial **Diet** (Default is BNB).
+4. Click **Approve** and confirm the token allowance in your wallet.
+5. Click **Stake** and confirm the transaction.
+
+*(Note: Advanced users wishing to call the contract directly on BscScan without using the front-end can follow the direct interface in the [Emergency Exit Guide]({% link guides/emergency-exit.md %})).*
+
+---
+
+## 3. Position Activation & The 7-Day Warmup Window
+
+Staking does not grant retroactive rewards for meals already opened or in progress:
+
+<div class="tfc-diagram-frame">
+  <div class="tfc-diagram-bar">
+    <span class="tfc-diagram-tag">TIMELINE</span>
+    <span class="tfc-diagram-title">Position Activation & Cadence Timeline</span>
+  </div>
+  <pre class="tfc-diagram-content"><code>Deposit (T_now) ─────────────► Next Meal Roll (8h Boundary) ─────► Normal Operation
+[ Deposit Tokens ]            [ Position Activates ]              [ Notch Climbs Each Meal ]
+(Weight in meal m is 0)       (Starts at Notch 1, Weight = p × 1) (Advances to Notch 2 next meal)</code></pre>
+</div>
+
+1. **Deposit & Activation**: When you deposit tokens, your capital is held in custody immediately. In the meal currently underway, your position's calculation weight is 0. Once the next 8-hour boundary advances (`advance`), your position activates at **Notch 1 (1.0× weight)**.
+2. **Climbing the Ladder**: After activating, your seniority notch increases by $+1$ for every completed 8-hour meal, up to the maximum cap of Notch 22 (requiring 21 completed active meals, or approximately 7 days on the standard cadence).
+
+{: .important }
+**The 7-Day Warmup Window (Zero Early Dilution)**:
+- **When can you stake**: After a successful `openStaking()` transaction. Before graduation only Governor may call it; after graduation anyone may call it. Graduation itself does not open staking, and `stake()` does not perform this opening step.
+- **How seniority accrues**: New ordinary positions have zero weight in their opening meal. After activation, seniority increases when someone successfully advances the clock, at intervals of at least eight hours.
+- **When do rewards start**: During the first 7 days, trading taxes accumulate inside the treasury with zero reward distributions. This ensures early stakers establish their seniority on a fair, equal footing without first-mover dilution. After the 7-day warmup, successful meal advances may allocate rewards, with at least eight hours between advances.
+
+*(Underlying mechanism: Opening staking via `openStaking()` starts the 7-day reward countdown clock `startRewardClock()`.)*
+
+---
+
+## 4. Multi-Position Management & Claiming
+
+Each stake creates an independently numbered position with its own tenure and diet selection:
+
+- **Adding More Principal**: To stake additional FATCAT, simply open a new position from the interface. A single wallet can manage multiple independent positions simultaneously.
+- **Independent Asset Diets**: Different positions can target different reward assets (e.g., Position #1 earning BNB, Position #2 earning tokenized bStocks).
+- **Per-Position Claiming**: Rewards are claimed separately per position. The Through interfaces accept an explicit cutoff batch for smaller claims; the dashboard currently uses the latest completed batch and does not automatically split long histories.
+- **Standard Principal Redemption**: Calling `redeem()` returns 100% of your staked principal to your wallet.
+- **Time-Seniority Certificate Exit**: Stakers may alternatively exit via `redeemAndIssueCertificate()` to mint an on-chain [Time-Seniority Certificate]({% link guides/seniority-certificates.md %}); this burns 100,000 FATCAT (`MINT_BURN`) from principal, refunding the remainder (`refund = principal - 100,000`) to your wallet. The certificate delivers token deflation and potential 5% royalties for The Belly, subject to marketplace payment in BNB/WBNB and a flush transaction.
+- **Seniority Reset on Re-Staking**: If you exit and open a fresh position without an active certificate, your multiplier resets to Notch 1 (1.0×) and must climb the ladder from scratch.
+
+---
+# SOURCE: guides/diets-and-claiming.md
+---
+
+# Diets & Claiming Rewards
+
+How to choose your preferred reward assets (Diets), manage allocations across market regimes, and claim earned tokens with automated native unwrapping.
+
+---
+
+## 1. What is a Diet?
+
+In TheFatCat, you are not forced into a single, uniform reward token. Instead, each position independently designates a **Diet Asset** from the protocol's approved [MENU]({% link protocol/execution.md %}):
+
+- **BNB (Canonical Network Asset)**: The default diet and protocol fallback asset (internally accounted via canonical WBNB). It requires zero market execution and carries zero counterparty or issuer risk. Stakers can receive native BNB directly with no manual unwrapping.
+- **bStocks (Third-Party Tokenized Equity Certificates)**: Pass-through certificates issued by third-party providers (such as Backed, etc.) tracking traditional equity or index ETF price performance (does not confer direct corporate equity ownership or shareholder voting rights; e.g. tokenized Nvidia, SpaceX, Nasdaq-100, or S&P 500 tracking tokens). **Regulatory & Geographic Notice**: The regulatory status and availability of tokenized certificates strictly depend on specific issuer offering terms and prospectus filings, which typically impose explicit investor qualification standards and restricted jurisdiction exclusions (e.g. unavailable to residents of the US, UK, etc.). Participants are solely responsible for verifying legal compliance; these assets are subject to the 5% per-meal probation cap (genesis launch menu items are pre-reviewed and exempt on their initial enable, operating directly at 100% capacity; a later re-enable serves the ordinary 7-day probation).
+- **FATCAT (Protocol Native)**: Eligible for addition after AMM graduation, liquidity stabilization, and TWAP oracle warmup.
+- **Future Candidate Tokens (Ecosystem Expansion)**: Potential high-liquidity crypto assets, blue-chip ecosystem tokens, or stablecoins that may be approved and listed on the MENU via timelocked governance queues and on-chain TWAP verification.
+
+{: .tip }
+Because each stake is an independent position ID, a single wallet can manage multiple positions with completely different diets (e.g. Position #1 earning BNB, Position #2 earning tokenized equities).
+
+---
+
+## 2. Changing Your Diet
+
+You can change your position's diet at any time through the front-end dashboard:
+
+1. Connect your wallet and navigate to the **Positions** dashboard at [thefatcat.fun](https://thefatcat.fun).
+2. Locate the position card you wish to update and click the **Diet** dropdown.
+3. Select your new reward asset from the approved MENU (e.g. BNB, bStocks, etc.).
+4. Click **Switch Diet** and confirm the transaction in your wallet.
+
+### Critical Diet Rules:
+1. **Zero Seniority Penalty**: Changing your diet **never resets or reduces your seniority notch**. Your accumulated ladder level ($c_i$) is 100% preserved.
+2. **Next-Interval Activation**: The new diet choice takes effect at the **next meal boundary** ($m + 1$). The currently open meal continues allocating to your previous asset.
+3. **No Loss of Past Rewards**: Unclaimed tokens earned under your previous diet remain permanently claimable in your dashboard. They are never wiped or overwritten.
+
+---
+
+## 3. Claiming Earned Rewards
+
+Rewards in TheFatCat do not expire. They continuously accumulate across settled meals and wait securely in the protocol's non-custodial distributor until you withdraw them.
+
+### How to Claim on the Dashboard:
+
+1. Open the **Dashboard** or **Belly / Positions** section on [thefatcat.fun](https://thefatcat.fun).
+2. Review your accrued reward balances across your active positions (e.g. BNB, bStocks).
+3. **Per-Position Claiming**: Click **Claim** on a position card. The interface sets the cutoff to the latest completed batch; it does not automatically split long histories into multiple gas-budgeted transactions.
+4. Confirm the transaction in your connected wallet.
+
+### Automatic Native BNB Unwrapping
+When your diet is set to BNB (accounted on-chain as canonical WBNB), claiming automatically unwraps it into **native BNB**. You receive spendable BNB directly in your wallet without any extra unwrapping steps or manual transactions.
+
+{: .tip }
+**Long Backlogs**: `claimThrough` / `claimNativeThrough` let the caller select an earlier `toBatch` and claim progressively in smaller ranges. Simulate each range against current gas limits. Passing the latest batch does not guarantee that an arbitrarily long history fits in one transaction.
+
+*(For advanced users wishing to claim directly from the contract on BscScan without using the web UI, refer to the [Emergency Exit Guide]({% link guides/emergency-exit.md %})).*
+
+---
+# SOURCE: guides/seniority-certificates.md
+---
+
+# Time-Seniority Certificates (ERC-721)
+
+File names below are internal implementation/test references, not public source links. Published source verification is referenced on the [Contracts]({% link contracts.md %}) page.
+
+An architectural and operational guide to TheFatCat's on-chain duration credential tokens, governing contract-level time assetization, supply deflation, and secondary royalty treasury routing.
+
+---
+
+## 1. Specification & Contract Architecture
+
+In TheFatCat's economic topology, duration is the primary non-capital variable. Time-Seniority Certificates (`SeniorityCertificate.sol`) provide an immutable on-chain credential standard:
+
+- **Standard Compliance**: ERC-721 with on-chain SVG metadata ([ERC-4906](https://eips.ethereum.org/EIPS/eip-4906)), native royalty signaling ([ERC-2981](https://eips.ethereum.org/EIPS/eip-2981)), and user-role signaling ([ERC-4907](https://eips.ethereum.org/EIPS/eip-4907)). Interface support does not itself enable a rental product; availability follows the separate certificate announcement.
+- **Supply Hard Cap**: Fixed ceiling of exactly **9,999** certificates (`MAX_SUPPLY = 9_999`), permanently enforced at contract level.
+- **Royalty Routing**: ERC-2981 signals a 500 bps (5%) royalty and `CertificateRevenueVault.sol` as receiver. Payment depends on marketplace compliance and actual transfer. The Vault accepts BNB/WBNB, and a `flush()` transaction forwards funds to Belly; it does not convert arbitrary ERC-20 proceeds.
+- **On-Chain Vector Badges**: Rendered via `SeniorityCertificateRenderer.sol` generating fully decentralized, dynamic SVG graphics directly from EVM bytecode without external IPFS or HTTP dependencies.
+
+---
+
+## 2. Core Economic Pillars
+
+### 1. Burn-to-Mint Duration Assetization
+When a staker closes a position via `redeemAndIssueCertificate`, exactly 100,000 FATCAT (`MINT_BURN`) is deducted from the staked principal and permanently burned to the dead address, refunding the remainder (`refund = principal - 100,000`) while assetizing the realized duration into an on-chain certificate. Ordinary `redeem()` returns 100% of principal without certificate minting.
+
+### 2. Dual Flywheel: Deflation & Treasury Inflows
+1. **Supply-Side Deflation**: Tokens burned during certificate minting are permanently removed from circulating supply, creating a non-reversible deflationary sink for FATCAT.
+2. **Treasury Accretion (The Belly Flywheel)**: Royalties that a marketplace actually pays in BNB/WBNB can enter Belly through `CertificateRevenueVault.flush()`. ERC-2981 does not enforce payment on every transfer.
+
+---
+
+## 3. Protocol Binding & Timelock Governance
+
+The certificate subsystem is separate from core staking deployment. Its binding and product activation are independent steps; product details and availability follow the dedicated announcement.
+
+To prevent administrative front-running or malicious NFT contract injection, `StakingVault.sol` enforces a two-step timelocked binding pipeline:
+
+```solidity
+// StakingVault.sol: 2-step binding pipeline
+function proposeCertificate(address candidate) external;  // Governor only
+function activateCertificate() external;                  // After CERTIFICATE_BINDING_DELAY
+```
+
+1. **Deterministic Verification**: Any candidate contract must pass interface checks (`supportsInterface(0x80ac58cd)`), verify its vault binding (`nft.vault() == address(this)`), and confirm the immutable supply cap.
+2. **Mandatory Timelock**: Once proposed, the candidate must wait for the full `CERTIFICATE_BINDING_DELAY` before activation.
+3. **Write-Once Permanence**: Once bound, the certificate collection cannot be replaced or upgraded.
+
+---
+
+## 4. Technical Specifications Matrix
+
+| Parameter | Value | Contract Identifier | Invariant Constraint |
+| :--- | :--- | :--- | :--- |
+| **Asset Standard** | ERC-721 / ERC-2981 / ERC-4907 / ERC-4906 | `SeniorityCertificate.sol` | Fully on-chain SVG renderer |
+| **Maximum Supply** | `9,999` units | `MAX_SUPPLY` | Strictly immutable constant |
+| **Secondary Royalty** | `500` bps (5.0%) | `ROYALTY_BPS` | Routed to `CertificateRevenueVault` |
+| **Treasury Target** | The Belly Reservoir | `royaltyReceiver` | Accretes staker yield inventory |
+| **Binding Policy** | 2-step timelock | `CERTIFICATE_BINDING_DELAY` | Zero to one collection once ever |
+
+---
+# SOURCE: guides/emergency-exit.md
+---
+
+# Emergency Exit: Getting Out Without Front-End
+
+A self-custody survival guide explaining how to redeem 100% of your staked principal directly from the blockchain using block explorers if the web interface ever becomes unavailable.
+
+---
+
+## 1. The Core Guarantee: Unpausable Redemption
+
+In decentralized finance, true self-custody means you never have to trust the front-end website.
+
+{: .important }
+**Architectural Invariant**: In [`StakingVault.sol`]({% link contracts.md %}), the principal redemption function `redeem()` **deliberately ignores the contract's `paused` state**. 
+
+Even if:
+- The website domain `thefatcat.fun` goes offline;
+- Front-end servers or Cloudflare are blocked;
+- The protocol's emergency pause is triggered by governance;
+
+**Your principal cannot be trapped.** No administrator, governor, or multi-sig has the technical ability to freeze your principal or redirect your tokens.
+
+---
+
+## 2. Step-by-Step Redemption on BscScan
+
+If the official front-end is down, you can execute your redemption directly on **BscScan**:
+
+### Step 1: Obtain Your Position ID
+1. Look up your wallet address on [BscScan](https://bscscan.com).
+2. Filter your transaction history for your original `stake` transaction to the `StakingVault`.
+3. In the **Transaction Details**, click on **Logs**.
+4. The `Staked(uint256 indexed id, address indexed owner, uint256 principal, address diet)` event emits your numeric position `id` in **Topic 1** (Topic 2 is the owner address).
+
+### Step 2: Open the Staking Vault Contract
+1. Navigate to the verified [`StakingVault` contract page on BscScan]({% link contracts.md %}).
+2. Click on the **Contract** tab, then select **Write Contract**.
+3. Click **Connect to Web3** and connect the wallet holding your position (e.g. MetaMask, Binance Web3 Wallet, OKX Wallet, Trust Wallet, or WalletConnect).
+
+### Step 3: Execute `redeem`
+1. Locate function `redeem`:
+   ```solidity
+   redeem(uint256 id)
+   ```
+2. Enter your numeric position `id` in the input field.
+3. Click **Write** and confirm the transaction in your wallet.
+4. Upon block inclusion, **100% of your staked FATCAT principal is returned directly to your wallet**.
+
+---
+
+## 3. Why Delayed Maintenance Cannot Trap Your Principal
+
+In some protocols, closing an accounting cycle is mandatory before capital can exit. In TheFatCat:
+
+- `redeem()` **does not call or depend on `advance()`**.
+- Even if no one runs maintenance or gas prices spike, your principal can be withdrawn without waiting for a meal advance.
+- The only effect of redeeming mid-meal is that you forfeit the single currently open interval; all previously completed intervals and settled rewards remain yours forever.
+
+---
+
+## 4. Claiming Rewards Directly from BscScan
+
+To claim your accrued reward tokens without the website:
+
+1. Navigate to the verified [`RewardDistributor`]({% link contracts.md %}) contract on BscScan.
+2. Under **Write Contract**, connect your wallet.
+3. Locate function `claimNative` (for native BNB unwrapping) or `claim` (for other diet tokens):
+   - `id`: Enter your position ID.
+   - `asset`: Enter the diet asset address (e.g. canonical WBNB contract address for BNB).
+   - `gen`: Enter the generation index for this asset (typically `0` for positions that have not redirected diets).
+4. For positions with extensive backlogs seeking bounded gas consumption, use `claimThrough` or `claimNativeThrough`:
+   - Pass `id`, `asset`, `gen`, and `toBatch` (the highest batch index to claim up to).
+5. Click **Write** and confirm.
+
+---
+
+## 5. Direct On-Chain Staking (Advanced)
+
+If the web application is offline or if you are automating deposits programmatically, positions can also be opened directly via the verified [`StakingVault`]({% link contracts.md %}) contract on BscScan:
+
+1. Under the FATCAT token contract on BscScan, call `approve(stakingVaultAddress, amount)`.
+2. Navigate to `StakingVault` -> **Write Contract** -> locate `stake`:
+
+```solidity
+function stake(
+    uint256 principal,
+    address diet
+) external returns (uint256 id);
+```
+
+- `principal`: Token amount in wei (must be $\ge 100{,}000 \times 10^{18}$ FATCAT, and must be an integer multiple of $10^{18}$ wei without fractional decimals).
+- `diet`: Target reward asset address (canonical WBNB contract address for default BNB rewards).
+- *Time-Seniority Certificate Entry*: To stake with an unencumbered Time-Seniority Certificate (lending its permanent starting multiplier), call the dedicated `stakeWithCertificate(uint256 principal, address diet, uint256 certificateId)` function.
+
+---
+
+## 6. Advancing the Protocol Without the Front-End
+
+The same self-reliance applies to settlement. **Anyone** can perform eligible maintenance steps directly on-chain as soon as their contract conditions permit. Settlement entry points are permissionless, value cannot be redirected by the caller, and an early call reverts without moving protocol assets, although the caller still pays gas.
+
+Use the official addresses and verified ABIs referenced on the [Contracts]({% link contracts.md %}) page. The steps below are independent calls; the [Decentralized Maintenance]({% link guides/community-keeper.md %}) page describes FEED and its conversion bounty.
+
+### Step 1: Close the current meal
+
+On the **Interval Controller**, call:
+
+```solidity
+function advance() external;
+```
+
+This closes the finished 8-hour meal and opens the next one. Under eight hours it reverts with `TooEarly` — wait and retry later; nothing is wrong.
+
+```sh
+cast send $CONTROLLER "advance()" --rpc-url $RPC --private-key $KEY
+```
+
+### Step 2: Buy the reward asset for a pending pool
+
+On the **Execution Router**, call:
+
+```solidity
+function execute(address asset, uint256 quoteIn, uint256 callerMinOut) external returns (uint256 received);
+```
+
+- `asset`: the reward asset to procure (from the menu).
+- `quoteIn`: Read Controller `pendingQuote(asset)`, Registry `entry(asset)` bounds and Belly `releasable()`. Choose no more than the minimum of pending, releasable quote and `maxExecQuote`, then use Distributor `spendFor(asset, amount)` to find the spend covering whole meals. The result must be positive and at least `minExecQuote`. The Router only caps the request to pending: below-minimum and above-maximum requests revert (`BelowMinExec` / `OverMaxExec`); it does not reduce an oversized request to the maximum.
+- `callerMinOut`: an optional personal floor. `0` is acceptable — the on-chain TWAP floor always applies on top. To tighten it, size it against `previewMinOut(asset, spendFor(asset, quoteIn))` on the Router and Distributor.
+
+If somebody already executed this reward pool, or the amount is below the asset's floor, the call reverts harmlessly — nothing has moved.
+
+```sh
+cast call $CONTROLLER "pendingQuote(address)(uint256)" $ASSET --rpc-url $RPC
+cast send $ROUTER "execute(address,uint256,uint256)" $ASSET $QUOTE_IN $MIN_OUT --rpc-url $RPC --private-key $KEY
+```
+
+### Step 3: Settle a stalled reward pool in BNB
+
+A reward pool is eligible for `fallbackFinalize` when the asset is disabled, its pending age exceeds `maxPendingAge` (default 24 hours), or the first whole meal cannot fit within `maxExecQuote` (`spendFor(asset, maxExecQuote) == 0`). The last condition allows fallback without waiting for timeout. Eligibility still does not guarantee payment in the current Belly release window; whole-meal and release limits apply. Users claim the resulting WBNB entitlement separately, optionally unwrapping it to BNB.
+
+```solidity
+function fallbackFinalize(address asset) external returns (uint256 quoteIn);
+```
+
+```sh
+cast send $ROUTER "fallbackFinalize(address)" $ASSET --rpc-url $RPC --private-key $KEY
+```
+
+### Step 4: Convert pending QQQB revenue
+
+On **FatCatQqqbVault**, read its QQQB balance and conversion limits, simulate, then call:
+
+```solidity
+function convertAndFlush(uint256 amountQqqb, uint256 minWbnbOut, uint256 deadline) external;
+```
+
+The initial range is 0.1–50 QQQB per conversion, with no hourly cumulative quota. Set a fresh deadline and an output floor compatible with the Vault's one-hour TWAP and 300 bps protection. A successful conversion calls the downstream receiver internally and splits net proceeds 85% Belly reward treasury and 15% project development, operations and marketing. This standalone entry earns no FEED bounty.
+
+Calling only the downstream receiver's `flush()` cannot convert upstream QQQB. `Belly.sync()` recognizes its existing WBNB balance; it does not exchange tokens.
+
+```sh
+cast send $QQQB_VAULT "convertAndFlush(uint256,uint256,uint256)" $AMOUNT_QQQB $MIN_WBNB_OUT $DEADLINE --rpc-url $RPC --private-key $KEY
+```
+
+### Step 5: Refresh a stale price window
+
+Read the oracle configured for that asset. V2 observation oracles may need an `update()` transaction and a sufficient observation interval before retrying. V3 two-hop oracles read pool observation history and do not expose the same update workflow; verify both pools have the required history and liquidity.
+
+---
+
+None of the maintenance steps above is required for principal redemption. Redemption does not wait for official or public maintenance.
+
+---
+# SOURCE: guides/community-keeper.md
+---
+
+# Decentralized Protocol Maintenance
+
+Anyone can attempt eligible maintenance through the [Belly page](https://thefatcat.fun/belly) or public contracts. There is no caller whitelist. Stakers do not have to operate a keeper, but meals and procurement require successful transactions by someone; official fallback maintenance does not guarantee perpetual or immediate progress.
+
+## One FEED, one assigned batch
+
+FEED calls `ProtocolExecutor.maintain(...)`, or the Flap Vault's `feed(request)` facade for the original wallet. It checks QQQB conversion (with its internal receiver flush), at most one due meal, then the contract-assigned batch of reward assets. The current batch comes from `previewAssets()`; callers cannot choose a cheaper subset. Successive completed checks rotate across the menu, with a shorter tail when necessary. Nine listed assets with batch size four are scanned as 4/4/1. Pass the exact preview order, with an equally sized `minOuts` array containing only zeros; procurement uses the protocol floor.
+
+Menu capacity and FEED batch size are separate on-chain parameters. The Registry defaults to **16 menu slots and 4 asset checks per FEED**, with hard limits **32 and 8**. The Governor multisig queues changes, waits three days, then executes them; Governor or Guardian may cancel before execution. A disabled asset occupies its slot until safe archival. The website, Flap component and keeper read the effective Registry values rather than maintaining separate settings. Increasing capacity does not list or approve any asset.
+
+Scanning is not a promise to purchase every scanned asset. Pending budgets, Belly outflow limits, minimum amounts and market checks still apply. After conversion, FEED attempts advancement and purchases in the same transaction. A failed advancement, read or purchase does not cancel a successful conversion or its eligible bounty; ordinary leg failures are recorded and the remaining assets are checked. Failed purchases retain their pending budgets for retry. If the entire isolated follow-up fails, including from exhausted follow-up gas or a menu change, only its work rolls back and the cursor stays unchanged. A zero-input call may just move the scan cursor. Invalid batch input, a positive conversion request with no completed leg, or whole-transaction out-of-gas still causes a full revert. Individual maintenance and fallback entry points remain available without a FEED bounty.
+
+There is no extra five-minute waiting period for public maintenance. A due meal can be advanced when the contract allows it; advancing records allocations and does not itself deliver reward tokens to a staker's wallet.
+
+## Conversion and the Feeder reward
+
+The Vault converts its own QQQB through the fixed QQQB → USDT → WBNB route. The caller pays gas, supplies no personal QQQB and cannot redirect the proceeds. The website chooses one conversion within the on-chain balance, minimum and per-swap maximum; the initial conversion range is 0.1–50 QQQB per transaction, with no cumulative hourly conversion quota. Price/TWAP, deadline and pause conditions still apply.
+
+A successful conversion **inside FEED** can create a Feeder reward independently of the later advancement and purchases. At conversion time the original caller must hold at least **10,000 FATCAT**, or provide its own staking position with positive remaining principal. The reward is `floor(gross WBNB output / 38)` (about 2.63158% of actual output), targeting 0.1% of the trade value represented by this conversion under the standard 4% tax and 5% platform-share assumptions. Prices, conversion costs and rounding affect the trade-value equivalent. After this deduction, the remaining proceeds split **85% to the Belly reward treasury and 15% to Ops Safe for project development, operations and marketing**. Direct conversion, advance, procurement and a scan without conversion do not earn this reward.
+
+The reward is recorded as claimable WBNB, separate from staking rewards. Claiming requires a separate transaction and gas, but does not recheck eligibility. Flap reads its Vault `FeedResult` by transaction hash and beneficiary; the website reads Executor leg results. Exact new credit is established by the Rewards `Accrued` event in that transaction, not global counter or balance changes that may include other users.
+
+## Before submitting
+
+Refresh the assigned batch and simulate. Another FEED or menu change can invalidate the preview before inclusion; refresh and retry after a failed simulation or confirmed revert. An included transaction consumes gas even when it reverts. Resolve an uncertain receipt before resubmitting. A success receipt alone does not prove that conversion, every purchase or a bounty occurred.
+
+Archival removes an asset from active menu/settlement work while retaining historical reward records and unclaimed settled debt. Historical rewards remain discoverable separately from the current menu; principal redemption does not require a maintenance call. See [menu lifecycle]({% link protocol/execution.md %}) and [Emergency Exit]({% link guides/emergency-exit.md %}).
+
+---
+# SOURCE: contracts.md
+---
+
+# Verified Contracts Schedule
+
+TheFatCat contract components, responsibilities and deployment boundaries on BNB Chain. Verify official published addresses and BscScan source before interacting.
+
+---
+
+## Architectural Breakdown
+
+Explore detailed specifications for each contract subsystem:
+
+- **[Core Vault Contracts]({% link contracts/core-vaults.md %})**: StakingVault (principal isolation & unpausable redemptions), The Belly (unprivileged damping reservoir), and FatCatStakingVault (Flap V3 tax routing and fee division).
+- **[Routers & Oracles]({% link contracts/routers-and-oracles.md %})**: ExecutionRouter (MEV-guarded permanent-spender router), PancakeV3TwoHopTwapOracle / PancakeV2TwapOracle (endogenous price checks), and InitialRewardAssetRegistry.
+- **[Seniority Ledger & Math]({% link contracts/seniority-ledger.md %})**: SeniorityLedger ($O(1)$ scalar weight accounting), RewardDistributor (dual-liability solvency engine), and on-chain SeniorityCertificate renderers.
+
+---
+
+## Master Protocol Registry
+
+{: .note }
+**Address verification**: This component index does not replace an address manifest. Contract names are not recipient addresses; check the official network, address and verified source.
+
+| Component | Source Contract | Architectural Scope & Role | Deployment Standard | Deployment / Activation Boundary |
+|:---|:---|:---|:---|:---|
+| **FATCAT Token** | `FATCAT.sol` | 1,000,000,000 fixed supply, zero presale, immutable BEP-20 implementation | Flap Bonding Factory | Flap launch |
+| **PancakeSwap V2 Pair** | `PancakePair` | Liquidity pool pair (`FATCAT/QQQB`), cumulative TWAP price feed source | PancakeFactory | Upon Graduation |
+| **FatCatStakingVault** | `FatCatStakingVault.sol` | Fixed BNB receiver; wraps post-bounty net proceeds: 85% Belly treasury, 15% project development, operations and marketing | ERC-1167 fixed clone | Core wiring |
+| **FatCatQqqbVault** | `FatCatQqqbVault.sol` | QQQB receipt and fixed conversion into BNB receiver | Flap V3 BeaconProxy | Core wiring |
+| **FatCatQqqbVaultFactory** | `FatCatQqqbVaultFactory.sol` | Creates vaults and owns Beacon; Guardian-only upgrade/lock entrypoints | Flap FactoryBaseV2 | Core wiring |
+| **FatCatMaintenanceRewards** | `FatCatMaintenanceRewards.sol` | Per-Vault, non-upgradeable custody and claiming for qualifying FEED conversion bounties | Factory-created module | Core wiring |
+| **ProtocolExecutor** | `ProtocolExecutor.sol` | Public one-tx attempt: QQQB conversion, one due advance and the cursor-assigned reward purchase batch | Standalone contract | Core wiring |
+| **The Belly** | `Belly.sol` | Exponential damping reservoir; window outflow cap $\le 16/168$, write-once spender | Deterministic Deployment | Core deployment |
+| **StakingVault** | `StakingVault.sol` | Custodies staked principal; unpausable `redeem()`, 100k FATCAT floor, certificate link | Deterministic Deployment | Core deployment |
+| **SeniorityLedger** | `SeniorityLedger.sol` | $O(1)$ scalar weight accounting, 22-slot graduation ring, RAY prefix engine | Deterministic Deployment | Core deployment |
+| **LaunchIntervalController** | `LaunchIntervalController.sol` | Production clock engine ($\ge 8\text{h}$ cadence), 7-day wall-clock accumulation period | Deterministic Deployment | Core deployment |
+| **InitialRewardAssetRegistry** | `InitialRewardAssetRegistry.sol` | Production MENU whitelist with signed constructor menu exempt from probation | Deterministic Deployment | Core deployment |
+| **ExecutionRouter** | `ExecutionRouter.sol` | Permanent write-once router, TWAP-guarded batch market swaps & fallback | Deterministic Deployment | Core deployment |
+| **RewardDistributor** | `RewardDistributor.sol` | Dual-liability accounting, non-negative dust solvency custody | Deterministic Deployment | Core deployment |
+| **SeniorityCertificate** | `SeniorityCertificate.sol` | On-chain seniority credential (ERC-721); minted via FATCAT burn upon exit, with 5% ERC-2981 royalty signaling; actual BNB/WBNB payments can be flushed to Belly | Deterministic Deployment | Separate certificate activation |
+| **CertificateRenderer** | `SeniorityCertificateRenderer.sol` | Pure on-chain SVG generator rendering dynamic visual attributes | Deterministic Deployment | Separate certificate activation |
+| **CertificateData** | `CertificateData.sol` | Bytecode container storing compressed fonts and vector artwork data | Deterministic Deployment | Separate certificate activation |
+| **CertificateRevenueVault** | `CertificateRevenueVault.sol` | Ownerless royalty receiver; flushes actual BNB/WBNB royalty payments to The Belly; ERC-2981 signals 5%, subject to marketplace payment | Deterministic Deployment | Separate certificate activation |
+| **PancakeV2TwapOracle** | `PancakeV2TwapOracle.sol` | Endogenous TWAP reader evaluating time-weighted average prices for V2 pairs | Deterministic Deployment | Core deployment |
+| **PancakeV3Adapter** | `PancakeV3Adapter.sol` | Production execution adapter executing multi-hop swaps across Pancake V3 pools | Deterministic Deployment | Core deployment |
+| **PancakeV3TwoHopTwapOracle** | `PancakeV3TwoHopTwapOracle.sol` | Two-hop V3 TWAP oracle (WBNB -> USDT -> bStock) for equity feeds | Deterministic Deployment | Core deployment |
+
+---
+# SOURCE: contracts/core-vaults.md
+---
+
+# Core Protocol Vault Contracts
+
+The core storage and capital custody layers of TheFatCat enforce strict contract-level separation between principal capital and reward distributions:
+
+---
+
+## 1. StakingVault (`StakingVault.sol`)
+
+- **Architectural Role**: Holds 100% of user-staked FATCAT tokens.
+- **Key Invariants**:
+  - **Zero Tax Inflow**: No trading tax or DEX swap funds ever enter this contract.
+  - **100,000 FATCAT Floor**: Positions below the threshold are rejected, preventing dust griefing.
+  - **Unpausable Redemptions**: The `redeem()` function deliberately ignores contract emergency pause flags. Users can always withdraw their capital regardless of protocol status.
+  - **Zero Sweep Privilege**: Does not contain `sweepToken()`, `emergencyWithdraw()`, or any administrative backdoors.
+
+---
+
+## 2. The Belly Reservoir (`Belly.sol`)
+
+- **Architectural Role**: Custodies quote assets (WBNB) generated from DEX trading taxes.
+- **Key Invariants**:
+  - **Unprivileged Shock Absorber**: No administrator can arbitrarily withdraw or alter funds.
+  - **7-Window Outflow Throttle**: In any single 8-hour window, cumulative outflows are strictly capped at:
+    $$\text{Window Cap} = \text{Balance} \times \frac{16}{168} \approx 9.5238\%$$
+    Draining 50% of the reservoir requires at least 7 discrete intervals (48–56 hours), ensuring sufficient time for emergency response.
+  - **Authorized Spender Outflows**: Outflows can only leave The Belly via `release(amount)`, callable exclusively by the single write-once authorized `spender` ([`ExecutionRouter`]({% link contracts.md %})). `IntervalController.advance()` calls `Belly.sync()` to recognize balances and records allocation quotas. It cannot call `release()` to withdraw funds; the Router does that during execution or fallback.
+
+---
+
+## 3. QQQB Revenue Infrastructure
+
+- **`FatCatQqqbVaultFactory`**: The Flap entry Factory receives a separately deployed upstream implementation, creates the Beacon and QQQB Vault proxies, and deploys a fixed downstream BNB receiver. It declares QQQB as the launch quote; Belly and the reward core are independently deployed contracts, not aliases for the Factory address.
+- **`FatCatQqqbVault`**: Receives protocol QQQB, executes the fixed QQQB → USDT → WBNB path with on-chain price, amount and capacity checks, and forwards conversion proceeds to the configured receiver. Public callers do not supply or approve their own QQQB and cannot redirect the proceeds. The initial single-conversion range is 0.1–50 QQQB, with no hourly or daily cumulative quota. Governor and Flap Guardian may change the per-swap maximum via `setConversionLimit(newLimit)`; its minimum setting of 10 QQQB is a floor for the maximum, not the minimum conversion amount. Changing the per-swap maximum does not introduce a cumulative quota. Revenue conversion uses a one-hour TWAP and a 300 bps deviation bound, separate from reward procurement's initial 200 bps bound.
+- **`FatCatMaintenanceRewards`**: Holds the `floor(gross WBNB / 38)` bounty (nominally targeting 0.1% of represented trade value) earned by an eligible FEED caller after successful conversion until that caller claims it. Later advancement or purchase failures do not cancel that conversion's bounty. This per-Vault module is not upgraded through the Beacon.
+- **`FatCatStakingVault`**: The fixed-implementation BNB receiver processes the conversion output in the same transaction. Its `flush()` wraps the remaining BNB into WBNB and allocates 85% to the Belly reward treasury and 15% to the Ops Safe for project development, operations and marketing; the exact contract shares are 17/20 and 3/20. Integer dust stays with Belly. It performs the only operations split; neither this receiver nor the reward core is upgraded through the upstream Beacon.
+
+### Beacon Ownership and Upgrade Authority
+
+The Factory owns the Beacon, but only the canonical Flap Guardian can call Factory `upgradeVaultImplementation(address)` or `lockVaultUpgrades()`. `beaconImplementation()` reports the current implementation; `isVaultUpgradesLocked()` reports whether upgrades were permanently disabled. The deployer and project multisig have no upgrade authority through these entrypoints.
+
+Deployment leaves upgrades available. **Calling the permanent lock is irreversible.** Until locked, a Guardian upgrade can change the behavior of every upstream QQQB Vault under this Factory, including how unconverted assets are handled. It cannot upgrade the fixed receiver, Belly or staking principal contracts. An upgrade does not undo executed transactions or guarantee repair of changed storage. See [Monitoring and Pause Scope]({% link safety/monitoring.md %}).
+
+---
+# SOURCE: contracts/routers-and-oracles.md
+---
+
+# Execution Routers & Oracle Contracts
+
+The perimeter infrastructure layer handles decentralized market execution, oracle verification, and approved asset whitelisting:
+
+---
+
+## 1. Execution Router (`ExecutionRouter.sol`)
+
+- **Architectural Scope**: Orchestrates batch market swaps from quote asset (WBNB) into diet tokens and handles fallback quote settlement.
+- **Key Invariants**:
+  - **Permanent Write-Once Spender**: In The Belly, the authorized `spender` can be set and activated exactly once. Once live, it is permanently fixed and cannot be replaced or upgraded, guarding against unauthorized diversion risks. The 7-day activation delay is an immutable timelock safeguarding funds during launch week.
+  - **Atomic Solvency Check**: Output tokens from batch market swaps are delivered directly to the `RewardDistributor` before the transaction completes.
+  - **MEV-Resistant Batch Execution**: Aggregates all meal diet allocations into single unified swaps, removing individual user-transaction sandwich vulnerabilities and confining execution risk to the TWAP-bounded batch window.
+
+---
+
+## 2. TWAP Oracles (`PancakeV2TwapOracle.sol` & `PancakeV3TwoHopTwapOracle.sol`)
+
+- **Architectural Scope**: Reads cumulative prices directly from decentralized liquidity pools.
+- **Key Invariants**:
+  - **PancakeSwap V2 TWAP**: Reads endogenous time-weighted prices for configured standard pairs, requiring consecutive observations over a verified window. The QQQB launch graduates into FATCAT/QQQB; do not configure that pair as a direct FATCAT/WBNB oracle. FATCAT reward activation requires a separately verified quote-compatible route.
+  - **PancakeSwap V3 Two-Hop TWAP**: Prices tokenized equities (bStocks) through deep intermediary pools (WBNB $\to$ USDT $\to$ bStock) via `PancakeV3Adapter`, enforcing rigorous observation tick window verification.
+  - **Slippage Bounds**: Provides verified price bounds to `ExecutionRouter`, enforcing the `protocolMinOut` safety threshold.
+
+---
+
+## 3. Reward Asset Registry (`RewardAssetRegistry.sol` & `InitialRewardAssetRegistry.sol`)
+
+- **Architectural Scope**: Maintains the authoritative MENU whitelist of approved diet assets and handles probation limits.
+- **Key Invariants**:
+  - **Canonical Assets**: Native BNB (via WBNB) is permanent and immutable.
+  - **Probation Assets (bStocks)**: Non-canonical assets operate under a 5% allocation cap per meal (`PROBATION_CAP_BPS = 500`) during their 7-day probation period (`PROBATION = 7 days`).
+  - **Genesis Menu Exemption**: The initial signed launch menu in `InitialRewardAssetRegistry` is pre-vetted and exempt from probation (`_isProbationExempt`).
+  - **Native FATCAT**: Eligible for addition only post-graduation and after TWAP warmup stabilization.
+
+
+## Sustainable menu lifecycle
+
+Active menu capacity and FEED batches are governed separately; archived assets leave settlement loops while their historical index, final snapshots and reward liabilities remain. See the [menu lifecycle and limits]({% link protocol/execution.md %}).
+
+---
+# SOURCE: contracts/seniority-ledger.md
+---
+
+# Seniority Ledger & State Accounting Contracts
+
+The mathematical engine of TheFatCat provides $O(1)$ constant-gas scalar weight accounting, discrete graduation tracking, and solvency distribution:
+
+---
+
+## 1. Seniority Ledger (`SeniorityLedger.sol`)
+
+- **Architectural Scope**: Calculates aggregate effective weights for each active meal across all diet pools.
+- **Key Invariants**:
+  - **$O(1)$ Closed-Form Decomposition**: Partitions stakers into climbing and mature cohorts:
+    $$W(m) = (1 + m) P_{\text{climb}} - J_{\text{climb}} + 22 P_{\text{settled}} + W_{\text{exiting}} - H_{\text{opening}}$$
+
+    Here $j_i$ is the weight reference `effectiveFrom`; eligibility starts only at `activeFrom`. $H_{\text{opening}}$ is the Ledger's `headOpening` correction that removes opening-meal weight before a position is eligible. Ordinary positions have `effectiveFrom = activeFrom` and zero opening correction.
+
+  - **22-Slot Circular Graduation Ring**: Rotates per interval to graduate mature positions without loops.
+  - **Zero Add-Principal / Position Merging**: Mature positions cannot absorb fresh capital, preventing seniority laundering exploits.
+
+---
+
+## 2. Reward Distributor (`RewardDistributor.sol`)
+
+- **Architectural Scope**: Dual-liability accounting and individual claim disbursement.
+- **Key Invariants**:
+  - **RAY-Precision Accumulators**: Employs $\text{RAY} = 10^{27}$ fixed-point arithmetic for double-prefix accumulators ($A_{a, m}, B_{a, m}$).
+  - **Non-Negative Dust Solvency**: Downward integer truncation guarantees total claims strictly never exceed available assets:
+    $$\sum r_i \le R_{\text{available}}$$
+  - **Single-Transaction Native BNB**: Includes `claimNative()` to unwrap WBNB to native BNB natively on-chain.
+
+---
+
+## 3. Time-Seniority Certificate & Renderer
+
+- **SeniorityCertificate (`SeniorityCertificate.sol`)**: ERC-721 credential contract minted via burning FATCAT upon position exit, with hardcoded 5% ERC-2981 royalty signaling. Actual BNB/WBNB payments can be flushed to The Belly via `CertificateRevenueVault.sol`.
+- **CertificateData (`CertificateData.sol`)**: On-chain raw font bytecode and portrait vector graphics asset store in the separate certificate subsystem.
+- **CertificateRenderer (`SeniorityCertificateRenderer.sol`)**: Pure on-chain SVG renderer producing deterministic visual badge layers with zero external IPFS or HTTP dependencies.
+
+
+## Sustainable menu lifecycle
+
+Active menu capacity and FEED batches are governed separately; archived assets leave settlement loops while their historical index, final snapshots and reward liabilities remain. See the [menu lifecycle and limits]({% link protocol/execution.md %}).
+
+---
+# SOURCE: safety.md
+---
+
+# Security & Governance Architecture
+
+An exhaustive overview of TheFatCat's non-custodial custody invariants, on-chain solvency proofs, vulnerability post-mortems, and active operational monitoring.
+
+---
+
+## Security Index
+
+- **[Custody & Solvency Proofs]({% link safety/custody.md %})**: Unprivileged vaults, zero sweep/rescue functions, and the non-negative dust theorem ($\sum r_i \le R$).
+- **[Audits & Hardening Post-Mortems]({% link safety/audits-and-hardening.md %})**: Detailed post-mortems of three critical accounting faults and race conditions identified and hardened via PocAudit regression test suites.
+- **[Operational Monitoring]({% link safety/monitoring.md %})**: Upstream tax processor metric tracking, Guardian roles, and emergency response procedures.
+- **[Risks & Launch Status]({% link safety/risks-and-status.md %})**: Material protocol dependencies, oracle trust models, and launch milestones.
+
+---
+# SOURCE: safety/custody.md
+---
+
+# Custody & Solvency Proofs
+
+A formal exposition of TheFatCat's non-custodial capital boundaries, zero-sweep invariant, and the mathematical proof of super-solvency via integer floor truncation.
+
+---
+
+## 1. Strict Contract Separation of Principal
+
+In TheFatCat, staked FATCAT tokens are principal, never reward inventory:
+
+- **Isolated Storage**: Staked tokens are locked strictly inside [`StakingVault.sol`]({% link contracts.md %}).
+- **No Bridging to Belly**: Principal never touches `Belly.sol`, the router, or distributor contracts.
+- **Unconditional Redemption**: `redeem()` ignores contract pauses and requires zero external keeper approvals.
+
+---
+
+## 2. The Zero-Sweep Principle
+
+A "sweep", "rescue", or "skimming" function in a smart contract is simply an administrative backdoor with friendlier marketing.
+
+{: .important }
+**The Zero-Sweep Invariant**: None of the core protocol contracts (`StakingVault`, `Belly`, `RewardDistributor`, `SeniorityLedger`) contain any `sweepToken()`, `rescueFunds()`, or `emergencyWithdraw()` functions.
+
+If a contract holds user funds, nobody — not the developer, not the multi-sig, not the community — can withdraw or transfer those assets except through the deterministic state-transition rules defined at deployment.
+
+---
+
+## 3. Mathematical Proof of Solvency (Non-Negative Dust Theorem)
+
+A critical failure mode in DeFi dividend distributors is rounding overflow, where integer division rounding errors accumulate until the vault owes more tokens than it actually holds, causing transaction reverts for the final claimers.
+
+TheFatCat mathematically eliminates insolvency through dual-scaled integer floor division:
+
+### Theorem: Non-Negative Dust Vesting
+Let $R$ (in D18{tok}) be the total reward tokens acquired in an execution batch, and let $S$ (in D18{quote}) be the allocated quote pool. For any $N$ stakers with quote entitlements $x_i$ satisfying $\sum_{i=1}^N x_i \le S$, the aggregate claimed tokens $\sum_{i=1}^N r_i$ is strictly less than or equal to $R$:
+
+$$\sum_{i=1}^N r_i \le R$$
+
+### Step-by-Step Proof:
+1. **Batch Conversion Rate**:
+   
+   $$\text{Rate} = \left\lfloor \frac{R \cdot \text{RAY}}{S} \right\rfloor \le \frac{R \cdot \text{RAY}}{S}$$
+
+2. **Per-User Claimed Tokens**:
+   
+   $$r_i = \left\lfloor \frac{x_i \cdot \text{Rate}}{\text{RAY}} \right\rfloor \le \frac{x_i \cdot \text{Rate}}{\text{RAY}}$$
+
+3. **Summing Across All $N$ Claimers**:
+   
+   $$\sum_{i=1}^N r_i \le \sum_{i=1}^N \frac{x_i \cdot \text{Rate}}{\text{RAY}} = \frac{\text{Rate}}{\text{RAY}} \cdot \sum_{i=1}^N x_i$$
+
+4. **Substituting Constraints**: Since $\sum_{i=1}^N x_i \le S$ and $\text{Rate} \le \frac{R \cdot \text{RAY}}{S}$:
+   
+   $$\sum_{i=1}^N r_i \le \frac{\text{Rate} \cdot S}{\text{RAY}} \le \frac{\left( \frac{R \cdot \text{RAY}}{S} \right) \cdot S}{\text{RAY}} = R \quad \blacksquare$$
+
+### Corollary: Non-Negative Dust Vesting (Security Invariant D1)
+The residual rounding dust $\Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$ permanently vests inside the distributor. Actual on-chain reserves strictly dominate recorded accounting liabilities:
+
+$$\text{balanceOf}(\text{Distributor}, a) \ge \text{liability}[a]$$
+
+$$\text{balanceOf}(\text{Distributor}, \text{quote}) \ge \text{liability}[\text{WBNB}] + \sum_a \text{quoteLiability}[a]$$
+
+For WBNB, both liability books share one token balance and must be added. This algebra is conditional on the stated inputs; implementation coverage comes from regression and invariant tests.
+
+---
+# SOURCE: safety/audits-and-hardening.md
+---
+
+# Audits & Hardening Post-Mortems
+
+File names below are internal implementation/test references, not public source links. Published source verification is referenced on the [Contracts]({% link contracts.md %}) page.
+
+During adversarial auditing and internal regression and invariant testing (PocAudit test harness), several critical accounting edge cases, race conditions, and precision bounds were investigated and systematically hardened.
+
+This document discloses three representative accounting vulnerabilities and the contract changes and tests that cover those scenarios, complete with test references from `contracts/test/`.
+
+---
+
+## 1. Upstream Payout Interleaving & Wrapper Race Condition
+
+- **Test Suite**: `SweepWrappedRace.t.sol`
+- **Target Contracts**: `FatCatStakingVault.sol`, `FatCatStakingVaultFactory.sol`
+
+### Vulnerability Vector
+Upstream launchpad protocols (such as Flap V3) deliver protocol yield to external vaults through a split pattern: an ERC-20 / wrapped native transfer followed by an asynchronous notification ping (`transfer-then-ping`).
+
+This architecture created a potential race condition:
+1. If an unprivileged caller front-runs or interleaves a call to `sweepWrapped()` between the physical asset transfer and the ping notification, the funds are swept into The Belly before the vault's accounting hook registers the deposit.
+2. If an upstream wrapper (e.g., WBNB) reverts or pauses temporarily mid-execution, a partial state update could desynchronize recorded vault revenue from physical custody.
+
+### Hardening & Verification
+The vault was hardened with idempotent state checks and atomic unwrapped/wrapped self-healing:
+- Before `flush()`, native BNB revenue sits unwrapped; calling `sweepWrapped()` is a harmless no-op because wrapped token balances are zero.
+- Mid-flush execution introduces zero reentrancy surface: external invocations are restricted strictly to trusted wrapper contracts.
+- In `SweepWrappedRaceTest`, an adversarial interleaving was simulated where payouts are transferred and intercepted by a sweep before the ping. The test suite proved that custody is conserved, no funds are stranded, and the contract balance self-heals without administrative intervention.
+
+---
+
+## 2. Multi-Position Rounding Residue & Liability Bounding
+
+- **Test Suite**: `RewardDustEstimate.t.sol`
+- **Target Contracts**: `RewardDistributor.sol`, `SeniorityLedger.sol`
+
+### Vulnerability Vector
+When distributing batch rewards $R$ among $M$ active positions, each position's claim is computed via integer division:
+
+$$r_i = \left\lfloor \frac{R \cdot W_i}{W_{\text{active}}} \right\rfloor$$
+
+In a high-throughput system with thousands of open positions spanning dozens of consecutive intervals, cumulative rounding residue could theoretically drift or, if rounded upwards, result in vault insolvency ($\sum r_i > R$). Conversely, if residue accumulates without clear liability accounting, stakers might be unable to withdraw their full allocations.
+
+### Hardening & Verification
+The accounting engine rounds down at several stages, including quote entitlements, batch conversion rates and token claims. The displayed single-floor equation illustrates the direction of rounding; it is not the full implementation.
+
+`RewardDustEstimateTest` samples 2, 99 and 1,000 positions across one or 30 batches, including immediate and accumulated claims. After the sampled users claim, it checks that the remaining asset balance equals recorded residual liability. That result is a scenario assertion, not a universal bound on dust.
+
+A single mathematical floor loses less than one unit at that operation's scale. Multiple rounding stages and fixed-point conversions can accumulate larger residuals; these tests do not establish a universal sub-wei or one-wei-per-position-per-batch bound. Residue remains recorded in the Distributor and has no admin withdrawal or automatic recycling path.
+
+The algebraic inequality $\sum r_i \le R$ holds under its stated entitlement and rate assumptions. Regression and stateful invariant tests check the implementation against those assumptions; they are not a formal proof of all possible executions.
+
+
+---
+
+## 3. Vault Revenue Split Integrity & Skimming Prevention
+
+- **Test Suite**: `VaultRevenueSplit.t.sol`
+- **Target Contracts**: `FatCatStakingVault.sol`
+
+### Vulnerability Vector
+In conventional staking vault implementations, revenue-sharing ratios between the protocol treasury, operations, and stakers are often stored in mutable storage variables managed by administrative roles or multisig timelocks.
+
+This introduces two distinct vulnerabilities:
+1. **Governance Skimming**: A malicious or compromised admin key can increase the operational cut to 100%, siphoning all staking yield before depositors can react.
+2. **Migration Desynchronization**: Changing fee parameters mid-stream can cause discrepancies between accrued but unforwarded revenue and new distribution ratios.
+
+### Hardening & Verification
+To permanently eliminate governance skimming attack vectors, the revenue split is hardcoded as an immutable mathematical constant:
+- **Project Development, Operations and Marketing**: 15% of post-bounty net revenue (exactly $3/20$), routed to the Ops Safe.
+- **Reward Treasury**: 85% of the same net revenue (exactly $17/20$), plus integer rounding remainder, routed to The Belly.
+- There are **no setter functions**, no administrative override interfaces, and no governance upgrade pathways for this ratio (`FatCatStakingVault.sol:94–95`).
+- In `VaultRevenueSplitTest`, tests verify that every incoming unit of revenue is atomically split with the 15% team share (exactly $3/20$) and the treasury receiving the remainder, and that third-party callers cannot alter or divert the flow.
+
+---
+
+## Adversarial Test Suite Index
+
+The following is a selected index, not a complete release test count. Validation records must identify the source commit, command, result and any skipped fork tests:
+
+| Test File | Target Domain | Core Invariant Verified |
+| :--- | :--- | :--- |
+| `contracts/test/SweepWrappedRace.t.sol` | Payout Concurrency | Custody conservation under transfer/ping interleaving; zero reentrancy during wrapper unwraps. |
+| `contracts/test/RewardDustEstimate.t.sol` | Rounding samples | Remaining balance equals residual liability after sampled claims; reports measured residue without a universal per-claim bound. |
+| `contracts/test/VaultRevenueSplit.t.sol` | Fee Accounting | Fixed 15% team share (exactly $3/20$); zero admin fee adjustment surface. |
+| `contracts/test/PocAudit09Invariant.t.sol` | Composed solvency | WBNB balance covers WBNB token liability plus all quote liabilities; other assets cover their own liabilities. |
+| `contracts/test/PocAudit03Oracle.t.sol` | V2 oracle age | V2 observation windows age out; stale observations cannot remain valid indefinitely. |
+| `contracts/test/PancakeV3TwoHopTwapOracle.t.sol` | V3 two-hop oracle | Checks TWAP windows and harmonic liquidity floors across both pools. |
+
+---
+# SOURCE: safety/monitoring.md
+---
+
+# Operational Monitoring & Incident Response
+
+Deployment baselines, distinct upgrade and pause roles, and recovery checks for the QQQB revenue lane.
+
+---
+
+## 1. QQQB Revenue Dependencies and Approved Baselines
+
+Production monitoring is configured against the actual deployment and an explicitly reviewed baseline; local test results do not establish that a production service is running.
+
+- **Flap processor routing**: Check the deployed processor owner, creator-revenue target (`FatCatQqqbVault`), payout quote (QQQB), fee recipient and fee configuration against the approved launch record. The P2 observation was `feeRate = 500`, a 5% share of tax, not a permanent platform guarantee.
+- **Vault Beacon baseline**: The QQQB watcher checks the Vault proxy, Beacon, current implementation and code hashes, their Factory binding, canonical Flap Guardian and upgrade-lock state. Before locking, the Beacon owner must be the Factory; after locking it must be the zero address. The owner and the ultimate upgrade authority are different roles.
+- **Issuer policy**: QQQB issuer authority is trusted under the current integration decision. Issuer-role or token-implementation changes are not automatic hold conditions for the official conversion service. Transfers, actual balance changes, liquidity and protected execution must still work.
+
+A mismatch or unavailable approved baseline holds the official maintenance service's QQQB conversion calls and requires review. It does **not** send an on-chain pause transaction or automatically stop public calls. Approving a new baseline after review can release the off-chain hold; it does not reverse an upgrade or completed transaction.
+
+### Upgrade and Pause Roles
+
+| Action | Authorized role | Scope |
+|---|---|---|
+| Factory `upgradeVaultImplementation(address)` | Flap Guardian only | Upstream QQQB Vault implementations under this Factory |
+| Factory `lockVaultUpgrades()` | Flap Guardian only | Permanently disables those upgrades; irreversible |
+| QQQB Vault `pause()` | Project governor, project guardian, or Flap Guardian | Stops conversion under the current implementation |
+| QQQB Vault `unpause()` | Project governor or Flap Guardian | Resumes conversion if all execution checks pass |
+
+The project guardian can pause but cannot unpause or upgrade this Vault. The Factory upgrade path does not change the fixed BNB receiver, Belly or staking contracts. A valid on-chain pause blocks conversion for official and public callers alike; waiting QQQB stays upstream.
+
+---
+
+## 2. Emergency Pause & Recovery
+
+The protocol incorporates robust incident response mechanisms:
+
+- **Emergency Pause Controls**: Both protocol governance and the dedicated `Guardian` address hold the power to immediately pause The Belly's outflow.
+- **Scope of Pause**: Pausing halts releases and market swaps, preventing fund drainage. It **deliberately does not** pause principal redemption in `StakingVault.sol`.
+- **Unpause Recovery**: Unpausing requires multi-signature governance authorization. The protocol maintains rehearsed recovery procedures and automated verification test suites to ensure rapid recovery during live incidents.
+
+---
+
+## 3. Responsible Disclosure & Security Channel
+
+TheFatCat welcomes independent security researchers and white-hat hackers:
+
+- **Security Reporting**: Vulnerabilities should be submitted privately via [GitHub Security Advisories](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new).
+- **Review & Feedback**: The security response team regularly reviews submitted security reports and aims to provide prompt evaluation and feedback.
+- **Discretionary Grants**: Valid Critical and High severity findings verified by the community are eligible for discretionary security bounties from the community treasury.
+
+---
+# SOURCE: safety/risks-and-status.md
+---
+
+# Risks & Operating Conditions
+
+Transparent disclosures regarding protocol assumptions, third-party dependencies, and operating conditions.
+
+---
+
+## 1. Network & Opening Rules
+
+{: .note }
+This page describes the network, opening conditions and dependency boundaries. Use official contract addresses and on-chain state for interactions.
+
+- **Target Network**: BNB Chain (Chain ID: 56).
+- **Initial Launch Venue**: Flap bonding curve, paired with QQQB; reward accounting remains WBNB.
+- **Staking Opening Timeline**: Trading begins on the bonding curve. Staking requires a successful `openStaking()` call: Governor-only before graduation, permissionless after graduation. That transaction starts the seven-day reward clock.
+- **7-Day Warmup & Treasury Timelock Protections**:
+  1. **Reward Emission Delay (Warmup Period)**: When staking is opened (calling `openStaking()` under the hood to start the clock), the protocol establishes a 7-day warmup period. During this window, diet intervals and seniority advance normally, but no rewards are emitted yet, ensuring early stakers can accumulate initial seniority on equal footing;
+  2. **Treasury Outflow Delay**: The Belly reservoir's authorization for the procurement execution module is set by governance through an independent proposal and is protected by a separate 7-day delay (these two gates operate on independent clocks and are not inherently synchronized);
+  3. **Initial Cushion Building**: During the initial 7-day warmup week, trading taxes flow continuously into The Belly, accumulating an initial buffer reserve before emissions commence.
+- **Contract Addresses**: Use the official addresses and verified source referenced on the [Contracts]({% link contracts.md %}) page and confirm the network.
+
+---
+
+## 2. Material Risk Disclosures
+
+### 1. Market Volume & Variable Rewards
+The protocol does not promise or provide fixed yields; all reward funding derives strictly from secondary market trading volume taxes (plus voluntary donations). During market lulls, inflows may decrease significantly. While The Belly acts as an exponential shock absorber, it cannot create artificial yield when trading stops.
+
+### 2. External Upstream Processor Dependency
+On BNB Chain, the transaction tax processor is an external contract owned by the Flap factory system. Upstream upgrades or configuration changes can affect fee delivery timing and liquidation pacing. The QQQB Vault also uses a Beacon whose Factory exposes Guardian-only upgrade and permanent-lock functions. This upgrade authority affects upstream QQQB handling, not the fixed receiver, Belly or staking principal. The project currently trusts QQQB issuer authority; unavailable transfers or liquidity can still delay conversion. See [Monitoring and Roles]({% link safety/monitoring.md %}).
+
+### 3. Market Volatility & Execution Delays
+Procuring non-native assets relies on oracle pricing and slippage protection. During extreme market volatility or sudden liquidity drying, procurement batches may pause until prices stabilize. If swaps cannot be executed over an extended period, eligible pending amounts can be settled in native BNB.
+
+### 4. Third-Party Tokenized Assets (bStocks) & Settlement Boundaries
+Tokenized equities and similar assets are issued and custodied by third-party institutions and are not direct equity shares of the underlying companies. They carry risks of issuer default, trading halts, and regulatory restrictions. The protocol caps probation allocations at 5% per diet to reduce single-asset exposure; when an asset cannot be procured, eligible pending amounts can be settled in native BNB (this settlement remains subject to the Belly's 8-hour window velocity cap, rather than an instant full withdrawal).
+
+---
+# SOURCE: whitepaper.md
+---
+
+# TheFatCat Protocol Whitepaper (v1.0)
+
+**Decentralized Trading-Tax Routing Protocol with Adaptive Damping and Seniority Weighting**  
+*Official Release v1.0 — September 2026*
+
+---
+
+## Document Sections
+
+Access the technical whitepaper specifications and download official distribution formats:
+
+- **[Official Downloads & Specs]({% link whitepaper/downloads.md %})**: Academic double-column PDF in English and Chinese (Typst 0.15).
+- **[Mathematical Architecture Abstract]({% link whitepaper/math-overview.md %})**: Theoretical derivations of The Belly exponential damping, $O(1)$ closed-form seniority algebra, and tested solvency invariants.
+
+---
+# SOURCE: whitepaper/math-overview.md
+---
+
+# Mathematical & Theoretical Architecture Abstract
+
+A concise theoretical summary of the mathematical breakthroughs in the TheFatCat whitepaper:
+
+---
+
+## 1. The Belly Exponential Damping Mechanics
+Operates on a discrete permissionless clock cadence ($\Delta t \ge 8\text{h}$). Releases $\alpha = 8/168 = 1/21 \approx 4.7619\%$ of unreserved quote balance per interval, featuring an ideal zero-inflow model half-life of 4.735 days. Outflow rate is strictly bounded by a window allowance of $16/168 \approx 9.5238\%$, requiring 7 discrete window allowances (48–56 hours) to draw down 50%.
+
+---
+
+## 2. $O(1)$ Closed-Form Seniority Ledger
+Linear algebra decomposition partitions stakers into Climbing ($m - j_i < 21$) and Settled ($m - j_i \ge 21$) cohorts, evaluating total active weight in $O(1)$ scalar arithmetic:
+
+$$W(m) = (1 + m) P_{\text{climb}} - J_{\text{climb}} + 22 P_{\text{settled}} + W_{\text{exiting}} - H_{\text{opening}}$$
+
+Here $j_i$ is the weight reference `effectiveFrom`; eligibility starts only at `activeFrom`. $H_{\text{opening}}$ is the Ledger's `headOpening` correction that removes opening-meal weight before a position is eligible. Ordinary positions have `effectiveFrom = activeFrom` and zero opening correction.
+
+Graduation is managed via a 22-slot circular ring buffer. Dual-prefix accumulators ($A_{a, m}, B_{a, m}$) scaled by $\text{RAY} = 10^{27}$ compute quote entitlements in $O(1)$ constant gas.
+
+---
+
+## 3. Sovereign Multi-Asset Diets Formula
+Each position designates its preferred reward asset. Under ideal conditions, nominal quote budgets cancel out algebraically:
+
+$$\text{Share}_{i, a} = Q_{\text{total}} \cdot \frac{w_i}{W_{\text{total}}}$$
+
+---
+
+## 4. Tested Solvency Invariants
+Conservative integer floor division guarantees super-solvency:
+
+$$\sum_{i=1}^N r_i \le R, \quad \Delta_{\text{dust}} = R - \sum_{i=1}^N r_i \ge 0$$
+
+Dual liabilities (`liability[asset]` and `quoteLiability[asset]`) remain fully covered by physical contract balances.
+
+---
+# SOURCE: whitepaper/downloads.md
+---
+
+# Official Whitepaper Downloads
+
+The official technical specification is available as publication-grade PDF for offline review, print, and academic citations:
+
+---
+
+## Academic Double-Column PDF (Publication Ready)
+Typeset using **Typst 0.15** with publication-grade vector graphics and mathematical typesetting:
+
+This v1.0 revision (2026-09-27) aligns net revenue splits, FEED rewards, configurable menu limits, bounded time-proration and contract operating rules.
+
+- [Download English PDF (v1.0)]({{ '/assets/whitepaper/TheFatCat_Whitepaper_v1.0_EN.pdf' | relative_url }}){:download="TheFatCat_Whitepaper_v1.0_EN.pdf"}
+- [Download Chinese PDF (v1.0)]({{ '/assets/whitepaper/TheFatCat_Whitepaper_v1.0_ZH.pdf' | relative_url }}){:download="TheFatCat_Whitepaper_v1.0_ZH.pdf"}
+
+---
+# SOURCE: faq.md
+---
+
+# Frequently Asked Questions (FAQ) & Limitations
+
+Clear, honest answers to high-frequency community and technical questions regarding TheFatCat protocol.
+
+---
+
+## Category Directory
+
+Explore specific question categories:
+
+- **[Staking & Positions FAQ]({% link faq/staking.md %})**: Questions on APY/APR transparency, unpausable principal redemptions, position isolation, and staking thresholds.
+- **[Seniority & Diets FAQ]({% link faq/seniority-and-rewards.md %})**: The initial 7-day fair-launch ramp period, diet switching mechanics, native BNB one-click unwrapping, and Time-Seniority Certificates.
+- **[The Belly & Emission FAQ]({% link faq/belly-and-release.md %})**: Why emissions differ from raw 8h fees, upstream threshold mechanics, and the 7-window outflow throttle.
+- **[Security & Custody FAQ]({% link faq/security-and-safety.md %})**: Front-end independence, zero sweep backdoors, and Guardian defensive constraints.
+
+---
+# SOURCE: faq/staking.md
+---
+
+# Staking & Positions FAQ
+
+---
+
+## 1. Why is there no published APY or APR?
+Because TheFatCat is an authentic decentralized trading tax routing protocol, not an inflationary ponzi or lending protocol. Rewards depend entirely on actual trading volume, the current Belly balance, active staker weights, and individual diet choices. Any fixed yield number would be an artificial marketing fabrication.
+
+---
+
+## 2. What happens if I redeem my principal?
+You may call `redeem()` at any block to withdraw 100% of your principal. There is zero exit fee or lockup penalty. The only trade-off is that redeeming forfeits the single currently open interval and ends that position's seniority. Any rewards settled in previous intervals remain permanently yours to claim in the distributor.
+
+---
+
+## 3. Why can't positions be merged or added to?
+Every stake creates an isolated position with its own independent seniority clock. Allowing capital to be appended to an existing mature position would enable **Seniority Laundering**—a whale could open a tiny position, wait 7 days to reach Notch 22, and then dump massive capital into it to instantly receive $22.0\times$ privilege without waiting through the ramp period. To stake additional tokens, simply open a new position. A single wallet can hold and manage multiple positions with zero friction.
+
+---
+
+## 4. What is the minimum staking threshold?
+The protocol enforces a 100,000 FATCAT floor per position. This prevents dust spamming and protects the gas efficiency of on-chain state accounting.
+
+---
+# SOURCE: faq/seniority-and-rewards.md
+---
+
+# Seniority & Diets FAQ
+
+---
+
+## 1. Why are there zero reward emissions during the first 7 days following staking open?
+The first 7 days following staking open serve as the system's **Warmup Window**:
+1. **Fair Start & Seniority Accumulation**: When staking opens (calling `openStaking()` under the hood to start the clock), the protocol establishes a 7-day warmup period. During this time, intervals and seniority notches advance normally (from Notch 1 upward), but dividends are not yet emitted, ensuring early stakers build up seniority on equal footing;
+2. **Treasury Outflow Timelock**: The Belly reservoir enforces an independent 7-day governance delay before authorizing the procurement execution module to withdraw capital (the two gates operate on independent clocks and are not inherently synchronized);
+3. **Accumulating Initial Dividend Backing**: During this initial week, trading taxes flow continuously into The Belly without outflows, establishing a deep buffer reserve before distributions begin.
+
+---
+
+## 2. If I change my Diet, does my seniority notch reset?
+**No.** Your seniority notch is tied to your position's tenure in the pool, not your choice of asset. Changing your diet takes effect at the next meal boundary and preserves 100% of your accumulated seniority notch ($c_i$).
+
+---
+
+## 3. How do I claim rewards, and how does native BNB work?
+You can claim rewards at any time through the dashboard. For stakers who selected BNB as their Diet, the protocol provides a native withdrawal method (calling `claimNative()` under the hood) that automatically unwraps WBNB into native BNB in a single transaction without extra manual wrapping steps.
+
+---
+
+## 4. What is a Time-Seniority Certificate? Is it currently live?
+A [Time-Seniority Certificate]({% link guides/seniority-certificates.md %}) is an on-chain ERC-721 credential system designed to assetize and record stakers' accumulated time and seniority.
+- **Technical Parameters**: Fixed supply cap of 9,999 units, minted by burning FATCAT upon position exit. Features 5% ERC-2981 secondary royalties routed to `CertificateRevenueVault` which can flush actual BNB/WBNB payments into The Belly reservoir.
+- **Governance & Activation**: Activation of certificate minting is governed via a two-step timelock proposal process in `StakingVault.sol` (`CERTIFICATE_BINDING_DELAY`).
+
+---
+# SOURCE: faq/belly-and-release.md
+---
+
+# The Belly & Dynamic Emission FAQ
+
+---
+
+## 1. Why doesn't The Belly payout match the exact trading fees from the last 8 hours? Why is the allocation 1/21 (~4.76%)?
+The Belly operates as an **exponential damping reservoir**, not a direct pass-through pipe:
+- **Why 1/21:** The protocol benchmarks time against a natural week (7 days = 168 hours) with 3 meals/day (8 hours each), totaling exactly 21 meals per week. Each standard interval emits $8/168 = 1/21 \approx 4.76\%$ of net unreserved balance, ensuring the reservoir naturally maintains a steady-state buffer equal to one full week (21 meals) of fee inflows.
+- **Volumetric Smoothing:** Spikes in trading volume are absorbed and smoothed across weeks, ensuring dividends continue even when trading enters quiet periods.
+- **Bounded Time-Proration**: A successful advance allocates `base × min(elapsed, 16 hours) / 168 hours`. It advances one meal and restarts its timer at the current timestamp; longer delays do not backfill all missed meals or all elapsed hours.
+
+---
+
+## 2. Why is The Belly balance reading zero early on?
+After graduation, Flap accumulates FATCAT tax tokens and liquidates them into QQQB when the deployed threshold and sell conditions are met. QQQB then awaits a protected conversion through USDT/WBNB; a successful conversion funds Belly through the fixed BNB receiver in the same transaction. A zero Belly inflow can therefore reflect upstream batching or unmet conversion conditions. Waiting QQQB is not WBNB already held by Belly.
+
+---
+
+## 3. What is the 7-Window outflow defense?
+Even if the authorized `ExecutionRouter` were compromised by an unforeseen vulnerability, The Belly’s hardcoded outflow allowance throttles any potential draining:
+- Max per-window draw: $\le 16/168 \approx 9.5238\%$.
+- Draining 50% of the reservoir requires at least **7 full window intervals** (48 to 56 hours), ensuring ample reaction time for protocol governance or the Guardian to pause anomalies.
+
+---
+# SOURCE: faq/security-and-safety.md
+---
+
+# Security & Capital Custody FAQ
+
+---
+
+## 1. What happens if the website goes offline?
+Your principal does not depend on our website. Staking contracts are fully permissionless and will be publicly verified on BscScan upon mainnet deployment. Follow our [Emergency Exit Guide]({% link guides/emergency-exit.md %}) to redeem your principal directly on-chain via any standard Web3 block explorer or interface.
+
+---
+
+## 2. Can an administrator freeze my principal?
+**No.** In [`StakingVault.sol`]({% link contracts.md %}), the `redeem()` function intentionally ignores the contract's `paused` variable. Even during emergency governance pauses, the path that returns your principal can never be obstructed.
+
+---
+
+## 3. Can an administrator or developer rug pull or drain user funds?
+**No.** StakingVault and The Belly have zero administrative sweep, extraction, or migration backdoors. The only capital outflow paths are user-initiated principal redemption and the write-once authorized spender's window-capped release (`release()`, mathematically limited to at most 16/168 per interval window). All outflows are strictly bound by the immutable clock and mathematical release formulas.
+
+---
+
+## 4. What authority does the protocol Guardian hold?
+The protocol `Guardian` address holds solely defensive powers:
+- Ability to trigger an emergency pause on Belly outflows during anomalous market conditions.
+- Zero custody of user principal.
+- Zero capability to sweep, transfer, or redirect capital to arbitrary addresses.
+
+---
+# SOURCE: notices.md
+---
+
+# Notices & Legal Disclaimers
+
+Important legal disclosures, non-financial advice notices, and protocol interaction warnings.
+
+---
+
+## Document Sections
+
+Review protocol risk warnings and compliance specifications:
+
+- **[Protocol Risk Disclaimers]({% link notices/risk-disclaimers.md %})**: Experimental DeFi protocol classification, non-financial advice notices, zero profit promises, and lack of fiduciary relationship.
+- **[Regulatory & Compliance Status]({% link notices/regulatory-status.md %})**: Code is Law precedence, third-party platform dependencies, and jurisdictional compliance obligations.
+
+---
+# SOURCE: notices/regulatory-status.md
+---
+
+# Regulatory Status & Legal Jurisdiction
+
+---
+
+## 1. Code is Law & Precedence
+Smart contracts on the blockchain are autonomous and irreversible:
+1. **Precedence**: In the event of any conflict or inconsistency between the explanatory prose in this documentation and the deployed on-chain bytecode, the **verified smart contract code on BNB Chain always takes absolute precedence**.
+2. **Third-Party Venue Dependencies**: The protocol interacts with third-party decentralized applications and launchpads (including Flap and PancakeSwap). TheFatCat core contributors have no control over third-party infrastructure, RPC availability, or external token smart contracts.
+
+---
+
+## 2. Jurisdiction & User Responsibility
+Users are solely responsible for complying with all applicable laws, regulations, and tax obligations in their relevant jurisdiction before acquiring FATCAT tokens or interacting with the protocol contracts. Access may be restricted or prohibited in jurisdictions under comprehensive sanctions or where decentralized digital asset staking is prohibited by law.
+
+3. **Third-Party Tokenized Assets (bStocks) Special Regulatory & Qualification Notice**:
+Select menu options supported by the protocol comprise tokenized certificates (bStocks) issued by third-party regulated entities (such as Backed, etc.) that track traditional equity or index ETF price performance. These certificates do not confer direct corporate stock ownership or voting rights. Third-party issuer offering circulars typically impose strict investor qualification standards and restricted jurisdiction exclusions (e.g., generally not offered or sold to restricted persons in the United States, United Kingdom, and other restricted territories). Stakers designating these assets as their Diet are solely responsible for reviewing issuer terms and ensuring full compliance with cross-border regulatory and tax requirements.
+
+---
+# SOURCE: notices/risk-disclaimers.md
+---
+
+# Protocol Risk Disclaimers
+
+---
+
+## 1. Experimental DeFi Protocol & Meme Culture Attributes
+TheFatCat is an experimental decentralized DeFi protocol combining community Meme culture with automated transaction tax routing on BNB Chain:
+- **No Investment Advice**: Nothing contained in this documentation, the website, community channels, or associated smart contracts constitutes financial, investment, legal, tax, or professional advice of any nature.
+- **Zero Profit Guarantee**: TheFatCat does not promise or guarantee profit, returns, yield, price appreciation, or capital preservation. Rewards depend strictly on secondary market trading volume, pool tenure, active weights, and asset execution conditions.
+- **Risk of Total Loss**: Digital assets and smart contracts carry inherent financial, technological, and market risks, including the complete loss of staked or traded capital.
+
+---
+
+## 2. No Fiduciary Relationship
+Neither TheFatCat, its open-source contributors, nor any affiliated developers act as an investment advisor, trustee, broker, or financial fiduciary to any staker or token holder. All interactions with the smart contracts are conducted strictly on a peer-to-protocol, self-directed basis.
+
+---
+# SOURCE: links.md
+---
+
+# Official Links & Ecosystem Directory
+
+Verified navigation directory for official applications, social channels, smart contracts, and developer repositories of TheFatCat protocol.
+
+{: .warning }
+Always verify browser domain names before connecting your Web3 wallet or signing on-chain transactions. Protocol contributors will never initiate direct messages, ask for private keys, or request seed phrases.
+
+---
+
+## Core Applications & Channels
+
+<div class="tfc-portal-grid">
+  <div class="tfc-portal-card">
+    <div class="tfc-portal-badge live">Live</div>
+    <div class="tfc-portal-icon">🌐</div>
+    <h3 class="tfc-portal-title">Official Website</h3>
+    <p class="tfc-portal-desc">The primary portal for TheFatCat protocol. Includes protocol overview, interactive hydrodynamic reservoir simulator, and tokenomics background.</p>
+    <a href="https://thefatcat.fun" target="_blank" rel="noopener noreferrer" class="tfc-portal-btn">
+      Visit Main Site &rarr;
+    </a>
+    <div class="tfc-portal-url">https://thefatcat.fun</div>
+  </div>
+
+  <div class="tfc-portal-card highlight">
+    <div class="tfc-portal-badge live">DApp</div>
+    <div class="tfc-portal-icon">🥣</div>
+    <h3 class="tfc-portal-title">The Belly (Staking App)</h3>
+    <p class="tfc-portal-desc">Direct workbench to stake FATCAT, select Diet reward assets (BNB/WBNB, QQQB, SPCXB, NVDAB, SPYB, GOOGLB), monitor Hunger state, and claim meal distributions.</p>
+    <a href="https://thefatcat.fun/belly" target="_blank" rel="noopener noreferrer" class="tfc-portal-btn primary">
+      Launch Staking App &rarr;
+    </a>
+    <div class="tfc-portal-url">https://thefatcat.fun/belly</div>
+  </div>
+
+  <div class="tfc-portal-card">
+    <div class="tfc-portal-badge live">Community</div>
+    <div class="tfc-portal-icon">𝕏</div>
+    <h3 class="tfc-portal-title">Official X (Twitter)</h3>
+    <p class="tfc-portal-desc">The official channel for technical announcements, smart contract deployments, milestone updates, and community communications.</p>
+    <a href="https://x.com/TheFatCatFi" target="_blank" rel="noopener noreferrer" class="tfc-portal-btn">
+      Follow @TheFatCatFi &rarr;
+    </a>
+    <div class="tfc-portal-url">https://x.com/TheFatCatFi</div>
+  </div>
+
+  <div class="tfc-portal-card muted">
+    <div class="tfc-portal-badge pending">Pending Genesis</div>
+    <div class="tfc-portal-icon">✈️</div>
+    <h3 class="tfc-portal-title">Official Telegram</h3>
+    <p class="tfc-portal-desc">Official community group and announcement broadcast channel. Reserved; the official link will be populated prior to genesis launch.</p>
+    <a href="javascript:void(0);" class="tfc-portal-btn disabled" aria-disabled="true">
+      Coming Soon (Pending Genesis)
+    </a>
+    <div class="tfc-portal-url">t.me/ (Pending Genesis)</div>
+  </div>
+</div>
+
+---
+
+## Technical & Governance Gateways
+
+Comprehensive references for developers, auditors, and integrators:
+
+| Gateway / Channel | Address / Resource Link | Verification Notes |
+| :--- | :--- | :--- |
+| **Documentation Portal** | [thefatcatofficial.github.io/TheFatCat-docs/](https://thefatcatofficial.github.io/TheFatCat-docs/) | Canonical technical specifications & guides |
+| **Public Docs Repository** | [github.com/TheFatCatOfficial/TheFatCat-docs](https://github.com/TheFatCatOfficial/TheFatCat-docs) | Open-source Jekyll documentation repository |
+| **BNB Chain Explorer** | [bscscan.com](https://bscscan.com) | Official network explorer for deployed contracts |
+| **Security Advisories** | [GitHub Security Advisories](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new) | Responsible vulnerability disclosure channel (periodic review & prompt feedback) |
+
+---
+
+## Anti-Phishing Security Checklist
+
+Before interacting with any protocol application or contract:
+
+1. **Verify Exact Domain**: Ensure the address bar reads `https://thefatcat.fun` or `https://thefatcat.fun/belly`. Beware of lookalike domains using subtle character substitutions.
+2. **Check Contract Addresses**: Compare contract targets with the [Verified Contracts Matrix]({% link contracts.md %}) schedule.
+3. **No Signature for Free Grants**: The protocol never requires signing permit messages or approving unlimited spending for airdrops.

@@ -1,0 +1,63 @@
+# TheFatCat Documentation
+
+> TheFatCat is a decentralized trading-tax routing and yield distribution protocol on BNB Chain, implementing discrete first-order exponential smoothing (The Belly) and duration-seniority weighting (1.0x to 22.0x). The protocol natively supports outputting tokenized stocks (bStocks) tracking the value of core real-world equities, enabling stakers to route their yield directly into equity-backed assets without traditional brokerage accounts.
+
+## Formal Foundations & Architecture
+- [Introduction](https://thefatcatofficial.github.io/TheFatCat-docs/): Overview of TheFatCat architecture, hydrodynamic damping, and bStocks output.
+- [Definitions & Notation](https://thefatcatofficial.github.io/TheFatCat-docs/definitions.html): Formal algebraic notation, variable index, dual-track terminology mapping, and core architecture invariants.
+- [Terminology Mapping](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/terminology.html): Canonical DeFi mechanism mapping for protocol terms (meal, belly, diet, hunger).
+- [Algebraic Notation](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/notation.html): Strict mathematical symbol definitions, dimensional units, and coordinate frames.
+- [Protocol Invariants](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/invariants.html): Conservation of value, monotonic progression, non-negative dust, and bounded outflows.
+- [Paradigm Shift](https://thefatcatofficial.github.io/TheFatCat-docs/background/paradigm-shift.html): Quantitative proofs of dilution suppression and volatility damping vs traditional reflection tokens.
+- [Prior Art & Comparative Matrix](https://thefatcatofficial.github.io/TheFatCat-docs/background/prior-art.html): Comprehensive mechanism comparison against Curve Finance, Pendle V2, and Synthetix V3.
+- [The Belly Reservoir Model](https://thefatcatofficial.github.io/TheFatCat-docs/background/reservoir-model.html): Hydrodynamic damping mathematics, first-order decay, and 1/21 release cadence per 8-hour meal.
+- [Time-Weighting Model](https://thefatcatofficial.github.io/TheFatCat-docs/background/time-weighting.html): Staked time as the sole non-capital weighting variable (1.0x to 22.0x additive seniority multiplier).
+- [Core Principles](https://thefatcatofficial.github.io/TheFatCat-docs/background/principles.html): Immutable sovereignty, continuous unwithholdable yield, and linear capital scale.
+- [System Topology](https://thefatcatofficial.github.io/TheFatCat-docs/topology.html): Comprehensive smart contract wiring and asset routing architecture.
+- [Asset Flows Topology](https://thefatcatofficial.github.io/TheFatCat-docs/topology/asset-flows.html): QQQB tax receipt, deterministic conversion, revenue allocation, and vault isolation.
+- [Batch Settlement Pipeline](https://thefatcatofficial.github.io/TheFatCat-docs/topology/claim-pipeline.html): Decoupled TWAP swap routing, MEV isolation, and multi-asset distributor settlement.
+- [State Transitions & Cadence](https://thefatcatofficial.github.io/TheFatCat-docs/topology/state-machine.html): Discrete intervals, monotonic clock progression, and epoch triggers.
+
+## Protocol Economics & Fees
+- [Trading Tax & Fee Routing](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/fees.html): 4% FATCAT tax paid as QQQB; after fees and fixed conversion, post-bounty net WBNB splits 85% to the Belly treasury and 15% to project development, operations and marketing.
+- [Hydrodynamics Mathematics](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html): Exponential smoothing release formulas, decay derivation, and continuous yield smoothing.
+- [Seniority Engine](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html): O(1) closed-form calculation of time-seniority multipliers, ring buffers, and exit forfeiture.
+- [Execution & Batching](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html): Decoupled accounting and execution, TWAP oracle protection, and 5% probation cap for bStocks.
+
+## User Guides & Operations
+- [Staking & Positions Guide](https://thefatcatofficial.github.io/TheFatCat-docs/guides/staking.html): 100,000 FATCAT active entry floor, isolated positions, and continuous staking rules.
+- [Diets & Claiming Rewards](https://thefatcatofficial.github.io/TheFatCat-docs/guides/diets-and-claiming.html): Selecting reward assets (BNB, bStocks, FATCAT), batch claiming, and native BNB unwrapping.
+- [Emergency Exit Procedures](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html): Direct on-chain principal redemption bypassing emergency pauses.
+- [Time-Seniority Certificates](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html): ERC-721 crystallized duration credential tokens, burn-to-mint mechanism, and 5% Belly royalties.
+- [Decentralized Maintenance](https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html): Public one-tx maintenance, QQQB conversion, immediate due-meal access, and the eligible caller's WBNB-output / 38 bounty targeting 0.1% of represented trade value.
+
+## Smart Contracts Reference & Security
+- [Contracts Overview Matrix](https://thefatcatofficial.github.io/TheFatCat-docs/contracts.html): Canonical deployment addresses, deterministic bytecode verification, and immutable pointers.
+- [Core Vaults](https://thefatcatofficial.github.io/TheFatCat-docs/contracts/core-vaults.html): QQQB Vault/Factory, Guardian-only Beacon upgrades, fixed BNB receiver, Belly and staking boundaries.
+- [Routers & Oracles](https://thefatcatofficial.github.io/TheFatCat-docs/contracts/routers-and-oracles.html): ExecutionRouter.sol, PancakeV3TwoHopTwapOracle.sol, and execution pipelines.
+- [Seniority Ring Buffers & Ledgers](https://thefatcatofficial.github.io/TheFatCat-docs/contracts/seniority-ledger.html): SeniorityLedger.sol, 22-slot graduation ring buffer, and multi-cohort duration accounting.
+- [Custody & Solvency Proofs](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html): Integer floor truncation bounds, non-negative dust theorem, and zero admin sweeps.
+- [Audits & Hardening Post-Mortems](https://thefatcatofficial.github.io/TheFatCat-docs/safety/audits-and-hardening.html): Vulnerability post-mortems and formal defenses from PocAudit regression suites.
+- [Operational Monitoring](https://thefatcatofficial.github.io/TheFatCat-docs/safety/monitoring.html): Upstream tax processor metric tracking and Guardian emergency roles.
+- [Security & Risk Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html): Trust boundaries, upgradability scope, and risk mitigations.
+
+## Frequently Asked Questions (FAQ)
+- [FAQ Overview](https://thefatcatofficial.github.io/TheFatCat-docs/faq.html): High-frequency community, architectural, and operational questions.
+- [Staking & Positions FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq/staking.html): APY expectations, unpenalized redemption, position isolation, and entry thresholds.
+- [The Belly & Release FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq/belly-and-release.html): Early zero balance, 7-window outflow defense, and spender activation timelocks.
+- [Seniority & Rewards FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq/seniority-and-rewards.html): Notch climb mechanics, equal distribution entitlement, and claiming cadences.
+- [Security & Safety FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq/security-and-safety.html): Non-custodial principal, zero sweep capability, and restricted Guardian powers.
+
+## Whitepaper & Mathematical Specifications
+- [Academic Whitepaper](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper.html): Formal academic specification and dual-column architecture overview.
+- [Mathematical Formalism](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper/math-overview.html): Complete quantitative proofs, half-life derivations, and algebraic definitions.
+- [Official Whitepaper Downloads](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper/downloads.html): Publication-grade bilingual PDF downloads and compilation verification.
+
+## Notices, Compliance & Ecosystem
+- [Legal Notices & Disclaimers](https://thefatcatofficial.github.io/TheFatCat-docs/notices.html): Decentralized protocol disclaimers, non-financial advice, and boundaries.
+- [Risk Disclaimers](https://thefatcatofficial.github.io/TheFatCat-docs/notices/risk-disclaimers.html): Smart contract risk, upstream oracle dependencies, and liquidation boundaries.
+- [Regulatory Status](https://thefatcatofficial.github.io/TheFatCat-docs/notices/regulatory-status.html): Tokenized equity tracking certificates (bStocks) legal boundaries and jurisdictional exclusions.
+- [Official Directory & Links](https://thefatcatofficial.github.io/TheFatCat-docs/links.html): Official dApp portals, social channels, code repositories, and contract addresses.
+
+## Full Context Ingestion
+- [Full Documentation for LLMs](https://thefatcatofficial.github.io/TheFatCat-docs/llms-full.txt): Complete concatenated technical documentation in a single clean plain text file.
