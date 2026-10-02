@@ -1,0 +1,141 @@
+---
+layout: table_wrappers
+---
+
+<!DOCTYPE html>
+
+<html lang="{{ page.lang | default: 'en' }}">
+{% include head.html %}
+<body data-lang="{{ page.lang | default: 'en' }}">
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  {% include icons/icons.html %}
+  {% if page.nav_enabled == true %}
+    {% include components/sidebar.html %}
+  {% elsif layout.nav_enabled == true and page.nav_enabled == nil %}
+    {% include components/sidebar.html %}
+  {% elsif site.nav_enabled != false and layout.nav_enabled == nil and page.nav_enabled == nil %}
+    {% include components/sidebar.html %}
+  {% endif %}
+  <div class="main" id="top">
+    {% include components/header.html %}
+    <div class="main-content-wrap">
+      {% include components/breadcrumbs.html %}
+      <div id="main-content" class="main-content">
+        <div class="page-corner-actions">
+          {% include components/ai_actions.html %}
+        </div>
+        <main>
+          {% if site.heading_anchors == true %}
+            {% include vendor/anchor_headings.html html=content beforeHeading="true" anchorBody="<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><use xlink:href=\"#svg-link\"></use></svg>" anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
+          {% else %}
+            {{ content }}
+          {% endif %}
+
+        </main>
+        {% include components/footer.html %}
+      </div>
+    </div>
+    {% if site.search_enabled != false %}
+      {% include components/search_footer.html %}
+    {% endif %}
+  </div>
+
+  {% if site.mermaid %}
+    {% include components/mermaid.html %}
+  {% endif %}
+
+  {% include components/mcp_modal.html %}
+
+  <script>
+    (function() {
+      function initCopyButtons(root) {
+        var container = root || document;
+        var blocks = container.querySelectorAll('div.highlighter-rouge, figure.highlight, pre');
+        var isZh = (document.documentElement && document.documentElement.lang === 'zh') ||
+                   (document.body && document.body.getAttribute('data-lang') === 'zh') ||
+                   window.location.pathname.indexOf('/zh') !== -1;
+        var copyIconSvg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="fill:none!important;stroke:currentColor!important;"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" style="fill:none!important;"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" style="fill:none!important;"></path></svg>';
+        var copiedIconSvg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="fill:none!important;stroke:currentColor!important;"><path d="M20 6 9 17l-5-5" style="fill:none!important;"></path></svg>';
+
+        function fallbackCopy(text, cb) {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          ta.style.pointerEvents = 'none';
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          try { document.execCommand('copy'); if (cb) cb(); } catch(e) {}
+          document.body.removeChild(ta);
+        }
+
+        blocks.forEach(function(codeBlock) {
+          if (codeBlock.closest && (codeBlock.closest('#tfc-mcp-modal') || codeBlock.closest('.tfc-diagram-frame'))) return;
+          if (codeBlock.classList && (codeBlock.classList.contains('tfc-diagram-frame') || codeBlock.classList.contains('tfc-diagram-content'))) return;
+          if (codeBlock.tagName === 'PRE' && codeBlock.closest && codeBlock.closest('div.highlighter-rouge, figure.highlight, .tfc-diagram-frame')) return;
+
+          var targetContainer = codeBlock;
+          if (codeBlock.tagName === 'PRE') {
+            if (codeBlock.parentElement && codeBlock.parentElement.classList.contains('tfc-code-wrap')) {
+              targetContainer = codeBlock.parentElement;
+            } else {
+              var wrapper = document.createElement('div');
+              wrapper.className = 'highlighter-rouge tfc-code-wrap';
+              codeBlock.parentNode.insertBefore(wrapper, codeBlock);
+              wrapper.appendChild(codeBlock);
+              targetContainer = wrapper;
+            }
+          }
+
+          if (targetContainer.querySelector('.tfc-code-copy-btn')) return;
+
+          var copyButton = document.createElement('button');
+          var timeout = null;
+          copyButton.type = 'button';
+          copyButton.className = 'tfc-code-copy-btn';
+          copyButton.setAttribute('aria-label', isZh ? '复制代码到剪贴板' : 'Copy code to clipboard');
+          copyButton.innerHTML = copyIconSvg;
+          targetContainer.appendChild(copyButton);
+
+          copyButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (timeout !== null) return;
+            var targetPre = targetContainer.querySelector('pre') || targetContainer.querySelector('code') || targetContainer;
+            var code = targetPre ? (targetPre.innerText || targetPre.textContent) : '';
+            code = code.replace(/\n$/, '');
+
+            var doSuccess = function() {
+              copyButton.classList.add('copied');
+              copyButton.innerHTML = copiedIconSvg;
+              timeout = setTimeout(function() {
+                copyButton.classList.remove('copied');
+                copyButton.innerHTML = copyIconSvg;
+                timeout = null;
+              }, 2000);
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(code).then(doSuccess).catch(function() {
+                fallbackCopy(code, doSuccess);
+              });
+            } else {
+              fallbackCopy(code, doSuccess);
+            }
+          });
+        });
+      }
+
+      window.initCopyButtons = initCopyButtons;
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { initCopyButtons(); });
+      } else {
+        initCopyButtons();
+      }
+    })();
+  </script>
+  <script src="{{ '/assets/js/tfc-pjax.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+  <script src="{{ '/assets/js/tfc-ai.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+</body>
+</html>
