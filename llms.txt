@@ -1,0 +1,60 @@
+# TheFatCat User Documentation
+
+> TheFatCat is a new experimental DeFi protocol that combines meme culture with a decentralized trading-tax routing mechanism.
+
+## Definitions & Architecture
+- [Introduction](https://thefatcatofficial.github.io/TheFatCat-docs/): Protocol overview, reward reserves and time-weighted positions.
+- [Definitions & Notation](https://thefatcatofficial.github.io/TheFatCat-docs/definitions.html): Symbols, units, terminology and accounting conditions.
+- [Terminology](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/terminology.html): Product terms and their meaning in use.
+- [Symbols & Calculation Basis](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/notation.html): Principal, seniority, reward shares and meal references.
+- [Accounting Constraints](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/invariants.html): Principal isolation, allocation limits and funding for settled rewards.
+- [Design Background](https://thefatcatofficial.github.io/TheFatCat-docs/background/paradigm-shift.html): Pass-through rewards compared with reserve-based allocation.
+- [Prior Art](https://thefatcatofficial.github.io/TheFatCat-docs/background/prior-art.html): Related mechanisms and links to Curve, Pendle and Synthetix documentation.
+- [Reservoir Model](https://thefatcatofficial.github.io/TheFatCat-docs/background/reservoir-model.html): Reserve allocation and the assumptions behind the decay model.
+- [Time Weighting](https://thefatcatofficial.github.io/TheFatCat-docs/background/time-weighting.html): Position duration, the seniority ladder and relative reward weights.
+- [Design Principles](https://thefatcatofficial.github.io/TheFatCat-docs/background/principles.html): Principal separation, reward accounting and operating limits.
+- [System Topology](https://thefatcatofficial.github.io/TheFatCat-docs/topology.html): Fund routes, position activation and the steps from allocation to claiming.
+- [Asset Flows](https://thefatcatofficial.github.io/TheFatCat-docs/topology/asset-flows.html): QQQB receipt, conversion, revenue splits and upstream authority boundaries.
+- [Procurement & Claims](https://thefatcatofficial.github.io/TheFatCat-docs/topology/claim-pipeline.html): Ordered purchases, oracle checks, settlement records and claiming settled rewards.
+- [State Machine & Intervals](https://thefatcatofficial.github.io/TheFatCat-docs/topology/state-machine.html): Transaction-driven meal advancement and frozen interval weights.
+
+## Protocol Mechanics & Fees
+- [How the Machine Runs](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/how-the-machine-runs.html): A walkthrough connecting revenue, Belly reserves, seniority, diets, settlement and FEED maintenance.
+- [Tax Routing & Fees](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/fees.html): QQQB tax receipt, conversion rewards and the 85% Belly / 15% Ops split of remaining revenue.
+- [The Belly](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html): Unreserved-balance allocations, the decay model and a safety cap on concentrated outflows after settlement delays.
+- [Meals & Seniority](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html): Position weights, the 1-to-22 seniority ladder and current-interval exit forfeiture.
+- [Procurement & Execution](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html): Global oldest-meal priority, TWAP checks, fallback conditions and claim boundaries.
+
+## User Guides & Operations
+- [Staking & Positions](https://thefatcatofficial.github.io/TheFatCat-docs/guides/staking.html): 100,000 FATCAT entry floor, activation and position ownership.
+- [Diets & Claiming](https://thefatcatofficial.github.io/TheFatCat-docs/guides/diets-and-claiming.html): Enabled reward assets, batch claims and native BNB unwrapping.
+- [Emergency Exit Guide](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html): Direct contract calls for principal redemption and claiming settled rewards without the website.
+- [Time-Seniority Certificates](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html): Future ERC-721 NFTs representing time-based seniority, minted by staking-position holders burning FATCAT; further details will be announced later.
+- [FEED & Decentralized Maintenance](https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html): Public FEED maintenance and qualifying conversion rewards of 1/38 of WBNB output, rounded down.
+
+## Security & Governance
+- [Custody & Accounting Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html): Core fund access, upstream recovery powers and rounding limits.
+- [Testing & Validation](https://thefatcatofficial.github.io/TheFatCat-docs/safety/audits-and-hardening.html): Current protections and the scope of internal regression and invariant tests.
+- [Operational Monitoring](https://thefatcatofficial.github.io/TheFatCat-docs/safety/monitoring.html): Monitoring measures, emergency response and user guidance.
+- [Risks & Operating Conditions](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html): Opening rules, issuer dependencies and settlement delays without fixed payment guarantees.
+
+## Frequently Asked Questions (FAQ)
+- [FAQ & Limitations](https://thefatcatofficial.github.io/TheFatCat-docs/faq.html): Questions about staking, rewards and operating limits.
+- [Staking & Positions FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq/staking.html): Variable rewards, principal redemption, position isolation and entry thresholds.
+- [The Belly & Release FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq/belly-and-release.html): Upstream inflows, reserve allocations, outflow windows and reward outflow authorization.
+- [Seniority & Diets FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq/seniority-and-rewards.html): The launch warmup, separate seniority progression, diet changes and claims.
+- [Security & Custody FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq/security-and-safety.html): Direct contract access, core custody boundaries and upstream permissions and their effects on users.
+
+## Whitepaper & Models
+- [Whitepaper](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper.html): Protocol architecture and models in the whitepaper.
+- [Math Overview](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper/math-overview.html): Allocation and weight equations, model assumptions and accounting bounds.
+- [Whitepaper Downloads](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper/downloads.html): English and Chinese PDF snapshots.
+
+## Notices & Links
+- [Notices & Disclaimers](https://thefatcatofficial.github.io/TheFatCat-docs/notices.html): Protocol status, risk disclosures and legal boundaries.
+- [Risk Disclaimers](https://thefatcatofficial.github.io/TheFatCat-docs/notices/risk-disclaimers.html): Contract, market, liquidity and external dependency risks.
+- [Regulatory Status](https://thefatcatofficial.github.io/TheFatCat-docs/notices/regulatory-status.html): Tokenized asset issuer and jurisdictional limitations.
+- [Official Links](https://thefatcatofficial.github.io/TheFatCat-docs/links.html): Application, community and technical links.
+
+## Full Text
+- [Full Documentation](https://thefatcatofficial.github.io/TheFatCat-docs/llms-full.txt): English documentation collected into one plain-text file.

@@ -1,0 +1,1489 @@
+# TheFatCat Documentation: Full Text
+
+> The English text of all documentation chapters.
+> Website: https://thefatcat.fun
+> Docs: https://thefatcatofficial.github.io/TheFatCat-docs/
+
+---
+# SOURCE: index.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/
+
+# TheFatCat Documentation
+
+TheFatCat is a new experimental DeFi protocol that combines meme culture with a decentralized trading-tax routing mechanism.
+
+## How it works
+
+- **Revenue and allocation:** FATCAT's 4% trading tax is received as QQQB. Following fees, conversion and any earned FEED bounty, net WBNB is split 85% to the Belly and 15% to project development, operations and marketing. An on-time 8-hour meal allocates up to 1/21 of unreserved quote funds; allocation does not itself transfer funds.
+- **Staking weight:** The minimum position is 100,000 FATCAT. An ordinary position becomes eligible from the next meal at 1× weight, increasing by 1× per active meal to 22×. Principal and time multiply linearly; a larger deposit still receives a larger share at equal seniority.
+- **Settlement and claims:** Procurement follows global meal order and uses price and liquidity checks. Eligible failures can settle in WBNB under the fallback rules. Finalized rewards remain claimable; pending procurement can be delayed.
+- **Exit:** Ordinary redemption returns principal without an exit fee and does not check the protocol pause flag. Exiting stops future weight and forfeits the unfinalized active-meal entitlement; previously finalized rewards are retained.
+
+## Start here
+
+| Topic | Pages |
+|:---|:---|
+| Using the protocol | [Staking](https://thefatcatofficial.github.io/TheFatCat-docs/guides/staking.html), [diets and claims](https://thefatcatofficial.github.io/TheFatCat-docs/guides/diets-and-claiming.html), [emergency exit](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html) |
+| Maintenance | [FEED & decentralized maintenance](https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html) |
+| Mechanisms | [How the Machine Runs](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/how-the-machine-runs.html), [Belly allocation](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html), [seniority](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html), [execution](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html), [fees](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/fees.html) |
+| Architecture | [Topology](https://thefatcatofficial.github.io/TheFatCat-docs/topology.html), [definitions](https://thefatcatofficial.github.io/TheFatCat-docs/definitions.html), [design background](https://thefatcatofficial.github.io/TheFatCat-docs/background.html) |
+| Risk and verification | [Security](https://thefatcatofficial.github.io/TheFatCat-docs/safety.html), [risk boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html) |
+| Reference | [FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/faq.html), [whitepaper](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper.html), [notices](https://thefatcatofficial.github.io/TheFatCat-docs/notices.html), [official links](https://thefatcatofficial.github.io/TheFatCat-docs/links.html) |
+
+## Limits and selected future roadmap items
+
+Rewards depend on actual revenue, maintenance and market execution. The protocol promises no fixed return; TWAP checks limit execution conditions but do not eliminate MEV or token, issuer and liquidity risk. Chain availability and token behavior also affect withdrawals and claims.
+
+[Time-Seniority Certificates](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html) will be introduced when the protocol is mature enough.
+
+---
+# SOURCE: definitions.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/definitions.html
+
+# Definitions & Notation
+
+Symbols, units and accounting conditions used throughout the protocol documentation. Product terms such as Belly, meal and diet describe the reserves, participation periods and reward choices users encounter.
+
+## Section Navigation
+
+- **[Notation](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/notation.html)**: Variables, units and interval references.
+- **[Terminology](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/terminology.html)**: Product terms and their meaning in use.
+- **[Accounting Constraints](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/invariants.html)**: Principal isolation, allocation limits and funding for settled rewards.
+
+---
+# SOURCE: definitions/notation.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/definitions/notation.html
+
+# Symbols and Calculation Basis
+
+This table explains the symbols used to understand principal, seniority and reward shares. Amounts represent token quantities; actual receipts depend on completed settlement.
+
+| Symbol | Meaning | How to Read It |
+|:---|:---|:---|
+| $m$ | **Meal Number** | Each successful advance starts the next meal, at least eight hours after the previous advance. |
+| $\Delta t$ | **Meal Interval** | Time since the previous successful advance; one allocation counts at most 16 hours. |
+| $p_i$ | **Position Principal** | FATCAT staked in position $i$. Ordinary positions require at least 100,000 FATCAT in whole tokens. |
+| $c_i$ | **Seniority Multiplier** | Zero before an ordinary new position activates, then 1, rising each active meal to a maximum of 22. |
+| $w_i$ | **Position Weight** | Principal multiplied by seniority, used to determine the reward share. |
+| $W$ | **Total Eligible Weight** | All eligible position weights for the meal; new staking can change your relative share. |
+| $B$ | **Belly Reserves** | Recognized WBNB funds, including allocations not yet paid out for settlement. |
+| $L$ | **Reserved Funds** | Allocated funds still in Belly awaiting purchases or settlement; they cannot be allocated again. |
+| $U$ | **Unreserved Balance** | Belly reserves minus reserved funds, available for a new meal's allocation and never counted below zero. |
+| $a$ | **Diet Asset** | A position's selected reward asset from the enabled menu. |
+| $Q_a$ | **Diet Budget** | The meal's WBNB-denominated budget for diet $a$, rather than its final received token quantity. |
+
+See [Meals & Seniority](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html) and [Belly Reserves and Release](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html).
+
+---
+# SOURCE: definitions/terminology.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/definitions/terminology.html
+
+# Dual-Track Terminology Mapping
+
+Belly, meal and diet are the protocol's community-facing terms. The table explains what they mean in use:
+
+| Product Term | Meaning | What to Know When Using It |
+|:---|:---|:---|
+| **The Belly** | Reward Reserve Treasury | Receives revenue and allocates it meal by meal. It is separate from staked principal and has a window outflow cap. |
+| **Meal** | Reward Accounting Period | Advances are at least eight hours apart. A completed meal records shares; rewards still require settlement. |
+| **Diet** | A Position's Selected Reward Asset | Choose from the enabled menu. Changes preserve seniority, take effect next meal and leave past rewards claimable. |
+| **Seniority Ladder** | A Time-Based Position Weight Multiplier | Rises from Notch 1 to Notch 22 after activation. It is an allocation weight, not a promised return. |
+| **Full Seniority** | Reaching Notch 22 | Further participation does not raise the multiplier. Rewards still depend on revenue and total eligible weight. |
+| **Forfeit** | Surrendering the Currently Open Meal's Share on Exit | Previously earned rewards remain recorded, and principal has no exit fee. |
+| **Belly Outflow Limit** | Maximum Reward Release Within an Eight-Hour Window | Initially 16/168 of the opening WBNB balance, about 9.5238%. Claims of settled rewards do not use this allowance. |
+| **FEED** | Public Protocol Maintenance | Attempts revenue conversion, due-meal advancement and an assigned batch. Only eligible successful conversions earn a Feeder reward. |
+
+---
+# SOURCE: definitions/invariants.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/definitions/invariants.html
+
+# Accounting Constraints
+
+These rules explain how principal and rewards are recorded separately, and how allocations and outflows are limited. They do not establish safety for arbitrary token behavior, market value or chain outages.
+
+## Principal Custody
+
+The principal vault should retain FATCAT corresponding to recorded outstanding principal. Reward purchases are separate. Ordinary principal redemption remains available during a protocol pause; completion still depends on an available chain and successful token transfers. See [Custody Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html).
+
+## Allocation and Outflow
+
+A new meal's budget uses recognized Belly reserves minus existing reserved funds, counting at most 16 hours. An on-time eight-hour meal in the reward period allocates at most 1/21 of this unreserved balance.
+
+Actual outflow uses a different base: **the total WBNB balance when the eight-hour spending window opens**, including funds reserved for pending shares. The initial allowance is 16/168 of that balance. New deposits do not increase the current allowance. Allocation limits and outflow limits apply separately. See [Belly Rules](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html).
+
+## Advancement and Transaction Costs
+
+Meal advancement does not process every staker individually, but it still handles the relevant menu assets. Menu size and the particular operation affect gas; this is not a fixed transaction-cost guarantee.
+
+## Settled Rewards and Rounding
+
+With valid accounting and supported token behavior, total claims from a batch should not exceed the assets actually received for it. Downward rounding may leave small residual balances in the reward-distribution stage.
+
+Settled unclaimed rewards must retain their funding. Pending purchase budgets also cannot become free balance merely because a user has not claimed. Reservations can be released only when the rules establish that no eligible claimant remains. See [Custody Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html) and [Procurement and Settlement](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html).
+
+---
+# SOURCE: background.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/background.html
+
+# Design Background
+
+This section explains the choices behind reserve-based allocation, selectable reward assets and time-weighted staking. Detailed formulas and operating rules are maintained in the protocol pages.
+
+- [Allocation design choices](https://thefatcatofficial.github.io/TheFatCat-docs/background/paradigm-shift.html): Revenue timing, asset selection and eligibility boundaries.
+- [Related mechanisms](https://thefatcatofficial.github.io/TheFatCat-docs/background/prior-art.html): Accounting, time weighting and reference material.
+- [The reserve model](https://thefatcatofficial.github.io/TheFatCat-docs/background/reservoir-model.html): Unreserved funds, allocation and conditional decay estimates.
+- [Time weighting](https://thefatcatofficial.github.io/TheFatCat-docs/background/time-weighting.html): Principal, seniority, exit and certificates.
+- [Principles and limits](https://thefatcatofficial.github.io/TheFatCat-docs/background/principles.html): What the mechanisms provide and what they do not guarantee.
+
+---
+# SOURCE: background/paradigm-shift.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/background/paradigm-shift.html
+
+# Allocation Design Choices
+
+TheFatCat uses three mechanisms to organize trading-tax revenue:
+
+| Design question | Choice | Limit |
+|:---|:---|:---|
+| How should irregular revenue be allocated? | Hold quote funds in the Belly and allocate a fraction of unreserved funds per meal. | A reserve spreads existing revenue across meals; it does not create income or guarantee payout stability. |
+| Which asset should users receive? | Each position selects an enabled menu asset. Procurement is separate from allocation. | Settlement depends on asset eligibility, liquidity, oracle checks and fallback conditions. |
+| How should duration affect shares? | Multiply principal by a seniority coefficient, rising from 1× to 22× for an ordinary continuing position. | New capital can still reduce existing participants' percentage shares. Duration does not fix a position's reward amount. |
+
+New ordinary positions start participating in the next meal. Position exits and diet changes follow explicit boundaries rather than claiming the opening meal's allocation immediately.
+
+See [Belly allocation](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html), [meal and seniority rules](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html) and [execution](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html) for the formulas and conditions.
+
+---
+# SOURCE: background/prior-art.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/background/prior-art.html
+
+# Related Mechanisms and References
+
+Reserve allocation, time weighting and cumulative reward indexes address different questions. Comparing them requires the same accounting units, participation boundaries and asset assumptions; a shared rounding operation alone does not establish equivalent safety.
+
+| Topic | TheFatCat's approach | Details |
+|:---|:---|:---|
+| Accounting cadence | Meals last at least eight hours; an advance ends at most one meal. | [Meal rules](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html) |
+| Position weighting | Principal multiplied by an accrued seniority coefficient. | [Meals & Seniority](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html) |
+| Claims | Settled reward records preserve each position's historical entitlements for later claiming. | [Custody and accounting](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html) |
+| Rounding | Integer payout calculations round down; residue is retained by the distributor. | [Accounting constraints](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/invariants.html) |
+| Market execution | Procurement uses TWAP, liquidity and output checks, with conditional WBNB fallback. | [Execution](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html) |
+
+## Reference material
+
+- [Curve voting escrow documentation](https://curve.readthedocs.io/dao-vecrv.html): A reference for locked-duration voting weight.
+- [Pendle documentation](https://docs.pendle.finance/): Protocol mechanics and version-specific tokenomics.
+- [Synthetix V3 overview](https://blog.synthetix.io/a-quick-explainer-on-synthetix-v3/): Pool, collateral and reward-distributor architecture.
+
+These references are publicly accessible and describe only their respective systems. This project makes no claim that TheFatCat is unique, safer than other protocols or formally verified. Source review and testing remain dependent on the version and behavior being examined.
+
+---
+# SOURCE: background/reservoir-model.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/background/reservoir-model.html
+
+# The Reserve Model
+
+The Belly holds quote funds before procurement. The controller subtracts funds already reserved for existing entitlements before making a new meal allocation. Advancing the meal records budgets; the router later draws funds subject to the Belly's separate window allowance and execution conditions.
+
+For an on-time 8-hour meal, the nominal allocation is at most **1/21 of unreserved quote funds**. A delayed advance counts at most 16 hours of eligible allocation time; it does not create every missed meal. Actual allocation also depends on launch and participation conditions. See [Belly allocation and limits](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html).
+
+## Ideal decay estimate
+
+With no new inflow, allocation and settlement every eight hours, no pause or backlog, and integer rounding ignored, unreserved funds shrink by 20/21 per meal. The resulting model half-life is approximately **4.736 days**. This is an illustration of a regular schedule, not a deadline for actual payments or a guarantee of stable income.
+
+## Settlement is separate
+
+Each position selects a menu asset. Its accounting share is recorded before market procurement; the quantity finally received depends on execution or WBNB fallback. Price checks do not eliminate execution costs, MEV or delay. See [procurement and fallback](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html).
+
+---
+# SOURCE: background/time-weighting.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/background/time-weighting.html
+
+# Time Weighting
+
+Reward weight combines deposited principal and the position's seniority coefficient:
+
+$$w_i = p_i c_i$$
+
+For an ordinary position, the coefficient is zero before its participation boundary, starts at 1× in the next meal and rises by 1× per active meal to 22×. The 21-step climb takes seven days only under regular eight-hour advancement after eligibility starts; maintenance delays can extend it.
+
+At equal seniority, ten times the principal produces ten times the weight. A 22× position has 22 times the weight per unit principal of a 1× position, but its reward also depends on revenue, all other weights and settlement. Larger deposits can still receive larger total shares.
+
+## Exit and certificates
+
+Ordinary principal redemption remains available during a protocol pause and has no exit fee. Exiting ends future participation and forfeits the unfinalized active-meal entitlement. Finalized rewards remain claimable. An ordinary new position starts its own seniority history.
+
+[Time-Seniority Certificates](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html) are planned for release when the protocol has matured; further details will be announced later.
+
+Further reading: [meals and seniority](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html), [staking](https://thefatcatofficial.github.io/TheFatCat-docs/guides/staking.html) and [certificates](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html).
+
+---
+# SOURCE: background/principles.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/background/principles.html
+
+# Principles and Limits
+
+| Principle | Mechanism | Boundary |
+|:---|:---|:---|
+| Allocate from received revenue | The Belly retains quote funds; new meal budgets exclude existing reservations. | No fixed APY, APR or minimum reward. A reserve cannot replace missing revenue. |
+| Separate principal from reward procurement | Principal remains in the staking vault; ordinary redemption does not check the pause flag. | Chain availability, transaction execution and token behavior still matter. |
+| Allow asset selection | Positions choose enabled menu assets independently. | Listing is not a guarantee of token value, issuer performance or successful swaps. |
+| Include duration in weight | Principal scales linearly; ordinary seniority rises from 1× to 22×. | Reward shares change as positions enter, exit or change diets. |
+| Bound allocation and spending | Controller allocation and Belly outflow have separate limits. | Pauses, pending meals and market conditions can delay settlement. |
+
+The [certificate concept](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html) will turn time-based seniority into an ERC-721 NFT.
+
+See [core rules](https://thefatcatofficial.github.io/TheFatCat-docs/protocol.html) and [risk boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html).
+
+---
+# SOURCE: topology.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/topology.html
+
+# System Topology
+
+Fund routes, position activation and the steps from allocation to claiming.
+
+## Chapter Overview
+
+- **[Asset Flows](https://thefatcatofficial.github.io/TheFatCat-docs/topology/asset-flows.html)**: QQQB tax receipt, conversion, revenue splits and separation of principal from reward funds.
+- **[State Machine & Intervals](https://thefatcatofficial.github.io/TheFatCat-docs/topology/state-machine.html)**: Transaction-driven meal advancement, recorded meal shares and seniority progression.
+- **[Procurement & Claims](https://thefatcatofficial.github.io/TheFatCat-docs/topology/claim-pipeline.html)**: Ordered purchases, oracle checks, settlement records, and claiming settled rewards.
+
+---
+# SOURCE: topology/asset-flows.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/topology/asset-flows.html
+
+# Dual-Track Asset Flows & Vault Segregation
+
+TheFatCat holds staking principal separately from trading-tax reward funds. The diagram shows the main route from protocol revenue to position rewards:
+
+![TheFatCat Protocol Fund Flows](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig1-topology.svg?v=20261010u1)
+
+---
+
+## 1. Tax Inflow in QQQB
+
+Eligible FATCAT trades carry the configured 4% tax. After Flap deducts its platform fee, QQQB tax revenue enters the protocol's revenue-processing stage. After graduation, tax liquidation is batched; each trade does not necessarily create an immediate Belly inflow. Verify actual fees and receipts against official deployment records and on-chain transactions.
+
+---
+
+## 2. Fixed Conversion and Revenue Allocation
+
+    ASSET FLOW
+    QQQB Conversion and Revenue Allocation
+
+```text
+QQQB tax revenue → Fixed-route conversion to WBNB
+  → Eligible FEED conversion: 1/38 of output credited as a Feeder reward
+  → Remaining net revenue: 85% to the Belly reward treasury
+                            15% for development, operations and marketing
+```
+
+Anyone can help through FEED when execution conditions permit, with official maintenance supplementing processing when needed. Participants pay gas and supply no personal QQQB; they cannot change the conversion route or revenue destination. Successful conversion and revenue allocation complete in the same transaction, with no duplicate operations deduction. Standalone conversion earns no Feeder reward.
+
+Later advancement or purchase failures do not undo a successful FEED conversion or its eligible reward. The 85%/15% split applies to net proceeds after upstream fees, actual conversion costs and any earned Feeder reward, rather than trade value. See [Tax Routing & Fees](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/fees.html) and [FEED](https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html).
+
+Upstream revenue processing and delegated-operation services have upgrade and emergency fund-handling permissions that can affect future revenue and delegated behavior. Their boundaries differ from the principal vault's. See [Custody & Accounting Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html).
+
+---
+
+## 3. Principal and Rewards Are Held Separately
+
+- **Staking Principal Vault**: Holds deposited FATCAT principal, without using it for tax conversion or reward purchases.
+- **Belly Reward Treasury**: Holds WBNB reward reserves and has no authority to withdraw users' staked principal.
+- **Settled Rewards**: Recorded for each position after purchases or fallback complete, and claimed separately from principal redemption.
+
+---
+# SOURCE: topology/claim-pipeline.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/topology/claim-pipeline.html
+
+# Procurement and Reward Claims
+
+## 1. Record a Meal Allocation
+
+At a meal's close, the protocol determines each diet's budget from eligible weights. Funds remain in Belly until a purchase or fallback payment completes. A meal with no eligible participants reserves no new funds; historical rewards remain unaffected.
+
+## 2. Settle a Diet's Share
+
+Each step handles **one diet's complete allocation from one meal**. The earliest meal with pending shares has priority; diets within it can settle separately, while later meals must wait.
+
+Market purchases must satisfy price-reference, liquidity and minimum-output requirements. A BNB diet requires no purchase of another token. Shared purchases avoid a separate swap for each user, but execution-price and MEV risks remain.
+
+Eligible shares can settle in WBNB instead of the selected asset. Purchases and fallback funding both use Belly's window allowance. See [execution and fallback conditions](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html).
+
+## 3. Confirm Settled Rewards
+
+Assets actually received are recorded by batch and determine each position's claimable quantity. Pending budgets and settled rewards are separate stages; an allocation shown on the page does not mean it is already available to claim.
+
+## 4. Claim to Your Wallet
+
+Position owners can claim settled rewards through the website. Rewards have no protocol expiry, and claims do not use Belly's window allowance. Asset availability and transfer success still depend on token behavior and issuer risks.
+
+A BNB claim can unwrap WBNB in the same transaction and deliver native BNB directly. Long unclaimed histories may need smaller-range claims. See [Diets & Claiming](https://thefatcatofficial.github.io/TheFatCat-docs/guides/diets-and-claiming.html); when the website is unavailable, follow [Emergency Exit](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html).
+
+---
+# SOURCE: topology/state-machine.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/topology/state-machine.html
+
+# Meal Advancement and Position States
+
+TheFatCat moves forward through meal-by-meal accounting. Each time window is a **Meal**:
+
+    MEALS
+    Meal Advancement and Position Activation
+
+```text
+Previous meal closes ──► Current meal runs ──► Next meal begins
+                         At least eight hours  Successful advance transaction
+New position deposits ─► No current-meal share ► Joins at Notch 1
+```
+
+---
+
+## 1. Cadence and Participation
+
+- A meal meets the time requirement after at least **8 hours**.
+- **Anyone can help maintain it**: Public participants or official maintenance must still submit a successful transaction. Automation does not guarantee immediate or continuous availability.
+- **How delays are handled**: Each successful advance closes one meal and starts the next at the current time. Allocation counts at most 16 hours. A 48-hour stop does not create six meals at once or allocate 48 hours of budget. See [FEED](https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html).
+
+---
+
+## 2. What Is Recorded at a Meal's Close?
+
+The completed meal's shares use its eligible position weights. New positions and later diet changes do not retroactively change participation in that meal.
+
+---
+
+## 3. How Does Seniority Increase?
+
+An ordinary new position activates at Notch 1 when the next meal begins. Each completed active meal then adds one notch, up to 22. Continued participation at the cap does not raise it further. See [Meals & Seniority](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html).
+
+---
+
+## 4. Allocation and Receipt Are Different
+
+Advancing a meal only determines the reward budget; funds remain in Belly. Purchases or fallback settlement must then complete before rewards become claimable. Settled rewards can be claimed separately, and principal redemption does not wait for these steps.
+
+---
+# SOURCE: protocol.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/protocol.html
+
+# Core Mechanics
+
+How reserves are allocated, seniority is recorded, and reward purchases are settled.
+
+## Mechanics Index
+
+- **[How the Machine Runs](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/how-the-machine-runs.html)**: A complete walkthrough from trading-tax revenue to reserves, position weights, settlement and FEED maintenance.
+- **[The Belly](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html)**: Allocations from unreserved quote, the decay model and the separate eight-hour outflow cap.
+- **[Meals & Seniority](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html)**: Minimum eight-hour intervals, the 22-notch seniority ladder and position weights.
+- **[Procurement & Execution](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html)**: Oldest-meal settlement order, TWAP and slippage checks, fallback conditions and claim boundaries.
+- **[Tax Routing & Fees](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/fees.html)**: Tax receipt, upstream fees, conversion rewards and the 85% Belly / 15% Ops split of remaining revenue.
+
+---
+# SOURCE: protocol/belly.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html
+
+# The Belly Reserve and Release Mechanics
+
+The Belly holds WBNB reward reserves. Meal allocation and actual treasury outflow are separate operations.
+
+![The Belly Reserve Model](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig2-hydrodynamics.svg?v=20261010u2)
+
+## 1. Meal Allocation
+
+On a successful meal advance, the protocol computes a budget from the net unreserved balance:
+
+The budget uses unreserved funds and eligible reward time as a fraction of 168 hours, counting at most 16 hours and rounding down.
+
+- The calculation excludes funds already reserved for earlier allocations, so the same funds are not allocated twice.
+- Rewarded time excludes the initial seven-day accumulation period. Advances require at least eight hours, but each closes only one meal and starts the next at the current timestamp. Delays do not backfill missed meals.
+- An on-time, fully rewarded eight-hour meal budgets 8/168 = 1/21, about 4.76%, of unreserved funds. This denominator corresponds to 21 eight-hour meals per week.
+- Per-asset integer floors, probation caps and meals without eligible claimants can leave part of the budget unallocated. Below the minimum release weight, no new budget is allocated.
+
+Advancing a meal records allocations without moving tokens. Funds leave Belly later, when purchases, direct WBNB settlement or fallback funding complete. See [Execution and settlement order](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html).
+
+## 2. Ideal Decay Model
+
+With no new inflow, regular eight-hour advances and no allocation constraints, unreserved stock follows the simplified model:
+
+$$U_k = U_0\left(\frac{20}{21}\right)^k$$
+
+The discrete half-life is approximately **4.736 days**, and about **1.24%** remains after 30 days. This describes an ideal allocation model, not a promised payout schedule or the physical Belly balance while allocations await settlement.
+
+## 3. Eight-Hour Outflow Cap
+
+To limit concentrated outflows, Belly enforces a standing maximum within each eight-hour window. At initial deployment, the cap is **16/168, about 9.5238%, of the total WBNB balance at window opening**, rounded down.
+
+**This is a safety ceiling, not a fixed payout percentage every eight hours.** Normal meal budgets follow the meal allocation rules and settle when execution conditions are met.
+
+When market execution is blocked or other exceptional conditions delay settlement of allocated rewards, pending funds can accumulate. Concentrated outflows after settlement resumes may reach this cap. A settlement that exceeds the window's remaining allowance cannot execute; it must wait for a later window and still meet settlement conditions.
+
+The cap is independent of allocation accounting and applies to all actual Belly outflows. Consecutive windows require at least eight hours between openings, and deposits during a window do not raise its allowance. The cap slows concentrated outflows, but does not guarantee detection or intervention.
+
+Global meal order and whole-allocation requirements can delay a release even when a pool is fallback-eligible. Claims of **already settled** rewards draw from separately recorded reward funds and do not consume Belly's allowance.
+
+## 4. Opening Rules and Operating State
+
+- Reward outflow requires an initial authorization with a separate seven-day delay. This is independent of the seven-day reward warmup after staking opens; the two periods need not end together.
+- No new reward budget is allocated during warmup. Tax inflow still depends on successful upstream liquidation and QQQB conversion.
+- Emergency measures can pause Belly outflows. Principal redemption and claims of already settled rewards do not depend on Belly's pause state.
+
+---
+# SOURCE: protocol/meals-and-seniority.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html
+
+# Meals and the Seniority Ladder
+
+Meals determine when reward shares are recorded; seniority determines a position's allocation weight. They work together, but a seniority multiplier is not a return multiplier.
+
+## 1. When a Position Joins
+
+Every stake creates an independent position with its own principal, diet and seniority. A new position does not participate in the meal already underway. It activates at **Notch 1 (1.0×)** when the next meal begins.
+
+After activation, each completed active meal adds one notch, up to 22. Advances are at least eight hours apart. Under the standard cadence, climbing from Notch 1 to Notch 22 takes 21 completed meals, about seven days. Maintenance delays can extend this time.
+
+![Position Activation and the Seniority Ladder](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig3-graduation-ring.svg?v=20261010u1)
+
+## 2. Seniority and Relative Weight
+
+A position's allocation weight is:
+
+**Position weight = staked principal × current seniority multiplier**
+
+At equal principal, a Notch 22 position has 22 times the weight of a Notch 1 position. At equal seniority, ten times the principal gives ten times the weight. Actual rewards also depend on protocol revenue, other positions' aggregate weight and settlement. A 22× weight does not promise a fixed 22× return.
+
+![Seniority Relative Advantage Scenarios](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig4-seniority-premium.svg?v=20261010u1)
+
+Relative advantage also changes with the seniority distribution. If most other positions approach the cap, a fully mature position's advantage over the average becomes smaller. New staking can dilute existing positions' allocation shares.
+
+## 3. How Rewards Remain Recorded
+
+At each meal's close, the protocol records eligible position shares. Purchases or fallback settlement then turn those shares into claimable rewards. An advanced meal does not necessarily have rewards ready to claim.
+
+Historical settled rewards have no protocol expiry, and changing diets does not erase them. Long unclaimed histories may require several transactions. See [Diets & Claiming](https://thefatcatofficial.github.io/TheFatCat-docs/guides/diets-and-claiming.html).
+
+## 4. Exit and Forfeiture
+
+Ordinary redemption returns principal to the position owner without waiting for meal advancement. Exiting forfeits only the unsettled share of the currently open meal; previously earned rewards remain recorded with no protocol expiry.
+
+Forfeited shares follow that meal's asset settlement rules; they do not universally roll into the next meal. Exiting ends the position's future participation and seniority. Staking again requires a new position starting at Notch 1.
+
+---
+# SOURCE: protocol/execution.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html
+
+# Batch Procurement and Settlement
+
+A completed meal first determines each position's quote entitlement, then reward assets are purchased together. User staking and claiming do not perform separate market swaps, but the reward quantity still depends on that batch's execution price.
+
+## 1. Global Meal Order
+
+Each purchase or fallback settlement handles one asset's complete pending share from one meal. The earliest meal with unsettled shares has priority. Assets within that meal can finish separately; later meals must wait. Meal advancement can continue recording new allocations while settlement waits.
+
+A blocked asset can therefore delay other diets' later meals. FEED's rotating checks do not bypass this order. **Already settled rewards and principal redemption do not wait for the purchase queue.**
+
+### Why can a pending purchase remain unavailable?
+
+Pending work is not a promise that a trade can complete now. Each purchase must satisfy amount limits, oldest-meal order, Belly's current allowance and market conditions. Unspent budgets remain in Belly for later processing. A failed purchase does not itself establish fallback eligibility.
+
+## 2. Routes, TWAP and Output Floors
+
+The initial menu is BNB/WBNB, QQQB, SPCXB, NVDAB, SPYB and GOOGLB. BNB rewards require no purchase of another token; other assets are procured through their configured routes. FATCAT availability depends on whether it has actually been enabled on the menu.
+
+The protocol uses a time-weighted market price (TWAP) to set a minimum output, with an initial **3%** price-deviation boundary for reward purchases. Insufficient price history, low liquidity or expected output below the floor can delay or prevent a purchase. These checks constrain execution; they cannot eliminate MEV, token, issuer or liquidity risks.
+
+## 3. Allocation Probation
+
+Newly enabled non-native assets have a **5% per-meal allocation cap** for seven days, rising to 100% afterward. This is not a permanent exposure cap. Budget above the cap stays in Belly and is not reassigned to other assets in that meal.
+
+Initial menu assets are exempt on first enable; later re-enabling follows the ordinary rules. Users bear the issuer risks of their selected assets. WBNB remains the default and fallback settlement asset.
+
+## 4. WBNB Fallback Settlement
+
+When the selected asset cannot be purchased normally, eligible pending shares can settle in WBNB instead. Conditions include disabled or parked status, waiting beyond the permitted age (initially one day), or a complete meal allocation exceeding the purchase ceiling. Pending residue covered by the recovery rules also retains a processing path.
+
+Parking is a governance emergency measure. It preserves an asset's weights and future allocations while removing the fallback age wait. Automatic maintenance prefers fallback, while ordinary purchases may still complete. Parking persists until lifted; lifting it does not reverse completed WBNB settlements.
+
+Fallback still requires a successful transaction, meal order, a complete allocation, and sufficient allowance while Belly outflows are available. **One day is the initial eligibility threshold, not an automatic payment deadline or a guaranteed maximum wait.**
+
+After fallback settlement, users can claim WBNB or unwrap it as native BNB. Received amounts still depend on the batch's eligible shares and rounding. Fallback does not compensate for price losses on tokens already purchased.
+
+## 5. Menu Lifecycle
+
+Defaults are 16 menu slots and 4 checks per FEED, with limits of 32 and 8. Changes require a three-day governance delay; increasing capacity does not automatically list any asset.
+
+Disabling an asset or removing it from the active menu does not erase historical settled rewards. Disabled assets still occupy capacity until safely cleared. Review the current diet menu separately from a position's historical rewards; an asset disappearing from the menu does not mean its rewards were cancelled.
+
+---
+# SOURCE: protocol/fees.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/protocol/fees.html
+
+# Tax Routing & Fee Distribution Model
+
+A complete accounting breakdown of TheFatCat's 4% dynamic trading tax, Flap platform withholdings, reward-treasury and project-fund allocation, and the 100-year tax expiration schedule.
+
+---
+
+## 1. The 4% Trading Tax in Percentages
+
+Every eligible buy and sell on the Flap bonding curve or PancakeSwap V2 primary pool incurs a **4.0% FATCAT trading tax**. The Belly is the protocol's reward treasury; the Ops Safe receives income for project development, operations and marketing.
+
+### Platform fee and FEED reward target
+
+| Allocation | Percentage | Calculation basis |
+|:---|---:|:---|
+| **Flap platform fee** | **0.2%** | **Eligible FATCAT trade value** |
+| **Eligible FEED conversion reward** | **0.1% target** | **Eligible trade value represented by this conversion** |
+
+The Flap platform fee is included in the 4% trading tax: 4% × 5% = 0.2%, or 5% of collected tax, deducted upstream.
+
+The FEED reward targets **0.1% of the eligible trade value represented by this conversion**. Under the standard 4% tax and 5% platform share of tax, the protocol receives a nominal 4% × 95% = 3.8% of trade value. Paying 1/38 of actual WBNB output gives the nominal equivalent 3.8% / 38 = 0.1%. The on-chain reward is one thirty-eighth of gross WBNB output, rounded down, about **2.63158% of conversion output**. Prices, conversion costs and rounding affect its trade-value equivalent.
+
+### Shares of actual project revenue
+
+After the platform deduction and market conversion, an eligible successful FEED conversion first earns **one thirty-eighth of its gross WBNB output**, rounded down. This implements the nominal trade-value target through a conversion-output share. Direct conversion and an ineligible caller earn no bounty.
+
+The WBNB **remaining after any earned bounty** is allocated as follows:
+
+| Destination | Share of that remaining net revenue | Receiver |
+|:---|---:|:---|
+| **Reward treasury** | **85%** | The Belly |
+| **Project development, operations and marketing** | **15%** | Ops Safe |
+
+The team share is rounded down to the smallest unit and every remainder goes to the treasury. The operations split occurs only once. Later advancement or purchase failures do not cancel a successful conversion's Feeder reward. Eligibility and claiming are explained in [FEED & Decentralized Maintenance](https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html).
+
+### Worked example: 10,000 units of trade value
+
+Using one common unit of account, the 4% tax is **400**. Under the same no-cost/no-price-movement assumptions:
+
+| Destination | No earned FEED bounty | Eligible FEED earns a bounty |
+|:---|---:|---:|
+| Flap platform | 20 | 20 |
+| FEED caller | 0 | 10 |
+| Project development, operations and marketing | 57 | 55.5 |
+| Reward treasury | 323 | 314.5 |
+| **Total** | **400** | **400** |
+
+Both columns sum to the same 400 collected tax units. The 85/15 split applies after any earned conversion bounty. These are illustrative trade-value equivalents under the stated assumptions, not guaranteed token payouts.
+
+Ordinary wallet-to-wallet FATCAT transfers are untaxed in the tested token implementation. Tax applies to eligible trades, not to a user's staking deposit merely because it is an ERC-20 transfer.
+
+---
+
+## 2. Liquidation Mechanics & Vault Routing
+
+1. **Bonding curve**: Under Flap's Prebond Tax mechanism, the selected quote asset is **QQQB**. The curve collects the configured FATCAT trading tax in QQQB alongside its separate venue fee. Platform fees are deducted upstream.
+2. **After graduation**: Eligible pool trades accrue FATCAT tax tokens. Once the liquidation conditions are met, including an eligible sell and the processor’s configured liquidation threshold, the upstream processor converts them into QQQB.
+3. **QQQB conversion**: The protocol's revenue vault receives QQQB. Its permissionless conversion follows fixed QQQB → USDT → WBNB pools. Only conversion through FEED can credit one thirty-eighth of gross WBNB to an eligible original caller, independently of later advancement or purchases. Standalone conversions earn no Feeder reward. Amount, capacity, TWAP, slippage, deadline and pause checks are enforced on-chain. Callers supply gas, not QQQB, and cannot select the output recipient.
+4. **Revenue allocation**: In the same transaction, the remaining WBNB is allocated: 85% to the Belly reward treasury and 15% to the Ops Safe for project development, operations and marketing, using the exact fixed contract shares.
+
+A delay may occur before upstream liquidation or while QQQB awaits a permitted conversion. Check each balance and transaction before diagnosing missing Belly inflow. If conversion fails, that transaction rolls back; accumulated QQQB is not counted as WBNB already available to Belly.
+
+---
+
+## 3. Venue Trading Fees (Isolated from Token Tax)
+
+In addition to token trading taxes, underlying decentralized trading venues charge standard swap fees:
+- **Flap Bonding Curve (Pre-Graduation Only)**: 1.0% venue fee charged by the platform while trading on the bonding curve. Once FATCAT graduates to PancakeSwap V2, the bonding curve permanently closes and this 1.0% venue fee ceases to exist.
+- **PancakeSwap V2 Pool (Post-Graduation)**: Standard 0.25% decentralized swap fee. According to PancakeSwap's official fee schedule, **0.17%** is captured by decentralized liquidity providers (LP), while the remaining **0.08%** is routed to the PancakeSwap Protocol Treasury (0.03%) and CAKE buyback-and-burn (0.05%), rather than being entirely captured by LPs.
+
+These venue fees are captured directly by AMM liquidity providers and curve platforms, and are strictly isolated from TheFatCat's internal tax routing.
+
+---
+
+## 4. 100-Year Tax Duration & Anti-Farmer Protection
+
+Under the adopted Flap trading-tax configuration:
+- **100-Year Post-Graduation Expiration**: The trading tax is configured with an immutable expiration of **100 years post-graduation**. Upon expiration, the token automatically becomes permanently **0% tax-free**.
+- **1-Year Anti-Farmer Window**: For the first 365 days post-graduation, secondary liquidity pools are restricted from bypassing taxes. After 1 year, taxes apply exclusively to the primary liquidity pool pair.
+
+---
+# SOURCE: guides.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/guides.html
+
+# User Guides
+
+Instructions for staking, claiming and maintaining the protocol.
+
+## Guide Index
+
+- **[Staking & Positions](https://thefatcatofficial.github.io/TheFatCat-docs/guides/staking.html)**: Entry threshold, position activation and ownership.
+- **[Diets & Claiming](https://thefatcatofficial.github.io/TheFatCat-docs/guides/diets-and-claiming.html)**: Enabled reward assets, meal allocations, batch claims and BNB unwrapping.
+- **[Time-Seniority Certificates](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html)**: Planned for release when the protocol has matured.
+- **[FEED & Decentralized Maintenance](https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html)**: FEED pipeline, individual actions and conversion reward eligibility.
+- **[Emergency Exit](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html)**: Direct contract calls for principal redemption and settlement when the website is unavailable.
+
+---
+# SOURCE: guides/staking.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/guides/staking.html
+
+# Staking & Position Management
+
+A comprehensive guide to opening positions, managing isolated stakes, and climbing the seniority ladder in TheFatCat.
+
+---
+
+## 1. Prerequisites & The Entry Threshold
+
+To open a staking position in TheFatCat:
+
+- **Minimum Principal & Whole Token Requirement**: **100,000 FATCAT** (representing exactly 0.01% of the 1,000,000,000 total supply). **Note**: The contract strictly enforces whole-token principal; fractional token amounts will cause the transaction to fail.
+- **Approved FATCAT**: You must approve the staking contract to spend your FATCAT tokens.
+- **Gas**: A small amount of native BNB for transaction fees on BNB Chain.
+
+The ordinary 100,000 FATCAT entry threshold is fixed at deployment and limits small positions. It does not impose a fixed gas cost for every operation.
+
+---
+
+## 2. How to Open a Position
+
+1. Connect your Web3 wallet (MetaMask, Binance Web3 Wallet, OKX Wallet, Trust Wallet, or WalletConnect) at [thefatcat.fun](https://thefatcat.fun).
+2. Enter the amount of FATCAT you wish to stake (must be a whole token amount $\ge 100{,}000$).
+3. Select your desired initial **Diet** (Default is BNB).
+4. Click **Approve** and confirm the token allowance in your wallet.
+5. Click **Stake** and confirm the transaction.
+
+*(If the website is unavailable and you need to withdraw principal or settled rewards, follow the [Emergency Exit Guide](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html).)*
+
+---
+
+## 3. Position Activation & The 7-Day Warmup Window
+
+Staking does not grant retroactive rewards for meals already opened or in progress:
+
+    TIMELINE
+    Position Activation & Cadence Timeline
+
+```text
+Deposit ─────────────► Next Meal Roll (8h Boundary) ─────► Normal Operation
+[ Deposit Tokens ]            [ Position Activates ]              [ Notch Climbs Each Meal ]
+(Weight in meal m is 0)       (Starts at Notch 1, Weight = p × 1) (Advances to Notch 2 next meal)
+```
+
+1. **Deposit & Activation**: When you deposit tokens, your capital is held in custody immediately. In the meal currently underway, your position's calculation weight is 0. When the next meal begins, at least eight hours after the previous advance, your position activates at **Notch 1 (1.0× weight)**.
+2. **Climbing the Ladder**: After activating, your seniority notch increases by $+1$ for every completed 8-hour meal, up to the maximum cap of Notch 22 (requiring 21 completed active meals, or approximately 7 days on the standard cadence).
+
+**The 7-Day Reward Warmup**:
+- **When can you stake**: Staking will open immediately after token graduation. Deposits become available once staking is open; the seven-day reward accumulation period starts when staking opens.
+- **How seniority accrues**: New ordinary positions have zero weight in their opening meal. After activation, seniority increases when someone successfully advances the clock, at intervals of at least eight hours.
+- **When do rewards start**: The first seven days allocate no new rewards. Revenue may accumulate when upstream conversion succeeds. After warmup, successful meal advances may allocate rewards, with at least eight hours between advances.
+
+The warmup is a single protocol-wide period; opening a new position does not restart it.
+
+---
+
+## 4. Multi-Position Management & Claiming
+
+Each stake creates an independently numbered position with its own tenure and diet selection:
+
+- **Adding More Principal**: To stake additional FATCAT, simply open a new position from the interface. A single wallet can manage multiple independent positions simultaneously.
+- **Independent Asset Diets**: Different positions can target different reward assets (e.g., Position #1 earning BNB, Position #2 earning tokenized bStocks).
+- **Per-Position Claiming**: Rewards are claimed separately per position. A long reward history may need several smaller claims; the dashboard currently uses the latest completed batch and does not split long histories automatically.
+- **Standard Principal Redemption**: Exiting a position returns 100% of your staked principal to your wallet.
+- **Seniority Reset on Re-Staking**: Exiting and opening a fresh ordinary position resets its multiplier to Notch 1 (1.0×); it must climb the ladder from scratch.
+
+---
+# SOURCE: guides/diets-and-claiming.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/guides/diets-and-claiming.html
+
+# Diets & Claiming Rewards
+
+How to choose your preferred reward assets (Diets), manage allocations across market regimes, and claim earned tokens with automated native unwrapping.
+
+---
+
+## 1. What is a Diet?
+
+In TheFatCat, you are not forced into a single, uniform reward token. Instead, each position independently designates a **Diet Asset** from the protocol's approved [MENU](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html):
+
+- **BNB**: The default diet and fallback asset, accounted as canonical WBNB. It requires no reward-asset swap and can be claimed as native BNB. Network, contract and BNB price risks remain.
+- **bStocks**: Third-party tokens tracking equity or index prices. Check each issuer's terms for ownership rights, redemption, eligible users and availability. Non-exempt assets have a 5% per-meal allocation cap during their seven-day probation. Initial menu assets are exempt on first enable; later re-enabling starts ordinary probation. See [asset risks](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html).
+- **FATCAT (Protocol Native)**: Eligible for addition after AMM graduation, liquidity stabilization, and TWAP oracle warmup.
+- **Future Candidate Tokens (Ecosystem Expansion)**: Potential high-liquidity crypto assets, blue-chip ecosystem tokens, or stablecoins that may be approved and listed on the MENU via timelocked governance queues and on-chain TWAP verification.
+
+Because each stake is an independent position ID, a single wallet can manage multiple positions with completely different diets (e.g. Position #1 earning BNB, Position #2 earning tokenized equities).
+
+---
+
+## 2. Changing Your Diet
+
+You can change your position's diet at any time through the front-end dashboard:
+
+1. Connect your wallet and navigate to the **Positions** dashboard at [thefatcat.fun](https://thefatcat.fun).
+2. Locate the position card you wish to update and click the **Diet** dropdown.
+3. Select your new reward asset from the approved MENU (e.g. BNB, bStocks, etc.).
+4. Click **Switch Diet** and confirm the transaction in your wallet.
+
+### Critical Diet Rules:
+1. **Seniority Preserved**: Changing your diet does not reset or reduce your seniority notch.
+2. **Next-Interval Activation**: The new diet choice takes effect at the **next meal boundary** ($m + 1$). The currently open meal continues allocating to your previous asset.
+3. **Past Rewards Preserved**: Settled rewards under the previous diet remain claimable; changing diets does not erase them.
+
+---
+
+## 3. Claiming Earned Rewards
+
+Rewards in TheFatCat do not expire. They continuously accumulate across settled meals and wait securely in the protocol's non-custodial distributor until you withdraw them.
+
+### How to Claim on the Dashboard:
+
+1. Open the **Dashboard** or **Belly / Positions** section on [thefatcat.fun](https://thefatcat.fun).
+2. Review your accrued reward balances across your active positions (e.g. BNB, bStocks).
+3. **Per-Position Claiming**: Click **Claim** on a position card. The interface sets the cutoff to the latest completed batch; it does not automatically split long histories into multiple gas-budgeted transactions.
+4. Confirm the transaction in your connected wallet.
+
+### Automatic Native BNB Unwrapping
+When your diet is set to BNB (accounted on-chain as canonical WBNB), claiming automatically unwraps it into **native BNB**. You receive spendable BNB directly in your wallet without any extra unwrapping steps or manual transactions.
+
+**Long Backlogs**: A long reward history may need to be claimed in smaller ranges across several transactions. The dashboard currently uses the latest completed batch and does not split the history automatically. If a claim exceeds the current gas limit, follow the smaller-range claiming steps in the [Emergency Exit Guide](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html).
+
+*(For advanced users wishing to claim directly from the contract on BscScan without using the web UI, refer to the [Emergency Exit Guide](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html)).*
+
+---
+# SOURCE: guides/seniority-certificates.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html
+
+# Time-Seniority Certificates
+
+Time-Seniority Certificates will be introduced in the future as ERC-721 NFTs. Users with staking positions will be able to mint them by burning $FATCAT. Further details will be announced later. The relevant interfaces were reserved at deployment.
+
+---
+# SOURCE: guides/emergency-exit.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html
+
+# Emergency Exit Guide: Getting Out Without Front-End
+
+A guide to redeeming ordinary staking principal and claiming settled rewards through a block explorer when the web interface is unavailable. These examples require an official deployment record and verified contracts; this documentation does not supply production addresses.
+
+---
+
+## 1. The Core Guarantee: Redemption During a Pause
+
+Staking principal is held by an on-chain contract. When the website is unavailable, you can still act directly using the wallet that owns the position.
+
+**Independent Principal Redemption**: Ordinary redemption remains available during a protocol pause without a maintainer's approval.
+
+Even if:
+- The website domain `thefatcat.fun` goes offline;
+- Front-end servers are blocked;
+- The protocol's emergency pause is triggered by governance;
+
+Completion still requires an available chain, successful position checks and a successful FATCAT transfer. Use the position owner's wallet and verify the network, address and source against the official deployment record.
+
+---
+
+## 2. Step-by-Step Redemption on BscScan
+
+If the official front-end is down, you can execute your redemption directly on **BscScan**:
+
+### Step 1: Obtain Your Position ID
+1. Look up your wallet address on [BscScan](https://bscscan.com).
+2. Filter your transaction history for your original `stake` transaction to the `StakingVault`.
+3. In the **Transaction Details**, click on **Logs**.
+4. The `Staked(uint256 indexed id, address indexed owner, uint256 principal, address diet)` event emits your numeric position `id` in **Topic 1** (Topic 2 is the owner address).
+
+### Step 2: Open the Staking Vault Contract
+1. Use the official deployment record to find the StakingVault address, then open its verified contract page on BscScan.
+2. Click on the **Contract** tab, then select **Write Contract**.
+3. Click **Connect to Web3** and connect the wallet holding your position (e.g. MetaMask, Binance Web3 Wallet, OKX Wallet, Trust Wallet, or WalletConnect).
+
+### Step 3: Execute `redeem`
+1. Locate function `redeem`:
+   ```solidity
+   redeem(uint256 id)
+   ```
+2. Enter your numeric position `id` in the input field.
+3. Click **Write** and confirm the transaction in your wallet.
+4. After successful execution and block confirmation, **100% of your staked FATCAT principal is returned directly to your wallet**.
+
+---
+
+## 3. Why Delayed Maintenance Cannot Trap Your Principal
+
+In some protocols, closing an accounting cycle is mandatory before capital can exit. In TheFatCat:
+
+- Principal redemption **does not require a meal advance or completed reward purchases first**.
+- Even if no one runs maintenance or gas prices spike, your principal can be withdrawn without waiting for a meal advance.
+- Redeeming mid-meal forfeits that open meal's unsettled share. Historical reward entitlements remain recorded without a protocol expiry.
+
+---
+
+## 4. Claiming Rewards Directly from BscScan
+
+To claim your accrued reward tokens without the website:
+
+1. Find RewardDistributor in the official deployment record and open that address's verified contract page on BscScan.
+2. Under **Read Contract**, check `generationCount(id, asset)` and `generationAt(id, asset, i)` to identify the asset's claim generations. Indexes start at `0`; a later return to the same diet can create another generation. Use `batchCount(asset)` to find the number of settled batches; the highest batch index is the count minus one, and there is no batch to claim when the count is zero. Then connect the position owner's wallet under **Write Contract**.
+3. Use `claimNative` to unwrap eligible WBNB into native BNB, or `claim` to receive reward tokens and WBNB without unwrapping. If your wallet or contract cannot receive native BNB, use `claim` or `claimThrough`:
+   - `id`: Enter your position ID.
+   - `asset`: Enter the diet asset address (e.g. canonical WBNB contract address for BNB).
+   - `gen`: Enter the verified generation index for this position and asset; do not assume every claim uses `0`.
+4. For positions with extensive backlogs seeking bounded gas consumption, use `claimThrough` or `claimNativeThrough`:
+   - Pass `id`, `asset`, `gen`, and `toBatch` (the highest batch index to claim up to).
+5. Click **Write** and confirm.
+
+Claiming handles settled rewards only; it does not finish pending purchases or fallback settlement. For a long history, simulate a smaller claim range before processing it progressively. Resolve uncertain transaction status before resubmitting.
+
+---
+# SOURCE: guides/community-keeper.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html
+
+# FEED & Decentralized Protocol Maintenance
+
+Anyone can attempt maintenance through the [Belly page](https://thefatcat.fun/belly). There is no participant whitelist. Stakers do not have to operate a keeper, but meals and procurement require successful transactions by someone; official fallback maintenance does not guarantee perpetual or immediate progress.
+
+## One FEED, one assigned batch
+
+FEED attempts to convert pending QQQB revenue, advance one due meal, then purchase rewards for an assigned batch of diets. The protocol selects the assets to check; participants cannot choose their own subset. Successive checks rotate across the menu. Nine listed assets with four checks per transaction are scanned as 4/4/1.
+
+Menu capacity and the number of checks are set separately. Defaults are **16 menu slots and 4 asset checks per FEED**, with limits of **32 and 8**. Changes require a three-day governance delay. Increasing capacity does not automatically list or approve any asset.
+
+Scanning is not a promise to purchase every checked asset. Pending budgets, Belly outflow limits, minimum amounts and market conditions still apply. Later advancement or purchase failures do not cancel a successful conversion or its eligible Feeder reward; unfinished work can be retried when conditions allow. A failed whole transaction still consumes gas and does not establish that any step completed.
+
+There is no extra five-minute waiting period for public maintenance. A due meal can advance when execution conditions permit; advancement determines reward allocations and does not itself deliver rewards to a staker's wallet.
+
+## Conversion and the Feeder reward
+
+FEED converts QQQB revenue held by the protocol. Participants pay gas, supply no personal QQQB and cannot redirect the proceeds. The website prepares one conversion using the available balance and per-transaction limits; the initial range is 0.1–50 QQQB. Completion still depends on prices, liquidity and the protocol's operating state.
+
+A successful conversion **inside FEED** can create a Feeder reward independently of later advancement and purchases. At conversion time the participating wallet must hold at least **10,000 FATCAT**, or own a staking position with remaining principal. The reward is **1/38 of the gross WBNB output, rounded down**, about 2.63158% of actual output. Under the standard 4% tax and 5% platform share of tax, its nominal target is 0.1% of the trade value represented by the conversion. Prices, conversion costs and rounding affect that equivalent. After this deduction, the remaining proceeds split **85% to the Belly reward treasury and 15% to Ops Safe for project development, operations and marketing**. Standalone conversion, advancement, purchases and scans without conversion do not earn this reward.
+
+Feeder rewards are recorded as claimable WBNB separately from staking rewards. Claiming requires another transaction and gas, but does not recheck eligibility. Review the page's processing results and actual new reward; a successful transaction alone does not prove that conversion, every purchase or a Feeder reward occurred.
+
+## Before submitting
+
+Refresh the page and review the pending work, estimated gas and reward eligibility before confirming in your wallet. Another participant's FEED or a menu change may make earlier information outdated; refresh before retrying a failed attempt. Resolve an uncertain transaction status before resubmitting.
+
+Historical settled rewards remain claimable after an asset leaves the active menu. Principal redemption does not require maintenance first. See [menu lifecycle](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html) and [Emergency Exit](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html).
+
+---
+# SOURCE: safety.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/safety.html
+
+# Security & Governance
+
+Custody boundaries, accounting checks, monitoring measures and operating risks.
+
+## Security Index
+
+- **[Custody & Accounting Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html)**: Principal isolation, core contracts without administrative sweep functions, and conditional rounding bounds.
+- **[Testing & Validation](https://thefatcatofficial.github.io/TheFatCat-docs/safety/audits-and-hardening.html)**: Current accounting protections and the scope of internal regression and invariant tests.
+- **[Operational Monitoring](https://thefatcatofficial.github.io/TheFatCat-docs/safety/monitoring.html)**: An overview of monitoring, emergency response measures and user guidance.
+- **[Risks & Operating Conditions](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html)**: Opening rules, external dependencies and settlement delays.
+
+---
+# SOURCE: safety/custody.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html
+
+# Custody & Accounting Boundaries
+
+## 1. Principal Isolation
+
+Staked FATCAT is held in a separate principal vault, apart from Belly's reward reserves and settled rewards. It is not used for reward purchases.
+
+During a protocol pause, the position owner can still request principal redemption without a maintainer's approval. Completion still requires an available chain, successful position checks and a successful FATCAT transfer. Exiting forfeits the currently open meal's share, while historical reward entitlements remain claimable. See [Emergency Exit](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html).
+
+## 2. Administrative Fund Access
+
+The core principal, reward-reserve and allocation contracts have no administrative sweep or rescue withdrawal entry points. Belly's reward outflows are subject to an eight-hour window allowance; settled rewards are paid according to position entitlements.
+
+This boundary does not cover every upstream revenue step. **The upstream QQQB revenue vault can be upgraded until permanently locked, and an authorized Flap role can transfer tax proceeds held at the revenue-receiving stage in an emergency.** These funds are not users' staked FATCAT principal, but these permissions can affect future reward revenue.
+
+The upstream service can also submit staking, redemption, diet changes and claims on a user's behalf. Upgrades may change that delegated behavior, so its influence extends beyond tax processing. Ordinary redemption and claims still pay the position owner; new staking requires sufficient balance and valid authorization. Verify the official deployment record and review the actions and allowances shown in your wallet.
+
+## 3. Settled Rewards and Rounding
+
+Rewards depend on the assets actually received for a batch, eligible shares and downward rounding. Recorded claimable rewards should retain their funding; they cannot be treated as available for redistribution merely because a user has not collected them.
+
+Multiple rounding stages and smaller-range claims may leave small residual balances. These have no administrative withdrawal or automatic recycling path. Internal tests check accounting and received amounts against the relevant conditions; they do not prove that every token behavior or execution path is safe. See [Testing & Validation](https://thefatcatofficial.github.io/TheFatCat-docs/safety/audits-and-hardening.html).
+
+---
+# SOURCE: safety/audits-and-hardening.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/safety/audits-and-hardening.html
+
+# Testing & Validation
+
+The protocol has undergone extensive internal testing ahead of launch. Internal regression and stateful invariant tests check implementation behavior. They are not an independent audit or a formal proof of all possible executions. Production addresses and explorer verification require a separate official deployment record.
+
+## Current Protections and Test Scope
+
+| Area | Current protection | Internal test scope |
+|---|---|---|
+| Revenue receipt | Only received revenue is credited; protections limit duplicate processing | Different receipt orders and handling of transfer failures |
+| Rounding and liabilities | Rewards round down; pending purchase funds and settled rewards are recorded separately | Sampled claims across positions and meals, and funds covering recorded rewards |
+| QQQB-route revenue split | 15% of net proceeds after any Feeder reward goes to project funds; the remainder, including rounding, goes to Belly | Distribution amounts and destinations |
+| Oracle pricing | Price reference freshness, average market prices and liquidity checks | Stale price data and insufficient liquidity along the conversion route |
+
+Upstream revenue handling has separate upgrade and emergency transfer powers. These can affect tax revenue before it reaches Belly and are not withdrawal powers over users' staked principal. See [Custody Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html) for the distinction between upstream revenue and staking principal.
+
+Rounding tests sample specific position counts, batch counts and claim schedules. They do not establish one residual limit for every possible use. Multiple rounding stages and smaller-range claims can leave small balances; see [Custody](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html) for how funds and rewards are kept separate.
+
+Test evidence applies to the tested source revision and model. It does not by itself establish the deployed addresses, production monitoring availability, all external token behavior or a guaranteed recovery time.
+
+---
+# SOURCE: safety/monitoring.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/safety/monitoring.html
+
+# Operational Monitoring & Incident Response
+
+TheFatCat has operational monitoring and incident response mechanisms to detect anomalies and take action when needed.
+
+## Monitoring Measures
+
+Monitoring checks protocol status and key on-chain activity. Detected anomalies are reviewed and may trigger a response. Monitoring depends on chain data and external services; it cannot guarantee detection of every issue or an immediate response.
+
+## Emergency Response
+
+Within contract permissions and execution conditions, responses may include pausing relevant operations, restricting affected processes and restoring services to reduce the risk of an incident spreading. The response depends on the incident. Recovery may take time, and these measures do not reverse completed transactions.
+
+## What Users Can Do
+
+Follow status notices through [official channels](https://thefatcatofficial.github.io/TheFatCat-docs/links.html). Reward settlement may be delayed during an incident. To exit a position or claim settled rewards, consult the [Emergency Exit Guide](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html); transactions still depend on chain availability and contract execution conditions.
+
+Report security issues privately through [GitHub Security Advisories](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new), and avoid disclosing sensitive details publicly.
+
+---
+# SOURCE: safety/risks-and-status.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html
+
+# Risks & Operating Conditions
+
+## 1. Network and Opening Rules
+
+- **Network**: BNB Chain (Chain ID: 56).
+- **Initial launch venue**: Flap bonding curve, paired with QQQB; reward accounting uses WBNB.
+- **Staking opening**: Staking will open immediately after token graduation; the seven-day reward warmup begins when staking opens.
+- **Reward warmup**: During the first seven days after opening, intervals and seniority advance without reward allocations. Revenue successfully delivered to Belly can accumulate as reserves.
+- **Reward outflow authorization**: Initial reward outflow authorization has a separate seven-day delay. This clock is independent of the reward warmup, so the two gates need not open together.
+
+Before interacting, use a separately published official deployment record to verify addresses, explorer source, network and on-chain state.
+
+## 2. Material Risks
+
+### Market Volume and Variable Rewards
+
+The protocol does not promise fixed yield. Reward funding comes from trading-tax proceeds and voluntary payments received by the protocol. Lower market volume can reduce inflows; the reservoir cannot create new yield when trading stops.
+
+### Upstream Authority and External Tokens
+
+Flap tax processing and the QQQB revenue route are external dependencies. Upgrades, configuration changes or emergency transfers of upstream funds can change reward delivery. These permissions do not grant withdrawal access to the user's principal vault.
+
+The upstream service can also submit staking, redemption, diet changes and claims on users' behalf. Upgrades may change that delegated behavior without replacing the core contracts' code. Ordinary redemption and claims still pay the position owner; new staking requires the user's balance and valid authorization. This dependency therefore extends beyond tax processing.
+
+The current integration trusts QQQB issuer authority. Transfer restrictions, issuer or implementation changes, and unavailable liquidity can affect conversion. See [Custody Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html).
+
+### Procurement and Settlement Delays
+
+Reward procurement depends on available oracle observations, liquidity and slippage checks. Settlement prioritizes the globally oldest pending meal; a waiting asset can delay newer meals, while other assets in that oldest meal may still be processed. Rewards already settled in the Distributor remain claimable, and principal redemption is separate from procurement.
+
+Eligible pending quote can be settled through the WBNB fallback and claimed as native BNB. Eligibility depends on the route's pending-age limit, disabled or parked status, or an allocation exceeding the purchase ceiling. Becoming eligible does not execute a payment: a caller must submit the settlement, and Belly's pause state, available funds and eight-hour outflow cap still apply. The complete oldest-meal allocation for that asset must fit the available window. There is **no guarantee of payment one day after a failed purchase** or of a fixed maximum wait.
+
+Parking preserves an asset's weights and allocation eligibility. Automatic maintenance prefers WBNB fallback without the age wait, while ordinary purchases may still complete. Parking lasts until lifted, and lifting it cannot reverse settled rewards. See [execution and menu rules](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html).
+
+### Third-Party Tokenized Assets
+
+Tokenized equities and similar assets are issued and custodied by third parties; they are not direct shares in the underlying companies. They carry issuer default, transfer or trading restrictions, and regulatory risks.
+
+Newly enabled assets are capped at 5% of an interval's allocation during a seven-day probation period. The initial menu is exempt on its initial enable; later re-enabling restores ordinary probation. After probation, 5% is not a permanent per-asset exposure cap. Fallback covers eligible pending procurement amounts, not a guaranteed recovery of already acquired tokens or their market value.
+
+---
+# SOURCE: whitepaper.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper.html
+
+# TheFatCat Whitepaper
+
+Version **v1.0**, public text revision **October 10, 2026**.
+
+- [PDF downloads](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper/downloads.html): English and Chinese versions.
+- [Mechanism summary](https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper/math-overview.html): Allocation, seniority and accounting boundaries.
+
+For interactions, verify contract addresses against the official deployment record and check current [protocol rules](https://thefatcatofficial.github.io/TheFatCat-docs/protocol.html). A written model does not guarantee execution or future returns.
+
+---
+# SOURCE: whitepaper/math-overview.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper/math-overview.html
+
+# Mechanism Summary
+
+This page summarizes reserve allocation, position weight and reward claiming. Model results depend on the stated assumptions; they are not a payment schedule.
+
+## Allocation and execution
+
+An on-time eight-hour meal allocates up to 1/21 of unreserved quote funds. Delayed advancement counts at most 16 hours of eligible allocation time. Allocation records reservations; actual outflow separately observes the Belly's window allowance. See [Belly rules](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html).
+
+The approximately 4.736-day half-life describes an ideal model with no new inflow, allocation and settlement every eight hours, no pause or backlog, and rounding ignored. It is not a payment schedule.
+
+## Seniority
+
+Position weight is principal times its seniority coefficient. Ordinary eligible positions climb from 1× to 22×. At the standard eight-hour cadence, climbing from 1× to 22× requires 21 completed active meals, about seven days. Maintenance delays can extend this period. Participation rules are specified in [meal rules](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html).
+
+## Assets and claims
+
+Each position receives rewards in its selected diet asset. Quote allocation, funded reward quantity and claimable amount are distinct; swap execution and conditional WBNB fallback determine what can be claimed. Procurement proceeds by [global meal order](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html). Finalized claims are not reclaimed because users wait to collect them.
+
+## Accounting boundaries
+
+Downward rounding limits payouts for a funded batch; it does not prove the safety or market value of arbitrary tokens. Funds reserved for pending purchases and rewards already settled for users are recorded separately. See [accounting constraints](https://thefatcatofficial.github.io/TheFatCat-docs/definitions/invariants.html), [custody](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html) and [risk boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html).
+
+---
+# SOURCE: whitepaper/downloads.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/whitepaper/downloads.html
+
+# Whitepaper Downloads
+
+Version **v1.0** · Revised **October 10, 2026**.
+
+- [English PDF](https://thefatcatofficial.github.io/TheFatCat-docs/assets/whitepaper/TheFatCat_Whitepaper_v1.0_EN.pdf)
+- [Chinese PDF](https://thefatcatofficial.github.io/TheFatCat-docs/assets/whitepaper/TheFatCat_Whitepaper_v1.0_ZH.pdf)
+
+---
+# SOURCE: faq.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/faq.html
+
+# FAQ & Limitations
+
+Answers about staking, rewards and operating limits.
+
+## Category Directory
+
+- **[Staking & Positions](https://thefatcatofficial.github.io/TheFatCat-docs/faq/staking.html)**: Variable rewards, entry thresholds and principal redemption.
+- **[Seniority & Diets](https://thefatcatofficial.github.io/TheFatCat-docs/faq/seniority-and-rewards.html)**: The seven-day launch warmup, separate seniority progression, diet changes and claims.
+- **[The Belly & Release](https://thefatcatofficial.github.io/TheFatCat-docs/faq/belly-and-release.html)**: Reserve allocations, upstream delivery delays, outflow windows and reward outflow authorization.
+- **[Security & Custody](https://thefatcatofficial.github.io/TheFatCat-docs/faq/security-and-safety.html)**: Direct contract access, core fund boundaries and upstream permissions and their effects on users.
+
+---
+# SOURCE: faq/staking.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/faq/staking.html
+
+# Staking & Positions FAQ
+
+---
+
+## 1. Why is there no published APY or APR?
+Rewards vary with trading-tax revenue, the Belly's available balance, active position weights and execution conditions. The protocol makes no fixed-yield commitment.
+
+---
+
+## 2. What happens if I redeem my principal?
+You may redeem your position at any time to withdraw 100% of your principal. There is zero exit fee or lockup penalty. The only trade-off is that redeeming forfeits the single currently open interval and ends that position's seniority. Any rewards settled in previous intervals remain permanently yours to claim in the distributor.
+
+---
+
+## 3. Why can't positions be merged or added to?
+Each stake has its own seniority clock. Additional principal must open a new position and build its own seniority; it cannot inherit an existing position's multiplier. One wallet can manage multiple positions.
+
+---
+
+## 4. What is the minimum staking threshold?
+Ordinary positions require at least 100,000 FATCAT, limiting small positions.
+
+---
+# SOURCE: faq/seniority-and-rewards.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/faq/seniority-and-rewards.html
+
+# Seniority & Diets FAQ
+
+---
+
+## 1. Why are there zero reward emissions during the first 7 days following staking open?
+The seven-day reward warmup begins when staking opens:
+
+1. **Seniority progression**: Successful advances still update seniority, but the warmup allocates no new rewards. Earlier activation can accumulate seniority sooner.
+2. **Separate authorization clock**: Belly reward outflow authorization has its own seven-day proposal delay, independent of the reward warmup.
+3. **Revenue accumulation**: Successful upstream tax liquidation and QQQB conversion can fund Belly; inflow is not guaranteed to be continuous or reach a fixed amount.
+
+---
+
+## 2. If I change my Diet, does my seniority notch reset?
+**No.** Your seniority notch is tied to your position's tenure in the pool, not your choice of asset. Changing your diet takes effect at the next meal boundary and preserves 100% of your accumulated seniority notch ($c_i$).
+
+---
+
+## 3. How do I claim rewards, and how does native BNB work?
+You can claim rewards at any time through the dashboard. For stakers who selected BNB as their Diet, the protocol provides a native BNB withdrawal option that automatically unwraps WBNB into native BNB in a single transaction without extra manual wrapping steps.
+
+---
+
+## 4. What is a Time-Seniority Certificate?
+
+A [Time-Seniority Certificate](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html) is planned for release when the protocol has matured. Details will be announced later.
+
+---
+# SOURCE: faq/belly-and-release.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/faq/belly-and-release.html
+
+# The Belly & Dynamic Emission FAQ
+
+---
+
+## 1. Why doesn't The Belly payout match the exact trading fees from the last 8 hours? Why is the allocation 1/21 (~4.76%)?
+The Belly allocates from its accumulated unreserved balance:
+- **Why 1/21:** At the standard eight-hour cadence, the allocation fraction is $8/168 = 1/21 \approx 4.76\%$. A seven-day inflow buffer is an ideal steady-state model, subject to constant inflows and regular allocation and execution.
+- **Smoothing:** Existing reserves can fund later meals when trading slows. The reservoir cannot create income or guarantee continuing payments.
+- **Bounded Time-Proration**: A successful advance allocates from unreserved funds in proportion to eligible elapsed time, counting at most 16 hours and using 168 hours as the denominator. It advances one meal and restarts its timer at the current timestamp; longer delays do not backfill all missed meals or all elapsed hours.
+
+---
+
+## 2. Why is The Belly balance reading zero early on?
+After graduation, Flap accumulates FATCAT tax tokens and liquidates them into QQQB when the deployed threshold and sell conditions are met. QQQB then awaits a protected conversion through USDT/WBNB; a successful conversion funds Belly through the fixed BNB receiver in the same transaction. A zero Belly inflow can therefore reflect upstream batching or unmet conversion conditions. Waiting QQQB is not WBNB already held by Belly.
+
+---
+
+## 3. Why is there an eight-hour outflow cap?
+To limit concentrated releases of funds accumulated during settlement delays, The Belly caps actual outflows within each eight-hour window. Initially, the cap is $16/168 \approx 9.5238\%$ of the total WBNB balance at window opening, rounded down.
+
+This is a standing safety ceiling that applies to all actual Belly outflows, not a fixed payout percentage every eight hours. Normal meals settle their allocated budgets. When exceptional conditions delay settlement of allocated rewards, pending funds can accumulate, and concentrated outflows after settlement resumes may reach the cap. Settlements exceeding the window's remaining allowance must wait for a later window and still meet settlement conditions. New deposits do not raise the current allowance, and claims of settled rewards do not consume it. See [Belly's outflow cap](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html).
+
+---
+# SOURCE: faq/security-and-safety.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/faq/security-and-safety.html
+
+# Security & Custody FAQ
+
+## 1. What if the website goes offline?
+
+Principal is held by the staking contract, not the website. Verify the official deployed address and source, then follow [Emergency Exit](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html) to redeem principal or claim settled rewards through a compatible wallet or block explorer.
+
+## 2. Does an emergency pause freeze my principal?
+
+Ordinary principal redemption remains available during a protocol pause without a maintainer's approval. Position checks, accounting and the FATCAT transfer must still succeed. Exiting forfeits the currently open meal's share, while historical reward entitlements remain recorded.
+
+## 3. Can administrators withdraw protocol funds?
+
+The core principal and reward contracts have no administrative sweep or rescue withdrawal entry points. Upstream tax proceeds have different permissions: the revenue vault can be upgraded until permanently locked, and an authorized Flap role can transfer some upstream revenue in an emergency. These funds are not users' staked FATCAT principal, but changes can still affect reward funding.
+
+Upgrades can also change the upstream delegated-operation service. Ordinary redemption and reward payments still go to the position owner; new staking requires the user's balance and valid authorization. See [Custody & Accounting Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/custody.html).
+
+## 4. How can emergency measures affect use?
+
+During an incident, the protocol can pause some operations, restrict affected assets or adjust execution conditions. This may delay new staking, reward purchases and settlement. Completed transactions are not reversed, and recovery is not guaranteed to be immediate.
+
+Some pending rewards may settle in WBNB instead. Review position records and completed settlement for seniority, historical entitlements and actual claimable amounts. Upstream platform permissions are separate from the project's own emergency permissions. See [Risks & Operating Conditions](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html).
+
+---
+# SOURCE: notices.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/notices.html
+
+# Notices & Legal Disclaimers
+
+Important legal disclosures, non-financial advice notices, and protocol interaction warnings.
+
+---
+
+## Document Sections
+
+Review protocol risk warnings and compliance specifications:
+
+- **[Protocol Risk Disclaimers](https://thefatcatofficial.github.io/TheFatCat-docs/notices/risk-disclaimers.html)**: Experimental DeFi protocol classification, non-financial advice notices, zero profit promises, and lack of fiduciary relationship.
+- **[Regulatory & Compliance Status](https://thefatcatofficial.github.io/TheFatCat-docs/notices/regulatory-status.html)**: Code is Law precedence, third-party platform dependencies, and jurisdictional compliance obligations.
+
+---
+# SOURCE: notices/regulatory-status.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/notices/regulatory-status.html
+
+# Regulatory Status & Legal Jurisdiction
+
+---
+
+## 1. Code and Documentation
+On-chain behavior depends on the actual deployed contracts:
+1. **Behavior Verification**: Documentation explains the mechanisms. Verify actual behavior against the deployed, verified source and bytecode on BNB Chain.
+2. **Third-Party Venue Dependencies**: The protocol interacts with third-party decentralized applications and launchpads (including Flap and PancakeSwap). TheFatCat core contributors have no control over third-party infrastructure, RPC availability, or external token smart contracts.
+
+---
+
+## 2. Jurisdiction & User Responsibility
+Users are solely responsible for complying with all applicable laws, regulations, and tax obligations in their relevant jurisdiction before acquiring FATCAT tokens or interacting with the protocol contracts. Access may be restricted or prohibited in jurisdictions under comprehensive sanctions or where decentralized digital asset staking is prohibited by law.
+
+3. **Third-Party Tokenized Assets (bStocks) Special Regulatory & Qualification Notice**:
+Some menu assets are third-party tokens tracking equity or index prices. Rights, redemption terms, eligible users and regional availability depend on the actual issuer's terms and cannot be inferred from a menu name. Review the relevant offering documents and comply with applicable regulatory and tax requirements before use.
+
+---
+# SOURCE: notices/risk-disclaimers.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/notices/risk-disclaimers.html
+
+# Protocol Risk Disclaimers
+
+---
+
+## 1. Experimental DeFi Protocol & Meme Culture Attributes
+TheFatCat is an experimental decentralized DeFi protocol combining community Meme culture with automated transaction tax routing on BNB Chain:
+- **No Investment Advice**: Nothing contained in this documentation, the website, community channels, or associated smart contracts constitutes financial, investment, legal, tax, or professional advice of any nature.
+- **Zero Profit Guarantee**: TheFatCat does not promise or guarantee profit, returns, yield, price appreciation, or capital preservation. Rewards depend strictly on secondary market trading volume, pool tenure, active weights, and asset execution conditions.
+- **Risk of Total Loss**: Digital assets and smart contracts carry inherent financial, technological, and market risks, including the complete loss of staked or traded capital.
+
+---
+
+## 2. No Fiduciary Relationship
+Neither TheFatCat, its open-source contributors, nor any affiliated developers act as an investment advisor, trustee, broker, or financial fiduciary to any staker or token holder. All interactions with the smart contracts are conducted strictly on a peer-to-protocol, self-directed basis.
+
+---
+# SOURCE: links.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/links.html
+
+# Official Links & Ecosystem Directory
+
+Official application, community and technical links.
+
+Always verify browser domain names before connecting your Web3 wallet or signing on-chain transactions. Protocol contributors will never initiate direct messages, ask for private keys, or request seed phrases.
+
+---
+
+## Core Applications & Channels
+
+    Live
+    🌐
+
+### Official Website
+
+Protocol overview, reservoir simulator and background.
+
+    [Visit Main Site →](https://thefatcat.fun)
+    https://thefatcat.fun
+
+    Core System
+    🥣
+
+### The Belly (Staking System)
+
+Stake FATCAT, choose from the enabled on-chain reward menu, check position state and claim settled rewards.
+
+    [Open Staking System →](https://thefatcat.fun/belly)
+    https://thefatcat.fun/belly
+
+    Community
+    𝕏
+
+### Official X (Twitter)
+
+Protocol announcements and community updates.
+
+    [Follow @TheFatCatFi →](https://x.com/TheFatCatFi)
+    https://x.com/TheFatCatFi
+
+---
+
+## Documentation & Verification
+
+Public references for users:
+
+| Gateway / Channel | Address / Resource Link | Verification Notes |
+| :--- | :--- | :--- |
+| **Documentation Portal** | [thefatcatofficial.github.io/TheFatCat-docs/](https://thefatcatofficial.github.io/TheFatCat-docs/) | Protocol rules and user guides |
+| **BNB Chain Explorer** | [bscscan.com](https://bscscan.com) | Official network explorer for deployed contracts |
+| **Security Advisories** | [GitHub Security Advisories](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new) | Private vulnerability reporting |
+
+---
+
+## Anti-Phishing Security Checklist
+
+Before interacting with any protocol application or contract:
+
+1. **Verify Exact Domain**: Ensure the address bar reads `https://thefatcat.fun` or `https://thefatcat.fun/belly`. Beware of lookalike domains using subtle character substitutions.
+2. **Check Contract Addresses**: Compare contract targets with the separately published official deployment record before signing.
+3. **No Signature for Free Grants**: The protocol never requires signing permit messages or approving unlimited spending for airdrops.
+
+---
+# SOURCE: protocol/how-the-machine-runs.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/protocol/how-the-machine-runs.html
+
+# How the Machine Runs
+
+Adapted from founder Silas's article of the same name, this chapter connects trading-tax revenue, Belly reserves, staking seniority, diet selection and FEED maintenance. It follows revenue through to position rewards and explains the conditions at each stage.
+
+## 1. From trading tax to position rewards
+
+TheFatCat accumulates revenue in the Belly, then allocates it by meal and position weight. Staking principal, reward reserves and claimable rewards have separate accounting and custody.
+
+| Stage | What happens | What it means for you |
+|:---|:---|:---|
+| Tax receipt | FATCAT trading tax is received as QQQB through the upstream route, then converted to WBNB | A taxable trade does not mean revenue has reached the Belly; liquidation and conversion must succeed |
+| Revenue split | After upstream fees and any earned FEED bounty, 85% of net revenue plus split-rounding dust goes to the Belly; 15% funds development, operations and marketing | The 85% / 15% split applies to revenue after fees and bounties |
+| Meal allocation | A successful meal advance records a budget and position entitlements from unreserved funds | Allocation is accounting; it does not send rewards to your wallet |
+| Asset settlement | The Executor procures selected assets in meal order, or settles in WBNB under the fallback rules | Rewards may wait for price, liquidity, maintenance or treasury-allowance conditions |
+| User claim | Settled rewards enter the Distributor, from which you claim them by transaction | Claiming rewards and redeeming staking principal are separate operations |
+
+Ordinary staking principal stays in a separate Vault. Claiming delivers settled reward assets without selling the FATCAT held as your principal. See [Tax Routing & Fees](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/fees.html) for the full fee calculation.
+
+## 2. Why the Belly behaves like a reservoir
+
+Fees can arrive in bursts of trading activity. The Belly spreads allocation of that revenue across later meals. It changes the timing of allocations but creates no additional revenue.
+
+For an on-time, fully rewarded eight-hour meal that meets allocation conditions, the budget is capped at **1/21 of unreserved quote funds, approximately 4.76%**. Funds already reserved for pending meals are excluded to prevent allocating them again.
+
+- Meals require at least eight hours between advances, and someone must submit a successful transaction to advance them.
+- Each advance closes one meal and starts the next at the current call time. Missed historical meals are not backfilled.
+- A delayed advance counts at most sixteen hours of rewarded time.
+- The initial accumulation period, insufficient eligible weight, asset caps and integer rounding can reduce actual allocations below the budget limit.
+
+Assuming no new revenue, one valid meal closed every eight hours, full and prompt execution, and no integer dust, the model's unreserved balance declines as follows:
+
+| Time elapsed | Remaining unreserved balance in the model |
+|:---|:---|
+| 1 day | About 86% |
+| 3 days | About 64% |
+| 7 days | About 36% |
+| 14 days | About 13% |
+| 30 days | About 1.24% |
+
+This ideal model has a half-life of about 4.74 days. The table describes an allocation model; pending reservations may still sit in the Belly, so it is not a direct measure of physical treasury balance or your payout schedule. Without new revenue, the amount available per meal also declines.
+
+Actual outflows have a separate eight-hour window allowance. Allocation budgets and withdrawal allowances are distinct rules; see [The Belly Reserve and Release Mechanics](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/belly.html).
+
+## 3. How a position records principal and time
+
+Each stake creates an independent position recording principal, seniority, diet and claim progress. A wallet can have multiple positions, which do not automatically merge. The minimum ordinary position is **100,000 FATCAT**, fixed at deployment; its market cost changes with the price of FATCAT.
+
+The basic weight relationship is:
+
+**Position weight = staked principal × seniority multiplier**
+
+A new position does not participate in the meal already open. It becomes active in the next meal at **1×**. Each completed active meal adds 1 to the multiplier, reaching the **22×** cap after 21 completed active meals. The count follows actual advances; calendar time alone does not add seniority, and the multiplier does not compound principal.
+
+For two positions each staking 100,000 FATCAT, one in its first active meal has a weight of 100,000, while a mature one has a weight of 2,200,000. Their weight per unit of principal differs by 22 times, while actual rewards also depend on total pool weight, diet allocations and execution. If all positions are mature, weight per unit of principal is equal and shares again follow principal proportionally.
+
+At equal seniority, ten times the principal still means ten times the weight. Seniority does not cap capital size; new capital can dilute other positions' future shares from the next meal onward. See [Meals & Seniority](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/meals-and-seniority.html) for formulas and boundaries.
+
+### How the first seven days work
+
+Staking will open immediately after token graduation. The initial seven-day accumulation period starts with the **successful transaction opening staking**, which starts the reward clock. Positions can accrue seniority through successful meal advances during this period, but no new reward budgets are allocated; successfully converted revenue stays in the Belly.
+
+This is why “staking has been open for seven days” and “21 active meals have been completed” are different conditions. After accumulation ends, a successful advance must still satisfy rewarded-time, weight and allocation conditions to create a reward budget.
+
+## 4. Diets determine the settlement asset
+
+Each position chooses one DIET from the enabled menu. BNB is the default, accounted as WBNB internally. It needs no additional procurement swap and can be unwrapped to native BNB when claimed. Eligible menu assets can also include tokenized equities (bStocks) and other tokens. FATCAT itself can only be considered after graduation, route validation, TWAP warmup and other listing conditions.
+
+- A diet change takes effect in the next meal, preserves seniority and has no protocol switching fee; transaction gas still applies.
+- Previously recorded rewards remain in their historical assets. A diet change does not convert them into the new choice.
+- Procurement for non-WBNB assets follows global oldest-meal order and checks prices, liquidity and minimum output.
+- Fallback-eligible allocations can settle in WBNB, subject to available funds and treasury allowance. One failed purchase does not mean immediate fallback settlement.
+
+Allocation, settlement and claiming can happen at different times. See [Diets & Claiming Rewards](https://thefatcatofficial.github.io/TheFatCat-docs/guides/diets-and-claiming.html) for actions and [Procurement & Execution](https://thefatcatofficial.github.io/TheFatCat-docs/protocol/execution.html) for waiting and fallback rules.
+
+## 5. Who keeps the machine running: FEED
+
+Smart contracts need transactions to trigger work. Anyone can attempt public maintenance; each staker does not need to run a keeper. A FEED attempts these steps in order:
+
+1. Convert the tax Vault's QQQB to WBNB and forward revenue.
+2. Advance at most one due meal and record new allocations.
+3. Check a contract-assigned batch of menu assets and attempt pending procurement.
+
+The caller pays gas without supplying personal QQQB. Each step remains subject to balance, timing, price, liquidity and pause conditions.
+
+### How the FEED bounty is earned
+
+When conversion succeeds inside FEED, the original caller must either hold at least **10,000 FATCAT** or provide its own staking position with positive remaining principal. An eligible caller receives a credit of one thirty-eighth of the output, rounded down based on the actual gross WBNB output. An ineligible caller can still help maintain the protocol but earns no bounty.
+
+The bounty is recorded as separately claimable WBNB and requires another transaction and gas to withdraw. Standalone advances, procurement and FEED scans without successful conversion earn no bounty. Only in the standard tax model, ignoring costs, price changes and rounding, does it represent approximately 0.1% of the corresponding trade value; actual amounts follow conversion and reward records.
+
+Local failures in later advancement or procurement normally preserve a successful conversion and eligible bounty, but invalid input, whole-transaction gas exhaustion and other transaction-level failures can still revert everything. A success receipt does not prove that every step completed. Official automated maintenance attempts to supplement public calls; its success and timeliness still depend on execution conditions and its operating environment. See [FEED & Decentralized Maintenance](https://thefatcatofficial.github.io/TheFatCat-docs/guides/community-keeper.html).
+
+## 6. What remains when you exit
+
+Ordinary positions have no protocol lockup or exit fee. Redemption returns principal and ends future weight for that position. Exiting forfeits the currently open meal's entitlement while preserving previously recorded reward entitlements. A new ordinary position starts again at 1×.
+
+| Where funds are held | Purpose and boundaries |
+|:---|:---|
+| Staking Vault | Holds principal; ordinary redemption does not check the protocol pause flag |
+| Belly | Holds reward reserves; outflows follow a fixed route, pause controls and window allowances |
+| Reward Distributor | Holds settled rewards; claiming does not require further Belly outflows at that time |
+
+Pending procurement or a paused Belly therefore adds no meal-wait requirement to ordinary redemption. Redemption and claims still require a successful transaction, token delivery and the relevant contract checks. See the [Emergency Exit Guide](https://thefatcatofficial.github.io/TheFatCat-docs/guides/emergency-exit.html) for direct interaction when the front end is unavailable.
+
+## 7. What else to keep in view
+
+Rewards come from actual revenue and donations recognized by the contracts. They depend on trading volume, participating principal and seniority distribution, selected assets and execution. The reservoir and seniority rules promise no fixed return.
+
+Upstream Flap permissions can change future tax routing; tokenized equities introduce issuer, custody and upgrade risks; TWAP checks do not eliminate manipulation, MEV or liquidity risk. See [Risk Boundaries](https://thefatcatofficial.github.io/TheFatCat-docs/safety/risks-and-status.html) for how these conditions affect your actions, and [Monitoring & Incident Response](https://thefatcatofficial.github.io/TheFatCat-docs/safety/monitoring.html) for an overview of response measures.
+
+[Time-Seniority Certificates](https://thefatcatofficial.github.io/TheFatCat-docs/guides/seniority-certificates.html) are a future roadmap item, to be issued as NFTs when the protocol is mature enough. Users with staking positions will be able to burn FATCAT to mint them. Further details will be announced later.

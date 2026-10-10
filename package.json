@@ -1,0 +1,13 @@
+{
+  "name": "thefatcat-docs",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test:ui": "node scripts/test-ui.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

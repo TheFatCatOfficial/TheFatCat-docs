@@ -1,0 +1,60 @@
+# TheFatCat 官方用户文档
+
+> TheFatCat 是一个融合了 Meme 文化与去中心化交易税收路由机制的新型DeFi 实验性协议。
+
+## 定义与架构
+- [项目简介](https://thefatcatofficial.github.io/TheFatCat-docs/zh/): 协议概览、奖励储备与按资历加权的仓位。
+- [核心定义与符号](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions.html): 符号、量纲、术语与记账条件。
+- [术语映射](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/terminology.html): 产品词汇在实际使用中的含义。
+- [符号与计算口径](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/notation.html): 本金、资历、奖励份额与餐次口径。
+- [核算约束](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/invariants.html): 本金隔离、分配限额及已结算奖励的资金保留。
+- [设计背景](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/paradigm-shift.html): 直通式奖励与储备分配机制的比较。
+- [参照协议](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/prior-art.html): 与 Curve、Pendle、Synthetix 的机制比较。
+- [储备池模型](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/reservoir-model.html): 储备分配与衰减模型的假设。
+- [资历加权](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/time-weighting.html): 仓位时长、资历阶梯与相对奖励权重。
+- [设计原则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/principles.html): 本金分离、奖励记账与运行边界。
+- [系统拓扑](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology.html): 资金路径、仓位生效，以及从分配到领取的步骤。
+- [资产流向](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/asset-flows.html): QQQB 接收、兑换、收入分成与上游权限边界。
+- [采购与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/claim-pipeline.html): 顺序采购、预言机检查、结算记录及已结算奖励的领取。
+- [状态机与餐次](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/state-machine.html): 通过交易推进餐次与冻结餐次权重。
+
+## 协议机制与费用
+- [机器如何运转](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/how-the-machine-runs.html): 串联收入、Belly 储备、资历、食谱、结算与 FEED 维护的完整导读。
+- [税收路由与费用](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/fees.html): QQQB 税收入账、兑换推动奖励，以及剩余收入的 85% Belly / 15% Ops 分成。
+- [The Belly](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html): 未预留余额的分配、衰减模型，以及限制结算延迟后集中出金的安全上限。
+- [餐次与资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html): 仓位权重、1 至 22 档资历阶梯与退出时放弃当前餐次份额。
+- [采购与执行](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html): 全局最早餐次优先、TWAP 检查、回退条件与领取边界。
+
+## 用户指南
+- [质押与仓位](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/staking.html): 100,000 FATCAT 准入门槛、激活与仓位所有权。
+- [食谱与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html): 启用的奖励资产、批次领取与原生 BNB 解包。
+- [紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html): 网站不可用时，直接调用合约赎回本金或领取已结算奖励。
+- [时间资历凭证](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/seniority-certificates.html): 未来将以 ERC-721 NFT 的形式留存时间资历，持有质押仓位的用户可燃烧 FATCAT 铸造，详细内容后续公布。
+- [FEED 机制与去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html): 公众 FEED 维护，以及符合资格的兑换按 WBNB 产出的 1/38 向下取整计算推动奖励。
+
+## 安全与治理
+- [托管与记账边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html): 核心资金权限、上游恢复权限与取整限制。
+- [测试与验证](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/audits-and-hardening.html): 当前保护措施与内部回归、不变量测试范围。
+- [运行监控](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/monitoring.html): 监控措施、应急处置与用户应对入口。
+- [风险披露与运行条件](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html): 开放规则、发行人依赖与没有固定到账保证的结算延迟。
+
+## 常见问题解答 (FAQ)
+- [常见问题与限制](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq.html): 质押、奖励及运行边界的常见问题。
+- [质押与仓位问答](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/staking.html): 浮动奖励、本金赎回、仓位隔离与准入门槛。
+- [The Belly 与释放问答](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/belly-and-release.html): 上游收入、储备分配、流出窗口与 奖励出金授权。
+- [资历与食谱问答](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/seniority-and-rewards.html): 发射预热、独立的资历推进、切换食谱与领取。
+- [安全与托管问答](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/security-and-safety.html): 直接访问合约、核心托管边界，以及上游权限及其对用户的影响。
+
+## 白皮书与模型
+- [白皮书](https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper.html): 白皮书中的协议架构与模型。
+- [数学概要](https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper/math-overview.html): 分配与权重公式、模型假设及记账界限。
+- [白皮书下载](https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper/downloads.html): 中英文 PDF 快照。
+
+## 声明与链接
+- [声明与免责](https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices.html): 协议性质、风险披露与法律边界。
+- [风险声明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices/risk-disclaimers.html): 合约、市场、流动性与外部依赖风险。
+- [监管说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices/regulatory-status.html): 代币化资产发行方与司法辖区限制。
+- [官方链接](https://thefatcatofficial.github.io/TheFatCat-docs/zh/links.html): 应用、社区与技术链接。
+
+## 全文文档
+- [全文文档](https://thefatcatofficial.github.io/TheFatCat-docs/llms-full-zh.txt): 中文文档汇总文本。

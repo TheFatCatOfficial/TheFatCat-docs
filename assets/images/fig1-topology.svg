@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" role="img" aria-labelledby="title desc"><title id="title">FIGURE 1: FROM TRADING TAX TO POSITION REWARDS</title><desc id="desc">Tax revenue funds rewards; staked principal is held separately.</desc><defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b0e14"/><stop offset="1" stop-color="#141923"/></linearGradient><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker></defs><rect width="1000" height="680" rx="16" fill="url(#bg)"/>
+<text x="40" y="48" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="21" font-weight="700" fill="#f8fafc" text-anchor="start">FIGURE 1: FROM TRADING TAX TO POSITION REWARDS</text>
+<text x="40" y="76" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="start">Tax revenue funds rewards; staked principal is held separately.</text>
+<rect x="40" y="112" width="185" height="160" rx="12" fill="#161e2c" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="58" y="144" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#38bdf8" text-anchor="start">Trading tax</text>
+<text x="58" y="175" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">4% on eligible trades</text>
+<text x="58" y="199" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Platform fee deducted</text>
+<text x="58" y="223" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">QQQB enters the protocol</text>
+<rect x="285" y="112" width="185" height="160" rx="12" fill="#161e2c" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="303" y="144" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#38bdf8" text-anchor="start">Fixed conversion</text>
+<text x="303" y="175" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Revenue becomes WBNB</text>
+<text x="303" y="199" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Eligible FEED reward first</text>
+<text x="303" y="223" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">1/38 of actual output</text>
+<rect x="530" y="112" width="185" height="160" rx="12" fill="#161e2c" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="548" y="144" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#38bdf8" text-anchor="start">Belly reserves</text>
+<text x="548" y="175" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">85% of net remainder</text>
+<text x="548" y="199" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Reserve, then allocate</text>
+<text x="548" y="223" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Window outflow limits</text>
+<rect x="775" y="112" width="185" height="160" rx="12" fill="#161e2c" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="793" y="144" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#38bdf8" text-anchor="start">Meal allocation</text>
+<text x="793" y="175" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">At least 8 hours apart</text>
+<text x="793" y="199" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Shares follow weights</text>
+<text x="793" y="223" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Settlement still required</text>
+<path d="M230 192 L275 192" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M475 192 L520 192" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M720 192 L765 192" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="512" y="177" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" font-weight="700" fill="#fbbf24" text-anchor="middle">85%</text>
+<path d="M377 277 L377 302" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="285" y="309" width="280" height="62" rx="12" fill="#161e2c" stroke="#b89454" stroke-width="1.5"/>
+<text x="301" y="334" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="700" fill="#fbbf24" text-anchor="start">15% of remaining net revenue</text>
+<text x="301" y="355" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" font-weight="400" fill="#cbd5e1" text-anchor="start">Development, operations and marketing</text>
+<rect x="40" y="415" width="250" height="155" rx="12" fill="#161e2c" stroke="#34d399" stroke-width="1.5"/>
+<text x="58" y="447" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#34d399" text-anchor="start">Staked principal</text>
+<text x="58" y="478" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">At least 100,000 FATCAT</text>
+<text x="58" y="502" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Not used to purchase rewards</text>
+<text x="58" y="526" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Redeem principal on exit</text>
+<rect x="375" y="415" width="250" height="155" rx="12" fill="#161e2c" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="393" y="447" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#38bdf8" text-anchor="start">Position allocation weight</text>
+<text x="393" y="478" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Principal × seniority multiplier</text>
+<text x="393" y="502" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Notch 1 through Notch 22</text>
+<text x="393" y="526" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Diet selects the reward asset</text>
+<rect x="710" y="415" width="250" height="155" rx="12" fill="#161e2c" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="728" y="447" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#fbbf24" text-anchor="start">Settlement and claiming</text>
+<text x="728" y="478" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Purchase or WBNB fallback</text>
+<text x="728" y="502" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">Claim settled rewards separately</text>
+<text x="728" y="526" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#cbd5e1" text-anchor="start">BNB can arrive as native BNB</text>
+<path d="M867 278 L867 405" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M300 490 L365 490" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5 5"/>
+<path d="M635 490 L700 490" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5 5"/>
+<text x="40" y="612" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="start">Dashed arrows show participation in allocation, not principal transfers.</text>
+<text x="40" y="638" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#94a3b8" text-anchor="start">Rewards depend on actual revenue, total weights and settlement; no fixed return is promised.</text>
+</svg>
