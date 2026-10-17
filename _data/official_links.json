@@ -1,0 +1,87 @@
+{
+  "applications": [
+    {
+      "url": "https://thefatcat.fun/belly",
+      "primary": true,
+      "en": {
+        "title": "The Belly (Staking System)",
+        "description": "Stake $FATCAT, choose from the enabled on-chain reward menu, check position state and claim settled rewards.",
+        "action": "Open Staking System"
+      },
+      "zh": {
+        "title": "质押系统（The Belly）",
+        "description": "质押 $FATCAT、从链上启用菜单中选择奖励资产、查看仓位状态并领取已结算奖励。",
+        "action": "前往质押系统"
+      }
+    },
+    {
+      "url": "https://thefatcat.fun",
+      "primary": false,
+      "en": {
+        "title": "Official Website",
+        "description": "Protocol overview, reservoir simulator and background.",
+        "action": "Visit Main Site"
+      },
+      "zh": {
+        "title": "协议官方主站",
+        "description": "协议概览、储备池模拟器与设计背景。",
+        "action": "访问官方主站"
+      }
+    },
+    {
+      "url": "https://x.com/TheFatCatFi",
+      "primary": false,
+      "en": {
+        "title": "Official X (Twitter)",
+        "description": "Protocol announcements and community updates.",
+        "action": "Follow @TheFatCatFi"
+      },
+      "zh": {
+        "title": "官方 X（推特）",
+        "description": "协议公告与社区动态。",
+        "action": "关注 @TheFatCatFi"
+      }
+    }
+  ],
+  "references": [
+    {
+      "url": "https://thefatcatofficial.github.io/TheFatCat-docs/",
+      "en": {
+        "title": "Documentation Portal",
+        "label": "thefatcatofficial.github.io/TheFatCat-docs/",
+        "description": "Protocol rules and user guides"
+      },
+      "zh": {
+        "title": "官方用户文档站",
+        "label": "thefatcatofficial.github.io/TheFatCat-docs/",
+        "description": "协议规则、机制说明与操作指南"
+      }
+    },
+    {
+      "url": "https://bscscan.com",
+      "en": {
+        "title": "BNB Chain Explorer",
+        "label": "bscscan.com",
+        "description": "Official network explorer for deployed contracts"
+      },
+      "zh": {
+        "title": "BNB Chain 浏览器",
+        "label": "bscscan.com",
+        "description": "用于查询已部署合约的源码与交易"
+      }
+    },
+    {
+      "url": "https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new",
+      "en": {
+        "title": "Security Advisories",
+        "label": "GitHub Security Advisories",
+        "description": "Private vulnerability reporting"
+      },
+      "zh": {
+        "title": "安全通报通道",
+        "label": "GitHub 私密安全通报通道",
+        "description": "私密漏洞提报"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{% assign directory_language = page.lang | default: 'en' %}
+<div class="tfc-portal-list" role="list">
+{% for entry in site.data.official_links.applications %}
+{% assign directory_text = entry[directory_language] %}
+  <div class="tfc-portal-entry" role="listitem">
+    <div class="tfc-portal-copy">
+      <h3 class="tfc-portal-title">{{ directory_text.title | escape }}</h3>
+      <p class="tfc-portal-desc">{{ directory_text.description | escape }}</p>
+      <p class="tfc-portal-url">{{ entry.url | escape }}</p>
+    </div>
+    <a href="{{ entry.url | escape }}" target="_blank" rel="noopener noreferrer" class="tfc-portal-btn{% if entry.primary %} primary{% endif %}">
+      {{ directory_text.action | escape }} &rarr;
+    </a>
+  </div>
+{% endfor %}
+</div>

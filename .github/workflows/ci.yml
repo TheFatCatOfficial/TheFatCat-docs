@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@a0102e0972be65f351c307e2d64b9314a57c8073 # v1 branch head
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          cache-version: 0
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Check publication gate
+        if: hashFiles('scripts/requirements-public-scan.txt') != ''
+        run: |
+          python3 -m venv "$RUNNER_TEMP/pdf-scan-env"
+          "$RUNNER_TEMP/pdf-scan-env/bin/pip" install --require-hashes -r scripts/requirements-public-scan.txt
+          "$RUNNER_TEMP/pdf-scan-env/bin/python" scripts/test_public_pdfs.py
+          "$RUNNER_TEMP/pdf-scan-env/bin/python" scripts/test_export_public.py
+          "$RUNNER_TEMP/pdf-scan-env/bin/python" scripts/export-public.py "$RUNNER_TEMP/public-docs-check"
+      - name: Build with Jekyll
+        run: |
+          python3 scripts/test_build_llms.py
+          python3 scripts/test_public_build.py
+          python3 scripts/build-llms.py --check
+          bundle exec jekyll build
+          python3 scripts/check-public-build.py _site
+        env:
+          JEKYLL_ENV: production
+      - name: Browser regression checks
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npm run test:ui -- _site

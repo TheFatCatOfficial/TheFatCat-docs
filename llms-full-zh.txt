@@ -1,0 +1,1617 @@
+# TheFatCat 文档全文
+
+> 全站中文正文（全部 45 个章节）。
+> 官方网站：https://thefatcat.fun
+> 文档：https://thefatcatofficial.github.io/TheFatCat-docs/zh/
+
+---
+# 来源章节: zh/index.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/
+
+# TheFatCat 文档中心
+
+TheFatCat 是一个实验性 DeFi 收入协议，将 Meme 文化与交易税路由机制结合在一起。
+
+质押 `$FATCAT`，按时间资历系数获得 BNB、bStocks 或精选 Meme 代币奖励。
+
+[代币发射与功能开放流程](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/launch-stages.html)：了解三个开放阶段与全协议统一的七天积累期。
+
+## 使用文档
+
+- [质押指南](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/staking.html)
+- [选择奖励资产](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html#2-如何切换食谱)
+- [领取奖励](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html#3-领取已结算奖励)
+- [紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)
+
+## 运行方式
+
+- **收入与分配**：`$FATCAT` 的 4% 交易税以 QQQB 接收。扣费、兑换及扣除已产生的推动奖励后，净 WBNB 的 85% 进入 Belly，15% 用于项目开发、运营和营销。正常 8 小时餐次最多分配未预留资金的 1/21；分配本身不转移资金。
+- **质押权重**：最低开仓本金为 100,000 `$FATCAT`。普通仓位从下一餐生效，时间资历系数从 1× 起步，每个有效餐次增加 1×，最高 22×。仓位权重 = 本金 × 时间资历系数 × 当前资产的激励系数。
+- **结算与领取**：采购按全局餐次顺序推进，并检查价格和流动性。符合回退条件的失败采购可用 WBNB 结算。已结算奖励可以保留并领取，待采购奖励可能延迟。
+- **退出**：普通赎回无退出费，且不检查协议暂停标记。退出后停止未来计权，并放弃进行中餐次尚未结算的权益；此前已结算的奖励保留。
+
+## 进一步了解
+
+- **维护**：[FEED 机制与去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html)
+
+- **机制**：[机器如何运转](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/how-the-machine-runs.html)、[Belly 分配](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)、[资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html)、[执行](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)、[费用](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/fees.html)
+
+- **架构**：[拓扑](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology.html)、[定义](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions.html)、[设计背景](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background.html)
+
+- **风险与核验**：[安全](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety.html)、[风险边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html)
+
+- **参考**：[FAQ](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq.html)、[白皮书](https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper.html)、[声明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices.html)、[官方链接](https://thefatcatofficial.github.io/TheFatCat-docs/zh/links.html)
+
+## 限制与部分未来路线图
+
+奖励取决于实际收入、维护和市场执行，不承诺固定收益。TWAP 检查限制执行条件，不能消除 MEV、代币、发行方或流动性风险。链可用性与代币行为也会影响退出和领取。
+
+[时间资历凭证](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/seniority-certificates.html)会在协议成熟的时机推出。
+
+---
+# 来源章节: zh/definitions.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions.html
+
+# 定义与符号
+
+说明协议文档使用的符号、计算口径及记账条件。Belly、餐次、食谱等产品术语分别描述储备、参与周期和奖励选择。
+
+## 章节导览
+
+- **[符号与计算口径](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/notation.html)**：本金、资历、奖励份额与餐次口径。
+- **[术语对照](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/terminology.html)**：产品词汇在实际使用中的含义。
+- **[核算约束](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/invariants.html)**：本金隔离、分配限额及已结算奖励的资金保留。
+
+---
+# 来源章节: zh/definitions/notation.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/notation.html
+
+# 符号与计算口径
+
+本表说明文档中用于理解本金、资历和奖励份额的符号。金额按代币数量表示，具体到账以实际结算为准。
+
+| 符号 | 含义 | 用户如何理解 |
+|:---|:---|:---|
+| $m$ | **餐次序号** | 每完成一次餐次推进，进入下一餐；推进间隔至少八小时。 |
+| $\Delta t$ | **餐次间隔** | 距上次成功推进经过的时间；单次分配最多计入 16 小时。 |
+| $p_i$ | **仓位本金** | 仓位 $i$ 质押的 `$FATCAT` 数量，普通开仓至少 100,000 `$FATCAT`，且须为整代币。 |
+| $c_i$ | **时间资历系数** | 普通新仓生效前为零，生效时为 1，之后逐餐增加，最高为 22。 |
+| $k_a$ | **激励系数** | 按资产 $a$ 设置，取值范围 1.0×–2.0×，显示为 1.5× 等数值，初期由官方调控。 |
+| $w_i$ | **仓位权重** | $p_i \times c_i \times k_a$，$a$ 为仓位当前的食谱资产，用于确定奖励分配份额。 |
+| $W$ | **全体有效权重** | 当餐全部符合条件的仓位的权重之和；新增质押可能改变您的相对份额。 |
+| $B$ | **Belly 储备** | Belly 已确认的 WBNB 资金，包含尚未拨款的已分配部分。 |
+| $L$ | **已预留资金** | 已分配但仍留在 Belly 等待采购或结算的资金，不能重复分配。 |
+| $U$ | **未预留净额** | Belly 储备扣除已预留资金后，可用于新一餐分配的部分，最低按零计算。 |
+| $a$ | **食谱资产** | 仓位选择的奖励资产，须来自已启用菜单。 |
+| $Q_a$ | **食谱分配预算** | 当餐为食谱 $a$ 分配的 WBNB 计价预算，不等于该资产最终到账数量。 |
+
+相关规则见[餐次与资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html)及[Belly 储备与释放](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)。
+
+---
+# 来源章节: zh/definitions/terminology.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/terminology.html
+
+# 术语对照
+
+Belly、餐次和食谱是协议面向社区使用的表达。下表说明它们在实际使用中的含义：
+
+| 产品词汇 | 对应含义 | 使用时需要了解 |
+|:---|:---|:---|
+| **The Belly（大肚皮）** | 奖励储备金库 | 接收奖励收入，逐餐分配；与质押本金分开，实际流出受窗口额度限制。 |
+| **Meal（餐次）** | 奖励记账周期 | 推进间隔至少八小时；完成一餐后记录份额，奖励仍须后续结算。 |
+| **Diet（食谱）** | 仓位选择的奖励资产 | 可从启用菜单中选择；切换不重置资历，下一餐生效，旧奖励仍可领取。 |
+| **Seniority（时间资历阶梯）** | 仓位参与时间形成的时间资历系数 | 生效后从 1 档逐餐升至 22 档；是分配权重，不是收益承诺。 |
+| **满级** | 资历达到 22 档 | 后续参与保持上限，不继续提高时间资历系数；奖励仍受收入和全体权重影响。 |
+| **Forfeit（份额放弃）** | 退出时放弃当前开放餐次的份额 | 不抹去此前已赚取奖励，也不收取本金退出费。 |
+| **Belly 流出限额** | 八小时窗口内可释放的奖励资金上限 | 初始为窗口开启时 WBNB 总余额的 16/168，约 9.5238%；已结算奖励领取不消耗此额度。 |
+| **FEED** | 公众参与的协议维护 | 尝试兑换收入、推进到期餐次及处理指定批次；仅符合条件的成功兑换产生推动奖励。 |
+
+---
+# 来源章节: zh/definitions/invariants.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/invariants.html
+
+# 核算约束
+
+这些规则说明本金和奖励如何分别记录，以及分配与流出受到哪些约束。它们不保证任意代币行为、资产市值或链中断情况下的安全。
+
+## 本金托管
+
+本金金库应保留与登记未退出本金相对应的 `$FATCAT`。奖励采购与本金金库分开，普通本金赎回不受协议暂停限制；成功提款仍取决于链和代币转账正常完成。详见[托管边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)。
+
+## 分配与流出
+
+新一餐预算按 Belly 已确认储备扣除现有预留资金后计算，单次最多计入 16 小时。处于奖励期、准时推进的八小时餐次，最多分配这部分未预留资金的 1/21。
+
+实际流出额度采用另一个基数：**八小时支出窗口开启时的 WBNB 总余额**，包含待结算份额已预留的资金。初始额度为该余额的 16/168，窗口内新增入金不提高当窗额度。分配限额和流出限额分别生效。详见[Belly 规则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)。
+
+## 推进与交易成本
+
+餐次推进不需要逐个处理所有质押者，但仍须处理菜单中的相关资产。菜单规模和具体操作会影响 Gas。
+
+## 已结算奖励与取整
+
+在有效记账和受支持代币行为下，一批奖励的总领取量不应超过该批实际收到的资金。向下取整可能留下少量残差，这些残差保留在奖励分配环节。
+
+已结算未领取的奖励仍须保留对应资金。尚待采购的预算也不能因用户未领取就被当作空闲余额；只有确认不存在符合条件的领取者的份额，才能按规则解除预留。详见[托管边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)和[采购与结算](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)。
+
+---
+# 来源章节: zh/background.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/background.html
+
+# 设计背景
+
+本节说明储备式分配、奖励资产自选和时间加权质押的设计选择。详细公式与运行规则集中在协议页面。
+
+- [分配设计选择](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/paradigm-shift.html)：收入节奏、资产选择和参与边界。
+- [相关机制与参考资料](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/prior-art.html)：记账、时间权重与参考资料。
+- [蓄水池模型](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/reservoir-model.html)：未预留资金、分配与有条件的衰减估算。
+- [时间权重](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/time-weighting.html)：本金、资历、退出与凭证。
+- [原则与限制](https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/principles.html)：机制提供的能力及其保证范围。
+
+---
+# 来源章节: zh/background/paradigm-shift.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/paradigm-shift.html
+
+# 分配设计选择
+
+TheFatCat 通过三项机制组织交易税收入：
+
+| 设计问题 | 选择 | 限制 |
+|:---|:---|:---|
+| 如何分配不均匀的收入？ | 收入先存入 Belly，每餐按未预留资金的一定比例分配。 | 储备把已有收入分配到不同餐次，不创造收入，也不保证奖励稳定。 |
+| 用户领取什么资产？ | 每个仓位选择启用的菜单资产，采购与分配分开。 | 结算依赖资产资格、流动性、预言机检查及回退条件。 |
+| 时长如何影响份额？ | 本金乘以时间资历系数（普通仓位持续参与时从 1× 升至 22×），再乘以所选资产的激励系数。 | 新资金仍会降低已有参与者的份额比例，时长不能固定奖励金额。 |
+
+普通新仓从下一餐开始参与。退出与更换食谱按明确的餐次边界处理，不让新仓立即领取开仓餐次的分配。
+
+公式及条件见 [Belly 分配](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)、[餐次与资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html)和[执行](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)。
+
+---
+# 来源章节: zh/background/prior-art.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/prior-art.html
+
+# 相关机制与参考资料
+
+储备分配、时间权重和累计奖励索引解决不同问题。比较时需要一致的记账单位、参与边界和资产假设。
+
+| 主题 | TheFatCat 的方式 | 详情 |
+|:---|:---|:---|
+| 记账节奏 | 每餐至少八小时，每次推进最多结束一餐。 | [餐次规则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html) |
+| 仓位权重 | 本金 × 已积累的时间资历系数 × 所选资产的激励系数。 | [餐次与资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html) |
+| 领取 | 已结算奖励记录保留各仓位的历史权益，供之后领取。 | [托管与记账](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html) |
+| 舍入 | 奖励整数计算向下取整，余数留在分发器。 | [核算约束](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/invariants.html) |
+| 市场执行 | 采购检查 TWAP、流动性和最低输出，并提供有条件的 WBNB 回退。 | [执行](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html) |
+
+## 参考资料
+
+- [Curve 投票托管文档](https://curve.readthedocs.io/dao-vecrv.html)：锁定时长计入投票权重的参考。
+- [Pendle 文档](https://docs.pendle.finance/)：协议机制及分版本的代币经济学。
+- [Synthetix V3 概览](https://blog.synthetix.io/a-quick-explainer-on-synthetix-v3/)：资金池、抵押品和奖励分发器架构。
+
+资料来源为公开路径，只描述各自系统。本项目不声称 TheFatCat 独一无二、比其他协议更安全或已经形式化验证。源码核对与测试结论都依赖被检查的版本和行为。
+
+---
+# 来源章节: zh/background/reservoir-model.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/reservoir-model.html
+
+# 蓄水池模型
+
+Belly 在采购前持有 WBNB 资金。分配新餐次预算前，先扣除已为已有权益预留的资金。推进餐次只登记预算；之后完成采购或结算时，资金才从 Belly 转出，并受 Belly 独立窗口额度和执行条件限制。
+
+正常 8 小时餐次的名义分配最多为**未预留资金的 1/21**。延迟推进最多计入 16 小时的有效分配时长，不会补出所有错过的餐次；实际分配还取决于启动和参与条件。详见 [Belly 分配与限制](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)。
+
+## 理想衰减估算
+
+假设没有新流入、每八小时分配并完成结算、没有暂停或积压，并忽略整数舍入，未预留资金每餐乘以 20/21，模型半衰期约为 **4.736 天**。这只是规律运行时的示例，不是实际付款期限，也不是稳定收入保证。
+
+## 结算独立进行
+
+每个仓位选择菜单资产，在市场采购前先登记记账份额。最终收到的数量取决于执行或 WBNB 回退。价格检查不能消除执行成本、MEV 或延迟。详见[采购与回退](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)。
+
+---
+# 来源章节: zh/background/time-weighting.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/time-weighting.html
+
+# 时间权重
+
+奖励权重由存入本金、仓位时间资历系数与所选资产的激励系数相乘：
+
+$$w_i = p_i \, c_i \, k_a$$
+
+普通仓位在参与边界前系数为零，从下一餐以 1× 起步，每个有效餐次增加 1×，最高 22×。只有生效后按八小时规律推进，21 次爬升才对应七天；维护延迟会延长所需时间。
+
+同资历下，十倍本金对应十倍权重。22× 仓位的单位本金权重是 1× 仓位的 22 倍，但奖励还取决于收入、其他仓位权重及结算；较大的本金仍可能获得较大的总份额。
+
+## 退出
+
+普通本金赎回不受协议暂停限制，也无退出费。退出终止未来参与，并放弃进行中餐次尚未结算的权益；已结算奖励仍可领取。普通新仓重新建立自己的资历历史。
+
+相关内容见[餐次与资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html)、[质押](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/staking.html)及[凭证](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/seniority-certificates.html)。
+
+---
+# 来源章节: zh/background/principles.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/background/principles.html
+
+# 原则与限制
+
+| 原则 | 机制 | 边界 |
+|:---|:---|:---|
+| 从实际收入中分配 | Belly 保留已收到的资金，新餐次预算扣除已有预留资金。 | 不承诺固定 APY、APR 或最低奖励；储备不能替代缺失的收入。 |
+| 本金与奖励采购分开 | 本金留在质押金库，普通赎回不检查暂停标记。 | 链可用性、交易执行及代币行为仍会影响操作。 |
+| 允许资产选择 | 每个仓位独立选择启用的菜单资产。 | 上架不保证代币价值、发行方履约或兑换成功。 |
+| 将时长纳入权重 | 本金线性计权，普通资历从 1× 升至 22×。 | 开仓、退出及食谱变化会改变份额比例。 |
+| 限制分配与支出 | 餐次分配和 Belly 流出分别有额度约束。 | 暂停、待结算餐次和市场条件可能延迟结算。 |
+
+[凭证概念](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/seniority-certificates.html)将把时间资历铸造成符合 ERC-721 标准的 NFT。
+
+详见[协议规则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol.html)与[风险边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html)。
+
+---
+# 来源章节: zh/topology.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology.html
+
+# 系统拓扑与资金流
+
+资金路径、仓位生效，以及从分配到领取的主要步骤。
+
+## 章节导览
+
+- **[资产流向](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/asset-flows.html)**：QQQB 税费接收、兑换、收入分成，以及本金与奖励资金的分离。
+- **[餐次推进与仓位状态](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/state-machine.html)**：通过交易推进餐次、记录餐次份额与资历增长。
+- **[采购与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/claim-pipeline.html)**：顺序采购、预言机检查、结算记录，以及已结算奖励的领取。
+
+---
+# 来源章节: zh/topology/asset-flows.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/asset-flows.html
+
+# 资产流向
+
+TheFatCat 将质押本金与交易税奖励资金分别保管。下图展示从收入进入协议到仓位领取奖励的主要路径：
+
+![TheFatCat 协议资金流向](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig1-topology.zh.svg?v=20261017u1)
+
+[查看完整图（新标签页）](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig1-topology.zh.svg?v=20261017u1)
+
+---
+
+## 1. QQQB 税费流入
+
+符合条件的 `$FATCAT` 交易适用配置的 4% 交易税。Flap 扣除平台费用后，QQQB 税收收入进入协议的收入处理环节。毕业后税费按批次清算，并非每笔交易都会立即形成 Belly 流入；实际费率和收款情况以官方部署记录及链上交易为准。
+
+---
+
+## 2. 双路由兑换与收入分配
+
+    ASSET FLOW
+    QQQB 税费兑换与收入分配
+
+```text
+QQQB 税收收入 → 双路由兑换与价格检查 → WBNB
+  → 符合条件的 FEED 兑换：先记本次产出的 1/38 为推动奖励
+  → 其余净收入：85% 进入 Belly 奖励金库
+                15% 用于项目开发、运营和营销
+```
+
+任何人都可在执行条件允许时通过 FEED 参与维护，官方维护可在需要时补充处理。参与者只付 Gas，无需提供自己的 QQQB；不能改变兑换路线或收入去向。成功兑换和收入分配在同一笔交易中完成，运营分账只扣一次。单独兑换不产生推动奖励。
+
+后续推进或采购失败，不撤销已成功的 FEED 兑换和符合条件的推动奖励。85% / 15% 的计算基数为扣除上游费用、实际兑换成本及已产生推动奖励后的净收入，并非交易额。详见[税收路由与费用](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/fees.html)和[FEED 机制与去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html)。
+
+上游收入处理及代操作服务存在升级和应急资金处置权限，可能影响未来收入和代操作行为。其权限与用户本金金库的边界不同，详见[托管与记账边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)。
+
+---
+
+## 3. 本金与奖励分别保管
+
+- **质押本金金库**：保管用户存入的 `$FATCAT` 本金，不用于交易税兑换或奖励采购。
+- **Belly 奖励金库**：保管 WBNB 奖励储备，不具有提取用户质押本金的权限。
+- **已结算奖励**：采购或回退完成后，按仓位记录供用户领取，与本金赎回分别处理。
+
+---
+# 来源章节: zh/topology/claim-pipeline.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/claim-pipeline.html
+
+# 采购与领取
+
+## 1. 记录餐次分配
+
+餐次结束时，协议按当餐有效权重确定各食谱的预算。资金在完成采购或回退拨款前仍留在 Belly。没有符合条件的参与者的餐次不预留新资金，已有的历史奖励不受影响。
+
+## 2. 为食谱完成结算
+
+每次处理**一个食谱在一餐中的完整分配**。最早仍有待结份额的餐次优先处理；同餐不同食谱可分别完成，后续餐次须等待。
+
+市场采购须符合价格参考、流动性和最低产出要求。BNB 食谱无需采购其他代币。集中采购免去用户逐笔兑换，但仍存在成交价格和 MEV 风险。
+
+符合条件时，可用 WBNB 代替目标资产完成回退结算。采购和回退拨款均受 Belly 窗口额度限制。详见[执行与回退条件](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)。
+
+## 3. 确认已结算奖励
+
+实际收到的奖励资产按批次记录，并据此计算各仓位可领取的数量。待采购预算和已结算奖励是两个阶段；页面显示已分配，不代表资金已经可以领取。
+
+## 4. 领取到钱包
+
+仓位所有者可通过官网领取已结算奖励。奖励没有协议到期日，领取不消耗 Belly 的窗口额度；代币是否可用及转账能否完成，仍取决于该资产的行为和发行方风险。
+
+BNB 领取可在同一笔交易中完成 WBNB 解包，直接收到原生 BNB。长期未领取时，可能需要分段处理。详见[食谱与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html)；网页不可用时，可参阅[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)。
+
+---
+# 来源章节: zh/topology/state-machine.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/topology/state-machine.html
+
+# 餐次推进与仓位状态
+
+TheFatCat 通过逐餐记账向前运行，每个时间窗口被称为一个**餐次（Meal）**：
+
+    MEALS
+    餐次推进与仓位生效
+
+```text
+上一餐结束 ─────────► 当前餐次运行 ─────────► 下一餐开始
+                      至少八小时              成功提交推进交易
+新仓位存入 ─────────► 当前餐次不参与 ────────► 从 1 档资历入席
+```
+
+---
+
+## 1. 推进节奏与参与方式
+
+- 当前餐次运行满 **8 小时** 后，即可满足时间条件。
+- **任何人可参与维护**：公众或官方维护服务仍须成功提交交易，自动化不保证即时或持续可用。
+- **延迟如何处理**：每次成功推进只结束一餐，并以当前时间开启下一餐；分配最多计入 16 小时。停顿 48 小时后不会一次补出六餐，也不会分配 48 小时预算。详见[FEED 机制与去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html)。
+
+---
+
+## 2. 餐次结束时记录什么
+
+结束的一餐按当餐有效仓位权重确定份额。之后新建仓位或切换食谱，不会追溯改变该餐的参与记录。
+
+---
+
+## 3. 资历怎样增加
+
+普通新仓位在下一餐开始后以 1 档生效。之后每完成一个活跃餐次，资历增加 1 档，最高 22 档。达到满级后，继续参与也不会突破上限。详见[餐次与资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html)。
+
+---
+
+## 4. 分配与到账的区别
+
+推进餐次只确定奖励预算，资金仍留在 Belly。之后完成采购或回退结算，才形成可领取奖励。已结算奖励可另行领取，本金赎回无需等待这些步骤。
+
+---
+# 来源章节: zh/protocol.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol.html
+
+# 核心机制
+
+说明储备如何分配、资历如何记录，以及奖励采购如何结算。
+
+## 机制索引
+
+- **[机器如何运转](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/how-the-machine-runs.html)**：从交易税收入到储备、仓位权重、结算与 FEED 维护的完整导读。
+- **[Belly 储备与释放](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)**：未预留资金的分配、衰减模型与独立的八小时流出上限。
+- **[餐次与资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html)**：最短八小时餐次、22 档资历阶梯与仓位权重。
+- **[采购与结算](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)**：最早餐次结算顺序、TWAP 与滑点检查、回退条件和领取边界。
+- **[税收路由与费用](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/fees.html)**：税收入账、上游费用、推动奖励，以及剩余收入的 85% Belly / 15% Ops 分成。
+
+---
+# 来源章节: zh/protocol/belly.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html
+
+# Belly 储备与释放
+
+Belly 托管 WBNB 奖励储备。餐次分配与资金实际转出是两个步骤。
+
+![Belly 蓄水池模型](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig2-hydrodynamics.zh.svg?v=20261017u1)
+
+[查看完整图（新标签页）](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig2-hydrodynamics.zh.svg?v=20261017u1)
+
+## 1. 餐次分配
+
+成功推进餐次时，协议按未预留净余额计算预算：
+
+分配预算按未预留资金与可奖励时长计算，以一周 168 小时为基准，最多计入 16 小时，并向下取整。
+
+- 计算时先扣除已为此前分配预留的资金，避免同一笔资金重复分配。
+- 可奖励时长不包含初始七天积累期。推进至少间隔八小时，但每次只关闭一餐，并以当前时间开启下一餐；延迟不会补出多餐。
+- 完整处于奖励期的准时八小时餐次，预算比例为 8/168 = 1/21，约 4.76%。一周对应 21 个八小时餐次。
+- 各资产向下取整、试用期配额及无人具备领取资格的餐次，可能使部分预算不被分配。总权重低于最低释放门槛时，不产生新预算。
+
+推进餐次只登记分配，不转移代币。之后完成采购、直接 WBNB 结算或回退拨款时，资金才从 Belly 转出。详见[执行与结算顺序](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)。
+
+## 2. 理想衰减模型
+
+在无新增流入、每八小时准时推进且没有分配限制的简化模型中，未预留储备满足：
+
+$$U_k = U_0\left(\frac{20}{21}\right)^k$$
+
+离散半衰期约为 **4.736 天**，30 天后约剩 **1.24%**。这是理想分配模型，并非支付时间承诺，也不代表分配尚未结算时 Belly 的实际总余额。
+
+## 3. 八小时最大流出限额
+
+为限制短时间内集中流出，Belly 为每个八小时窗口设置常设的最大流出限额。初始部署时，上限为窗口开启时 WBNB 总余额的 **16/168，约 9.5238%**，并向下取整。
+
+**这是安全上限，并非每八小时固定发放的比例。** 正常餐次仍按餐次分配规则确定预算，并在满足执行条件后结算。
+
+当市场执行受阻或其他特殊情况导致已分配奖励暂时无法结算、待结算资金累计时，恢复后的集中流出可能触及这一上限。超出当窗剩余额度的结算不能执行，须等待后续窗口，并继续满足结算条件。
+
+这一上限与分配记账独立，所有实际流出均受其约束。窗口开启至少间隔八小时，窗口内新增入金不会抬升当窗额度。限额用于减缓集中流出，不保证异常一定被发现或阻止。
+
+即使资金池取得回退资格，全局餐次顺序和当窗剩余额度仍可能延迟流出；普通资产还须满足完整单餐分配要求。**已结算**奖励从单独记录的奖励资金中领取，不消耗 Belly 窗口额度。
+
+## 4. 开放规则与运行状态
+
+- 奖励流出须完成初始授权及独立的七天等待期。它与质押开放后的七天积累期分别计时，不要求同时结束。
+- 积累期不产生新奖励预算；交易税入账仍依赖上游成功清算及 QQQB 兑换。
+- 应急措施可暂停 Belly 流出。本金赎回和已结算奖励领取不依赖 Belly 的暂停状态。
+
+---
+# 来源章节: zh/protocol/meals-and-seniority.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html
+
+# 餐次与资历
+
+餐次决定什么时候记录奖励份额，时间资历系数与所选资产的激励系数决定仓位在分配中的权重。时间资历系数不等于收益倍数。
+
+## 1. 仓位何时入席
+
+每笔质押都会形成独立仓位，分别记录本金、食谱和资历。新仓位不参与开仓时正在进行的那一餐；下一餐开始后，以 **1 档资历（1×）** 入席生效。
+
+生效后，每完成一个活跃餐次，资历增加 1 档，最高为 22 档。餐次推进间隔至少八小时；在标准节奏下，从 1 档升至 22 档需经历 21 个完整餐次，约七天。维护延迟也会延后晋升。
+
+时间资历系数从生效时的 **1×** 起步，**最高 22×，需晋升 21 次**。
+
+![仓位生效与资历阶梯](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig3-graduation-ring.zh.svg?v=20261017u1)
+
+[查看完整图（新标签页）](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig3-graduation-ring.zh.svg?v=20261017u1)
+
+## 2. 时间资历系数与相对优势
+
+仓位的分配权重为：
+
+**仓位权重 = 质押本金 × 当前时间资历系数 × 当前食谱资产的激励系数**
+
+同一食谱、相同本金下，22 档仓位的权重是 1 档仓位的 22 倍；相同资历下，十倍本金对应十倍权重。实际奖励还取决于协议收入、其他仓位的总权重及结算结果，不能将 22 倍权重理解为固定 22 倍收益。
+
+![资历相对优势情景](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig4-seniority-premium.zh.svg?v=20261014u1)
+
+[查看完整图（新标签页）](https://thefatcatofficial.github.io/TheFatCat-docs/assets/images/fig4-seniority-premium.zh.svg?v=20261014u1)
+
+资历分布也会改变相对优势。若其他仓位普遍接近满级，满级仓位相对全体平均值的优势就会缩小；新增质押则可能稀释已有仓位的分配比例。
+
+## 3. 奖励如何持续记录
+
+每餐结束时，协议记录仓位对应的有效份额。随后完成采购或回退结算，才形成可领取的奖励。餐次已推进，不代表该餐奖励已经可以领取。
+
+历史已结算奖励没有协议到期日，切换食谱不会抹去旧食谱下的这些奖励。长期未领取时，领取过程可能需要多笔交易；详见[食谱与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html)。
+
+## 4. 退出与份额放弃
+
+普通退出将本金退给仓位所有者，无需等待餐次推进。退出仅放弃当前开放餐次尚未结算的份额；此前已赚取的奖励保留，没有协议到期日。
+
+放弃的份额按该餐和资产的结算规则处理，不应理解为一律滚入下一餐。退出终止该仓位的后续参与和资历；重新质押须开启新仓位，并从 1 档重新起步。
+
+---
+# 来源章节: zh/protocol/execution.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html
+
+# 采购与结算
+
+餐次结束时先确定各仓位以 WBNB 计价的份额，再统一采购奖励资产。用户质押和领取时不单独进行市场兑换，但实际获得的奖励数量仍取决于该批次的成交价格。
+
+## 1. 全局餐次顺序
+
+每次采购或回退结算，普通资产须处理一餐中的完整待结份额，`$FATCAT` 可分批结算。最早仍有待结份额的餐次优先处理；同一餐的不同资产可分别完成，之后的餐次则须等待。等待结算期间，餐次仍可继续推进并记录新的分配。
+
+因此，一个资产的采购受阻，也可能延后其他食谱的后续餐次。FEED 的轮流检查不会跳过这一顺序。**已结算奖励的领取和本金赎回，无需等待采购队列。**
+
+### 为什么显示待处理，却暂时无法采购？
+
+待处理不代表当前一定可以成交。每次采购仍须符合金额范围、最旧餐次顺序、Belly 当窗额度和市场条件。未使用的预算保留在 Belly，等待后续处理；一次未完成采购，也不代表立即取得回退结算资格。
+
+## 2. 路线、TWAP 与产出底线
+
+首发菜单为 BNB/WBNB、QQQB、SPCXB、NVDAB、SPYB、GOOGLB。BNB 奖励无需采购其他代币；其余资产按各自配置的兑换路线集中采购。`$FATCAT` 是否加入菜单，须以实际启用状态为准。`$FATCAT` 奖励可分批采购，已结算部分可先领取；剩余部分继续等待，符合条件时可改以 WBNB 结算，并以原生 BNB 领取。
+
+协议参考一段时间内的市场均价（TWAP）设置最低产出要求，首发股票代币的初始价格偏离边界为 **3%**，`$FATCAT` 采用单独的采购条件。价格观察不足、流动性不足或预计产出低于底线时，采购可能等待或失败。这些检查限制执行条件，不能消除 MEV、代币、发行方或流动性风险。
+
+## 3. 分配试用期
+
+除 `$FATCAT` 外，新启用的非原生资产在七天试用期内设有**单餐 5% 分配上限**，之后上限为 100%。这不是终身风险敞口上限；超出上限的预算留在 Belly，不在同餐改分给其他资产。
+
+初始菜单首次启用豁免试用期，后续重新启用须按普通规则处理。发行方风险随所选择的资产承担；WBNB 始终为默认与回退结算资产。
+
+## 4. WBNB 回退结算
+
+目标资产无法正常采购时，符合条件的待处理份额可改以 WBNB 结算。条件包括资产被禁用或挂起、待处理时间超过规定上限（初始为一天），或普通资产的完整单餐份额超过采购上限。符合恢复规则的待处理余款，也保留后续处理路径。
+
+挂起是治理可采取的一项应急措施：它保留该资产的权重和未来分配，并取消回退的时间等待。自动维护会优先回退，普通采购仍可能完成。挂起状态持续到解除，解除不会逆转已经完成的 WBNB 结算。
+
+回退仍须有人成功提交交易，满足餐次顺序及 Belly 的运行状态和当窗额度；普通资产还须一次处理完整单餐份额。**一天是初始资格门槛，不是自动到账期限，也不保证最长等待时间。**
+
+完成回退后，用户可领取已结算 WBNB，或将其解包为原生 BNB。到账数量仍取决于该批次的有效份额和取整；已采购代币的价格损失不由回退机制补偿。
+
+## 5. 菜单生命周期
+
+默认菜单容量为 16 项、每次 FEED 检查 4 项，上限分别为 32 和 8。调整须经过三天治理等待期，增加容量不会自动上架资产。
+
+资产禁用或退出活动菜单，不会抹去历史已结算奖励。暂时禁用的资产在安全清退前仍占菜单容量。请分别查看当前可选食谱与仓位的历史奖励，避免将资产不再展示误认为奖励被取消。
+
+---
+# 来源章节: zh/protocol/fees.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/fees.html
+
+# 税收路由与费用
+
+全面拆解 TheFatCat 的 4% 交易税、Flap 平台代扣机制、奖励金库与项目资金的分配，以及 100 年税期。
+
+---
+
+## 1. 用百分比理解 4% 交易税
+
+在 Flap 联合曲线或 PancakeSwap V2 主流动性池中发生的符合条件的买入与卖出，收取 **4.0% `$FATCAT` 交易税**。The Belly 是协议的奖励金库；项目运营钱包接收用于项目开发、运营和营销的收入。
+
+### 平台费用与推动奖励目标
+
+| 项目 | 百分比 | 计算基数 |
+|:---|---:|:---|
+| **Flap 平台费用** | **0.2%** | **符合条件的 `$FATCAT` 交易额** |
+| **符合条件的 FEED 推动奖励** | **0.1% 目标** | **本次兑换所对应的交易额** |
+
+Flap 平台费用包含在 4% 交易税内：4% × 5% = 0.2%，即占所收税款的 5%，在上游扣除。
+
+推动奖励以**本次兑换所对应交易额的 0.1%** 为目标。标准 4% 交易税、平台取税款 5% 时，协议名义取得交易额的 4% × 95% = 3.8%；实际兑换所得的 1/38 名义等值为 3.8% / 38 = 0.1%。链上实际奖励为本次 WBNB 总产出的 1/38，向下取整，约为**兑换所得的 2.63158%**；价格、兑换成本与取整会影响其交易额等值金额。
+
+### 按项目实际净收入计算的比例
+
+扣除平台费用并完成市场兑换后，成功且符合条件的 FEED 先按**本次 WBNB 总产出的 1/38**向下取整记推动奖励。单独兑换或调用者不符合条件时，没有此奖励。
+
+**扣除已产生推动奖励后的 WBNB 净收入**按以下比例分配：
+
+| 资金用途 | 占该笔剩余净收入 | 接收方 |
+|:---|---:|:---|
+| **奖励金库** | **85%** | The Belly |
+| **项目开发、运营和营销资金** | **15%** | 项目运营钱包 |
+
+团队份额按最小单位向下取整，全部余数留给 Belly；运营分账仅执行一次。后续推进或采购失败，不撤销已成功兑换产生的推动奖励。资格和领取方式见[FEED 机制与去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html)。
+
+### 计算示例：交易额为 10,000 个计价单位
+
+用同一计价单位计算，4% 交易税为 **400**。本例假设没有兑换成本和价格变化：
+
+| 资金用途 | 未产生推动奖励 | 符合条件的 FEED 产生推动奖励 |
+|:---|---:|---:|
+| Flap 平台费用 | 20 | 20 |
+| FEED 推动者 | 0 | 10 |
+| 项目开发、运营和营销资金 | 57 | 55.5 |
+| 奖励金库 | 323 | 314.5 |
+| **合计** | **400** | **400** |
+
+两列均合计为所收的 400 单位交易税。85/15 分账在扣除实际产生的推动奖励后进行；这些是上述假设下的交易额等值示例，并非保证到账币量。
+
+在已测试的代币实现中，普通个人钱包之间的 `$FATCAT` 转账不收交易税。税费适用于符合条件的交易，用户的质押存入不会仅因是 ERC-20 转账而收税。
+
+---
+
+## 2. 清算触发与金库路由
+
+1. **联合曲线阶段**：Flap Prebond Tax 使用选定的计价资产 **QQQB** 收取 `$FATCAT` 交易税，另计独立的交易场所手续费；平台费用在上游扣除。
+2. **毕业后阶段**：符合条件的池内交易累积 `$FATCAT` 税费代币；满足清算条件（包括符合条件的卖单和处理器配置的清算阈值）后，上游处理器将其兑换为 QQQB。
+3. **QQQB 兑换层**：协议收入金库接收 QQQB。QQQB 收入采用双路由兑换为 WBNB，并通过价格检查降低不利成交风险。只有通过 FEED 兑换才可能产生上文所述的推动奖励。金额、额度、TWAP、滑点、期限与暂停检查均由链上强制执行。调用者只提供 gas，无需提供或授权自己的 QQQB，也不能选择输出接收方。
+4. **收入分配**：同一笔交易中，所得 WBNB 余款的 85% 进入 The Belly 奖励金库、15% 转入项目运营钱包作为项目开发、运营和营销资金，按合约精确常量计算。
+
+延迟可能来自上游尚未清算，或 QQQB 尚未满足受保护的兑换条件。判断 Belly 流入前，应分别核对各层余额和交易；兑换失败会回滚该笔交易，待兑换 QQQB 不能当成 Belly 已可用的 WBNB。
+
+---
+
+## 3. 交易场所手续费（与代币税相互独立）
+
+除代币交易税外，底层去中心化交易场所会正常收取其标准的兑换服务费：
+- **Flap 联合曲线（仅毕业前）**：在联合曲线阶段交易时，由发射平台收取的 1.0% 交易场所手续费。一旦 `$FATCAT` 达成发射指标毕业至 PancakeSwap V2，**联合曲线永久关闭，该 1.0% 的交易手续费即刻终止**。
+- **PancakeSwap V2 流动性池（毕业后）**：正常的去中心化 0.25% 兑换手续费。根据 PancakeSwap 官方费用拆分机制，其中 **0.17%** 分配给去中心化流动性提供者（LP），其余 **0.08%** 流向 PancakeSwap Protocol Treasury（0.03%）与 CAKE 回购销毁（0.05%），并非完全由 LP 捕获。
+
+这些场所手续费按上述方式归属发射平台、流动性提供者和 PancakeSwap，与 TheFatCat 的税收路由相互独立。
+
+---
+
+## 4. 100 年税期与防绕税窗口
+
+按采用的 Flap 交易税配置：
+- **毕业后 100 年税期结束**：交易税在**毕业 100 年后**到期，这一设置不可更改。到期后 `$FATCAT` 永久免税。
+- **1 年防绕税窗口（Anti-Farmer）**：毕业后的前 365 天内，通过任何 DEX 池交易都会收税，经其他池交易无法绕开；此后只对经主池的交易收税。
+
+---
+# 来源章节: zh/guides.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides.html
+
+# 用户操作指南
+
+质押、领取与协议维护的操作说明。
+
+## 指南目录
+
+- **[代币发射与功能开放流程](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/launch-stages.html)**：三个开放阶段、统一积累期与奖励领取时间。
+- **[质押与仓位](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/staking.html)**：准入门槛、仓位激活与所有权。
+- **[食谱与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html)**：启用的奖励资产、餐次分配、批次领取与 BNB 解包。
+- **[时间资历凭证](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/seniority-certificates.html)**：会在协议成熟的时机推出。
+- **[FEED 机制与去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html)**：FEED 流程、独立操作及推动奖励的资格。
+- **[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)**：网站不可用时，直接调用合约赎回本金或推进结算。
+
+---
+# 来源章节: zh/guides/staking.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/staking.html
+
+# 质押与仓位
+
+如何在 TheFatCat 中开启质押仓位、管理独立仓位，以及攀登 22 档资历阶梯。
+
+---
+
+## 1. 参与前提与最低门槛
+
+在 TheFatCat 中开立质押仓位需满足以下前提：
+
+- **最低本金与整代币要求**：**100,000 `$FATCAT`**（恰为代币总供应量 1,000,000,000 的 0.01%）。**注意**：开仓本金必须为整代币，带小数的数量会导致交易失败。
+- **代币授权（Approve）**：需先授权质押合约划转您的 `$FATCAT`。
+- **Gas**：钱包中需留有少量原生 BNB，用于支付 BNB Chain 上的交易 Gas。
+
+普通开仓的 100,000 `$FATCAT` 门槛在部署时固定，用于限制小额仓位。
+
+---
+
+## 2. 如何通过官网开启质押
+
+1. 使用 Web3 钱包（如 MetaMask、Binance Web3 钱包、OKX 钱包、Trust Wallet 或 WalletConnect）访问官网 [thefatcat.fun](https://thefatcat.fun) 并连接钱包。
+2. 输入您希望质押的 `$FATCAT` 数量（必须为 $\ge 100{,}000$ 的整代币）。
+3. 选择初始奖励资产（**食谱 Diet**，默认为原生 BNB）。
+4. 点击 **Approve** 并在钱包中确认代币授权。
+5. 点击 **Stake** 并确认交易。
+
+*(注：若官网不可用且您需要取回本金或已结算奖励，可参考[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)。)*
+
+---
+
+## 3. 仓位生效与七天积累期
+
+质押后不会追溯参与已经开启或正在进行的餐次：
+
+    TIMELINE
+    仓位入席、资历晋升与餐次推进时序
+
+```text
+质押存入 ────────────► 下次餐次推进 (8小时边界) ────────► 正常运转
+[ 存入代币 ]                   [ 仓位正式入席生效 ]               [ 资历逐期加 1 档 ]
+(当前餐次内有效权重为 0)         (起始资历 1 档，系数 1×)           (次餐晋升为 2 档)
+```
+
+1. **存入与生效**：存入代币后，本金即由质押金库托管。在当前正在进行的餐次中，新仓位的有效权重为 0；下一餐开始后（餐次推进间隔至少八小时），仓位以 **1 档资历（时间资历系数 1×）** 生效。
+2. **资历阶梯攀升**：生效后，每完成一个 8 小时活跃餐次，资历增加 1 档，最高 22 档（需 21 个完整餐次，在标准推进节奏下约为 7 天）。
+
+**七天积累期**是全协议统一的七天，从质押实际开放时起算。期间资历正常增长，但不分配新奖励；新开仓位不会让它重新起算。质押何时开放、各阶段可以做什么，见[代币发射与功能开放流程](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/launch-stages.html)。
+
+---
+
+## 4. 多仓位独立管理与奖励领取
+
+在 TheFatCat 中，每笔质押都会生成一个独立编号的仓位，各自记录资历进度与奖励资产：
+
+- **追加本金**：如需增加质押，只需在界面开启一个新仓位。同一个钱包可以同时管理多个独立仓位。
+- **各仓位独立选择食谱**：不同仓位可选择不同的奖励资产（例如：仓位 #1 选择 BNB，仓位 #2 选择代币化美股 bStocks）。
+- **激励系数**：各资产选项设有激励系数，选择该资产的仓位权重 = 本金 × 时间资历系数 × 激励系数，初期由官方调控，取值范围 1.0×–2.0×。
+- **按仓位领取**：奖励按仓位分别领取。长期未领取时，见[食谱与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html)。
+- **普通退仓（本金赎回）**：退出仓位时，质押本金全额退回您的钱包。
+- **重新质押**：普通仓位退出后再开新仓位，时间资历系数从 1 档（1×）重新开始。
+
+---
+# 来源章节: zh/guides/diets-and-claiming.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html
+
+# 食谱与领取
+
+如何为每个仓位选择奖励资产（食谱 Diets），以及如何领取已结算奖励。食谱为 BNB 时，领取会自动解包为原生 BNB。
+
+---
+
+## 1. 什么是食谱（Diet）？
+
+在 TheFatCat 中，奖励不限于单一代币。每个质押仓位可独立从协议启用的[食谱菜单（MENU）](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)中选择一项**奖励资产（Diet Asset）**：
+
+- **BNB**：默认食谱与回退结算资产，链上以规范 WBNB 记账。它不需要采购其他奖励资产，可直接领取为原生 BNB；仍存在网络、合约和 BNB 价格风险。
+- **bStocks**：追踪股票或指数价格的第三方代币。所有权、赎回、用户资格及可用范围须核对各发行方条款。非豁免资产在七天试用期内受单餐 5% 分配上限约束；初始菜单首次启用豁免，后续重新启用须重新试用。详见[资产风险](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html)。
+- **`$FATCAT`（协议原生代币）**：在 AMM 毕业、流动性稳定且完成 TWAP 预言机预热后，才可加入菜单。
+- **未来候选资产（生态扩展）**：可能经时间锁治理流程和链上 TWAP 核验后上架的高流动性加密资产、主流生态代币或稳定币。
+
+### 菜单扩展、激励系数与资产上架
+
+菜单计划逐步引入更多 bStocks 和 Meme 资产。各资产选项设有激励系数，选择该资产的仓位权重 = 本金 × 时间资历系数 × 激励系数，初期由官方调控，取值范围 1.0×–2.0×。初步计划每周一公布各资产当周的激励系数；公布调控并上线后，经三天治理等待后从下一餐生效。
+
+团队将在未来开放资产上架申请通道。申请资产须经过团队评估；通过评估后，申请方需按确认的上架条件永久销毁一定数量的 `$FATCAT`，作为资产加入菜单的成本。具体申请条件、销毁数量和办理流程将在通道开放时公布。
+
+---
+
+## 2. 如何切换食谱
+
+您可随时在官网管理面板中为仓位切换食谱：
+
+1. 连接钱包并在 [thefatcat.fun](https://thefatcat.fun) 进入 **仓位管理（Positions）** 面板。
+2. 找到需要调整的仓位卡片，点击 **食谱（Diet）** 下拉菜单。
+3. 从已启用的菜单中选择新的奖励资产（如 BNB、bStocks 等）。
+4. 点击 **Switch Diet（切换食谱）** 并在钱包中确认交易。
+
+### 切换食谱的规则：
+1. **资历保留**：切换食谱不重置或扣减时间资历系数。
+2. **下一餐生效**：新食谱在**下一个餐次边界（$m + 1$）**生效。当前正在进行的餐次仍按原资产计提。
+3. **历史奖励保留**：旧食谱下已结算的奖励仍可领取，切换食谱不会抹去这些奖励。
+
+---
+
+## 3. 领取已结算奖励
+
+TheFatCat 的奖励**没有协议到期日**。各餐次结算后持续累积在奖励分发器合约中，可随时领取。
+
+### 官网领取步骤：
+
+1. 打开 [Belly 页面](https://thefatcat.fun/belly)。
+2. 查看各仓位已结算的奖励余额（如 BNB、bStocks 等）。
+3. **按仓位领取**：在仓位卡片点击 **Claim（领取）**。
+4. 在连接的钱包中确认交易。
+
+### 原生 BNB 自动解包
+食谱设为 BNB 时（链上以 WBNB 记账），领取会自动解包为**原生 BNB** 并转入您的钱包，无需另行解包。
+
+**长期未领取时**：历史奖励过多时，可能需要缩小领取范围、分多笔交易领取。当前网页使用最近已完成批次，不会自动拆分长历史。若单笔领取超过当前 Gas 限制，或官网不可用，可参阅[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)中的领取步骤。
+
+---
+# 来源章节: zh/guides/seniority-certificates.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/seniority-certificates.html
+
+# 时间资历凭证
+
+时间资历凭证将在未来以 ERC-721 NFT 的形式推出。持有质押仓位的用户可销毁 `$FATCAT` 进行铸造。详细内容会在后续公布。相关接口已在部署时预留。
+
+---
+# 来源章节: zh/guides/emergency-exit.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html
+
+# 紧急退出说明
+
+本指南说明网页不可用甚至协议推进暂停时，如何通过区块浏览器赎回普通质押本金、领取已结算奖励。示例须以官方部署记录和验证合约为前提。
+
+[为什么会有暂停？](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/monitoring.html)
+
+---
+
+## 1. 核心保障：暂停期间仍可赎回本金
+
+质押本金保存在链上合约中。官网无法访问时，您仍可使用持有仓位的钱包直接操作。
+
+**本金赎回独立可用**：普通赎回不受协议暂停限制，也不需要维护者批准。
+
+即使发生以下极端情况：
+- 官网域名 `thefatcat.fun` 发生故障或不可访问；
+- 前端服务器遭遇阻断；
+- 协议治理触发了相应合约的紧急暂停开关；
+
+交易成功仍需要链可用、仓位核验及 `$FATCAT` 转账正常完成。请使用持有仓位的所有者钱包，并核对官方部署记录中的网络、地址和验证源码。
+
+---
+
+## 2. 在 BscScan 浏览器上逐步赎回本金
+
+若官方前端发生离线，您可直接在 **BscScan** 上完成赎回：
+
+### 第一步：获取您的仓位编号（Position ID）
+1. 在 [BscScan](https://bscscan.com) 搜索并打开您的钱包地址。
+2. 在交易历史中找到您最初向 `StakingVault` 发起质押的 `stake` 交易记录。
+3. 点击进入 **交易详情（Transaction Details）**，切换到 **Logs（日志）** 标签页。
+4. 在 `Staked(uint256 indexed id, address indexed owner, uint256 principal, address diet)` 事件中，查阅 **Topic 1** 即为您的数字仓位编号 `id`（Topic 2 为所有者地址）。
+
+### 第二步：进入质押金库合约页面
+1. 从官方部署记录取得 StakingVault 地址，再打开 BscScan 上相应的验证合约页面。
+2. 点击 **Contract（合约）** 标签，随后选择 **Write Contract（写入合约）**。
+3. 点击 **Connect to Web3**，连接持有该仓位的所有者钱包（如 MetaMask、Binance Web3 钱包、OKX 钱包、Trust Wallet 或 WalletConnect）。
+
+### 第三步：调用 `redeem` 函数
+1. 在函数列表中找到 `redeem`：
+   ```solidity
+   redeem(uint256 id)
+   ```
+2. 在输入框中填入您的数字仓位编号 `id`。
+3. 点击 **Write** 并在钱包中确认该笔交易。
+4. 交易成功并经区块确认后，**您质押的 100% `$FATCAT` 本金将退回您的钱包**。
+
+---
+
+## 3. 为什么维护延迟不会卡住本金
+
+在某些协议中，退出资金前必须先结算当期会计周期。而在 TheFatCat 中：
+
+- 本金赎回**无需先推进餐次或完成奖励采购**。
+- 即使暂时无人推进维护，或网络 Gas 费上涨，赎回本金也不必等待餐次推进。
+- 餐次中途赎回退仓时，您仅放弃当前开放餐次尚未结算的份额；此前的历史奖励权益仍保留，没有协议到期日。
+
+---
+
+## 4. 直接在 BscScan 上领取奖励代币
+
+若网页不可用，需领取已结算的奖励代币：
+
+1. 从官方部署记录取得 RewardDistributor 地址，打开 BscScan 上相应的验证合约页面。
+2. 在 **Read Contract** 中通过 `generationCount(id, asset)` 与 `generationAt(id, asset, i)` 核对该资产的领取世代。编号从 `0` 开始；切换后再次选择同一食谱，可能产生新的世代。通过 `batchCount(asset)` 查询已结算批次数量，最大批次下标为数量减一；数量为零时暂无批次可领取。再进入 **Write Contract**，连接仓位所有者钱包。
+3. `claimNative` 可将符合条件的 WBNB 解包为原生 BNB；`claim` 则领取奖励代币与未解包的 WBNB。钱包或合约无法接收原生 BNB 时，可用 `claim` 或 `claimThrough`：
+   - `id`：填入您的仓位编号。
+   - `asset`：填入食谱代币合约地址（默认 BNB 请填入标准 WBNB 合约地址）。
+   - `gen`：填入核对后的仓位及资产世代编号，不要默认所有领取都填 `0`。
+4. 若历史积压批次过多导致单笔 Gas 过高，可调用 `claimThrough` 或 `claimNativeThrough`：
+   - 额外填入 `toBatch`（领取截止的批次下标，按需分段领取）。
+5. 点击 **Write** 并在钱包中确认即可。
+
+领取只处理已结算奖励，不会替您完成尚未结束的采购或回退。若历史记录较长，应先模拟较小的领取范围，再逐段处理；不要反复重发状态不明的交易。
+
+---
+# 来源章节: zh/guides/community-keeper.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html
+
+# FEED 机制与去中心化维护
+
+任何人都可以通过 [Belly 页面](https://thefatcat.fun/belly)尝试帮助推进协议，没有参与者白名单。公众推进不及时时，官方兜底的 Keeper 机器人会在协议早期自动推进。普通质押用户可以不必自己运行 Keeper，但餐次和采购仍需有人成功完成推进操作；官方兜底不代表系统保证永久或立即前进。
+
+## 一次 FEED 检查指定批次
+
+FEED 依次尝试兑换待处理的 QQQB 收入、推进一个到期餐次，以及为指定批次的食谱采购奖励资产。每次检查的资产由协议安排，不能自行挑选；连续检查会轮流覆盖菜单。例如 9 项菜单、每次检查 4 项时，依次按 4/4/1 扫描。
+
+每次 FEED 默认检查 **4 项**资产，上限为 **8 项**。菜单容量及治理调整规则见[菜单生命周期](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html#5-菜单生命周期)。
+
+扫描不保证每个资产都被购买；待采购预算、Belly 流出限额、最小金额及市场条件仍然有效。已成功兑换的收入及符合条件的推动奖励，不会因后续推进或采购失败而撤销；未完成的步骤可在条件满足后重试。整笔交易失败时仍会消耗 Gas，不能据此认定任何步骤已完成。
+
+餐次到期且执行条件允许时即可推进；推进只确定奖励分配，不代表奖励已进入用户钱包。
+
+## 兑换与推动奖励
+
+FEED 兑换的是协议收到的 QQQB 收入。参与者只付 Gas，不需要提供自己的 QQQB，也不能改变收入去向。网页根据可用余额和单笔限额准备一次兑换；初始单笔范围为 0.1–50 QQQB，实际能否完成仍取决于价格、流动性及协议运行状态。
+
+**在 FEED 内成功兑换**即可为符合条件的参与者产生推动奖励，不要求后续推进或采购成功。兑换时，参与钱包须持有至少 **10,000 `$FATCAT`**，或持有仍有本金的质押仓位。奖励为本次 WBNB 总产出的 **1/38，向下取整**，约为实际产出的 2.63158%；在 `$FATCAT` 标准 4% 交易税下，名义目标为本次税费所对应交易额的 0.1%。价格、兑换成本和取整会影响等值金额。扣除奖励后的余额继续进入分配。单独执行的兑换、推进、采购，以及没有兑换的扫描，都不产生这项奖励。
+
+FEED 的推动奖励单独记为可领取 WBNB，与质押奖励分开。领取需付一笔 Gas。请在页面查看本次处理结果和实际新增奖励；交易成功本身不代表发生了兑换、全部购买或推动奖励，实际以链上事实为准。
+
+## 提交前
+
+刷新页面，确认当前待处理内容、预计 Gas 和奖励资格，再在钱包中确认。其他人的 FEED 或菜单变动可能使之前显示的内容失效；失败后应刷新再试。交易结果不明时，先查询交易状态，再决定是否重发。
+
+资产退出活动菜单后，历史已结算奖励仍可领取。赎回本金无需先执行维护。详见[菜单生命周期](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)和[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)。
+
+---
+# 来源章节: zh/safety.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety.html
+
+# 安全与治理
+
+说明资金托管边界、记账检查、监控措施与运行风险。
+
+## 安全索引
+
+- **[托管与记账边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)**：本金隔离、核心合约无管理员扫仓接口，以及有条件的取整界限。
+- **[测试与验证](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/audits-and-hardening.html)**：当前记账保护与内部回归、不变量测试的覆盖范围。
+- **[运行监控与应急响应](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/monitoring.html)**：监控与应急处置措施概述，以及用户应对入口。
+- **[风险披露与运行条件](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html)**：开放规则、外部依赖与结算延迟。
+
+---
+# 来源章节: zh/safety/custody.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html
+
+# 托管与记账边界
+
+## 1. 本金隔离
+
+质押的 `$FATCAT` 保存在独立的本金金库，与 Belly 中的奖励储备及已结算奖励分离，不参与奖励采购。
+
+协议暂停时，仓位所有者仍可申请赎回本金，无需维护者批准。交易成功仍需要链可用、仓位核验及 `$FATCAT` 转账正常完成。退出会放弃当前开放餐次的份额，历史奖励权益仍可领取。详见[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)。
+
+## 2. 管理员资金权限
+
+核心本金、奖励储备和分配记账合约没有管理员扫仓或救援提款入口。Belly 的奖励流出受八小时窗口额度约束，已结算奖励按仓位权益支付。
+
+这一边界不覆盖所有上游收入环节。**上游 QQQB 收入金库在永久锁定前可以升级，收入接收环节还允许 Flap 的授权角色在紧急情况下转移其中的税收收益。** 这些资金不是用户质押的 `$FATCAT` 本金，但相关权限可能影响后续奖励收入。
+
+上游服务还可代用户提交质押、赎回、切换食谱及领取操作。服务升级可能改变代操作行为，因此其影响不限于税费处理。普通赎回和领款仍付给仓位所有者；新增质押仍须用户有足够余额并完成有效授权。请核对官方部署记录，审阅钱包中的操作和授权内容。
+
+## 3. 已结算奖励与取整
+
+奖励按该批次实际收到的资产、有效份额及向下取整规则计算。已记录且可领取的奖励应保留对应资金，不能因为用户尚未领取就当作可再次分配的余额。
+
+多阶段取整和分段领取可能留下少量残差；这些残差没有管理员提款或自动回收路径。内部测试检查记账与到账是否符合相关条件，但不代表所有代币行为或执行路径均已被证明安全。详见[测试与验证](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/audits-and-hardening.html)。
+
+---
+# 来源章节: zh/safety/audits-and-hardening.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/audits-and-hardening.html
+
+# 测试与验证
+
+协议在推出前已经历了大量的内部测试。内部回归和有状态不变量测试用于检查实现行为，不等同于独立审计或覆盖所有执行路径的形式化证明。生产地址与浏览器源码验证须以单独的官方部署记录为准。
+
+## 当前保护措施与测试范围
+
+| 领域 | 当前保护措施 | 内部测试范围 |
+|---|---|---|
+| 收入接收 | 只记录实际收到的收入，并防止重复处理 | 不同到账顺序及转账失败时的处理 |
+| 舍入与负债 | 奖励向下取整，待采购资金与已结算奖励分别记录 | 跨仓位、跨餐次的样本领取，以及资金对已记奖励的覆盖 |
+| QQQB 通道收入分成 | 扣除推动奖励后，净收入的 15% 用于项目资金，余款及取整余数进入 Belly | 分配金额与资金去向 |
+| 预言机定价 | 价格参考时效、市场均价与流动性检查 | 价格参考过期及兑换沿途流动性不足 |
+
+上游收入处理具有独立的升级与紧急转移权限，可能影响到达 Belly 前的税费收入。这些权限不等于可提走用户的质押本金。上游收入与质押本金的区别见[托管边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)。
+
+舍入测试采用特定仓位数量、批次数量和领取安排，不证明所有使用情况都适用同一残差上限。多阶段取整及分段领取可能留下少量余额；资金与奖励如何分别保管，见[托管与记账边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)。
+
+测试证据适用于被测源码版本与模型，不能单独证明实际部署地址、生产监控可用性、所有外部代币行为或确定的恢复时间。
+
+---
+# 来源章节: zh/safety/monitoring.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/monitoring.html
+
+# 运行监控与应急响应
+
+TheFatCat 设有运行监控与应急处置机制，用于发现异常，并在必要时采取响应措施。
+
+## 监控措施
+
+监控关注协议运行状态及关键链上活动。发现异常后会进行核验，并视情况启动应急处理。监控依赖链上数据和外部服务，不能保证发现所有问题或即时响应。
+
+## 为什么会有紧急暂停？
+
+紧急暂停用于应对疑似合约漏洞或攻击、异常价格或流动性、上游收入路由及配置异常等情况。发现风险后，会先核验异常，并在权限允许的范围内暂停受影响环节，为排查和处置争取时间，降低风险继续扩大的可能。
+
+## 暂停范围与资金安全
+
+官方紧急暂停仅限制受影响环节的协议操作；各暂停开关独立生效，具体范围如下：
+
+| 暂停环节 | 停止的操作 |
+|---|---|
+| 上游 QQQB 兑换 | 将待处理 QQQB 兑换为 WBNB，新增奖励收入可能延迟。 |
+| Belly 奖励金库拨款 | 依赖 Belly 拨款的奖励采购及 WBNB 回退结算。 |
+| 质押新开仓 | 新建质押仓位。 |
+
+上述开关不会自动停止餐次记账推进，也不暂停代币交易。尚未采购或结算的奖励可能继续等待，不能当作已可领取的奖励。
+
+**暂停本身不会清空协议金库储备、重置用户已记录的时间资历与权重，或扣减质押本金。** 本金、奖励储备与已结算奖励分开保管，历史奖励权益也不会仅因暂停被清除。
+
+**暂停期间，用户仍可通过链上合约赎回普通质押本金、领取已结算奖励，无需等待解除暂停，也不需要维护者批准。** 核心质押与奖励合约没有管理员直接提取用户本金或已结算奖励的入口，暂停也不会将这些资产转给团队。上游税收收入具有独立权限边界，详见[托管与记账边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)。
+
+交易仍须满足链可用、仓位核验及代币转账成功等条件。普通赎回会放弃当前开放餐次的份额，此前历史奖励权益仍保留；已执行的交易不会因暂停而撤销。
+
+## 处置与恢复
+
+团队会排查异常、处理受影响环节并核验恢复条件。**完成异常处置与安全核验、具备恢复条件后，会第一时间通过有权限的治理流程解除相关暂停，恢复对应操作**，并通过[官方渠道](https://thefatcatofficial.github.io/TheFatCat-docs/zh/links.html)同步处理进展和恢复状态。
+
+具体恢复时间取决于问题处理及链上执行条件。恢复后，尚未结算的奖励仍按协议规则继续采购或回退结算，不代表所有积压奖励立即到账。
+
+## 用户应对
+
+请以[官方渠道](https://thefatcatofficial.github.io/TheFatCat-docs/zh/links.html)的状态通知为准。异常期间，奖励结算可能延迟。需要退出仓位或领取已结算奖励时，可参阅[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)；交易仍须满足链可用性和合约执行条件。
+
+发现安全问题，请通过 [GitHub 私密安全通报](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new)提交，避免公开敏感细节。
+
+---
+# 来源章节: zh/safety/risks-and-status.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html
+
+# 风险披露与运行条件
+
+## 1. 网络与开放规则
+
+- **网络**：BNB Chain（Chain ID: 56）。
+- **首发交易场所**：Flap 联合曲线，采用 QQQB 配对；奖励账本使用 WBNB。
+- **质押开放**：项目计划在代币毕业后马上开放质押，由项目方通过一次性交易开放，合约不会自动开放；七天积累期从质押开放时开始。
+- **积累期**：开放后的前七天，餐次与资历正常推进，不产生奖励分配。成功到达 Belly 的收入可积累为储备。
+- **奖励流出授权等待期**：奖励流出须另行授权，并等待七天。这一时钟独立于积累期，两项条件不一定同时满足。
+
+交互前，须用另行公布的官方部署记录核对地址、浏览器验证源码、网络及链上状态。
+
+## 2. 重大风险
+
+### 市场交易量与浮动奖励
+
+协议不承诺固定收益。奖励资金来自协议实际收到的交易税收与自愿支付。市场交易量下降会减少流入；储备池不能在交易停止时创造新收益。
+
+### 上游权限与外部代币
+
+Flap 税费处理及 QQQB 收入环节属于外部依赖。上游升级、配置变更或应急资金转移，可能改变奖励收入的到达情况；这些权限不等于可从用户本金金库提款。
+
+上游服务还可代用户提交质押、赎回、切换食谱及领取，升级可能改变这些代操作行为。普通赎回和领款仍付给仓位所有者。
+
+当前接入信任 QQQB 发行方权限。转账限制、发行方或实现变化，以及流动性不可用，都可能影响兑换。详见[托管边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)。
+
+### 采购与结算延迟
+
+奖励采购依赖可用的预言机观测、流动性与滑点检查。结算优先处理全局最早待结算餐次；某项资产等待时可能延迟后续餐次，同一最早餐次的其他资产仍可处理。Distributor 中已经结算的奖励仍可领取，本金赎回与采购分别处理。
+
+符合条件的待结算金额可回退为 WBNB，并以原生 BNB 领取。回退资格取决于路线的待处理时长上限、资产禁用或挂起状态，或普通资产的单餐分配额超过采购上限。具备资格不等于自动付款：仍须有人提交结算交易，并受 Belly 暂停状态、可用资金及八小时流出上限约束；普通资产在最早餐次的完整分配额须能放入可用窗口，`$FATCAT` 可分批处理。**不保证购买失败一天后到账，也没有固定的最长等待时间。**
+
+资产挂起后，权重和分配资格保留，自动维护优先尝试无需时间等待的 WBNB 回退，普通采购仍可能完成。挂起持续到解除，解除不会逆转已结算奖励。详见[执行与菜单规则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)。
+
+### 第三方代币化资产
+
+代币化美股等资产由第三方发行与托管，不是底层公司的直接股权，存在发行方违约、转账或交易限制，以及监管风险。
+
+除 `$FATCAT` 外，新启用资产在七天试用期内，最多获得一餐分配额的 5%。初始菜单仅首次启用时免除试用，后续重新启用恢复普通试用规则；试用结束后，5% 不是永久单资产风险上限。回退仅覆盖符合条件的待采购金额，不保证回收已经购入的代币或其市场价值。
+
+---
+# 来源章节: zh/whitepaper.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper.html
+
+# 白皮书
+
+TheFatCat 白皮书版本 **v1.0**，公开文本修订日期 **2026 年 10 月 17 日**。
+
+- [白皮书下载](https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper/downloads.html)：中文与英文版本。
+- [机制摘要](https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper/math-overview.html)：分配、资历与记账边界。
+
+实际交互请用官方部署记录核对合约地址，并查阅当前[协议规则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol.html)。书面模型不保证执行结果或未来收益。
+
+---
+# 来源章节: zh/whitepaper/math-overview.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper/math-overview.html
+
+# 机制摘要
+
+本页概述储备分配、仓位权重和奖励领取规则。模型结果依赖明确的假设，不是付款时间表。
+
+## 分配与执行
+
+正常八小时餐次最多分配未预留资金的 1/21。延迟推进最多计入 16 小时的有效分配时长。分配只登记保留资金，实际流出另外受到 Belly 窗口额度约束。详见 [Belly 规则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)。
+
+约 4.736 天的半衰期适用于理想模型：没有新流入、每八小时分配并完成结算、无暂停或积压，并忽略舍入。它不是付款时间表。
+
+## 资历
+
+仓位权重 = 本金 × 时间资历系数 × 所选资产的激励系数，普通生效仓位从 1× 升至 22×。在标准八小时节奏下，从 1× 升至 22× 需要完成 21 个活跃餐次，约七天；维护延迟会延后晋升。参与规则见[餐次规则](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html)。
+
+各资产选项的激励系数分别设置，初期由官方调控，取值范围 1.0×–2.0×。公布调控并上线后，经三天治理等待后从下一餐生效。
+
+## 资产与领取
+
+每个仓位按所选食谱资产接收奖励。以 WBNB 计价的分配、资金已到位的奖励数量和可领取金额属于不同阶段；采购执行及有条件的 WBNB 回退决定可领取资产。采购按[全局餐次顺序](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)推进。已结算奖励不会因用户迟迟未领取而被收回。
+
+## 核算边界
+
+向下取整约束资金已到位批次的支付，不证明任意代币的安全性或市场价值。为待采购份额预留的资金，与已为用户结算的奖励分别记录。详见[核算约束](https://thefatcatofficial.github.io/TheFatCat-docs/zh/definitions/invariants.html)、[托管](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)和[风险边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html)。
+
+---
+# 来源章节: zh/whitepaper/downloads.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/whitepaper/downloads.html
+
+# 白皮书下载
+
+版本 **v1.0** · 修订日期 **2026 年 10 月 17 日**。
+
+- [中文 PDF](https://thefatcatofficial.github.io/TheFatCat-docs/assets/whitepaper/TheFatCat_Whitepaper_v1.0_ZH.pdf)
+- [英文 PDF](https://thefatcatofficial.github.io/TheFatCat-docs/assets/whitepaper/TheFatCat_Whitepaper_v1.0_EN.pdf)
+
+---
+# 来源章节: zh/faq.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq.html
+
+# 常见问题与限制
+
+质押、奖励及运行边界的常见问题。
+
+## 问答目录
+
+- **[质押与仓位常见问题](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/staking.html)**：浮动奖励、准入门槛与本金赎回。
+- **[资历与食谱常见问题](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/seniority-and-rewards.html)**：质押开放后的七天积累期、独立的资历推进、切换食谱及领取。
+- **[The Belly 与释放常见问题](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/belly-and-release.html)**：储备分配、上游到账延迟、流出窗口与奖励流出授权。
+- **[安全与托管常见问题](https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/security-and-safety.html)**：直接访问合约、核心资金边界，以及上游权限及其对用户的影响。
+
+---
+# 来源章节: zh/faq/staking.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/staking.html
+
+# 质押与仓位常见问题
+
+---
+
+## 1. 为什么协议不公布 APY 或 APR？
+奖励随交易税收入、Belly 可用余额、活跃仓位权重和执行条件变化。协议不承诺固定收益率。
+
+---
+
+## 2. 如果我赎回本金，会发生什么？
+您可随时退出仓位，取回 100% 的本金，没有锁定期，也不收退出费。代价是放弃当前开放餐次尚未结算的份额，并结束该仓位的资历。此前已结算的奖励仍然保留，没有协议到期日，可随时在分发器中领取。
+
+---
+
+## 3. 为什么仓位不能追加本金或合并？
+每个仓位有独立的资历时钟。新增本金须开启新仓位并积累自己的资历，不能继承已有仓位的时间资历系数；同一钱包可管理多个仓位。
+
+---
+
+## 4. 质押开仓的最低门槛是多少？
+普通开仓的最低本金为 100,000 `$FATCAT`，用于限制小额仓位数量。
+
+---
+# 来源章节: zh/faq/seniority-and-rewards.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/seniority-and-rewards.html
+
+# 资历与食谱常见问题
+
+---
+
+## 1. 为什么质押开放后的前 7 天没有奖励分配？
+质押开放后，协议进入七天积累期：
+
+1. **资历推进**：成功的餐次推进仍更新资历，但积累期不分配新奖励。较早生效的仓位可以先积累资历。
+2. **独立授权时钟**：Belly 的奖励流出授权另有七天等待期，与积累期各自起算。
+3. **收入积累**：上游税收清算和 QQQB 兑换成功时可为 Belly 入账；收入不保证持续或达到固定金额。
+
+---
+
+## 2. 如果我切换食谱（Diet），时间资历系数会重置吗？
+**不会。** 资历档位取决于仓位持续参与的餐次，与所选奖励资产无关。切换食谱在下一个餐次边界生效，已积累的时间资历系数（$c_i$）完整保留。
+
+---
+
+## 3. 如何领取奖励？原生 BNB 怎样到账？
+质押者可随时在管理面板领取奖励。食谱为 BNB 时，协议提供原生领取接口，在同一笔交易中把 WBNB 解包为原生 BNB 转入钱包，无需另行解包。
+
+---
+
+## 4. 时间资历凭证是什么？
+
+[时间资历凭证](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/seniority-certificates.html)会在协议成熟的时机推出，详细内容会在后续公布。
+
+---
+# 来源章节: zh/faq/belly-and-release.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/belly-and-release.html
+
+# The Belly 与释放常见问题
+
+---
+
+## 1. 为什么 Belly 每餐的分配金额不等于过去 8 小时的实际交易税？为什么单餐分配比例是 1/21（约 4.76%）？
+因为 The Belly 按累积的未预留余额分配：
+- **为什么是 1/21：** 标准八小时节奏下，分配比例为 $8/168 = 1/21 \approx 4.76\%$。七天流入缓冲是理想稳态模型，要求恒定流入和规律的分配、执行。
+- **平滑作用：** 已有储备可在交易减少后继续支持后续餐次；金库不能创造收入，也不保证持续付款。
+- **有上限的时间折算**：成功推进以未预留资金为基数，按可奖励时长占一周 168 小时的比例计算配额，最多计入 16 小时，只推进一餐，并以当前时间重新起算；更长延迟不会补齐所有错过的餐次或全部流逝时长。
+
+---
+
+## 2. 为什么刚上线初期 Belly 金库余额可能显示为零？
+毕业后，Flap 会累积 `$FATCAT` 税费代币，在满足实际部署的阈值与卖单条件时清算为 QQQB。QQQB 随后在价格检查等条件满足时，通过双路由兑换为 WBNB；成功兑换会在同一笔交易中为 Belly 入账。因此 Belly 暂无流入可能来自上游批处理或兑换条件不满足，待处理 QQQB 不是 Belly 已持有的 WBNB。
+
+---
+
+## 3. 为什么需要八小时最大流出限额？
+为限制结算延迟后待结算资金的集中释放，The Belly 对每个八小时窗口的实际流出设置最大限额，初始为窗口开启时 WBNB 总余额的 $16/168 \approx 9.5238\%$，并向下取整。
+
+这是常设安全上限，所有实际流出均受其约束，并非每八小时固定发放的比例。正常餐次按分配预算结算；当特殊情况使已分配奖励暂时无法结算、待结算资金累计时，恢复后的集中流出可能触及上限，超出当窗剩余额度的结算须等待后续窗口，并继续满足结算条件。窗口内新增入金不抬升当窗额度，已结算奖励的领取不消耗此额度。详见 [Belly 最大流出限额](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)。
+
+---
+# 来源章节: zh/faq/security-and-safety.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/faq/security-and-safety.html
+
+# 安全与托管常见问题
+
+## 1. 如果官方网站离线，怎么办？
+
+本金保存在质押合约中，不由网站保管。核对官方部署地址与验证源码后，可按[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)通过兼容的钱包或区块链浏览器直接赎回本金、领取已结算奖励。
+
+## 2. 紧急暂停会冻结本金吗？
+
+普通本金赎回不受协议暂停限制，也不需要维护者批准。仓位核验、账本处理及 `$FATCAT` 转账仍须成功。退出会放弃当前开放餐次的份额，历史奖励权益仍然保留。
+
+## 3. 管理员能提走协议资金吗？
+
+核心本金和奖励合约没有管理员扫仓或救援提款入口。但上游税收收益存在不同的权限：收入金库在永久锁定前可以升级，部分上游收入可以在紧急情况下由 Flap 的授权角色转移。这些收入不是用户质押的 `$FATCAT` 本金，相关变化仍可能影响奖励来源。
+
+上游代操作服务也可能因升级而改变行为。普通赎回和奖励领取仍付给仓位所有者；新增质押仍需要用户余额和有效授权。详见[托管与记账边界](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/custody.html)。
+
+## 4. 应急措施会怎样影响使用？
+
+异常期间，协议可暂停部分操作、限制受影响资产或调整执行条件。这可能延后新质押、奖励采购及结算；已完成的交易不会因此撤销，恢复也不保证即时完成。
+
+部分待采购奖励可能改以 WBNB 结算。用户的资历、历史权益及实际可领取金额，应以仓位记录和已完成结算为准。上游平台的权限与项目自身的应急权限分别存在，详见[风险披露与运行条件](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html)。
+
+---
+# 来源章节: zh/notices.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices.html
+
+# 法律声明与免责条文
+
+重要的法律合规声明、非投资建议告示以及协议交互风险警示。
+
+## 声明章节导览
+
+查阅协议法律声明与合规风控边界：
+
+- **[协议风险披露与免责声明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices/risk-disclaimers.html)**：实验性 DeFi 路由协议属性、非投资建议、不承诺收益与无受托关系说明。
+- **[监管合规与司法管辖提示](https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices/regulatory-status.html)**：以已部署代码核对实际行为、第三方平台依赖与用户自主合规义务。
+
+---
+# 来源章节: zh/notices/regulatory-status.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices/regulatory-status.html
+
+# 监管合规与司法管辖提示
+
+---
+
+## 1. 代码与文档
+链上行为取决于实际部署的合约：
+1. **行为核对**：文档用于解释机制；判断实际运行行为时，应核对 BNB Chain 上已部署、已验证的源码和字节码。
+2. **第三方基础设施依赖**：协议与第三方去中心化应用及发射平台（包括 Flap 与 PancakeSwap）进行交互。TheFatCat 核心贡献者对第三方底层基础设施、节点 RPC 可用性或外部代币合约没有任何控制权。
+
+---
+
+## 2. 司法管辖区与自担合规责任
+在获取 `$FATCAT` 或与协议合约交互之前，用户须自行负责遵守其所在司法管辖区适用的全部法律、法规与税务义务。在受全面制裁或依法禁止去中心化数字资产质押的司法管辖区，访问可能受到限制或被禁止。
+
+---
+
+## 3. 第三方代币化资产（bStocks）
+部分菜单资产为追踪股票或指数价格的第三方代币。具体权利、赎回条件、用户资格及地区可用性取决于实际发行方条款，不能从本协议的菜单名称推断。使用前须审阅对应发行文件，并遵守适用的监管和税务要求。
+
+---
+# 来源章节: zh/notices/risk-disclaimers.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/notices/risk-disclaimers.html
+
+# 协议风险披露与免责声明
+
+---
+
+## 1. 实验性 DeFi 协议与 Meme 文化属性
+TheFatCat 是一个融合社区 Meme 文化与去中心化交易税收路由机制的 DeFi 实验性协议：
+- **非投资理财建议**：本文档、官方网站、社区渠道或相关智能合约中的任何表述，均不构成任何形式的财务、投资、法律、税务或专业建议。
+- **不承诺收益**：TheFatCat 绝不承诺或担保任何形式的利润、投资回报率、年化收益、代币价格升值或本金保值。奖励取决于二级市场实际交易量、质押时间、全网有效权重以及底层资产兑换情况。
+- **全额损失风险**：数字资产与智能合约具备固有的技术、金融与流动性风险，参与者可能面临全部质押或交易本金损失的风险。
+
+---
+
+## 2. 无受托人或代理信托关系
+TheFatCat 核心开源贡献者及相关开发者均不对任何质押者或代币持有人承担投资顾问、资产受托人、经纪人或财务信托职责。所有与智能合约的交互纯属点对协议的自愿自主行为。
+
+---
+# 来源章节: zh/links.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/links.html
+
+# 官方链接
+
+官方应用、社区与技术链接。
+
+在连接 Web3 钱包或签署任何链上交易前，请务必核对浏览器地址栏域名。协议贡献者绝不会主动私聊向您索取助记词、私钥或要求进行未经验证的授权。
+
+## 核心应用与官方通道
+
+### 质押系统（The Belly）
+
+质押 $FATCAT、从链上启用菜单中选择奖励资产、查看仓位状态并领取已结算奖励。
+
+https://thefatcat.fun/belly
+
+    [前往质押系统 →](https://thefatcat.fun/belly)
+
+### 协议官方主站
+
+协议概览、储备池模拟器与设计背景。
+
+https://thefatcat.fun
+
+    [访问官方主站 →](https://thefatcat.fun)
+
+### 官方 X（推特）
+
+协议公告与社区动态。
+
+https://x.com/TheFatCatFi
+
+    [关注 @TheFatCatFi →](https://x.com/TheFatCatFi)
+
+## 技术与验证通道
+
+供开发者与集成方查验的公开入口：
+
+### 官方用户文档站
+
+[thefatcatofficial.github.io/TheFatCat-docs/](https://thefatcatofficial.github.io/TheFatCat-docs/)
+
+协议规则、机制说明与操作指南
+
+### BNB Chain 浏览器
+
+[bscscan.com](https://bscscan.com)
+
+用于查询已部署合约的源码与交易
+
+### 安全通报通道
+
+[GitHub 私密安全通报通道](https://github.com/TheFatCatOfficial/TheFatCat-docs/security/advisories/new)
+
+私密漏洞提报
+
+## 防钓鱼安全核查清单
+
+在与协议发生任何链上资金交互前，请务必执行以下安全核对：
+
+1. **核对浏览器完整域名**：确保域名为 `https://thefatcat.fun` 或 `https://thefatcat.fun/belly`。谨防使用形近字符或添加前缀/后缀的仿冒钓鱼域名。
+2. **核对合约部署地址**：签名转账或授权前，须用另行公布的官方部署记录核对合约地址。
+3. **免费空投陷阱**：协议没有任何需要签署离线代币授权（Permit）或无限授权的“免费领币”活动。
+
+---
+# 来源章节: zh/protocol/how-the-machine-runs.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/how-the-machine-runs.html
+
+# 机器如何运转
+
+本章根据创始人 Silas 的同名文章整理，将交易税收入、Belly 储备、质押资历、食谱选择与 FEED 维护串成一条完整流程。阅读后，您可以理解一笔收入如何成为仓位奖励，以及每一步需要哪些条件。
+
+## 1. 从交易税到仓位奖励
+
+TheFatCat 用 Belly 蓄积收入，再按餐次和仓位权重分配。质押本金、奖励储备与待领奖励分别记账和托管。
+
+1. **税收接收**
+
+   `$FATCAT` 的交易税经上游路径以 QQQB 接收，之后经双路由兑换成 WBNB。
+
+   对您意味着什么：成交产生税收，不代表收入已经进入 Belly；变现与兑换仍需成功执行。
+
+2. **收入分账**
+
+   扣除上游费用及已产生的推动奖励后，净收入的 85% 连同分账取整余数进入 Belly，15% 用于开发、运营和营销。
+
+   对您意味着什么：85% / 15% 的基数是扣费、扣奖后的净收入。
+
+3. **餐次分配**
+
+   成功推进餐次时，协议从未预留资金中记录本餐预算和仓位权益。
+
+   对您意味着什么：分配是记账，此时没有把奖励转入您的钱包。
+
+4. **资产结算**
+
+   协议按餐次顺序采购所选资产，或按规则以 WBNB 回退结算。
+
+   对您意味着什么：奖励可能等待价格、流动性、维护或金库额度条件。
+
+5. **用户领取**
+
+   已结算奖励进入分发器，您发起领取交易后到账。
+
+   对您意味着什么：领取与质押本金赎回是独立操作。
+
+普通质押本金保存在独立 Vault 中。领取奖励交付的是已结算的奖励资产，不会卖出您托管的 `$FATCAT` 本金。完整费用口径见[税收路由与费用](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/fees.html)。
+
+## 2. Belly 为什么像一个蓄水池
+
+交易活跃时，手续费可能集中流入；Belly 将这段收入分配到后续餐次。它改变收入的分配节奏，但不能创造额外收入。
+
+在完整计奖、满足分配条件且准时推进的八小时餐次中，预算上限为**未预留资金的 1/21，约 4.76%**。已为待结算餐次预留的资金不再参与这一计算，避免重复分配。
+
+- 餐次至少间隔八小时，需要有人提交成功交易才会推进。
+- 一次推进只关闭一餐，下一餐从本次调用时刻开始，不补齐错过的历史餐次。
+- 推进延迟时，最多计入十六小时的有效奖励时间。
+- 初始积累期、有效权重不足、资产限额与整数舍入都可能使实际分配低于预算上限。
+
+假设没有新增收入、每八小时准时关闭一个有效餐次、分配完整且及时执行，并忽略整数尘埃，模型中的未预留余额会按以下比例衰减：
+
+| 经过时间 | 模型中的剩余未预留余额 |
+|:---|:---|
+| 1 天 | 约 86% |
+| 3 天 | 约 64% |
+| 7 天 | 约 36% |
+| 14 天 | 约 13% |
+| 30 天 | 约 1.24% |
+
+这一理想模型的半衰期约为 4.74 天。表格描述预算分配模型；尚未结算的预留仍可能留在 Belly，因此不能把它直接当作实际金库余额或个人到账时间表。没有新收入，每餐可分配金额也会逐渐缩小。
+
+实际资金流出另受独立的八小时窗口限额约束。分配预算和提款额度是两套规则，详见[Belly 储备与释放](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/belly.html)。
+
+## 3. 仓位如何记录本金与时间
+
+每次质押建立一个独立仓位，分别记录本金、资历、食谱与领取进度。同一钱包可以拥有多个仓位，它们不会自动合并。普通仓位的最低本金为 **100,000 `$FATCAT`**；门槛在部署时固定，其市场成本随 `$FATCAT` 价格变化。
+
+仓位权重的基本关系是：
+
+**仓位权重 = 质押本金 × 时间资历系数 × 激励系数**
+
+新仓位不参与已经开启的餐次，从下一餐以 **1×** 生效。此后每完成一个活跃餐次，时间资历系数增加 1，完成 21 个活跃餐次后达到 **22×** 上限。这里计数的是实际推进的餐次；等待日历时间不会自动增加资历，也不会让本金产生复利。
+
+例如，两个本金均为 100,000 `$FATCAT`、所选资产激励系数为 1× 的仓位：首次活跃仓位的权重为 100,000，成熟仓位为 2,200,000。二者的单位本金权重相差 22 倍，但实际奖励还取决于全池权重与执行结果。若所有仓位都已成熟，同一食谱内的份额按本金比例决定；不同食谱之间，激励系数会放大或缩小权重，试用期上限也可能限制该资产的预算，见[食谱与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html)。
+
+同资历下，十倍本金仍对应十倍权重。时间资历系数不会限制本金规模，新资金从下一餐开始也可能稀释其他仓位的后续份额。公式与边界见[餐次与资历](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/meals-and-seniority.html)。
+
+### 最初七天如何计算
+
+项目计划在代币毕业后马上开放质押，见[代币发射与功能开放流程](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/launch-stages.html)。初始七天积累期从**成功开放质押的交易**开始，该交易启动奖励时钟。期间可以在成功推进的餐次中积累资历，但不分配新的奖励预算；成功兑换的收入留在 Belly。
+
+这也是为什么“已经开放七天”和“已完成 21 个活跃餐次”不能互换。积累期结束后，仍需成功推进餐次，并满足有效计奖时间、权重与分配条件，才会形成奖励预算。
+
+## 4. 食谱决定奖励以什么资产结算
+
+每个仓位从已启用的菜单中选择一项 DIET。BNB 是默认选择，内部以 WBNB 记账，无需额外采购交易，并可在领取时解包为原生 BNB。符合条件的菜单还可包含股票代币（bStocks）等资产；`$FATCAT` 自身须在毕业、路由验证和 TWAP 预热等条件满足后才可能加入。
+
+- 更换食谱从下一餐生效，不重置时间资历，也不收取协议切换费；交易仍需 Gas。
+- 旧食谱下已记录的奖励保留，更换食谱不会把它们重新兑换成新资产。
+- 非 WBNB 资产的采购按全局最早餐次顺序推进，须通过价格、流动性、最小输出等检查。
+- 满足回退条件的分配可以 WBNB 结算，但仍需要可用资金和金库额度；一次采购失败不意味着立即完成回退。
+
+分配、结算和领取可以发生在不同时间。操作方法见[食谱与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html)，等待与回退规则见[采购与结算](https://thefatcatofficial.github.io/TheFatCat-docs/zh/protocol/execution.html)。
+
+## 5. 谁让机器继续运转：FEED
+
+智能合约需要交易触发。任何人都可以尝试公开维护，不要求每位质押用户运行维护程序。一次 FEED 会依次尝试：
+
+1. 将税收金库中的 QQQB 兑换为 WBNB，并转发收入。
+2. 推进至多一个已到期餐次，记录新的分配。
+3. 检查合约指定的一批菜单资产，尝试执行待结算采购。
+
+操作人支付 Gas，不需要拿自己的 QQQB 兑换。各步骤仍受余额、时间、价格、流动性和暂停状态等条件约束。
+
+### 推动奖励如何产生
+
+在 FEED 成功兑换的时刻，原始调用者须满足以下条件之一：持有至少 **10,000 `$FATCAT`**，或提供一个属于自己且剩余质押本金大于零的仓位。满足资格时，推动奖励按本次实际 WBNB 总产出的 1/38 向下取整记账。不满足资格仍可帮助维护，但不获得这笔奖励。
+
+推动奖励记为可单独领取的 WBNB，需要另一笔交易及 Gas 领取。单独推进餐次、采购，或没有成功兑换的 FEED 扫描，都不产生此奖励。忽略费用、价格变化和取整时，它才在标准税率模型下约等于对应交易额的 0.1%；实际金额以兑换与奖励记录为准。
+
+后续推进或采购的局部失败通常不会撤销已经成功的兑换和符合条件的推动奖励，但无效输入、整笔交易 Gas 耗尽等情况仍可能使整笔交易回滚。成功回执也不代表所有步骤都完成了。官方自动维护会尝试补充推进，其成功与及时性仍依赖执行条件和运行环境。详见[FEED 机制与去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html)。
+
+## 6. 退出时哪些权益会保留
+
+普通仓位没有协议锁定期或退出费。赎回返回本金，并结束该仓位的未来计权；退出会放弃当前仍在进行的餐次权益，此前已记录的奖励权益保留。新建普通仓位重新从 1× 开始。
+
+| 资金所在位置 | 作用与边界 |
+|:---|:---|
+| 质押 Vault | 保管本金；普通赎回不检查协议暂停标记 |
+| Belly | 保管奖励储备；流出受固定路由、暂停与窗口限额约束 |
+| 奖励分发器 | 保管已结算奖励；领取不依赖 Belly 当时能否继续出流 |
+
+因此，待采购奖励延迟或 Belly 暂停，不会给普通赎回新增一个餐次等待要求。实际赎回和领取仍须交易成功、代币正常交付，并通过相应合约检查。前端不可用时的直接交互方法见[紧急退出说明](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/emergency-exit.html)。
+
+## 7. 理解规则后，还需要关注什么
+
+奖励来源于实际收入及可被合约识别的捐入资金，取决于交易量、参与本金与资历分布、所选资产和执行结果。蓄水池与时间权重不能保证固定收益。
+
+上游 Flap 权限可能改变未来税收路由；股票代币另有发行方、托管与升级风险；TWAP 检查不能消除市场操纵、MEV 或流动性风险。查看[风险披露与运行条件](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/risks-and-status.html)，了解这些条件如何影响您的操作；[运行监控与应急响应](https://thefatcatofficial.github.io/TheFatCat-docs/zh/safety/monitoring.html)概述异常处置措施。
+
+---
+# 来源章节: zh/guides/launch-stages.md
+---
+
+https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/launch-stages.html
+
+# 代币发射与功能开放流程
+
+TheFatCat 分三个阶段开放交易、质押和质押奖励。本页说明各阶段可以做什么，以及为什么先开放质押、再开放奖励。当前进度请查看 [Belly 页面](https://thefatcat.fun/belly)。
+
+**代币发射 → 毕业后开放质押 → 七天积累期 → 开放质押奖励分配与领取**
+
+## 三个开放阶段
+
+| 阶段 | 开放时间 | 您可以做什么 | 质押奖励状态 |
+| :--- | :--- | :--- | :--- |
+| **第一阶段：代币发射** | 代币已上线，等待毕业 | 通过官方交易入口参与交易，查阅协议规则。已开放的收入维护入口独立运行。 | 暂未开放质押与质押奖励领取。 |
+| **第二阶段：开放质押** | 计划在代币毕业后马上开放，以实际开放状态为准 | 质押 `$FATCAT`、选择奖励资产，并按规则管理或退出仓位。生效仓位可随成功推进的餐次积累时间资历。 | 全协议进入七天积累期，期间不分配新的质押奖励。 |
+| **第三阶段：开放奖励** | 实际开放质押满七天，第八天起 | 继续质押和管理仓位，在奖励入口开放且结算完成后领取已结算奖励。 | 餐次推进可开始分配质押奖励；实际可领取金额仍取决于收入、采购与结算。 |
+
+**七天从全协议实际开放质押时统一起算，并不是从 `$FATCAT` 发射时起算。** 七天期满后，奖励执行以链上为准。
+
+## 为什么分阶段开放
+
+### 先完成发射与毕业，再开放质押
+
+第一阶段提供交易入口和协议说明，用户可以在质押开放前了解协议运行机制与参与方式。代币毕业后，按发布流程开放质押；具体是否已经开放，请以 Belly 页面的实际状态为准。
+
+### 留出初始奖励资金的积累时间
+
+开放质押后的七天用于积累初始奖励储备。成功处理的交易税收入可进入 Belly 蓄水池，为后续餐次分配提供资金。实际积累金额取决于收入与处理情况，不承诺固定收益或最低奖励。
+
+### 时间资历与奖励分配分别计算
+
+积累期内，普通新仓位仍从下一次成功推进的餐次生效，以 1× 时间资历系数起步。此后每完成一个有效餐次增加 1×，最高 22×，需晋升 21 次；推进延迟会延后晋升。
+
+积累期内质押者资历正常增长，这会影响奖励开放后的相对权重；但积累期内不产生资产奖励。仓位权重 = 本金 × 时间资历系数 × 当前奖励资产的激励系数。
+
+### 奖励开放后：先结算，再领取
+
+第三阶段开放后，奖励依次经过餐次分配、采购或符合条件的 WBNB 回退、结算与领取。开启奖励不代表奖励代币会自动到账，需要自行领取。
+
+**FEED 的推动奖励在七天积累期内正常结算**，参与条件见[FEED 机制与去中心化维护](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/community-keeper.html)。
+
+## 常见问题
+
+### 代币上线七天后就能领取质押奖励吗？
+
+不能按代币上线时间计算。七天从全协议实际开放质押时开始；期满后，还需完成对应餐次的分配与结算，才会形成可领取奖励。
+
+### 晚一些加入，还要重新等七天吗？
+
+不会重新计算全协议积累期。不过，普通新仓位仍须从下一次成功推进的餐次生效，时间资历也按该仓位自己的进度增长，不追溯参与之前的餐次。
+
+### 第三阶段开放，就会立刻收到奖励吗？
+
+奖励不会自动到账。请在 Belly 页面查看仓位与已结算奖励，按页面提示领取；待采购或待结算的奖励需要继续等待相应处理完成。
+
+准备参与时，请阅读[质押与仓位](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/staking.html)和[食谱与领取](https://thefatcatofficial.github.io/TheFatCat-docs/zh/guides/diets-and-claiming.html)，或前往 [Belly 页面](https://thefatcat.fun/belly)查看当前开放进度。
