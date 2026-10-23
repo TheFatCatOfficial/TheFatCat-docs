@@ -1,0 +1,24 @@
+// 13. Strict Sidebar Language Isolation (Top-Level Only)
+html[lang="en"] .site-nav > .nav-list > .nav-list-item[data-nav-lang="zh"],
+html[lang="zh"] .site-nav > .nav-list > .nav-list-item[data-nav-lang="en"] {
+  display: none !important;
+}
+
+// 14. PJAX transitions
+.main-content-wrap {
+  transition: opacity 0.1s ease-out;
+  will-change: opacity;
+}
+
+#tfc-pjax-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--tfc-brand-terminal);
+  width: 0%;
+  z-index: 99999;
+  transition: width 0.2s ease, opacity 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(72, 183, 141, 0.6);
+}

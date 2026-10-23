@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "print.css",
+      "sha256": "a247d4339b14a5ef3db5a814b8e4b2137b6615e80a5d5b1da2a485debcad7556"
+    },
+    {
+      "path": "paper-fiber.svg",
+      "sha256": "6b9eb63e3ee54acb771b412719cc5a705d79a2444504c174901727d58401cb46"
+    },
+    {
+      "path": "bevan-latin.woff2",
+      "sha256": "9e8d329901d9be63296b407809c6720f130357b370674528e43e028e69ba8adc"
+    },
+    {
+      "path": "OFL.txt",
+      "sha256": "eb87cba98ec9e702250887373fda17451b3153a695a4b0f27632c8ebf659d1b9"
+    },
+    {
+      "path": "local.css",
+      "sha256": "1276e9f66b05c7d48af508cce9c368383dc0651859e134b52cdeab3cf07adaae"
+    }
+  ]
+}

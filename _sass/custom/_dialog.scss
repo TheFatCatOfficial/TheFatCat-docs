@@ -1,0 +1,313 @@
+// Floating Toast Notification
+.tfc-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999998;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background-color: var(--tfc-brand-emerald);
+  border: 1px solid var(--tfc-brand-terminal);
+  color: var(--tfc-brand-paper);
+  font-size: 0.825rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+
+  &.show {
+    display: inline-flex;
+    animation: tfcToastIn 0.2s ease-out;
+  }
+
+  svg {
+    display: block;
+    color: var(--tfc-brand-terminal);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    justify-content: center;
+  }
+}
+
+@keyframes tfcToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Modal open scroll-lock
+body.tfc-modal-open {
+  overflow: hidden;
+}
+
+// Documentation dialog language visibility
+html:not([lang="zh"]) .tfc-mcp-zh,
+html[lang="zh"] .tfc-mcp-en {
+  display: none;
+}
+
+// Documentation links dialog
+.tfc-mcp-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999999; // Topmost, never covered by sticky header
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+
+  &.show {
+    display: flex;
+    animation: tfcModalFadeIn 0.2s ease-out;
+  }
+
+  @media (max-width: 640px) {
+    padding: 10px;
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@keyframes tfcModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.tfc-mcp-modal-card {
+  background: var(--tfc-brand-ink);
+  border: 1px solid #243029;
+  border-radius: 12px;
+  max-width: 580px;
+  width: 100%;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1000000;
+
+  html[data-theme="light"] & {
+    background: #f0e6d2;
+    border-color: #d8d0c2;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (max-width: 640px) {
+    max-height: calc(100dvh - 20px);
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+
+    .tfc-mcp-modal-body {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
+.tfc-mcp-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #1c2622;
+
+  html[data-theme="light"] & {
+    border-color: #ded6c7;
+  }
+
+  .tfc-mcp-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--tfc-brand-paper);
+
+    svg {
+      color: var(--tfc-brand-terminal);
+    }
+
+    html[data-theme="light"] & {
+      color: var(--tfc-brand-ink);
+    }
+  }
+
+  .tfc-mcp-modal-close {
+    background: transparent;
+    border: none;
+    color: #848a7b;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.12s ease;
+
+    &:hover {
+      color: var(--tfc-brand-paper);
+    }
+
+    html[data-theme="light"] & {
+      color: #6b736b;
+      &:hover { color: var(--tfc-brand-ink); }
+    }
+  }
+}
+
+.tfc-mcp-modal-body {
+  padding: 18px;
+}
+
+.tfc-mcp-modal-intro {
+  margin: 0 0 14px 0;
+  font-size: 0.825rem;
+  color: #a7a894;
+  line-height: 1.5;
+
+  html[data-theme="light"] & {
+    color: #555c54;
+  }
+}
+
+.tfc-mcp-url-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0 0 14px 0;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tfc-mcp-url-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #243029;
+  min-width: 0;
+
+  html[data-theme="light"] & {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: #ded6c7;
+  }
+}
+
+.tfc-mcp-url-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #848a7b;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+
+  html[data-theme="light"] & {
+    color: #6b736b;
+  }
+}
+
+.tfc-mcp-url-val {
+  font-size: 0.73rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: var(--tfc-brand-terminal);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    text-decoration: underline;
+    color: #6ed1a9;
+  }
+
+  html[data-theme="light"] & {
+    color: var(--tfc-brand-emerald);
+
+    &:hover {
+      color: #092822;
+    }
+  }
+}
+
+// Preserve the dialog overrides of the theme’s global pre/code declarations.
+.tfc-mcp-tab-content {
+  pre {
+    margin: 0 !important;
+    padding: 12px !important;
+    border-radius: 6px !important;
+    background-color: #0c100e !important;
+    border: 1px solid #1c2622 !important;
+    font-size: 0.775rem !important;
+    color: var(--tfc-brand-terminal) !important;
+    overflow-x: auto !important;
+    line-height: 1.45 !important;
+
+    code {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      color: inherit !important;
+    }
+
+    html[data-theme="light"] & {
+      background-color: #ece5d6 !important;
+      border-color: #d8d0c2 !important;
+      color: var(--tfc-brand-emerald) !important;
+    }
+  }
+}
+
+.tfc-mcp-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  color: #848a7b;
+  font-weight: 600;
+
+  .tfc-mcp-copy-code {
+    background: #1a2520;
+    border: 1px solid #243029;
+    color: var(--tfc-brand-paper);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+
+    &:hover {
+      border-color: var(--tfc-brand-terminal);
+      color: var(--tfc-brand-terminal);
+    }
+
+    html[data-theme="light"] & {
+      background: #e8e2d4;
+      border-color: #d8d0c2;
+      color: var(--tfc-brand-ink);
+      &:hover { border-color: var(--tfc-brand-emerald); color: var(--tfc-brand-emerald); }
+    }
+  }
+}

@@ -1,0 +1,238 @@
+// 9. Tables
+.table-wrapper {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin: 1.5rem 0 !important;
+  border: 1px solid #26352e !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 0 !important;
+  font-size: 0.9375rem !important;
+  line-height: 1.65 !important;
+  background: var(--tfc-brand-ink) !important;
+  overflow-wrap: break-word !important;
+  font-variant-numeric: tabular-nums;
+
+  th {
+    min-width: 7rem;
+    background: #141f1a !important;
+    color: var(--tfc-brand-paper) !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    border: 0 !important;
+    border-bottom: 1px solid #a8874c !important;
+    padding: 0.875rem 1rem !important;
+  }
+  td {
+    min-width: 10rem;
+    background: var(--tfc-brand-ink) !important;
+    color: #cbd5cf !important;
+    border: 0 !important;
+    border-bottom: 1px solid #26352e !important;
+    padding: 0.875rem 1rem !important;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #131a17 !important; }
+  tr:last-child td { border-bottom: 0 !important; }
+}
+
+// User documentation entry points and sequential explanations
+.main-content .tfc-start-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+
+  li { margin: 0; padding: 0; }
+  li::before { display: none; }
+  a {
+    display: block;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid #26352e;
+    font-weight: 600;
+    text-decoration: none;
+    &::after { content: " →"; }
+    &:hover { text-decoration: underline; }
+  }
+  @media (max-width: 30rem) { grid-template-columns: 1fr; }
+}
+
+.main-content .tfc-flow {
+  margin: 1.5rem 0;
+  padding-left: 1.75rem;
+  li { padding: 0 0 1rem 0.5rem; }
+  li + li { margin-top: 0.5rem; }
+  li > p:first-child { margin-bottom: 0.5rem; }
+  li > p:last-child { margin-bottom: 0; color: #a7b5aa; }
+  li::before { color: var(--tfc-brand-terminal); font-weight: 600; }
+}
+
+html[data-theme="light"] {
+  .table-wrapper { border-color: #dad0bb !important; }
+  .main-content .tfc-start-links a { border-color: #dad0bb; }
+  .main-content .tfc-flow li > p:last-child { color: #4a574c; }
+  .main-content .tfc-flow li::before { color: var(--tfc-brand-emerald); }
+}
+
+// 10. Callouts: paper card with a ruled label row
+.main-content :is(.note, .important, .warning, .tip) {
+  --tfc-caption-line: 1px;
+  --tfc-caption-paper: #202c25;
+  --tfc-caption-ink: var(--tfc-brand-paper);
+  --tfc-caption-border: #46514a;
+  margin: 1.35rem 0 !important;
+  padding: 0 1.1rem 0.85rem !important;
+  background: #161d1a !important;
+  border: 1px solid #46514a !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #d9ddd2 !important;
+  font-size: 0.92rem !important;
+  line-height: 1.65 !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+
+  &::before {
+    margin: 0 -1.1rem 0.7rem !important;
+    padding: 0.5rem 1.1rem !important;
+    border-width: 0 0 1px !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  strong {
+    color: #f1ece0 !important;
+    font-weight: 600 !important;
+  }
+}
+
+.main-content :is(.note, .tip) { --tfc-caption-ink: #98d4b7; }
+.main-content .important {
+  --tfc-caption-paper: var(--tfc-brand-caption);
+  --tfc-caption-ink: var(--tfc-brand-ink);
+  --tfc-caption-border: #c9a465;
+}
+.main-content .warning { border-color: rgba(189, 108, 117, 0.45) !important; }
+.main-content .warning {
+  --tfc-caption-paper: #322127;
+  --tfc-caption-ink: #e89da5;
+  --tfc-caption-border: #a2606b;
+}
+
+html[lang="zh"] .main-content {
+  :is(.note, .important, .warning, .tip)::before { letter-spacing: 0 !important; }
+  .note::before { content: "说明" !important; }
+  .tip::before { content: "提示" !important; }
+  .important::before { content: "注意" !important; }
+  .warning::before { content: "警告" !important; }
+}
+
+// 10.1 Diagram frame
+.tfc-diagram-frame {
+  --tfc-frame-line: 1px;
+  --tfc-frame-ink: #536257;
+  margin: 1.75rem 0 !important;
+  background: #080f0c !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  position: relative !important;
+
+  .tfc-diagram-bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 7px 14px !important;
+    background: rgba(14, 25, 20, 0.85) !important;
+    border-bottom: 1px solid var(--tfc-frame-ink) !important;
+    font-size: 0.75rem !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+
+    .tfc-diagram-tag {
+      --tfc-caption-line: 1px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+      font-size: 0.68rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      color: var(--tfc-brand-ink) !important;
+      padding: 1px 5px;
+      text-transform: uppercase !important;
+      flex-shrink: 0 !important;
+    }
+
+    .tfc-diagram-title {
+      color: #c7cdbf !important;
+      font-weight: 500 !important;
+      margin-left: 2px !important;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  .tfc-diagram-content {
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 1.15rem 1.35rem !important;
+    overflow-x: auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(168, 135, 76, 0.3) transparent !important;
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+      font-size: 0.85rem !important;
+      line-height: 1.65 !important;
+      color: var(--tfc-brand-paper) !important;
+      white-space: pre !important;
+      display: inline-block !important;
+      padding-right: 1.5rem !important;
+      background: transparent !important;
+      border: none !important;
+    }
+  }
+
+  // Diagram content is not a code-copy target.
+  .tfc-code-copy-btn,
+  button {
+    display: none !important;
+  }
+}
+
+// 11. KaTeX and figures
+.tfc-figure-link { font-size: 0.875rem !important; margin-top: -0.5rem !important; }
+.katex-display {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 1.15rem 1.25rem !important;
+  margin: 1.6rem 0 !important;
+  background-color: rgba(231, 223, 201, 0.025) !important; // Soft neutral parchment tint, zero terminal green
+  border-top: 1px solid rgba(231, 223, 201, 0.12) !important;
+  border-bottom: 1px solid rgba(231, 223, 201, 0.12) !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-radius: 0 !important; // Distinct from code box corners
+  color: var(--tfc-brand-paper) !important;
+  box-shadow: none !important; // Zero inset shadow
+  text-align: center !important;
+}
+
+.katex {
+  font-size: 1.05em !important;
+  color: var(--tfc-brand-paper) !important;
+}
+
+img, svg {
+  max-width: 100% !important;
+  height: auto !important;
+}

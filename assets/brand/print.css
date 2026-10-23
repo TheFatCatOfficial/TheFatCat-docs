@@ -1,0 +1,60 @@
+/* Shared print vocabulary. Edit here, then run scripts/sync-docs-brand.mjs. */
+:root {
+  --tfc-brand-ink: #111614;
+  --tfc-brand-paper: #e7dfc9;
+  --tfc-brand-panel: #ece5d1;
+  --tfc-brand-caption: #e3d29f;
+  --tfc-brand-emerald: #0e3b32;
+  --tfc-brand-terminal: #48b78d;
+  --tfc-brand-well: #050807;
+  --tfc-brand-press: #080c0a;
+  --tfc-brand-brass-rgb: 168 135 76;
+  --tfc-print-depth-rest: 2px 2px 0;
+  --tfc-print-depth-edge: 3px 3px 0;
+  --tfc-print-depth-hover: 3px 3px 0;
+  --tfc-print-depth-hover-edge: 4px 4px 0;
+  --tfc-print-depth-pressed: 1px 1px 0;
+  --tfc-print-plate-rest: 4px 4px 0;
+  --tfc-print-plate-hover: 5px 5px 0;
+  --tfc-print-lift: -1px;
+  --tfc-print-press: 2px;
+  --tfc-print-plate-press: 3px;
+}
+
+.tfc-print-plaque {
+  color: var(--tfc-brand-ink);
+  background: var(--tfc-print-texture, none) 0 0 / 384px 384px, var(--tfc-brand-paper);
+  border: var(--tfc-plaque-line, 2px) solid var(--tfc-brand-well);
+  border-radius: 0;
+  box-shadow: 0 0 0 1px rgb(var(--tfc-brand-brass-rgb) / 0.55), var(--tfc-plaque-depth, 3px 3px 0) var(--tfc-brand-well);
+}
+
+.tfc-print-caption,
+.tfc-print-reader :is(.note, .tip, .important, .warning)::before {
+  background: var(--tfc-caption-paper, var(--tfc-brand-caption));
+  color: var(--tfc-caption-ink, var(--tfc-brand-ink));
+  border: var(--tfc-caption-line, 2px) solid var(--tfc-caption-border, var(--tfc-brand-ink));
+  border-radius: 0;
+}
+
+.tfc-print-frame {
+  border: var(--tfc-frame-line, 3px) solid var(--tfc-frame-ink, var(--tfc-brand-ink));
+  border-radius: 0;
+}
+
+.tfc-print-action {
+  border-radius: 0;
+  transition: transform 100ms ease-out, box-shadow 100ms ease-out;
+}
+
+.tfc-print-action:hover:not([aria-disabled="true"]):not(.disabled) {
+  transform: translate(var(--tfc-print-lift), var(--tfc-print-lift));
+}
+
+.tfc-print-action:active:not([aria-disabled="true"]):not(.disabled) {
+  transform: translate(var(--tfc-print-press), var(--tfc-print-press));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tfc-print-action { transition: none; }
+}

@@ -1,0 +1,73 @@
+// 6. Dividers
+
+
+
+hr {
+  border: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent 0%, #2b3230 18%, #a8874c 50%, #2b3230 82%, transparent 100%) !important;
+  margin: 2.5rem 0 !important;
+  position: relative !important;
+}
+
+// 7. Typography, Headings & Content
+body {
+  background-color: var(--tfc-brand-ink) !important;
+  color: #cbd5cf !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  line-height: 1.7 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--tfc-brand-paper) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  cursor: default !important;
+  user-select: text;
+
+  .anchor-heading,
+  a.anchor-heading {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+.anchor-heading {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+h1 {
+  border-bottom: 1px solid #2b3230 !important;
+  padding-bottom: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+h2 {
+  margin-top: 2.75rem !important;
+  margin-bottom: 0.75rem !important;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
+
+  @media (max-width: 47.99rem) { margin-top: 2rem !important; }
+}
+
+a {
+  color: var(--tfc-brand-terminal) !important;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #6ed1a9 !important;
+    text-decoration: underline;
+  }
+}
+
+blockquote {
+  border-left: 4px solid #2b3230 !important;
+  color: #a7a894 !important;
+  padding-left: 1rem !important;
+  margin: 1.25rem 0 !important;
+}

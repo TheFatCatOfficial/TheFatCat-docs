@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none" aria-hidden="true">
+  <defs>
+    {% for icon in site.data.icons %}
+    <symbol id="tfc-icon-{{ icon[0] }}" viewBox="0 0 24 24">{{ icon[1].body }}</symbol>
+    {% endfor %}
+  </defs>
+</svg>

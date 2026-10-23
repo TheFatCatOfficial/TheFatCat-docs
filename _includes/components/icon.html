@@ -1,0 +1,2 @@
+{% assign icon = site.data.icons[include.name] %}
+<svg{% if include.class %} class="{{ include.class }}"{% endif %} viewBox="0 0 24 24" width="{{ include.dimension | default: 14 }}" height="{{ include.dimension | default: 14 }}" fill="{{ icon.fill }}"{% if icon.fill == 'none' %} stroke="currentColor" stroke-width="{{ include.stroke_width | default: 2 }}" stroke-linecap="round" stroke-linejoin="round"{% endif %} aria-hidden="true"><use href="#tfc-icon-{{ include.name }}"></use></svg>

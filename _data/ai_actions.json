@@ -1,0 +1,58 @@
+[
+  {
+    "id": "tfc-action-copy-md",
+    "icon": "copy",
+    "title": "copy_markdown",
+    "description": "copy_markdown_description",
+    "source_path": true
+  },
+  {
+    "id": "tfc-action-copy-full",
+    "icon": "book",
+    "title": "copy_all",
+    "description": "copy_all_description"
+  },
+  {
+    "id": "tfc-action-view-raw",
+    "icon": "file",
+    "title": "view_markdown",
+    "description": "view_markdown_description",
+    "link": "source",
+    "arrow": true
+  },
+  {
+    "divider": true
+  },
+  {
+    "id": "tfc-action-chatgpt",
+    "icon": "chatgpt",
+    "icon_class": "ai-icon-chatgpt",
+    "title": "open_chatgpt",
+    "description": "chatgpt_description",
+    "arrow": true
+  },
+  {
+    "id": "tfc-action-claude",
+    "icon": "claude",
+    "icon_class": "ai-icon-claude",
+    "title": "open_claude",
+    "description": "claude_description",
+    "arrow": true
+  },
+  {
+    "divider": true
+  },
+  {
+    "id": "tfc-action-mcp",
+    "icon": "link",
+    "title": "ai_docs",
+    "description": "ai_docs_description"
+  },
+  {
+    "icon": "info",
+    "title": "index_title",
+    "description": "index_description",
+    "link": "index",
+    "arrow": true
+  }
+]

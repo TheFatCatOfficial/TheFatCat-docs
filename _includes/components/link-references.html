@@ -1,0 +1,13 @@
+{% assign directory_language = page.lang | default: 'en' %}
+<div class="tfc-portal-references">
+{% for entry in site.data.official_links.references %}
+{% assign directory_text = entry[directory_language] %}
+  <div class="tfc-portal-reference">
+    <h3>{{ directory_text.title | escape }}</h3>
+    <div>
+      <p><a href="{{ entry.url | escape }}">{{ directory_text.label | escape }}</a></p>
+      <p class="tfc-portal-reference-desc">{{ directory_text.description | escape }}</p>
+    </div>
+  </div>
+{% endfor %}
+</div>

@@ -1,0 +1,3 @@
+/* Generated local asset bindings. Use the website brand sync script. */
+@font-face { font-family: "TFC Bevan"; font-style: normal; font-weight: 400; font-display: swap; src: url("./bevan-latin.woff2?v=9e8d329901d9be63") format("woff2"); }
+:root { --tfc-brand-display-font: "TFC Bevan", Georgia, serif; --tfc-print-texture: url("./paper-fiber.svg?v=6b9eb63e3ee54acb"); }

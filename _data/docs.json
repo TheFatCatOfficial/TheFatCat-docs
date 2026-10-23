@@ -1,0 +1,762 @@
+{
+  "en": {
+    "index_title": "# TheFatCat User Documentation",
+    "index_intro": "> TheFatCat is a new experimental DeFi revenue protocol that combines meme culture with a trading-tax routing mechanism.\n>\n> Stake `$FATCAT` and earn BNB, bStocks or selected MEME tokens with a time-based seniority multiplier.",
+    "full_title": "# TheFatCat Documentation: Full Text",
+    "full_intro": "> The English text of all documentation chapters.\n> Website: https://thefatcat.fun\n> Docs: {docs_url}",
+    "full_link": {
+      "section": "Full Text",
+      "title": "Full Documentation",
+      "description": "English documentation collected into one plain-text file."
+    },
+    "pages": [
+      {
+        "path": "index.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Introduction",
+          "description": "Protocol overview, reward reserves and time-weighted positions.",
+          "order": 0
+        }
+      },
+      {
+        "path": "definitions.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Definitions & Notation",
+          "description": "Symbols, units, terminology and accounting conditions.",
+          "order": 2
+        }
+      },
+      {
+        "path": "definitions/notation.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Symbols & Calculation Basis",
+          "description": "Principal, seniority, reward shares and meal references.",
+          "order": 4
+        }
+      },
+      {
+        "path": "definitions/terminology.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Terminology",
+          "description": "Product terms and their meaning in use.",
+          "order": 3
+        }
+      },
+      {
+        "path": "definitions/invariants.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Accounting Constraints",
+          "description": "Principal isolation, allocation limits and funding for settled rewards.",
+          "order": 5
+        }
+      },
+      {
+        "path": "background.md",
+        "index": null
+      },
+      {
+        "path": "background/paradigm-shift.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Design Background",
+          "description": "Pass-through rewards compared with reserve-based allocation.",
+          "order": 6
+        }
+      },
+      {
+        "path": "background/prior-art.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Prior Art",
+          "description": "Related mechanisms and links to Curve, Pendle and Synthetix documentation.",
+          "order": 7
+        }
+      },
+      {
+        "path": "background/reservoir-model.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Reservoir Model",
+          "description": "Reserve allocation and the assumptions behind the decay model.",
+          "order": 8
+        }
+      },
+      {
+        "path": "background/time-weighting.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Time Weighting",
+          "description": "Position duration, the seniority ladder and relative reward weights.",
+          "order": 9
+        }
+      },
+      {
+        "path": "background/principles.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Design Principles",
+          "description": "Principal separation, reward accounting and operating limits.",
+          "order": 10
+        }
+      },
+      {
+        "path": "topology.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "System Topology",
+          "description": "Fund routes, position activation and the steps from allocation to claiming.",
+          "order": 11
+        }
+      },
+      {
+        "path": "topology/asset-flows.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Asset Flows",
+          "description": "QQQB receipt, conversion, revenue splits and upstream authority boundaries.",
+          "order": 12
+        }
+      },
+      {
+        "path": "topology/claim-pipeline.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Procurement & Claims",
+          "description": "Ordered purchases, oracle checks, settlement records and claiming settled rewards.",
+          "order": 13
+        }
+      },
+      {
+        "path": "topology/state-machine.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "State Machine & Intervals",
+          "description": "Transaction-driven meal advancement and frozen interval weights.",
+          "order": 14
+        }
+      },
+      {
+        "path": "protocol.md",
+        "index": null
+      },
+      {
+        "path": "protocol/belly.md",
+        "index": {
+          "section": "Protocol Mechanics & Fees",
+          "title": "The Belly",
+          "description": "Unreserved-balance allocations, the decay model and a safety cap on concentrated outflows after settlement delays.",
+          "order": 17
+        }
+      },
+      {
+        "path": "protocol/meals-and-seniority.md",
+        "index": {
+          "section": "Protocol Mechanics & Fees",
+          "title": "Meals & Seniority",
+          "description": "Position weights, the 1-to-22 seniority ladder and current-interval exit forfeiture.",
+          "order": 18
+        }
+      },
+      {
+        "path": "protocol/execution.md",
+        "index": {
+          "section": "Protocol Mechanics & Fees",
+          "title": "Procurement & Execution",
+          "description": "Global oldest-meal priority, TWAP checks, fallback conditions and claim boundaries.",
+          "order": 19
+        }
+      },
+      {
+        "path": "protocol/fees.md",
+        "index": {
+          "section": "Protocol Mechanics & Fees",
+          "title": "Tax Routing & Fees",
+          "description": "QQQB tax receipt, conversion rewards and the split of remaining revenue: 85% to Belly and 15% for operations.",
+          "order": 16
+        }
+      },
+      {
+        "path": "guides.md",
+        "index": null
+      },
+      {
+        "path": "guides/staking.md",
+        "index": {
+          "section": "User Guides & Operations",
+          "title": "Staking & Positions",
+          "description": "100,000 `$FATCAT` entry floor, activation and position ownership.",
+          "order": 20
+        }
+      },
+      {
+        "path": "guides/diets-and-claiming.md",
+        "index": {
+          "section": "User Guides & Operations",
+          "title": "Diets & Claiming",
+          "description": "Enabled reward assets, batch claims and native BNB unwrapping.",
+          "order": 21
+        }
+      },
+      {
+        "path": "guides/seniority-certificates.md",
+        "index": {
+          "section": "User Guides & Operations",
+          "title": "Time-Seniority Certificates",
+          "description": "Future ERC-721 NFTs representing time-based seniority, minted by staking-position holders burning `$FATCAT`; further details will be announced later.",
+          "order": 23
+        }
+      },
+      {
+        "path": "guides/emergency-exit.md",
+        "index": {
+          "section": "User Guides & Operations",
+          "title": "Emergency Exit Guide",
+          "description": "Direct contract calls for principal redemption and claiming settled rewards without the website.",
+          "order": 22
+        }
+      },
+      {
+        "path": "guides/community-keeper.md",
+        "index": {
+          "section": "User Guides & Operations",
+          "title": "FEED & Decentralized Maintenance",
+          "description": "Public FEED maintenance and qualifying conversion rewards of 1/38 of WBNB output, rounded down.",
+          "order": 24
+        }
+      },
+      {
+        "path": "safety.md",
+        "index": null
+      },
+      {
+        "path": "safety/custody.md",
+        "index": {
+          "section": "Security & Governance",
+          "title": "Custody & Accounting Boundaries",
+          "description": "Core fund access, upstream recovery powers and rounding limits.",
+          "order": 25
+        }
+      },
+      {
+        "path": "safety/audits-and-hardening.md",
+        "index": {
+          "section": "Security & Governance",
+          "title": "Testing & Validation",
+          "description": "Current protections and the scope of internal regression and invariant tests.",
+          "order": 26
+        }
+      },
+      {
+        "path": "safety/monitoring.md",
+        "index": {
+          "section": "Security & Governance",
+          "title": "Operational Monitoring & Incident Response",
+          "description": "Monitoring measures, emergency response and user guidance.",
+          "order": 27
+        }
+      },
+      {
+        "path": "safety/risks-and-status.md",
+        "index": {
+          "section": "Security & Governance",
+          "title": "Risks & Operating Conditions",
+          "description": "Opening rules, issuer dependencies and settlement delays without fixed payment guarantees.",
+          "order": 28
+        }
+      },
+      {
+        "path": "faq.md",
+        "index": {
+          "section": "Frequently Asked Questions (FAQ)",
+          "title": "FAQ & Limitations",
+          "description": "Questions about staking, rewards and operating limits.",
+          "order": 30
+        }
+      },
+      {
+        "path": "faq/staking.md",
+        "index": {
+          "section": "Frequently Asked Questions (FAQ)",
+          "title": "Staking & Positions FAQ",
+          "description": "Variable rewards, principal redemption, position isolation and entry thresholds.",
+          "order": 31
+        }
+      },
+      {
+        "path": "faq/seniority-and-rewards.md",
+        "index": {
+          "section": "Frequently Asked Questions (FAQ)",
+          "title": "Seniority & Diets FAQ",
+          "description": "The launch warmup, separate seniority progression, diet changes and claims.",
+          "order": 33
+        }
+      },
+      {
+        "path": "faq/belly-and-release.md",
+        "index": {
+          "section": "Frequently Asked Questions (FAQ)",
+          "title": "The Belly & Release FAQ",
+          "description": "Upstream inflows, reserve allocations, outflow windows and reward outflow authorization.",
+          "order": 32
+        }
+      },
+      {
+        "path": "faq/security-and-safety.md",
+        "index": {
+          "section": "Frequently Asked Questions (FAQ)",
+          "title": "Security & Custody FAQ",
+          "description": "Direct contract access, core custody boundaries and upstream permissions and their effects on users.",
+          "order": 34
+        }
+      },
+      {
+        "path": "notices.md",
+        "index": {
+          "section": "Notices & Links",
+          "title": "Notices & Disclaimers",
+          "description": "Protocol status, risk disclosures and legal boundaries.",
+          "order": 38
+        }
+      },
+      {
+        "path": "notices/regulatory-status.md",
+        "index": {
+          "section": "Notices & Links",
+          "title": "Regulatory Status",
+          "description": "Tokenized asset issuer and jurisdictional limitations.",
+          "order": 40
+        }
+      },
+      {
+        "path": "notices/risk-disclaimers.md",
+        "index": {
+          "section": "Notices & Links",
+          "title": "Risk Disclaimers",
+          "description": "Contract, market, liquidity and external dependency risks.",
+          "order": 39
+        }
+      },
+      {
+        "path": "links.md",
+        "index": {
+          "section": "Notices & Links",
+          "title": "Official Links",
+          "description": "Application, community and technical links.",
+          "order": 41
+        }
+      },
+      {
+        "path": "protocol/how-the-machine-runs.md",
+        "index": {
+          "section": "Protocol Mechanics & Fees",
+          "title": "How the Machine Runs",
+          "description": "A walkthrough connecting revenue, Belly reserves, seniority, diets, settlement and FEED maintenance.",
+          "order": 15
+        }
+      },
+      {
+        "path": "guides/launch-stages.md",
+        "index": {
+          "section": "Definitions & Architecture",
+          "title": "Token Launch & Feature Opening",
+          "description": "Three opening stages, the shared seven-day accumulation period, seniority and settled reward claims.",
+          "order": 1
+        }
+      },
+      {
+        "path": "deployment.md",
+        "index": {
+          "section": "Security & Governance",
+          "title": "Core Contracts",
+          "description": "Core contract addresses on BNB Chain mainnet; unannounced addresses are marked accordingly.",
+          "order": 29
+        }
+      }
+    ]
+  },
+  "zh": {
+    "index_title": "# TheFatCat 官方用户文档",
+    "index_intro": "> TheFatCat 是一个融合了 Meme 文化与交易税收路由机制的新型DeFi 收入的实验性协议。\n>\n> 质押 `$FATCAT`，结合时间资历系数，获得 BNB、Bstock 或精选MEME 代币。",
+    "full_title": "# TheFatCat 文档全文",
+    "full_intro": "> 全站中文正文（全部 {chapter_count} 个章节）。\n> 官方网站：https://thefatcat.fun\n> 文档：{docs_url}",
+    "full_link": {
+      "section": "全文文档",
+      "title": "全文文档",
+      "description": "中文文档汇总文本。"
+    },
+    "pages": [
+      {
+        "path": "zh/index.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "项目简介",
+          "description": "协议概览、奖励储备与按资历加权的仓位。",
+          "order": 0
+        }
+      },
+      {
+        "path": "zh/definitions.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "核心定义与符号",
+          "description": "符号、量纲、术语与记账条件。",
+          "order": 2
+        }
+      },
+      {
+        "path": "zh/definitions/notation.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "符号与计算口径",
+          "description": "本金、资历、奖励份额与餐次口径。",
+          "order": 4
+        }
+      },
+      {
+        "path": "zh/definitions/terminology.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "术语映射",
+          "description": "产品词汇在实际使用中的含义。",
+          "order": 3
+        }
+      },
+      {
+        "path": "zh/definitions/invariants.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "核算约束",
+          "description": "本金隔离、分配限额及已结算奖励的资金保留。",
+          "order": 5
+        }
+      },
+      {
+        "path": "zh/background.md",
+        "index": null
+      },
+      {
+        "path": "zh/background/paradigm-shift.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "设计背景",
+          "description": "直通式奖励与储备分配机制的比较。",
+          "order": 6
+        }
+      },
+      {
+        "path": "zh/background/prior-art.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "参照协议",
+          "description": "与 Curve、Pendle、Synthetix 的机制比较。",
+          "order": 7
+        }
+      },
+      {
+        "path": "zh/background/reservoir-model.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "储备池模型",
+          "description": "储备分配与衰减模型的假设。",
+          "order": 8
+        }
+      },
+      {
+        "path": "zh/background/time-weighting.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "资历加权",
+          "description": "仓位时长、资历阶梯与相对奖励权重。",
+          "order": 9
+        }
+      },
+      {
+        "path": "zh/background/principles.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "设计原则",
+          "description": "本金分离、奖励记账与运行边界。",
+          "order": 10
+        }
+      },
+      {
+        "path": "zh/topology.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "系统拓扑",
+          "description": "资金路径、仓位生效，以及从分配到领取的步骤。",
+          "order": 11
+        }
+      },
+      {
+        "path": "zh/topology/asset-flows.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "资产流向",
+          "description": "QQQB 接收、兑换、收入分成与上游权限边界。",
+          "order": 12
+        }
+      },
+      {
+        "path": "zh/topology/claim-pipeline.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "采购与领取",
+          "description": "顺序采购、预言机检查、结算记录及已结算奖励的领取。",
+          "order": 13
+        }
+      },
+      {
+        "path": "zh/topology/state-machine.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "状态机与餐次",
+          "description": "通过交易推进餐次与冻结餐次权重。",
+          "order": 14
+        }
+      },
+      {
+        "path": "zh/protocol.md",
+        "index": null
+      },
+      {
+        "path": "zh/protocol/belly.md",
+        "index": {
+          "section": "协议机制与费用",
+          "title": "The Belly",
+          "description": "未预留余额的分配、衰减模型，以及限制结算延迟后集中出金的安全上限。",
+          "order": 17
+        }
+      },
+      {
+        "path": "zh/protocol/meals-and-seniority.md",
+        "index": {
+          "section": "协议机制与费用",
+          "title": "餐次与资历",
+          "description": "仓位权重、1 至 22 档资历阶梯与退出时放弃当前餐次份额。",
+          "order": 18
+        }
+      },
+      {
+        "path": "zh/protocol/execution.md",
+        "index": {
+          "section": "协议机制与费用",
+          "title": "采购与执行",
+          "description": "全局最早餐次优先、TWAP 检查、回退条件与领取边界。",
+          "order": 19
+        }
+      },
+      {
+        "path": "zh/protocol/fees.md",
+        "index": {
+          "section": "协议机制与费用",
+          "title": "税收路由与费用",
+          "description": "QQQB 税收入账、兑换推动奖励，以及剩余收入的 85% Belly / 15% 运营份额。",
+          "order": 16
+        }
+      },
+      {
+        "path": "zh/guides.md",
+        "index": null
+      },
+      {
+        "path": "zh/guides/staking.md",
+        "index": {
+          "section": "用户指南",
+          "title": "质押与仓位",
+          "description": "100,000 `$FATCAT` 准入门槛、激活与仓位所有权。",
+          "order": 20
+        }
+      },
+      {
+        "path": "zh/guides/diets-and-claiming.md",
+        "index": {
+          "section": "用户指南",
+          "title": "食谱与领取",
+          "description": "启用的奖励资产、批次领取与原生 BNB 解包。",
+          "order": 21
+        }
+      },
+      {
+        "path": "zh/guides/seniority-certificates.md",
+        "index": {
+          "section": "用户指南",
+          "title": "时间资历凭证",
+          "description": "未来将以 ERC-721 NFT 的形式留存时间资历，持有质押仓位的用户可燃烧 `$FATCAT` 铸造，详细内容后续公布。",
+          "order": 23
+        }
+      },
+      {
+        "path": "zh/guides/emergency-exit.md",
+        "index": {
+          "section": "用户指南",
+          "title": "紧急退出说明",
+          "description": "网站不可用时，直接调用合约赎回本金或领取已结算奖励。",
+          "order": 22
+        }
+      },
+      {
+        "path": "zh/guides/community-keeper.md",
+        "index": {
+          "section": "用户指南",
+          "title": "FEED 机制与去中心化维护",
+          "description": "公众 FEED 维护，以及符合资格的兑换按 WBNB 产出的 1/38 向下取整计算推动奖励。",
+          "order": 24
+        }
+      },
+      {
+        "path": "zh/safety.md",
+        "index": null
+      },
+      {
+        "path": "zh/safety/custody.md",
+        "index": {
+          "section": "安全与治理",
+          "title": "托管与记账边界",
+          "description": "核心资金权限、上游恢复权限与取整限制。",
+          "order": 25
+        }
+      },
+      {
+        "path": "zh/safety/audits-and-hardening.md",
+        "index": {
+          "section": "安全与治理",
+          "title": "测试与验证",
+          "description": "当前保护措施与内部回归、不变量测试范围。",
+          "order": 26
+        }
+      },
+      {
+        "path": "zh/safety/monitoring.md",
+        "index": {
+          "section": "安全与治理",
+          "title": "运行监控与应急响应",
+          "description": "监控措施、应急处置与用户应对入口。",
+          "order": 27
+        }
+      },
+      {
+        "path": "zh/safety/risks-and-status.md",
+        "index": {
+          "section": "安全与治理",
+          "title": "风险披露与运行条件",
+          "description": "开放规则、发行人依赖与没有固定到账保证的结算延迟。",
+          "order": 28
+        }
+      },
+      {
+        "path": "zh/faq.md",
+        "index": {
+          "section": "常见问题解答 (FAQ)",
+          "title": "常见问题与限制",
+          "description": "质押、奖励及运行边界的常见问题。",
+          "order": 30
+        }
+      },
+      {
+        "path": "zh/faq/staking.md",
+        "index": {
+          "section": "常见问题解答 (FAQ)",
+          "title": "质押与仓位问答",
+          "description": "浮动奖励、本金赎回、仓位隔离与准入门槛。",
+          "order": 31
+        }
+      },
+      {
+        "path": "zh/faq/seniority-and-rewards.md",
+        "index": {
+          "section": "常见问题解答 (FAQ)",
+          "title": "资历与食谱问答",
+          "description": "发射预热、独立的资历推进、切换食谱与领取。",
+          "order": 33
+        }
+      },
+      {
+        "path": "zh/faq/belly-and-release.md",
+        "index": {
+          "section": "常见问题解答 (FAQ)",
+          "title": "The Belly 与释放问答",
+          "description": "上游收入、储备分配、流出窗口与 奖励出金授权。",
+          "order": 32
+        }
+      },
+      {
+        "path": "zh/faq/security-and-safety.md",
+        "index": {
+          "section": "常见问题解答 (FAQ)",
+          "title": "安全与托管问答",
+          "description": "直接访问合约、核心托管边界，以及上游权限及其对用户的影响。",
+          "order": 34
+        }
+      },
+      {
+        "path": "zh/notices.md",
+        "index": {
+          "section": "声明与链接",
+          "title": "声明与免责",
+          "description": "协议性质、风险披露与法律边界。",
+          "order": 38
+        }
+      },
+      {
+        "path": "zh/notices/regulatory-status.md",
+        "index": {
+          "section": "声明与链接",
+          "title": "监管说明",
+          "description": "代币化资产发行方与司法辖区限制。",
+          "order": 40
+        }
+      },
+      {
+        "path": "zh/notices/risk-disclaimers.md",
+        "index": {
+          "section": "声明与链接",
+          "title": "风险声明",
+          "description": "合约、市场、流动性与外部依赖风险。",
+          "order": 39
+        }
+      },
+      {
+        "path": "zh/links.md",
+        "index": {
+          "section": "声明与链接",
+          "title": "官方链接",
+          "description": "应用、社区与技术链接。",
+          "order": 41
+        }
+      },
+      {
+        "path": "zh/protocol/how-the-machine-runs.md",
+        "index": {
+          "section": "协议机制与费用",
+          "title": "机器如何运转",
+          "description": "串联收入、Belly 储备、资历、食谱、结算与 FEED 维护的完整导读。",
+          "order": 15
+        }
+      },
+      {
+        "path": "zh/guides/launch-stages.md",
+        "index": {
+          "section": "定义与架构",
+          "title": "代币发射与功能开放流程",
+          "description": "三个开放阶段、统一七天积累期、时间资历与已结算奖励领取。",
+          "order": 1
+        }
+      },
+      {
+        "path": "zh/deployment.md",
+        "index": {
+          "section": "安全与治理",
+          "title": "核心合约",
+          "description": "BNB Chain 主网核心合约地址，尚未公布的地址标注为待公布。",
+          "order": 29
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+<footer class="doc-footer">
+  <hr class="doc-footer-divider">
+  {% if site.back_to_top %}
+    <p class="back-to-top-container" id="back-to-top-container">
+      <a href="#top" id="back-to-top">
+        {{ ui.back_to_top | escape }}
+      </a>
+    </p>
+  {% endif %}
+
+  <p class="text-small mb-0">
+    {{ ui.footer | escape }}
+  </p>
+
+  <div class="d-md-none mt-4 fs-2">
+    {% include components/copyright.html %}
+  </div>
+</footer>

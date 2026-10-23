@@ -1,0 +1,386 @@
+// TheFatCat documentation styles.
+
+
+html { font-size: 100% !important; }
+
+// 1. Sidebar Structure & Responsive Frame
+.side-bar {
+  background-color: #0c100e !important;
+}
+
+.site-nav, .site-header {
+  background-color: #0c100e !important;
+  width: 100% !important;
+}
+
+@media (min-width: 48rem) {
+  .site-nav { display: block !important; }
+  .side-bar {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    align-items: stretch !important;
+    border-right: 1px solid #1c2622 !important;
+    background-color: #0c100e !important;
+    z-index: 100 !important;
+  }
+
+  .side-bar + .main, .main {
+    margin-left: 280px !important;
+    width: calc(100% - 280px) !important;
+    max-width: none !important; // Override theme's 50rem cap
+    min-width: 0 !important;
+    background-color: var(--tfc-brand-ink) !important;
+    min-height: 100vh !important;
+  }
+}
+
+@media (min-width: 64rem) {
+  .side-bar {
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
+  }
+
+  .side-bar + .main, .main {
+    margin-left: 300px !important;
+    width: calc(100% - 300px) !important;
+    max-width: none !important;
+  }
+}
+
+// 2. Top Header & Search Area
+.main-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: clamp(0.5rem, 1.2vw, 1rem) !important;
+  background-color: #0e1411 !important;
+  border-bottom: 1px solid #1f2a24 !important;
+  padding: 0.65rem clamp(0.75rem, 2vw, 2.25rem) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 90 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+
+  @media (max-width: 992px) {
+    padding: 0.65rem 1rem !important;
+    gap: 0.65rem !important;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 0.75rem !important;
+    gap: 0.4rem !important;
+  }
+}
+
+.search {
+  flex: 1 1 280px !important;
+  max-width: 460px !important;
+  min-width: 180px !important;
+  height: 34px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+}
+
+.search-input-wrap {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 34px !important;
+  border-radius: 6px !important;
+  width: 100% !important;
+
+  .search-input {
+    background-color: #131a17 !important;
+    border: 1px solid #243029 !important;
+    color: var(--tfc-brand-paper) !important;
+    border-radius: 6px !important;
+    height: 34px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 36px !important; // Ample 36px space so text NEVER touches icon
+    padding-right: 12px !important;
+    font-size: 0.85rem !important;
+    line-height: 34px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    &:focus {
+      border-color: var(--tfc-brand-terminal) !important;
+      outline: none !important;
+      box-shadow: 0 0 0 2px rgba(72, 183, 141, 0.2) !important;
+    }
+
+    &::placeholder {
+      color: #939d90 !important;
+      opacity: 1 !important;
+    }
+  }
+
+  .search-label {
+    position: absolute !important;
+    left: 11px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    padding-left: 0 !important; // Override Just the Docs default 2rem padding!
+    margin: 0 !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+
+    .search-icon, svg {
+      width: 16px !important;
+      height: 16px !important;
+      color: #848a7b !important;
+      display: block !important;
+    }
+  }
+}
+
+.search-results {
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  left: 0 !important;
+  width: 460px !important;
+  max-width: min(460px, calc(100vw - 2rem)) !important;
+  max-height: 480px !important;
+  max-height: min(480px, 65vh) !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  background-color: var(--tfc-brand-ink) !important;
+  border: 1px solid #243029 !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 8px !important;
+  margin-top: 0 !important;
+  z-index: 1000 !important;
+
+  .search-results-list {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .search-results-list-item {
+    border-bottom: 1px solid #1c2622 !important;
+    list-style: none !important;
+
+    .search-result {
+      padding: 0.65rem 0.85rem !important;
+      text-decoration: none !important;
+      display: block !important;
+      transition: background-color 0.15s ease !important;
+
+      &:hover, &.active {
+        background-color: #17221d !important;
+      }
+    }
+
+    .search-result-title {
+      color: var(--tfc-brand-paper) !important;
+      font-weight: 600 !important;
+      font-size: 0.875rem !important;
+    }
+
+    .search-result-doc-title {
+      color: #a7a894 !important;
+      font-size: 0.8rem !important;
+    }
+
+    .search-result-section {
+      color: #38bdf8 !important;
+      font-size: 0.825rem !important;
+    }
+
+    .search-result-rel-url {
+      color: #a7a894 !important;
+      font-size: 0.75rem !important;
+    }
+
+    .search-result-previews {
+      color: #a5aca0 !important;
+      font-size: 0.775rem !important;
+      border-left: 1px solid #243029 !important;
+      line-height: 1.4 !important;
+    }
+
+    .search-result-preview {
+      color: #a5aca0 !important;
+    }
+
+    .search-result-highlight {
+      color: var(--tfc-brand-terminal) !important;
+      font-weight: 700 !important;
+      background-color: rgba(72, 183, 141, 0.15) !important;
+      padding: 0 2px !important;
+      border-radius: 2px !important;
+    }
+  }
+
+  .search-no-result,
+  .search-no-result-hint {
+    padding: 0.85rem 1rem !important;
+    color: #848a7b !important;
+    font-size: 0.85rem !important;
+  }
+
+  .search-no-result-hint {
+    color: var(--tfc-brand-terminal) !important;
+    border-top: 1px solid #1c2622 !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+// Keep article matches readable in both themes without shifting inline text.
+#main-content mark.tfc-search-hit {
+  color: var(--tfc-brand-ink);
+  background: #e8c76f;
+  border-radius: 2px;
+  scroll-margin-block: 8rem;
+
+  &:focus {
+    outline: 2px solid #a8874c;
+    outline-offset: 2px;
+  }
+}
+
+// Mobile Search Dropdown Alignment & Visibility
+@media (max-width: 768px) {
+  .search {
+    position: static !important;
+    min-width: 130px !important;
+  }
+
+  .main-header {
+    position: sticky !important;
+  }
+
+  .search-results {
+    position: absolute !important;
+    top: 100% !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: calc(80vh - 60px) !important;
+    max-height: calc(80dvh - 60px) !important;
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.85) !important;
+    border-radius: 8px !important;
+    z-index: 10000 !important;
+  }
+}
+
+// Neutralize base Just the Docs disruptive mobile search overrides
+html.search-active {
+  .main {
+    position: static !important;
+    @media (max-width: 47.99rem) { width: 100% !important; }
+  }
+
+  .main-header {
+    padding-top: 0.5rem !important;
+  }
+
+  .search-input-wrap {
+    height: 34px !important;
+    border-radius: 6px !important;
+  }
+
+  .search-results {
+    display: block !important;
+  }
+}
+
+// 3. Responsive Content Wrap & Sticky Footer Layout
+.main {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+
+  @media (max-width: 47.99rem) {
+    min-height: calc(100vh - 58px) !important;
+    min-height: calc(100dvh - 58px) !important;
+  }
+}
+
+.main-content-wrap {
+  flex: 1 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: 80rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 2rem 2rem 1rem !important;
+  box-sizing: border-box !important;
+
+  @media (max-width: 768px) {
+    padding: 1.25rem 1rem !important;
+    max-width: 100% !important;
+  }
+}
+
+.main-content {
+  flex: 1 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.main-content > main {
+  flex: 1 0 auto !important;
+  min-width: 0;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+
+  p, li { font-size: inherit; line-height: inherit; }
+  p { margin: 0 0 1.15em; }
+  li + li { margin-top: 0.4em; }
+  a { text-underline-offset: 0.18em; }
+  h1 { font-size: 2.125rem !important; line-height: 1.25; }
+  h2 { font-size: 1.5rem !important; line-height: 1.4; }
+  h3 { font-size: 1.2rem !important; line-height: 1.5; }
+  h1, h2, h3, h4 { scroll-margin-top: 5rem; }
+
+  @media (max-width: 47.99rem) {
+    font-size: 1rem;
+    h1 { font-size: 1.75rem !important; }
+    h2 { font-size: 1.375rem !important; }
+    h3 { font-size: 1.125rem !important; }
+  }
+}
+
+.doc-footer,
+.main-content > footer {
+  margin-top: auto !important;
+  width: 100% !important;
+  padding-top: 2rem !important;
+  padding-bottom: 0 !important;
+
+  .doc-footer-divider,
+  hr {
+    margin-top: 0 !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .back-to-top-container {
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+
+#back-to-top-container {
+  display: none;
+}

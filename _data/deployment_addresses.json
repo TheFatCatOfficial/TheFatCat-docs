@@ -1,0 +1,41 @@
+{
+  "chainId": 56,
+  "network": "BNB Chain",
+  "contracts": [
+    {
+      "en": "FATCAT token",
+      "zh": "FATCAT 代币",
+      "address": "0x21ee4849bd5dfb8c3712ef9e1cf7c02b16347777"
+    },
+    {
+      "en": "Staking principal vault",
+      "zh": "质押本金金库",
+      "address": "0xcfe521cde74b60568b0fd1d4fbccee93735e0a71"
+    },
+    {
+      "en": "Staking reward claims",
+      "zh": "质押奖励领取",
+      "address": "0x69900f41cd12830efd6cd62b564a274256b18181"
+    },
+    {
+      "en": "Belly reward treasury",
+      "zh": "Belly 奖励国库",
+      "address": "0xe115e8045cbf6b4c3321b58f98c4434e12591b36"
+    },
+    {
+      "en": "Flap launch vault factory",
+      "zh": "Flap 发射金库工厂",
+      "address": "0x61e5c7bb354b1711e9c2f52ce7c55d12d0384c1d"
+    },
+    {
+      "en": "Protocol revenue vault",
+      "zh": "协议收入金库",
+      "address": "0x938c77ddf086d4367bba5e1f30837b2e8fb7f466"
+    },
+    {
+      "en": "Revenue splitter",
+      "zh": "收入分账器",
+      "address": "0x8e5e3fc8ec9e0ce55708ca37b52d4c6e9cd23fe4"
+    }
+  ]
+}

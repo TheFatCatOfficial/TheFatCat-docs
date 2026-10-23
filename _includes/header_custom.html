@@ -1,0 +1,33 @@
+{%- assign is_zh = false -%}
+{%- if page.lang == 'zh' -%}
+  {%- assign is_zh = true -%}
+{%- endif -%}
+
+{%- if is_zh -%}
+  {%- assign target_en = page.url | replace_first: '/zh/', '/' -%}
+  {%- if target_en == '/zh' or target_en == '/zh.html' or target_en == '' -%}
+    {%- assign target_en = '/' -%}
+  {%- endif -%}
+  {%- assign target_zh = page.url -%}
+{%- else -%}
+  {%- assign target_en = page.url -%}
+  {%- if page.url == '/' or page.url == '' -%}
+    {%- assign target_zh = '/zh/' -%}
+  {%- else -%}
+    {%- assign target_zh = '/zh' | append: page.url -%}
+  {%- endif -%}
+{%- endif -%}
+
+<div class="header-actions" id="tfc-header-actions">
+  <div class="lang-switcher" id="tfc-lang-switcher" data-ui-label="language_selector" aria-label="{{ ui.language_selector | escape }}">
+    {% include components/icon.html name="globe" class="lang-icon" dimension=14 %}
+    <a href="{{ target_en | relative_url }}" id="lang-btn-en" class="lang-btn{% unless is_zh %} active{% endunless %}" title="English Documentation">EN</a>
+    <span class="lang-divider" aria-hidden="true">/</span>
+    <a href="{{ target_zh | relative_url }}" id="lang-btn-zh" class="lang-btn{% if is_zh %} active{% endif %}" title="中文文档">中文</a>
+  </div>
+
+  <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" data-ui-label="theme_toggle_label" data-ui-title="theme_toggle_title" aria-label="{{ ui.theme_toggle_label | escape }}" title="{{ ui.theme_toggle_title | escape }}">
+    {% include components/icon.html name="sun" class="theme-icon theme-icon-sun" dimension=16 %}
+    {% include components/icon.html name="moon" class="theme-icon theme-icon-moon" dimension=16 %}
+  </button>
+</div>

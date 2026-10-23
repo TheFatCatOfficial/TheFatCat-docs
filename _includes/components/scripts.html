@@ -1,0 +1,4 @@
+{% assign scripts = site.data.assets.scripts | where: 'position', include.position %}
+{% for asset in scripts %}
+<script src="{{ asset.path | relative_url }}?v={{ site.assets_revision }}"{% if asset.defer %} defer{% endif %}></script>
+{% endfor %}

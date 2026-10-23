@@ -1,0 +1,60 @@
+<div class="tfc-mcp-modal-backdrop" id="tfc-mcp-modal" role="dialog" aria-modal="true" aria-labelledby="tfc-mcp-title" aria-hidden="true" tabindex="-1">
+  <div class="tfc-mcp-modal-card">
+    <div class="tfc-mcp-modal-header">
+      <div class="tfc-mcp-modal-title" id="tfc-mcp-title">
+        {% include components/icon.html name="link" dimension="18" stroke_width="2" %}
+        <span class="tfc-mcp-zh">{{ site.data.ui.zh.ai_docs_title | escape }}</span>
+        <span class="tfc-mcp-en">{{ site.data.ui.en.ai_docs_title | escape }}</span>
+      </div>
+      <button type="button" class="tfc-mcp-modal-close" id="tfc-mcp-close" data-ui-label="close" aria-label="{{ ui.close | escape }}">✕</button>
+    </div>
+    <div class="tfc-mcp-modal-body">
+      <p class="tfc-mcp-modal-intro tfc-mcp-zh">
+        {{ site.data.ui.zh.ai_docs_intro | escape }}
+      </p>
+      <p class="tfc-mcp-modal-intro tfc-mcp-en">
+        {{ site.data.ui.en.ai_docs_intro | escape }}
+      </p>
+      <div class="tfc-mcp-url-grid">
+        <div class="tfc-mcp-url-card">
+          <span class="tfc-mcp-url-label">
+            <span class="tfc-mcp-zh">{{ site.data.ui.zh.official_docs_site | escape }}</span>
+            <span class="tfc-mcp-en">{{ site.data.ui.en.official_docs_site | escape }}</span>
+          </span>
+          <a href="{{ '/' | absolute_url }}" target="_blank" rel="noopener noreferrer" class="tfc-mcp-url-val" title="{{ '/' | absolute_url }}">{{ '/' | absolute_url }} ↗</a>
+        </div>
+        <div class="tfc-mcp-url-card">
+          <span class="tfc-mcp-url-label">
+            <span class="tfc-mcp-zh">{{ site.data.ui.zh.official_docs_repo | escape }}</span>
+            <span class="tfc-mcp-en">{{ site.data.ui.en.official_docs_repo | escape }}</span>
+          </span>
+          <a href="https://github.com/{{ site.repository }}" target="_blank" rel="noopener noreferrer" class="tfc-mcp-url-val" title="https://github.com/{{ site.repository }}">https://github.com/{{ site.repository }} ↗</a>
+        </div>
+      </div>
+
+      <div class="tfc-mcp-tab-content active" id="tfc-tab-llms">
+        <div class="tfc-mcp-code-header">
+          <span>llms.txt / llms-full.txt</span>
+          <button type="button" class="tfc-mcp-copy-code" data-target="llms-urls-code">
+            <span class="tfc-mcp-zh">{{ site.data.ui.zh.copy_urls | escape }}</span>
+            <span class="tfc-mcp-en">{{ site.data.ui.en.copy_urls | escape }}</span>
+          </button>
+        </div>
+        <pre><code id="llms-urls-code"># English
+Index: {{ '/' | absolute_url }}llms.txt
+Full text: {{ '/' | absolute_url }}llms-full.txt
+
+# 简体中文 (Chinese)
+Index (ZH): {{ '/' | absolute_url }}llms-zh.txt
+Full text (ZH): {{ '/' | absolute_url }}llms-full-zh.txt</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tfc-toast" id="tfc-toast" aria-live="polite">
+  {% include components/icon.html name="check" dimension="16" stroke_width="2.5" %}
+  <span id="tfc-toast-message">
+    <span class="tfc-mcp-zh">{{ site.data.ui.zh.copied | escape }}</span>
+    <span class="tfc-mcp-en">{{ site.data.ui.en.copied | escape }}</span>
+  </span>
+</div>

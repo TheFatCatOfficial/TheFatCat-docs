@@ -1,0 +1,12 @@
+{% assign deployment_language = page.lang | default: 'en' %}
+<table class="deployment-contracts">
+  <thead><tr><th>{% if deployment_language == 'zh' %}合约用途{% else %}Purpose{% endif %}</th><th>{% if deployment_language == 'zh' %}合约地址{% else %}Contract address{% endif %}</th></tr></thead>
+  <tbody>
+  {% for contract in site.data.deployment_addresses.contracts %}
+    <tr>
+      <td>{{ contract[deployment_language] | escape }}</td>
+      <td>{% if contract.address %}<a href="https://bscscan.com/address/{{ contract.address | escape }}"><code>{{ contract.address | escape }}</code></a>{% elsif deployment_language == 'zh' %}待公布{% else %}To be announced{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

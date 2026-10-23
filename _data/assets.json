@@ -1,0 +1,61 @@
+{
+  "styles": [
+    {
+      "path": "assets/css/just-the-docs-default.css",
+      "position": "head"
+    },
+    {
+      "path": "assets/css/just-the-docs-head-nav.css",
+      "position": "head",
+      "id": "jtd-head-nav-stylesheet"
+    },
+    {
+      "path": "assets/brand/print.css",
+      "position": "brand"
+    },
+    {
+      "path": "assets/brand/local.css",
+      "position": "brand"
+    }
+  ],
+  "scripts": [
+    {
+      "path": "assets/js/tfc-core.js",
+      "position": "head"
+    },
+    {
+      "path": "assets/js/tfc-theme.js",
+      "position": "head"
+    },
+    {
+      "path": "assets/js/tfc-nav.js",
+      "position": "head"
+    },
+    {
+      "path": "assets/js/tfc-search.js",
+      "position": "head"
+    },
+    {
+      "path": "assets/js/tfc-clipboard.js",
+      "position": "head"
+    },
+    {
+      "path": "assets/js/tfc-code.js",
+      "position": "head"
+    },
+    {
+      "path": "assets/js/tfc-page.js",
+      "position": "head"
+    },
+    {
+      "path": "assets/js/tfc-pjax.js",
+      "position": "body",
+      "defer": true
+    },
+    {
+      "path": "assets/js/tfc-ai.js",
+      "position": "body",
+      "defer": true
+    }
+  ]
+}

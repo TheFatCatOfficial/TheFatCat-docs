@@ -1,0 +1,4 @@
+{% assign styles = site.data.assets.styles | where: 'position', include.position %}
+{% for asset in styles %}
+<link rel="stylesheet" href="{{ asset.path | relative_url }}?v={{ site.assets_revision }}"{% if asset.id %} id="{{ asset.id }}"{% endif %}>
+{% endfor %}

@@ -1,0 +1,86 @@
+title: TheFatCat Docs
+description: Public user documentation for TheFatCat.
+theme: just-the-docs
+color_scheme: dark
+
+# Recompute with scripts/check-public-build.py --update-revision after JS or style edits.
+assets_revision: 8a851b7d4790196a
+sass:
+  sourcemap: never
+
+url: https://thefatcatofficial.github.io
+baseurl: /TheFatCat-docs
+repository: TheFatCatOfficial/TheFatCat-docs
+
+exclude:
+  - README.md
+  - README.zh.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - scripts
+  - vendor
+  - node_modules
+  - technical-docs
+  - whitepaper.md
+  - whitepaper
+  - zh/whitepaper.md
+  - zh/whitepaper
+  - assets/whitepaper
+
+search_enabled: true
+enable_copy_code_button: true
+heading_anchors: false
+nav_sort: case_sensitive
+back_to_top: true
+
+callouts:
+  warning:
+    title: Warning
+    color: red
+  note:
+    title: Note
+    color: blue
+  tip:
+    title: Tip
+    color: green
+  important:
+    title: Important
+    color: yellow
+
+aux_links:
+  Main site: https://thefatcat.fun
+  Public repository: https://github.com/TheFatCatOfficial/TheFatCat-docs
+
+aux_links_new_tab: true
+
+gh_edit_link: true
+gh_edit_link_text: Edit this page on GitHub
+gh_edit_repository: https://github.com/TheFatCatOfficial/TheFatCat-docs
+gh_edit_branch: main
+gh_edit_source: /
+
+defaults:
+  - scope:
+      path: "assets"
+    values:
+      layout: nil
+  - scope:
+      path: ""
+    values:
+      layout: default
+      lang: en
+      has_toc: false
+      image:
+        path: /assets/images/docs-share.png
+        width: 1200
+        height: 630
+        alt: TheFatCat Docs
+  - scope:
+      path: "zh"
+    values:
+      layout: default
+      lang: zh
+      has_toc: false

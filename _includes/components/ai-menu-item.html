@@ -1,0 +1,18 @@
+{% assign action = include.action %}
+{% if action.link == 'source' %}
+  {% capture action_url %}https://raw.githubusercontent.com/{{ site.repository }}/{{ site.gh_edit_branch | default: 'main' }}/{{ page.path }}{% endcapture %}
+{% elsif action.link == 'index' %}
+  {% capture action_url %}{% if page.lang == 'zh' %}{{ '/llms-zh.txt' | relative_url }}{% else %}{{ '/llms.txt' | relative_url }}{% endif %}{% endcapture %}
+{% endif %}
+{% if action.link %}
+<a href="{{ action_url | escape }}"{% if action.id %} id="{{ action.id }}"{% endif %} target="_blank" rel="noopener noreferrer" class="ai-dropdown-item" role="menuitem">
+{% else %}
+<button type="button" class="ai-dropdown-item" id="{{ action.id }}" role="menuitem"{% if action.source_path %} data-path="{{ page.path }}"{% endif %}>
+{% endif %}
+  <span class="ai-item-icon{% if action.icon_class %} {{ action.icon_class }}{% endif %}">{% include components/icon.html name=action.icon dimension=16 %}</span>
+  <span class="ai-item-text">
+    <span class="ai-item-title">{{ ui[action.title] | escape }}</span>
+    <span class="ai-item-desc">{{ ui[action.description] | escape }}</span>
+  </span>
+  {% if action.arrow %}<span class="ai-item-arrow">↗</span>{% endif %}
+{% if action.link %}</a>{% else %}</button>{% endif %}

@@ -1,0 +1,24 @@
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
+<link rel="alternate icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
+<meta name="theme-color" content="#111614">
+<meta name="referrer" content="no-referrer">
+{% include components/styles.html position="brand" %}
+
+{%- assign docs_source_branch = site.gh_edit_branch | default: 'main' -%}
+{%- assign docs_raw_base = 'https://raw.githubusercontent.com/' | append: site.repository | append: '/' | append: docs_source_branch | append: '/' -%}
+<script>
+  window.tfcDocs = window.tfcDocs || {};
+  window.tfcDocs.config = {
+    baseUrl: {{ site.baseurl | default: '' | jsonify }},
+    siteUrl: {{ site.url | jsonify }},
+    rawBaseUrl: {{ docs_raw_base | jsonify }},
+    ui: {{ site.data.ui | jsonify }},
+    aiUsage: {{ site.data.ai_usage | jsonify }}
+  };
+</script>
+
+<link rel="stylesheet" href="{{ '/assets/katex/katex.min.css' | relative_url }}" integrity="sha384-3rdsX6e5mueWyoweR9NIVmtEsUkokpBT/0ALqKKIBMr9j4qhHkaIkAcGgsE6uVlp" crossorigin="anonymous">
+<script defer src="{{ '/assets/katex/katex.min.js' | relative_url }}" integrity="sha384-QFFtAGzvvj+bfgCGxXJlNZZR1nXEZgvG8tDLCCY1F19xl20WlfTYgguB4VcNdxYk" crossorigin="anonymous"></script>
+<script defer src="{{ '/assets/katex/contrib/auto-render.min.js' | relative_url }}" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous"
+  onload="tfcDocs.renderMath();"></script>

@@ -1,0 +1,211 @@
+// 16. Official links directory
+.tfc-links-notice {
+  margin: 1.25rem 0 2.5rem !important;
+  padding: 0.2rem 0 0.2rem 1rem !important;
+  border-left: 1px solid #bd6c75;
+  color: #cbd5cf;
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.tfc-portal-list {
+  margin: 1.25rem 0 0;
+  border-top: 1px solid #2b3230;
+}
+
+.tfc-portal-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 14rem;
+  align-items: center;
+  gap: 3rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #2b3230;
+
+  .tfc-portal-copy {
+    min-width: 0;
+    max-width: 65ch;
+  }
+
+  .tfc-portal-title {
+    margin: 0 0 0.4rem !important;
+    padding: 0 !important;
+    border: 0 !important;
+    color: var(--tfc-brand-paper) !important;
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+    line-height: 1.5;
+  }
+
+  .tfc-portal-desc {
+    margin: 0 0 0.45rem !important;
+    color: #cbd5cf;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+
+  .tfc-portal-url {
+    margin: 0 !important;
+    color: #a7a894;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .tfc-portal-btn {
+    display: inline-flex !important;
+    min-height: 44px;
+    width: 100%;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    padding: 0.55rem 1rem !important;
+    border-radius: 0 !important;
+    background-color: #1f2c25 !important;
+    color: var(--tfc-brand-paper) !important;
+    border: 1px solid #2e4036 !important;
+    text-decoration: none !important;
+    box-shadow: var(--tfc-print-depth-rest) var(--tfc-brand-press), var(--tfc-print-depth-edge) rgba(168, 135, 76, 0.45) !important;
+
+    &:hover {
+      background-color: #27372e !important;
+      color: #ffffff !important;
+      border-color: var(--tfc-brand-terminal) !important;
+      box-shadow: var(--tfc-print-depth-hover) var(--tfc-brand-press), var(--tfc-print-depth-hover-edge) rgba(72, 183, 141, 0.55) !important;
+      text-decoration: none !important;
+    }
+
+    &:active {
+      box-shadow: var(--tfc-print-depth-pressed) var(--tfc-brand-press) !important;
+    }
+
+    &.primary {
+      background: linear-gradient(135deg, var(--tfc-brand-emerald) 0%, #134e42 100%) !important;
+      border: 1px solid var(--tfc-brand-terminal) !important;
+      color: #ffffff !important;
+      box-shadow: var(--tfc-print-depth-rest) var(--tfc-brand-press), var(--tfc-print-depth-edge) rgba(72, 183, 141, 0.55) !important;
+
+      &:hover {
+        background: linear-gradient(135deg, #134e42 0%, #196354 100%) !important;
+        box-shadow: var(--tfc-print-depth-hover) var(--tfc-brand-press), var(--tfc-print-depth-hover-edge) rgba(72, 183, 141, 0.75) !important;
+      }
+
+      &:active {
+        box-shadow: var(--tfc-print-depth-pressed) var(--tfc-brand-press) !important;
+      }
+    }
+
+    &.disabled {
+      background-color: #161e1a !important;
+      color: #647069 !important;
+      border-color: #232d27 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+html[data-theme="light"] {
+  .tfc-links-notice { color: #4a4f45; }
+  .tfc-portal-list, .tfc-portal-entry { border-color: #c8bda5; }
+
+  .tfc-portal-entry {
+    .tfc-portal-title { color: var(--tfc-brand-ink) !important; }
+    .tfc-portal-desc { color: #4a4f45; }
+    .tfc-portal-url { color: #5d6155; }
+
+    .tfc-portal-btn {
+      background-color: #eae1cb !important;
+      border-color: #cfc4a9 !important;
+      color: var(--tfc-brand-ink) !important;
+      box-shadow: var(--tfc-print-depth-rest) #cfc4a9, var(--tfc-print-depth-edge) rgba(168, 135, 76, 0.4) !important;
+
+      &:hover {
+        background-color: #decfae !important;
+        border-color: var(--tfc-brand-emerald) !important;
+        color: var(--tfc-brand-emerald) !important;
+        box-shadow: var(--tfc-print-depth-hover) #cfc4a9, var(--tfc-print-depth-hover-edge) rgba(14, 59, 50, 0.5) !important;
+      }
+
+      &.primary {
+        background: linear-gradient(135deg, var(--tfc-brand-emerald) 0%, #166856 100%) !important;
+        border-color: var(--tfc-brand-emerald) !important;
+        color: #ffffff !important;
+        box-shadow: var(--tfc-print-depth-rest) var(--tfc-brand-press), var(--tfc-print-depth-edge) rgba(168, 135, 76, 0.5) !important;
+
+        &:hover {
+          background: linear-gradient(135deg, #092f28 0%, #115042 100%) !important;
+          box-shadow: var(--tfc-print-depth-hover) var(--tfc-brand-press), var(--tfc-print-depth-hover-edge) rgba(14, 59, 50, 0.6) !important;
+        }
+      }
+
+      &.disabled {
+        background-color: #e4dcc7 !important;
+        border-color: #d4cbb3 !important;
+        color: #8c826d !important;
+      }
+    }
+  }
+}
+
+.tfc-portal-references {
+  margin: 1.25rem 0 0;
+  border-top: 1px solid #2b3230;
+}
+
+.tfc-portal-reference {
+  display: grid;
+  grid-template-columns: 12.5rem minmax(0, 1fr);
+  gap: 2rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid #2b3230;
+
+  h3 {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    font-size: 0.9375rem !important;
+    line-height: 1.65;
+  }
+
+  p {
+    margin: 0 !important;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  .tfc-portal-reference-desc { color: #cbd5cf; }
+}
+
+html[data-theme="light"] {
+  .tfc-portal-references, .tfc-portal-reference { border-color: #c8bda5; }
+  .tfc-portal-reference .tfc-portal-reference-desc { color: #4a4f45; }
+}
+
+@media (max-width: 1023px) {
+  .tfc-portal-reference {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4rem;
+  }
+
+  .tfc-portal-entry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+
+    .tfc-portal-btn {
+      justify-self: start;
+      width: min(100%, 16rem);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .tfc-portal-entry .tfc-portal-btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tfc-portal-entry .tfc-portal-btn { transition: none !important; }
+}

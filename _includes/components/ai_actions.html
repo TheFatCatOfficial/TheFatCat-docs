@@ -1,0 +1,21 @@
+<div class="ai-actions-wrap" id="tfc-ai-actions-wrap">
+  <div class="ai-btn-group" id="tfc-ai-btn-group">
+    <button type="button" class="ai-btn-action" id="tfc-ai-btn-copy" title="{{ ui.copy_page_tooltip | escape }}">
+      {% include components/icon.html name="copy" class="ai-btn-icon" dimension=12 %}
+      <span class="ai-btn-label">{{ ui.copy_page | escape }}</span>
+    </button>
+    <span class="ai-btn-divider" aria-hidden="true"></span>
+    <button type="button" class="ai-btn-trigger" id="tfc-ai-btn-dropdown" aria-label="{{ ui.actions_tooltip | escape }}" aria-expanded="false" aria-haspopup="menu" aria-controls="tfc-ai-dropdown" title="{{ ui.actions_tooltip | escape }}">
+      {% include components/icon.html name="chevron" class="ai-btn-chevron" dimension=10 stroke_width=2 %}
+    </button>
+  </div>
+  <div class="ai-actions-dropdown" id="tfc-ai-dropdown" role="menu" aria-label="{{ ui.menu_label | escape }}">
+    <div class="ai-dropdown-header">
+      {% include components/icon.html name="sparkle" dimension=12 %}
+      <span>{{ ui.menu_heading | escape }}</span>
+    </div>
+    {% for action in site.data.ai_actions %}
+      {% if action.divider %}<div class="ai-dropdown-divider"></div>{% else %}{% include components/ai-menu-item.html action=action %}{% endif %}
+    {% endfor %}
+  </div>
+</div>
